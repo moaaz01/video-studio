@@ -156,11 +156,13 @@ def build_beats(facts: Brief) -> list[dict[str, Any]]:
     """The deck: a hook, the feature screens, the number, the end card."""
     features = facts.features
     if facts.proof is None:
-        tail = [beat("device", 10, "paper", kicker="الميزات", line1=features[0], line2="، ".join(features[1:]),
-                     vo=("ارفع الملزمة، ولخِّص بالعربية، ثم اختبر نفسك.",))]
+        screens = [beat("device", 10, "paper", kicker="الميزات", line1=features[0], line2="، ".join(features[1:]),
+                        vo=("ارفع الملزمة، ولخِّص بالعربية، ثم اختبر نفسك.",))]
     else:
         proof = facts.proof
-        tail = [
+        screens = [
+            beat("device", 4, "paper", kicker="الملزمة", line1=features[0],
+                 line2="من هاتفك، بلا طباعة", vo=("ارفع ملزمةَ PDF، واسأل عن أيِّ صفحةٍ فيها.",)),
             beat("stat", 3, "ink", kicker="العيّنة", vo=(f"{proof.to} صفحةً في الملزمة التجريبية.",),
                  stat={"from": 0, "to": proof.to, "suffix": proof.suffix, "label": proof.label}),
             beat("device", 4, "paper", kicker="التلخيص والاختبار", line1=features[1],
@@ -170,9 +172,7 @@ def build_beats(facts: Brief) -> list[dict[str, Any]]:
     deck = [
         beat("hook", 2, "ink", kicker=facts.title, line1="ارفع ملزمتك واسألها",
              line2="لطلاب الجامعات", vo=("من الملزمةِ إلى السؤال، بلا طباعة.",)),
-        beat("device", 4, "paper", kicker="الملزمة", line1=features[0],
-             line2="من هاتفك، بلا طباعة", vo=("ارفع ملزمةَ PDF، واسأل عن أيِّ صفحةٍ فيها.",)),
-        *tail,
+        *screens,
         beat("cta", 3, "emerald", line1="جرّبها على ملزمتك",
              line2=facts.distribution, vo=("حمِّل التطبيق، وابدأ بملزمتك الأولى.",)),
     ]
