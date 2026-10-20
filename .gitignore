@@ -32,3 +32,6 @@ venv/
 
 # QA artefacts
 out/qa/
+film/ui-source.json
+references/corpus/.cache/
+references/corpus/evidence/

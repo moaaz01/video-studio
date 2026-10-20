@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "title": "StudyFetch Calendar 2.0 - the calendar decides what to study",
+      "url": "https://x.com/StudyFetch/status/2094578141130059825",
+      "source": "whatships",
+      "direction": "device",
+      "move": "Open on the pain, not the product: the first beat is the student deciding what to study tonight, and the calendar answers it - exam, topics, mastery - so the UI enters as the answer to a question the viewer already has.",
+      "why": "StudyAI's hook is the same pain (page in, no idea where to start). Borrowing the problem-first order means the device beat proves something instead of introducing a screen.",
+      "added": "2026-10-20"
+    },
+    {
+      "title": "Gemini study notebooks - curiosity to comprehension",
+      "url": "https://x.com/Google/status/2070188803340353693",
+      "source": "whatships",
+      "direction": "cta",
+      "move": "Sell the transformation in one line and make free/available part of the promise, not a footnote: the film never lists features, it names the before and after state and closes on the access condition (free, every language).",
+      "why": "Our CTA already ends on 'جاهز أن تبدأ؟ مجانًا'; this is the register to keep - one transformation, then access, nothing invented about scale or ratings.",
+      "added": "2026-10-20"
+    },
+    {
+      "title": "Shape morphing through UI states - prompt-motion",
+      "url": "https://prompt-motion.com/twoclipping-5cba86",
+      "source": "prompt-motion",
+      "direction": "ui-film",
+      "move": "One element, never cut: size, radius and colour morph while the content swaps with a short blur, every value a closed-form spring summed per event, all of it a pure function of seek(t); drags are direct manipulation and the loop closes on frame 0.",
+      "why": "This is exactly how a UI beat should behave in our engine: no transitions, no state, one spring per change, so --concurrency=75% cannot change the picture.",
+      "added": "2026-10-20"
+    }
+  ]
+}

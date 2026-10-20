@@ -19,6 +19,7 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+SCRIPTS = pathlib.Path(__file__).resolve().parent
 PY = sys.executable
 NPM = "npm.cmd" if sys.platform == "win32" else "npm"
 
@@ -186,40 +187,6 @@ def qa(args: argparse.Namespace) -> int:
     return run(cmd)
 
 
-BRIEF = """# Brief: {slug}
-
-One sentence: for {audience}, the film proves {promise}, so they {action}.
-
-## Facts (no invention past this line)
-- Product:
-- Audience:
-- One promise:
-- One action (handle / store / link):
-- Contacts:
-- Aspects: 16:9 + 9:16
-- Length: {seconds:.0f}s ({bars} bars @ {bpm} BPM)
-- Language: Arabic (MSA), voice-over vocalised
-- Sources given (screenshots, app repo, brand kit):
-
-## Direction
-- Chosen direction: (see references/visual-direction.md)
-- Why this one:
-- The three moves that define it:
-
-## Beats
-| bars | kind | job |
-|---|---|---|
-| 3 | hook | |
-| 5 | device | |
-| 5 | device | |
-| 4 | stat | |
-| 4 | cta | |
-
-## Out of scope
--
-"""
-
-
 def new(args: argparse.Namespace) -> int:
     """Clone the demo film into a named slug, plus a brief to fill in."""
     src = ROOT / "film" / "film.json"
@@ -230,19 +197,18 @@ def new(args: argparse.Namespace) -> int:
     data = json.loads(src.read_text(encoding="utf-8"))
     data["slug"] = args.slug
     dest.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    frames = sum(float(b.get("bars", 0)) for b in data["beats"]) * (60 * 240 / data.get("bpm", 120)) / 60
+    bars = int(sum(float(b.get("bars", 0)) for b in data["beats"]))
+    fps = data.get("fps", 30)
+    seconds = bars * 60 / fps
     brief = ROOT / "film" / "brief.md"
     if not brief.exists():
+        template = (ROOT / "film" / "brief.template.md").read_text(encoding="utf-8")
+        template = template.replace("# <film title> - brief", f"# {args.slug} - brief")
+        template = template.replace("# <film title> \u2014 brief", f"# {args.slug} - brief")
         brief.write_text(
-            BRIEF.format(
-                slug=args.slug,
-                audience="",
-                promise="",
-                action="",
-                seconds=frames / data.get("fps", 30),
-                bars=int(sum(float(b.get("bars", 0)) for b in data["beats"])),
-                bpm=data.get("bpm", 120),
-            ),
+            template
+            + f"\n---\n\nThe demo grid this scaffold came from: {bars} bars @ "
+            f"{data.get('bpm', 120)} BPM = {seconds:.2f} s at {fps} fps.\n",
             encoding="utf-8",
         )
         print(f"wrote {brief.relative_to(ROOT)}")
@@ -256,7 +222,14 @@ def new(args: argparse.Namespace) -> int:
     return 0
 
 
+DELEGATES = {"ui": "ui_source.py", "refs": "corpus.py"}
+
+
 def main() -> None:
+    argv = sys.argv[1:]
+    if argv and argv[0] in DELEGATES:
+        sys.exit(run([sys.executable, str(SCRIPTS / DELEGATES[argv[0]]), *argv[1:]]))
+
     p = argparse.ArgumentParser(description="video-studio orchestrator")
     sub = p.add_subparsers(dest="cmd", required=True)
 

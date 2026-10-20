@@ -127,7 +127,11 @@ timeline carries the copy, so a new scene needs no changes to the script layer.
 
 ```powershell
 python scripts/studio.py doctor              # python deps · node · remotion · fonts · key · timeline
-python scripts/studio.py new my-film         # scaffold film/my-film.json + film/brief.md
+python scripts/studio.py new my-film         # scaffold film/my-film.json + six-block brief
+python scripts/studio.py ui --dir <app>      # scan the real project -> film/ui-source.json
+python scripts/studio.py refs whatships "<product>"   # what already shipped
+python scripts/studio.py refs add --url ... --move ... --why ...
+python scripts/studio.py refs check --min 2  # phase-2 gate: references are pinned
 python scripts/studio.py timeline --strict   # compile film/film.json -> src/generated/timeline.json
 python scripts/studio.py voice               # Fish Audio, measured
 python scripts/studio.py score               # 120 BPM bed + foley, levelled to -1.4 dBFS
@@ -142,14 +146,35 @@ Measured on an i5-12450H / 16 GB: **~3 fps** at 1080p (a 2-minute film ≈ 20 mi
 
 ---
 
+## Where the quality comes from
+
+Four inputs, each with a command, so none of them is a vibe:
+
+| Input | Command | Produces |
+|---|---|---|
+| the product itself | `studio.py ui --dir <app>` | `film/ui-source.json`: real screens, strings, colours, fonts |
+| the pixels on a real device | `ui_source.py --rea` then REA + adb | captured screens + the real density -> dp |
+| what already shipped | `studio.py refs whatships "<product>"` | matching launch films with original X links |
+| the prompt craft | `studio.py refs motion product-ui` | the corpus taxonomy + pinned cards with the exact move |
+
+And the rule that keeps them honest: `studio.py refs check --min 2` fails the phase-2
+gate until the references you borrowed are written down as cards. See
+[`references/reference-sources.md`](references/reference-sources.md) for the full
+source list (including the Remotion resource index, OpenFilm, Mixkit and the Arabic
+type pool), [`references/fidelity-pipeline.md`](references/fidelity-pipeline.md) for the
+capture loop, and [`references/prompt-anatomy.md`](references/prompt-anatomy.md) for why
+the brief has six blocks.
+
 ## Rules the studio will not break
 
-1. **The film must match the product.** Real screens, real strings, real tokens.
+1. **The film must match the product** — and it is *measured*: scan the project,
+   capture the device, compare at 1:1. Real screens, strings, tokens.
 2. **No invented proof.** No fake stats, logos, ratings or users.
 3. **Arabic is set, not decorated.** `dir="rtl"`, no letter-spacing, no italics.
 4. **Muted-safe.** Every claim that matters also exists as text.
 5. **Sound is composed** to the cut — never a track laid on top.
-6. **Gates before praise** — measured numbers on the delivered file, not on the source.
+6. **Borrowed taste is cited** — two pinned cards minimum, each with the move and the source.
+7. **Gates before praise** — measured numbers on the delivered file, not on the source.
 
 ---
 
@@ -163,7 +188,7 @@ what "done" looks like, not a template to copy.
 ## CI
 
 `.github/workflows/ci.yml` runs the type check, the Python syntax pass, the strict
-timeline compile, the Arabic scan and a Remotion bundle on every push. It needs
+timeline compile, the Arabic scan, the corpus gate and a Remotion bundle on every push. It needs
 GitHub Actions minutes: on an account whose minutes/spending limit is exhausted,
 every run in every repo dies at startup (`startup_failure`, 0 jobs, ~1 s) — that is
 billing talking, not the workflow. Everything the gates check also runs locally:
@@ -172,6 +197,7 @@ billing talking, not the workflow. Everything the gates check also runs locally:
 npx tsc --noEmit
 python scripts/make_timeline.py --strict
 python scripts/qa.py --arabic-only
+python scripts/corpus.py check --min 3      # references are committed, so this works offline
 python scripts/studio.py qa --stills 8      # on rendered masters
 ```
 

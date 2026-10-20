@@ -81,3 +81,34 @@ Copy `src/brand.ts` and `src/components/DemoUI.tsx`, and build the real screens.
 Distribution facts for this product (kept here as data for the end card):
 Telegram `t.me/studyai0` · WhatsApp `+90 552 855 2420` · Telegram support
 `t.me/StudyA_1`.
+
+## Grounding (measured, not remembered)
+
+Before the beats were written, the app was scanned rather than recalled:
+
+```powershell
+python scripts/studio.py ui --dir <repo>/android
+```
+
+```
+package     com.studyai.app
+kotlin      378 files
+screens     100
+routes      6
+strings     ar:40, default:40
+colors      50
+fonts       tajawal_regular, tajawal_medium, tajawal_bold, tajawal_extrabold
+```
+
+That is why the device beat sets Tajawal at the weights the app ships, why the paper
+surface uses the app's own `Paper` / `PaperRaised` tokens, and why the strings on
+screen ("صباح الخير", "المساعد الذكي", "خطة المراجعة", "تقدّم هذا الأسبوع") are the
+app's strings and not invented copy.
+
+Three reference cards were pinned for this film (`scripts/corpus.py list`):
+
+| card | source | the move taken |
+|---|---|---|
+| StudyFetch Calendar 2.0 | whatships | open on the pain, let the UI answer it |
+| Gemini study notebooks | whatships | sell the transformation in one line, access as the close |
+| Shape morphing through UI states | prompt-motion | time-pure springs, one element, never cut |
