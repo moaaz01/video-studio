@@ -172,6 +172,8 @@ python scripts/studio.py eval                # three golden briefs must compile 
 python scripts/studio.py lut                 # palette -> grade curves + .cube LUTs, verified
 python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict   # platform UI bands
 python scripts/studio.py captions            # burned captions JSON + wide/vertical SRT, checked
+python scripts/studio.py shotlist film/brief.md --out film/plan.json   # brief -> plan + shots
+python scripts/studio.py provenance --strict # every declared capture matches its hash
 python scripts/mcp_server.py                 # the studio as MCP tools (stdio, no SDK)
 python scripts/studio.py render 16x9 9x16    # masters
 python scripts/studio.py qa --stills 8       # gates + contact sheets
@@ -201,6 +203,32 @@ source list (including the Remotion resource index, OpenFilm, Mixkit and the Ara
 type pool), [`references/fidelity-pipeline.md`](references/fidelity-pipeline.md) for the
 capture loop, and [`references/prompt-anatomy.md`](references/prompt-anatomy.md) for why
 the brief has six blocks.
+
+## A written brief becomes a shot list, not a guess
+
+`scripts/shotlist.py` compiles a short Arabic brief into a plan the engine can
+render: beats on the 120 BPM grid, keepable copy, a hook under 4.5 s, and a CTA
+whose last line carries the download handle the brief already states.
+
+```powershell
+python scripts/studio.py shotlist examples/shotlist/brief-device.md --out film/plan.json
+python scripts/studio.py shotlist examples/shotlist/brief-device.md --shots-out out/shots.md
+```
+
+The rules are code, not prose: 15-22 bars, hook <= 4.5 s, no two adjacent beats
+of the same kind, a reading budget imported from the same constants `advise.py`
+uses (never copied), and a stat beat only if the brief states a number. It
+reviews its own output before writing it: the fixture scores **95/100, MUST 0**
+and compiles to **32.00 s / 960 frames / 16 bars**.
+
+## Captures are declared, not assumed
+
+`scripts/provenance.py` reads `film/ui-source.json` and verifies every capture a
+film claims to use: the file exists, its SHA-256 matches the record, its beat
+exists in `film.json`, and its package is the one the scanner read. With no
+captures declared it says so plainly ("every screen in this film is a
+reconstruction") instead of pretending. The procedure for capturing a real
+device beat lives in [`docs/CAPTURE.md`](docs/CAPTURE.md).
 
 ## Captions are generated, timed, and checked
 

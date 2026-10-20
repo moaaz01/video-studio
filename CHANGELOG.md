@@ -1,6 +1,41 @@
-## Unreleased — v2.0.0
+## 2.0.0 — 2026-10-20
 
 The campaign: everything on `docs/ROADMAP-v2.md`, built and measured step by step.
+Four gates now decide whether a film is finished — the compiler, the design
+review, the golden briefs, and the pixels themselves (safe areas, capture hashes).
+
+### P1-2 — a brief becomes a plan and a shot list (done)
+
+- `scripts/shotlist.py` compiles a short Arabic brief into a `film.json`-shaped
+  plan plus a shot list. Rules are code: 120 BPM grid, 15-22 bars, hook <= 4.5 s,
+  no adjacent beats of the same kind, a reading budget imported from `advise.py`
+  and `make_timeline.py` (never copied), stat beat only when the brief states a
+  number, CTA last line carries the brief's own handle.
+- Fixture `examples/shotlist/brief-device.md`: 5 beats, 16 bars, **32.00 s /
+  960 frames**, compiles with `--strict`, `advise` **95/100, MUST 0**.
+- It imports the reviewer rather than re-implementing it, and refuses to write a
+  plan that fails the floor.
+
+### P1-1 — real capture: procedure and gate, blocked by the machine (honest)
+
+- `docs/CAPTURE.md` records the exact `adb` procedure (frozen animation clocks,
+  `screencap` for a screen, `screenrecord` for a moving beat) and the manifest
+  entry each capture needs.
+- `scripts/provenance.py --strict` verifies declared captures: file exists,
+  SHA-256 matches, beat exists, package matches the scanned app. Proven by a
+  control: a wrong hash fails (exit 1), the corrected hash passes.
+- **Not done, and not faked:** `adb devices` lists nothing on this machine and the
+  repository holds no real app screenshots, so no capture is declared. The film
+  says "every screen is a reconstruction" instead of claiming otherwise.
+
+### P1-3 — lens pass: deferred with a reason
+
+`@remotion/effects` (`lens-blur`, `chromatic-aberration`, `light-leak`, `glow`)
+only runs on canvas/WebGL layers, and `<HtmlInCanvas>` needs a Chrome flag this
+renderer does not set. A DOM approximation of depth of field would be a fake
+blur on a live UI, which is the one thing this studio refuses — so the motion
+blur (180-degree shutter, measured 1.93x cost) is the optics we ship, and the
+real lens pass waits for the canvas path.
 
 ### P2-2 — MCP resources, and the new verbs (done)
 

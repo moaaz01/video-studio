@@ -21,7 +21,7 @@ jobs:
       - name: types
         run: npx tsc --noEmit
       - name: python syntax
-        run: python -m py_compile scripts/*.py
+        run: python -m py_compile scripts/*.py evals/*.py
       - name: timeline compiles and fits the voice
         run: python scripts/make_timeline.py --strict
       - name: arabic scan
@@ -32,6 +32,8 @@ jobs:
         run: python scripts/advise.py --strict
       - name: golden briefs compile and score above the floor
         run: python evals/run_evals.py --min-score 90
+      - name: declared captures match their hashes
+        run: python scripts/provenance.py --strict
       - name: ui source scanner runs
         run: python scripts/ui_source.py --rea
 
@@ -61,6 +63,13 @@ jobs:
         run: |
           npx remotion still src/index.ts Studio16x9 out/qa/wide.png --frame=300
           npx remotion still src/index.ts Studio9x16 out/qa/vert.png --frame=300
+          npx remotion still src/index.ts Portrait4x5 out/qa/p45.png --frame=300
+          npx remotion still src/index.ts Square1x1 out/qa/sq.png --frame=300
+      - name: platform safe areas (measured on the pixels)
+        run: |
+          python -m pip install --quiet pillow numpy
+          python scripts/safe_area.py out/qa/vert.png --preset reels --strict
+          python scripts/safe_area.py out/qa/p45.png out/qa/sq.png --preset feed --strict
       - uses: actions/upload-artifact@v4
         if: always()
         with:

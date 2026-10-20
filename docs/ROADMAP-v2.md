@@ -16,7 +16,7 @@ impressive it looks in a demo:
 3. **Callable**: an agent can trigger it and read the result as text.
 4. **Cheap**: it does not make a 42-second render slower than a coffee.
 
-## What shipped in v1.2.0 (evidence, not intent)
+## What shipped in v2.0.0 (evidence, not intent)
 
 | Capability | Command | Evidence |
 | --- | --- | --- |
@@ -33,6 +33,8 @@ impressive it looks in a demo:
 | Measured platform safe areas | `python scripts/safe_area.py --preset reels` | vertical device beat 35.2% -> 0.0%, CTA 3.5%, synthetic violation 11.8% (fails) |
 | Captions with real timing | `python scripts/studio.py captions --check` | 10 cues agree with captions.json at 30 fps; max line 29/21 chars; 2-frame gaps |
 | MCP resources, not just tools | `initialize` -> `resources/list` | 7 resources; film reads 2189 chars; unknown URI -> -32602; 13 tools listed |
+| Brief -> plan + shot list | `python scripts/studio.py shotlist examples/shotlist/brief-device.md --out film/plan.json` | 5 beats / 16 bars / 32.00 s; compiles `--strict`; advise 95, MUST 0 |
+| Captures are declared, not assumed | `python scripts/provenance.py --strict` | no captures declared (says so); control: wrong hash exits 1, fixed hash exits 0 |
 
 The look is not a filter preset bolted on top. It is derived from what the app
 already does — warm paper, ink text, one emerald accent — so the film's grade and
@@ -44,7 +46,12 @@ than a LUT someone liked on a moodboard.
 Five axes, ranked by quality-per-hour. The score is my estimate of what the
 viewer notices, not what is fun to build.
 
-### Axis 1 — Optics and finishing (highest leverage, mostly unbuilt)
+### Axis 1 — Optics and finishing (partly shipped)
+
+Shipped in v2.0.0: palette-derived curves as SVG transfer functions (exact to
+1 code value), generated 3D LUTs for the canvas path, grain/vignette/bloom/letterbox
+overlays, one camera move per beat with a 7-frame accent, and 180-degree shutter
+motion blur (3 samples, measured 1.93x cost). Deferred: lens pass — see P1-3.
 
 Remotion 4.0.537 ships `@remotion/effects` with 70+ post-processing effects
 (`lut`, `noise`, `glow`, `lens-blur`, `chromatic-aberration`, `vignette`,
@@ -138,12 +145,12 @@ Arabic that is shaped correctly, and an agent that measures instead of guessing.
 | P0-1 | 180-degree shutter + motion blur at 2-3 samples | 1 | S | no still regressions; render time +<35% |
 | P0-2 | Advise loop with score floor in CI | 3 | S | demo film >= 90, 0 MUST |
 | P0-3 | LUT generated from our palette + HtmlInCanvas fallback | 1 | M | identical output when unsupported |
-| P1-1 | Real-capture beats (Recorder/Canvas Capture) | 2 | M | capture provenance recorded in film/ui-source.json |
-| P1-2 | Shot list generator from brief | 3 | M | 3 golden briefs produce valid timelines |
-| P1-3 | Lens pass: DOF, edge aberration, motivated light leak | 1 | M | measured sharpen/softness budget per beat |
+| P1-1 | Real-capture beats (Recorder/Canvas Capture) | 2 | M | **blocked on hardware**: no adb device; procedure + `provenance.py` gate shipped, no capture faked |
+| P1-2 | Shot list generator from brief | 3 | M | **done**: fixture compiles `--strict`, advise 95 / MUST 0 |
+| P1-3 | Lens pass: DOF, edge aberration, motivated light leak | 1 | M | **deferred**: `@remotion/effects` needs canvas/WebGL; a DOM fake would blur live UI |
 | P1-4 | Captions + SRT + forced alignment | 5 | S | caption timing within 120ms |
-| P2-1 | Auto-reframe 1x1/4x5, per-platform titles | 5 | M | safe-area checker per aspect |
-| P2-2 | MCP resources + evals harness | 4 | M | agent reads state without shell; 3 briefs scored |
+| P2-1 | Auto-reframe 1x1/4x5, per-platform titles | 5 | M | **done**: 4 layouts rendered; `safe_area.py` measures 35.2% -> 0.0% |
+| P2-2 | MCP resources + evals harness | 4 | M | **done**: 7 resources, 13 tools, 3 golden briefs at 100/100/95 |
 | P2-3 | Cloud render (Lambda/Cloud Run) | 4 | L | 4K render under 15 min |
 | P2-4 | Generative plates adapter (Veo/Sora/Flux), gated | 2 | L | provenance + license + "no UI" lint |
 

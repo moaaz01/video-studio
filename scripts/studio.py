@@ -149,7 +149,7 @@ def score(args: argparse.Namespace) -> int:
 def still(args: argparse.Namespace) -> int:
     outdir = ROOT / "out" / "qa"
     outdir.mkdir(parents=True, exist_ok=True)
-    comp = "Studio9x16" if args.vertical else "Studio16x9"
+    comp = args.composition or ("Studio9x16" if args.vertical else "Studio16x9")
     dest = outdir / f"still_{args.frame}{'_v' if args.vertical else ''}.png"
     npx = node_bin("npx")
     if not npx:
@@ -161,7 +161,8 @@ def still(args: argparse.Namespace) -> int:
 RENDERS = {
     "16x9": ("Studio16x9", "film_1080p.mp4", "75%"),
     "9x16": ("Studio9x16", "film_9x16.mp4", "75%"),
-    "1x1": ("Studio1x1", "film_1x1.mp4", "75%"),
+    "4x5": ("Portrait4x5", "film_4x5.mp4", "75%"),
+    "1x1": ("Square1x1", "film_1x1.mp4", "75%"),
 }
 
 
@@ -236,6 +237,7 @@ DELEGATES = {
     "lut": "lut.py",
     "safe": "safe_area.py",
     "captions": "captions.py",
+    "provenance": "provenance.py",
 }
 
 
@@ -267,6 +269,7 @@ def main() -> None:
     st = sub.add_parser("still")
     st.add_argument("frame", type=int)
     st.add_argument("--vertical", action="store_true")
+    st.add_argument("--composition", default=None, help="any composition id, e.g. Portrait4x5")
 
     r = sub.add_parser("render")
     r.add_argument("aspects", nargs="*", default=["16x9", "9x16"])

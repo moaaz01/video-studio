@@ -1,6 +1,6 @@
 {
   "name": "@video-studio/film",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "private": true,
   "description": "Remotion film engine for the video-studio skill: timeline-driven scenes, Arabic-first type, generated score and foley.",
   "type": "commonjs",

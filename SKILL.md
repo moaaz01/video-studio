@@ -70,6 +70,8 @@ python scripts/studio.py eval            # golden briefs must compile and score 
 python scripts/studio.py lut             # palette -> grade curves (and .cube for later)
 python scripts/studio.py safe <still> --preset reels --strict   # platform UI bands
 python scripts/studio.py captions        # cue JSON + wide/vertical SRT (--check verifies)
+python scripts/studio.py shotlist <brief> --out film/plan.json   # brief -> shot list + plan
+python scripts/studio.py provenance --strict   # declared captures match their hashes
 python scripts/mcp_server.py             # expose the studio to any agent (MCP, stdio)
                                           # tools: doctor, scan, refs, advise, storyboard, still,
                                           # render, qa, captions, safe, shotlist, grade, evals
