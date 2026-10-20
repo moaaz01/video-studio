@@ -2,6 +2,21 @@
 
 The campaign: everything on `docs/ROADMAP-v2.md`, built and measured step by step.
 
+### P2-1 — every aspect is a layout (done)
+
+- New masters: `Portrait4x5` (1080x1350) and `Square1x1` (1080x1080), same film,
+  same scenes. `Device` recomputes its card from the canvas, so 4:5 is a real
+  layout and not a crop that eats the Arabic copy.
+- The vertical master now lays out inside the Reels/Shorts/Stories safe box
+  (150/300 px at 1920): device copy and the hook's brand line moved out of the
+  platform UI band.
+- `scripts/safe_area.py` measures the result on pixels: corner energy
+  (`|dL/dx|*|dL/dy|`) inside the platform bands as a share of the frame.
+  Measured before/after on the vertical device beat: **35.2% -> 0.0%**
+  (CTA 3.5%), and a synthetic violation still fails at 11.8%, so the check is
+  not dead. Presets: reels, shorts, story, feed.
+- Verified by rendering all four masters and reading them, not by assertions.
+
 ### P0-3 — the grade comes from the palette (done)
 
 - `scripts/lut.py` reads `src/theme.ts`, derives per-channel transfer curves from

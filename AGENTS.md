@@ -23,11 +23,14 @@ python scripts/studio.py refs check --min 2   # are the references pinned?
 python scripts/studio.py timeline      # film/film.json -> src/generated/timeline.json
 python scripts/studio.py render        # out/film_1080p.mp4 + out/film_9x16.mp4
 python scripts/studio.py qa --stills 8 # gates + contact sheets, non-zero on failure
+python scripts/studio.py safe <still>  # platform safe-area check (reels/shorts/story/feed)
 python scripts/studio.py advise        # measured design review before you render
 python scripts/studio.py storyboard    # out/storyboard/sheet.png: real panels, real Arabic
 python scripts/studio.py looks         # one frame in every look: let the client choose
 python scripts/studio.py eval          # golden briefs: schema + compile + score floor
 python scripts/studio.py lut           # palette-derived grade curves + .cube LUTs
+python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict
+
 ```
 
 ## How to make a new film

@@ -170,6 +170,7 @@ python scripts/studio.py storyboard          # out/storyboard/sheet.png, panels 
 python scripts/studio.py advise              # measured review: time, contrast, rhythm, cta
 python scripts/studio.py eval                # three golden briefs must compile and score >= 90
 python scripts/studio.py lut                 # palette -> grade curves + .cube LUTs, verified
+python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict   # platform UI bands
 python scripts/mcp_server.py                 # the studio as MCP tools (stdio, no SDK)
 python scripts/studio.py render 16x9 9x16    # masters
 python scripts/studio.py qa --stills 8       # gates + contact sheets
@@ -199,6 +200,28 @@ source list (including the Remotion resource index, OpenFilm, Mixkit and the Ara
 type pool), [`references/fidelity-pipeline.md`](references/fidelity-pipeline.md) for the
 capture loop, and [`references/prompt-anatomy.md`](references/prompt-anatomy.md) for why
 the brief has six blocks.
+
+## Every aspect is a layout, not a crop
+
+`Studio16x9`, `Studio9x16`, `Portrait4x5` (1080x1350) and `Square1x1` (1080x1080)
+render the same compiled film. The 4:5 and 1:1 masters are not crops of the wide
+one: `Device` recomputes the phone card from the canvas, so the Arabic copy is
+never clipped and the UI stays at its real scale.
+
+The vertical master also lays itself out inside the Reels/Shorts/Stories safe
+box (top 150 px, bottom 300 px at 1920). That is measured, not asserted:
+
+```powershell
+python scripts/safe_area.py out/qa/vert_device.png out/qa/vert_cta.png --preset reels
+# before: 35.2% of the frame's corner energy sat under the platform UI
+# after:   0.0% / 3.5%            (a synthetic control still fails at 11.8%)
+```
+
+The checker counts corner-energy (`|dL/dx| * |dL/dy|`), which type and icons
+produce and a ruled-paper background or a vignette do not; the verdict is the
+share of that energy sitting in the platform bands. It is a heuristic and is
+documented as one — but it fails a deliberately bad frame, which a bounding-box
+list never would.
 
 ## Looks, storyboards, and a critic
 

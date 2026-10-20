@@ -234,6 +234,7 @@ DELEGATES = {
     "looks": "looks.py",
     "eval": "../evals/run_evals.py",
     "lut": "lut.py",
+    "safe": "safe_area.py",
 }
 
 

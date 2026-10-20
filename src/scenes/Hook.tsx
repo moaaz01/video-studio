@@ -68,7 +68,7 @@ export const Hook: React.FC<SceneProps> = ({beat, vertical}) => {
       <div
         style={{
           position: 'absolute',
-          bottom: vertical ? 120 : 64,
+          bottom: vertical ? 330 : 64, // 300px of Reels UI + breathing room
           left: 0,
           right: 0,
           display: 'flex',

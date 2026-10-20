@@ -39,6 +39,22 @@ export const RemotionRoot: React.FC = () => (
       height={1080}
     />
     <Composition
+      id="Portrait4x5"
+      component={FilmVertical}
+      durationInFrames={FILM.frames}
+      fps={FILM.fps}
+      width={1080}
+      height={1350}
+    />
+    <Composition
+      id="Square1x1"
+      component={FilmVertical}
+      durationInFrames={FILM.frames}
+      fps={FILM.fps}
+      width={1080}
+      height={1080}
+    />
+    <Composition
       id="GradeLab"
       component={GradeLab}
       durationInFrames={2}
