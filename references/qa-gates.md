@@ -68,6 +68,14 @@ Then, over the PCM: **peak ≤ −1.4 dBFS**, **no sample with |x| ≥ 0.999**, 
 clipped sibilance, no click at a cut, no silence where a beat expects sound,
 no audible loop point in the bed.
 
+## Gate 5b — the voice says the words
+
+TTS can drop a clause or invent one and still sound fluent. Round-trip every delivered
+line through ASR (`python scripts/voice_check.py --script <vo spec> --json <report>`):
+normalise Arabic orthography (diacritics, alef/ya/ta-marbuta, punctuation), then require
+**character similarity >= 0.90** and **word count delta <= 1** against the scripted line.
+Fix the line, never the gate. This is a proxy for intelligibility, not for accent.
+
 ## Gate 6 — multi-aspect parity
 
 - [ ] Both masters have the same frame rate, the same duration ±1 frame, the same

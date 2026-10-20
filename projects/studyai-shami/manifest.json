@@ -1,0 +1,308 @@
+{
+  "slug": "studyai-shami",
+  "generated_at": "2026-10-20T23:13:59+00:00",
+  "film": {
+    "look": "ui-daylight",
+    "fps": 30,
+    "frames": 1260,
+    "seconds": 42.0,
+    "beats": [
+      {
+        "id": "b01-hook",
+        "kind": "hook",
+        "frames": 180,
+        "screen": null
+      },
+      {
+        "id": "b02-device",
+        "kind": "device",
+        "frames": 300,
+        "screen": "home"
+      },
+      {
+        "id": "b03-device",
+        "kind": "device",
+        "frames": 300,
+        "screen": "agent"
+      },
+      {
+        "id": "b04-stat",
+        "kind": "stat",
+        "frames": 240,
+        "screen": null
+      },
+      {
+        "id": "b05-cta",
+        "kind": "cta",
+        "frames": 240,
+        "screen": null
+      }
+    ]
+  },
+  "voice": {
+    "engine": "Fish Audio TTS",
+    "model": "s2.1-pro-free",
+    "reference_id": "e58b89675fc345148a88d8bad896f28b",
+    "speed": 0.98,
+    "lines": [
+      {
+        "id": "b01-hook-1",
+        "seconds": 4.041
+      },
+      {
+        "id": "b02-device-1",
+        "seconds": 7.926
+      },
+      {
+        "id": "b03-device-1",
+        "seconds": 5.604
+      },
+      {
+        "id": "b04-stat-1",
+        "seconds": 5.13
+      },
+      {
+        "id": "b05-cta-1",
+        "seconds": 5.841
+      }
+    ],
+    "total_seconds": 28.542,
+    "asr_report": "out/qa/vo-asr-check.json (5/5 lines, worst similarity 0.953)"
+  },
+  "files": [
+    {
+      "path": "projects/studyai-shami/brief.md",
+      "role": "document",
+      "bytes": 5653,
+      "sha256": "4d351c3e120c48523cdc29bebd65c2d79c2fb7505aa2dd10b8b2e70aabdb46a9"
+    },
+    {
+      "path": "projects/studyai-shami/film.json",
+      "role": "document",
+      "bytes": 2343,
+      "sha256": "a0a423e4cba94c9af4fe48b96fe3a5bebea14c2036cb63e8ebb958beec2f7a8d"
+    },
+    {
+      "path": "projects/studyai-shami/vo-script.json",
+      "role": "document",
+      "bytes": 1031,
+      "sha256": "edb0784352f755aaffbce6086f37050300f95c4e8096ba63045c9782b1b1ba88"
+    },
+    {
+      "path": "projects/studyai-shami/README.md",
+      "role": "document",
+      "bytes": 4947,
+      "sha256": "e959a5d5716c8115abcd0f694a27469a7d004f69911bd86eb3e35a7839c17e26"
+    },
+    {
+      "role": "vo:b01-hook-1",
+      "path": "projects/studyai-shami/assets/vo/b01-hook-1.wav",
+      "bytes": 356422,
+      "sha256": "47d49a506b49a17785fe963cfc95895436e7051945a473aa9437a16b5c3827f2"
+    },
+    {
+      "role": "vo:b02-device-1",
+      "path": "projects/studyai-shami/assets/vo/b02-device-1.wav",
+      "bytes": 699150,
+      "sha256": "c4713377dda108a06ceb04c2b62af21cc392fc177c08fc41c07c785cbb0038ad"
+    },
+    {
+      "role": "vo:b03-device-1",
+      "path": "projects/studyai-shami/assets/vo/b03-device-1.wav",
+      "bytes": 494350,
+      "sha256": "9d9e7b18848ba3bed7faca979a98d1f9498c7c1e36e5c8add08e790e97cb48c8"
+    },
+    {
+      "role": "vo:b04-stat-1",
+      "path": "projects/studyai-shami/assets/vo/b04-stat-1.wav",
+      "bytes": 452554,
+      "sha256": "386e8d540e7cbac83ac6a5de966cffcf8a1babba75a94745d5e8d33cd7ad01cc"
+    },
+    {
+      "role": "vo:b05-cta-1",
+      "path": "projects/studyai-shami/assets/vo/b05-cta-1.wav",
+      "bytes": 515248,
+      "sha256": "be21ef2a5ea35f08ebf3848e2433b4562199e93705cac655228b711e1a629d90"
+    },
+    {
+      "role": "asset",
+      "path": "projects/studyai-shami/assets/timeline.json",
+      "bytes": 2566,
+      "sha256": "53a7d2021dd4a1af64315a268cbbaa6a2f83e1149bd1ca3ef59917d3c718765a"
+    },
+    {
+      "role": "asset",
+      "path": "projects/studyai-shami/assets/vo.json",
+      "bytes": 1414,
+      "sha256": "e46adef3ecef32654da3279e025d19351f4f4baac2a6e02fbac475b23aea4e25"
+    },
+    {
+      "role": "asset",
+      "path": "projects/studyai-shami/assets/captions.json",
+      "bytes": 2453,
+      "sha256": "7a8aa38af0a5c9d27043df8b1144513d326987d7cc9cbd25b5e7f6bd362f6e9f"
+    },
+    {
+      "role": "asset",
+      "path": "projects/studyai-shami/assets/grade.json",
+      "bytes": 5513,
+      "sha256": "88bec0f6ef110800557819a4031ec25bc3c939184f1f48c66a03e2005aac8774"
+    },
+    {
+      "role": "asset",
+      "path": "projects/studyai-shami/assets/studyai-ar.json",
+      "bytes": 4622,
+      "sha256": "eeab53a56595604f820e8fc9165a83405d62bf384103c1ceb7d4deeba0190e1d"
+    },
+    {
+      "role": "asset",
+      "path": "projects/studyai-shami/assets/music.wav",
+      "bytes": 8064044,
+      "sha256": "46c6625918d766cab1d9718c87119f70a0a7f55dd27b9a4839a2e050ca26e15c"
+    },
+    {
+      "role": "asset",
+      "path": "projects/studyai-shami/assets/captions/wide.srt",
+      "bytes": 697,
+      "sha256": "b128564e07774b98990a174e0f7795f0c95edec9dc44c7926ab2f9120110fdcb"
+    },
+    {
+      "role": "asset",
+      "path": "projects/studyai-shami/assets/captions/vertical.srt",
+      "bytes": 808,
+      "sha256": "84975f6bd7e046d3c5810102ab812aab806478d771ad5d98be00fe02e5cf18b3"
+    },
+    {
+      "role": "asset",
+      "path": "projects/studyai-shami/assets/vo-asr-check.json",
+      "bytes": 2329,
+      "sha256": "8476676675ae78acd058e5a805efea4e77d65ca43cf115225530679852ef711c"
+    }
+  ],
+  "stills": [
+    {
+      "role": "stills",
+      "path": "projects/studyai-shami/output/stills/wide_hook.png",
+      "bytes": 499562,
+      "sha256": "fe2c4419f8122ebbf3d1f3442e4b42742b12d37c2fc9db3b820582b6ac4fc5c2"
+    },
+    {
+      "role": "stills",
+      "path": "projects/studyai-shami/output/stills/wide_home.png",
+      "bytes": 924787,
+      "sha256": "1268bd36561a8a2de5df91a2507fdf0f1a5d4012fc5805cd26fded88f4daee5d"
+    },
+    {
+      "role": "stills",
+      "path": "projects/studyai-shami/output/stills/wide_agent.png",
+      "bytes": 794536,
+      "sha256": "f5d1eff67e6c4f74d8729a67c6bcc5617101c31be5f3d162a947d6a546ffb20e"
+    },
+    {
+      "role": "stills",
+      "path": "projects/studyai-shami/output/stills/wide_stat.png",
+      "bytes": 709417,
+      "sha256": "9db82884ef70e1b907eabb1eaf72e317dc1e7d33ae83e1e4d908d02fb346f2aa"
+    },
+    {
+      "role": "stills",
+      "path": "projects/studyai-shami/output/stills/wide_cta.png",
+      "bytes": 882448,
+      "sha256": "4ea69e7997593d0db60d96518e05808f4823c36d2f8ef2ffc7c64e99ad82f5eb"
+    },
+    {
+      "role": "stills",
+      "path": "projects/studyai-shami/output/stills/vert_hook.png",
+      "bytes": 500808,
+      "sha256": "5981c0f1fb092dbec64af51077d746f5398aef087d57a32041c90025382b13d7"
+    },
+    {
+      "role": "stills",
+      "path": "projects/studyai-shami/output/stills/vert_home.png",
+      "bytes": 611527,
+      "sha256": "6113870612dc3d5ff76b0ee290adbc073e9d7677be9e7b26c1dfe45dc65ea9b2"
+    },
+    {
+      "role": "stills",
+      "path": "projects/studyai-shami/output/stills/vert_agent.png",
+      "bytes": 495532,
+      "sha256": "81f6314201e936b713e75fad0a7375b7783fd727a56efbd9a40ddd4efea8e414"
+    },
+    {
+      "role": "stills",
+      "path": "projects/studyai-shami/output/stills/vert_cta.png",
+      "bytes": 886681,
+      "sha256": "fbd2735b02720601c04af77c9480e4b6c1a95cec132bcd05288e5ccd81c137f8"
+    },
+    {
+      "role": "stills",
+      "path": "projects/studyai-shami/output/stills/sheet_wide.png",
+      "bytes": 623704,
+      "sha256": "3568d0909d0b6cf9b62d2a221a0fc80f76d38b2d3621163b8e8a77542b758da9"
+    },
+    {
+      "role": "stills",
+      "path": "projects/studyai-shami/output/stills/sheet_vert.png",
+      "bytes": 728541,
+      "sha256": "525b732d5ef3d8d00ef7fce310f258bffeed4e59dca8d7f48f03216317caeb7b"
+    }
+  ],
+  "masters": [
+    {
+      "aspect": "16x9",
+      "path": "projects/studyai-shami/output/studyai-shami-16x9-1080p.mp4",
+      "bytes": 64927402,
+      "sha256": "e56289d3574b24121587a383a4c3b7fcf49a9dd0e0f2c2b679cfa1d725b2493d",
+      "duration": 42.005,
+      "picture": "1920x1080",
+      "fps": 30.0,
+      "vcodec": "h264",
+      "acodec": "aac",
+      "peak_db": -1.48,
+      "rms_db": -23.77,
+      "clipped": 0
+    },
+    {
+      "aspect": "9x16",
+      "path": "projects/studyai-shami/output/studyai-shami-9x16-1080p.mp4",
+      "bytes": 57139150,
+      "sha256": "d7886530d5fb0d8596dcf26039db2ad1a1e8387ab34afbc804998acf7cc1214a",
+      "duration": 42.005,
+      "picture": "1080x1920",
+      "fps": 30.0,
+      "vcodec": "h264",
+      "acodec": "aac",
+      "peak_db": -1.48,
+      "rms_db": -23.77,
+      "clipped": 0
+    },
+    {
+      "aspect": "4x5",
+      "path": "projects/studyai-shami/output/studyai-shami-4x5-1080p.mp4",
+      "bytes": 42299383,
+      "sha256": "58ee09e56085828997e4f673079330943d5b11e10bb92171c3e5b183717f32d4",
+      "duration": 42.005,
+      "picture": "1080x1350",
+      "fps": 30.0,
+      "vcodec": "h264",
+      "acodec": "aac",
+      "peak_db": -1.48,
+      "rms_db": -23.77,
+      "clipped": 0
+    },
+    {
+      "aspect": "1x1",
+      "path": "projects/studyai-shami/output/studyai-shami-1x1-1080p.mp4",
+      "bytes": 35072669,
+      "sha256": "c3dfcfc22df822061dd3acf958f1c41310259f88d8357c50ac9d5c9d3b035346",
+      "duration": 42.005,
+      "picture": "1080x1080",
+      "fps": 30.0,
+      "vcodec": "h264",
+      "acodec": "aac",
+      "peak_db": -1.48,
+      "rms_db": -23.77,
+      "clipped": 0
+    }
+  ]
+}

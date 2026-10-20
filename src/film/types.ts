@@ -17,6 +17,8 @@ export type Beat = {
   line1?: string;
   line2?: string;
   stat?: Stat;
+  /** which real app screen the phone shows, if the beat has a phone */
+  screen?: 'home' | 'agent';
   /** VO lines for this beat, in order — audio is placed by the mix, not here. */
   vo?: string[];
 };

@@ -1,0 +1,160 @@
+{
+  "generated_from": "C:\\Users\\ASUS VIVOBOOK\\Desktop\\usd\\app-studint\\android\\app\\src\\main\\res\\values-ar",
+  "generated_at": "2026-10-21T01:32:03",
+  "note": "Arabic UI strings copied from the app's own resources; the film shows these verbatim.",
+  "keys": {
+    "agent_attachment_job_processing": {
+      "ar": "قيد الإنشاء — سيصلك إشعار عند الاكتمال",
+      "file": "strings_agent.xml"
+    },
+    "agent_attachment_job_ready": {
+      "ar": "جاهز — اضغط للفتح",
+      "file": "strings_agent.xml"
+    },
+    "agent_composer_hint": {
+      "ar": "اسأل سؤالاً…",
+      "file": "strings_agent.xml"
+    },
+    "agent_send": {
+      "ar": "إرسال",
+      "file": "strings_agent.xml"
+    },
+    "agent_subtitle": {
+      "ar": "رفيقك الذكي في المذاكرة",
+      "file": "strings_agent.xml"
+    },
+    "agent_suggestion_1": {
+      "ar": "اشرح لي مفهوماً صعباً",
+      "file": "strings_agent.xml"
+    },
+    "agent_suggestion_2": {
+      "ar": "ضع لي خطة مذاكرة لهذا الأسبوع",
+      "file": "strings_agent.xml"
+    },
+    "agent_suggestion_3": {
+      "ar": "لخّص لي أحد مستنداتي",
+      "file": "strings_agent.xml"
+    },
+    "agent_suggestions_label": {
+      "ar": "جرّب أن تسأل",
+      "file": "strings_agent.xml"
+    },
+    "agent_thinking": {
+      "ar": "يفكّر…",
+      "file": "strings_agent.xml"
+    },
+    "agent_title": {
+      "ar": "الوكيل الذكي",
+      "file": "strings_agent.xml"
+    },
+    "cmp_doc_state_ready": {
+      "ar": "جاهز",
+      "file": "strings_components.xml"
+    },
+    "home_action_see_all": {
+      "ar": "عرض الكل",
+      "file": "strings_home.xml"
+    },
+    "home_continue_badge": {
+      "ar": "تابع من حيث توقفت",
+      "file": "strings_home.xml"
+    },
+    "home_continue_studying": {
+      "ar": "متابعة المذاكرة",
+      "file": "strings_home.xml"
+    },
+    "home_daily_goal_progress": {
+      "ar": "أكملت %1$s من %2$s دروس",
+      "file": "strings_home.xml"
+    },
+    "home_daily_goal_title": {
+      "ar": "هدف اليوم",
+      "file": "strings_home.xml"
+    },
+    "home_greeting_morning": {
+      "ar": "صباح الخير",
+      "file": "strings_home.xml"
+    },
+    "home_header_subtitle": {
+      "ar": "جاهز لمواصلة التعلّم اليوم؟",
+      "file": "strings_home.xml"
+    },
+    "home_library_subtitle": {
+      "ar": "مستنداتك الجاهزة للدراسة",
+      "file": "strings_home.xml"
+    },
+    "home_library_title": {
+      "ar": "مكتبتك",
+      "file": "strings_home.xml"
+    },
+    "home_mastery_percent": {
+      "ar": "%1$s٪",
+      "file": "strings_home.xml"
+    },
+    "home_minutes_unit": {
+      "ar": "%1$s د",
+      "file": "strings_home.xml"
+    },
+    "home_section_recent_files": {
+      "ar": "آخر الملفات",
+      "file": "strings_home.xml"
+    },
+    "home_upload_document": {
+      "ar": "رفع مستند",
+      "file": "strings_home.xml"
+    },
+    "nav_challenges": {
+      "ar": "التحديات",
+      "file": "strings_nav.xml"
+    },
+    "nav_documents": {
+      "ar": "مستنداتي",
+      "file": "strings_nav.xml"
+    },
+    "nav_home": {
+      "ar": "الرئيسية",
+      "file": "strings_nav.xml"
+    },
+    "nav_profile": {
+      "ar": "حسابي",
+      "file": "strings_nav.xml"
+    },
+    "quiz_page_reference": {
+      "ar": "صفحة %1$s",
+      "file": "strings_quiz.xml"
+    },
+    "samp_doc_d1_timestamp": {
+      "ar": "منذ ساعتين",
+      "file": "strings_sample.xml"
+    },
+    "samp_doc_d1_title": {
+      "ar": "الفصل الثالث — الكهرومغناطيسية",
+      "file": "strings_sample.xml"
+    },
+    "samp_doc_d2_timestamp": {
+      "ar": "أمس",
+      "file": "strings_sample.xml"
+    },
+    "samp_doc_d2_title": {
+      "ar": "ملخص الجهاز العصبي",
+      "file": "strings_sample.xml"
+    },
+    "samp_quick_action_chat": {
+      "ar": "محادثة",
+      "file": "strings_sample.xml"
+    },
+    "samp_quick_action_diagram": {
+      "ar": "مخطط",
+      "file": "strings_sample.xml"
+    },
+    "samp_quick_action_quiz": {
+      "ar": "اختبار",
+      "file": "strings_sample.xml"
+    },
+    "samp_quick_action_summary": {
+      "ar": "تلخيص",
+      "file": "strings_sample.xml"
+    }
+  },
+  "missing": []
+}

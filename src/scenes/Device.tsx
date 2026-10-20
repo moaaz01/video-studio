@@ -4,7 +4,16 @@ import {Ar, Kicker} from '../components/Text';
 import {Ground, Glow} from '../components/Surfaces';
 import {DpCtx, Phone} from '../components/Phone';
 import {Ico} from '../components/Ico';
-import {DEMO, DemoUI} from '../components/DemoUI';
+import {StudyAIScreen} from '../components/StudyAIScreen';
+import AR from '../generated/studyai-ar.json';
+
+/** The app's own quick actions, verbatim from `values-ar/strings_sample.xml`. */
+const QUICK = [
+  {label: AR.keys.samp_quick_action_chat.ar, icon: 'forum', tone: C.emeraldDeep},
+  {label: AR.keys.samp_quick_action_summary.ar, icon: 'summarize', tone: C.amber},
+  {label: AR.keys.samp_quick_action_quiz.ar, icon: 'quiz', tone: C.coral},
+  {label: AR.keys.samp_quick_action_diagram.ar, icon: 'gridView', tone: C.plum},
+];
 import {C, FONT, LAYOUT, VIDEO, shadow} from '../theme';
 import {entStyle, entrance, sp} from '../lib/anim';
 import type {SceneProps} from '../film/types';
@@ -68,7 +77,7 @@ export const Device: React.FC<SceneProps> = ({beat, vertical}) => {
       ) : null}
       {!vertical ? (
         <div style={{display: 'flex', gap: 10, marginTop: 8}}>
-          {DEMO.tiles.slice(0, 3).map((t, i) => (
+          {QUICK.slice(0, 3).map((t, i) => (
             <div
               key={t.label}
               style={{
@@ -118,7 +127,7 @@ export const Device: React.FC<SceneProps> = ({beat, vertical}) => {
             <div dir="rtl" lang="ar" style={{width: 412 * cardScale, height: 915 * cardScale, overflow: 'hidden'}}>
               <div style={{transform: `scale(${cardScale})`, transformOrigin: 'top right', width: 412, height: 915}}>
                 <DpCtx.Provider value={1}>
-                  <DemoUI />
+                  <StudyAIScreen variant={beat.screen ?? 'home'} />
                 </DpCtx.Provider>
               </div>
             </div>
@@ -165,7 +174,7 @@ export const Device: React.FC<SceneProps> = ({beat, vertical}) => {
         >
           <Phone width={PHONE_W}>
             <DpCtx.Provider value={SCREEN_DP}>
-              <DemoUI />
+              <StudyAIScreen variant={beat.screen ?? 'home'} />
             </DpCtx.Provider>
           </Phone>
         </div>

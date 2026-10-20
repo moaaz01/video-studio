@@ -81,7 +81,7 @@ the client annotates, the review is what you fix. Guide:
 | `src/brand.ts` | Client identity: name, monogram/icon, accent, CTA, contacts. |
 | `src/scenes/*.tsx` | One component per beat kind. Copy arrives as props. |
 | `src/film/Film.tsx` | Sequences beats, inserts cuts, drives both aspects. |
-| `src/look/looks.ts` | The four looks. `film.look` names one; no ad-hoc grading in scenes. |
+| `src/look/looks.ts` | The five looks (`ui-daylight` is the UI-first one). `film.look` names one; no ad-hoc grading in scenes. |
 | `src/film/Storyboard.tsx` | The storyboard sheet composition (`studio.py storyboard`). |
 | `src/components/DemoUI.tsx` | The mock product screen. Replace with the real UI. |
 | `src/audio/Soundtrack.tsx` | The mix: bed, measured VO cues, foley on the cuts. Mounted once in `Film.tsx`. |

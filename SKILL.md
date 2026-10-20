@@ -131,6 +131,8 @@ SKILL.md                  this file
 AGENTS.md                 portable entry for any non-DSH agent
 scripts/studio.py         orchestrator: doctor/new/ui/refs/timeline/voice/score/render/qa
 scripts/voice.py          Fish Audio TTS -> measured VO manifest
+scripts/voice_check.py    ASR round-trip gate: the wav must say the scripted words
+scripts/app_strings.py    real app strings (values-*/strings*.xml) -> src/generated JSON
 scripts/make_bed.py       additive synth: the bed, from timeline.json, measured
 scripts/make_score.py     legacy map-driven composer (only when a --map exists)+ foley, no samples
 scripts/level_score.py    loudness/peak leveller
@@ -138,6 +140,7 @@ scripts/make_timeline.py  film.json -> timeline.json, grid + reading-time checks
 scripts/qa.py             probes, blackdetect, loudness, Arabic scan, sheets
 scripts/ui_source.py      scans a real app project -> film/ui-source.json; REA capture bridge
 scripts/corpus.py         what shipped (whatships), what the corpus has (prompt-motion), cards, gate
+scripts/package_project.py  a film project folder: assets copied, masters measured, manifest + SHA256SUMS
 scripts/advise.py         measured design review: reading time, contrast, rhythm, cta, look
 scripts/looks.py          the same beat in every look -> out/looks/, for the client
 scripts/storyboard.py     out/storyboard/sheet.png, rendered by the engine itself
@@ -147,6 +150,7 @@ src/look/                 the look system: presets, grade/grain/vignette, one ca
 references/               the craft: direction, motion, type, audio, platforms, QA,
                           fidelity-pipeline, prompt-anatomy, reference-sources,
                           cinematic-look, corpus/
+projects/<slug>/          a finished film lives here: brief, film.json, vo-script, assets, output, manifest
 docs/ROADMAP-v2.md        what to build next, and the tests a candidate must pass
 examples/                 a shipped 118 s film as the worked example
 ```

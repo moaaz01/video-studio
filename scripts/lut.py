@@ -63,6 +63,9 @@ LOOKS = {
     "paper-clean": {"contrast": 0.08, "gamma": 1.00, "lift": 0.002, "gain": 1.00, "sat": 1.00, "warm": 0.2},
     "ink-noir": {"contrast": 0.34, "gamma": 0.98, "lift": 0.010, "gain": 0.97, "sat": 0.88, "warm": -0.3},
     "vivid-launch": {"contrast": 0.24, "gamma": 1.00, "lift": 0.004, "gain": 1.00, "sat": 1.15, "warm": 0.45},
+    # UI-first launch film: crisp paper, mild saturation, no crush — the phone screen
+    # must read as the product, not as a graded photograph of it.
+    "ui-daylight": {"contrast": 0.10, "gamma": 1.00, "lift": 0.004, "gain": 1.00, "sat": 1.06, "warm": 0.18},
 }
 
 

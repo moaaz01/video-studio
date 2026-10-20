@@ -99,6 +99,7 @@ def main() -> None:
             "line1": b.get("line1") or "",
             "line2": b.get("line2") or "",
             "stat": b.get("stat"),
+            "screen": b.get("screen"),
             "vo": lines,
         })
         cursor += dur
@@ -109,6 +110,7 @@ def main() -> None:
 
     tl = {
         "fps": fps,
+        "look": film.get("look"),
         "width": film.get("width", 1920),
         "height": film.get("height", 1080),
         "bpm": bpm,

@@ -337,7 +337,8 @@ curve works the midtones and leaves 251 where the app says 251 (before this,
 the CSS grade pushed them to 255 — a fidelity bug dressed as a look).
 
 A film gets **one look**, declared in `film/film.json` as `"look": "cinema-warm"`
-(or `paper-clean`, `ink-noir`, `vivid-launch`). It is a grade, grain, vignette,
+(or `paper-clean`, `ink-noir`, `vivid-launch`, `ui-daylight` — the last keeps paper
+surfaces crisp for UI-first films). It is a grade, grain, vignette,
 bloom and optional letterbox — applied to the whole composite, deterministic, and
 free. [`references/cinematic-look.md`](references/cinematic-look.md) explains the
 presets and the rules.
@@ -407,6 +408,36 @@ The 118-second StudyAI promo (16:9 + 9:16, Telegram distribution, vocalised
 Arabic VO) is documented in [`examples/studyai/`](examples/studyai/) — brief, beat
 sheet, measurements, and what the first cut got wrong. It is the reference for
 what "done" looks like, not a template to copy.
+
+## Film projects
+
+A finished film lives in its own folder, not scattered across `out/`:
+
+```
+projects/<slug>/
+  brief.md            the six decisions, including what is banned
+  film.json           beats, copy, screen routing, look, voice
+  vo-script.json      the lines sent to Fish + the voice parameters
+  assets/             every file the film consumed (VO wavs, bed, timeline, captions, grade, app strings)
+  output/             the masters + stills + SRT (mp4 is git-ignored; hashes live in manifest.json)
+  manifest.json       durations, codecs, loudness, sizes, SHA-256, measured by package_project.py
+  SHA256SUMS          the same hashes, verifiable with sha256sum -c
+  README.md           what it is, how to rebuild it, and what is reconstruction vs claim
+```
+
+`scripts/package_project.py` closes a project: copies the global build state into
+`assets/`, measures and copies the masters into `output/`, writes the manifest and
+checksums. Two gates were added with the first project:
+
+- `scripts/voice_check.py` — ASR round-trip over every delivered VO line
+  (`references/qa-gates.md`, Gate 5b): character similarity ≥ 0.90, word delta ≤ 1.
+- `scripts/app_strings.py` — extracts the app's real Arabic string table
+  (`values-*/strings*.xml`) into `src/generated/`, and `--check` fails if the screen
+  component and the app resources drift. The screens in the film render `t('key')`
+  only, so the copy in the video cannot be invented.
+
+Shipped project: [`projects/studyai-shami/`](projects/studyai-shami/) — 42 s, Shami
+voice, four aspects, CRF 12 masters, `ui-daylight` look.
 
 ## Verified status (v2.1.0)
 

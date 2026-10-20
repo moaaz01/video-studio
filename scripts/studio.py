@@ -177,7 +177,7 @@ def render(args: argparse.Namespace) -> int:
         comp, name, conc = RENDERS[aspect]
         cmd = [
             npx, "remotion", "render", "src/index.ts", comp, str(ROOT / "out" / name),
-            "--scale=1", "--codec=h264", "--crf", str(args.crf), "--x264-preset=medium",
+            "--scale=1", "--codec=h264", "--crf", str(args.crf), "--x264-preset=" + args.preset,
             "--pixel-format=yuv420p", "--color-space=bt709", "--image-format=jpeg",
             f"--concurrency={args.concurrency or conc}", "--overwrite",
         ]
@@ -277,6 +277,7 @@ def main() -> None:
     r.add_argument("aspects", nargs="*", default=["16x9", "9x16"])
     r.add_argument("--crf", type=int, default=15)
     r.add_argument("--concurrency", default=None)
+    r.add_argument("--preset", default="medium", help="x264 preset (medium | slow | slower)")
 
     m = sub.add_parser("master", help="one audio gain stage over the masters, video untouched")
     m.add_argument("files", nargs="*", default=[])

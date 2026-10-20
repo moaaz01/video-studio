@@ -9,7 +9,7 @@
  * Looks are a budget, not a palette: pick one per film, never mix.
  */
 
-export type LookName = "cinema-warm" | "paper-clean" | "ink-noir" | "vivid-launch";
+export type LookName = "cinema-warm" | "paper-clean" | "ink-noir" | "vivid-launch" | "ui-daylight";
 
 export type Look = {
   name: LookName;
@@ -67,6 +67,16 @@ export const LOOKS: Record<LookName, Look> = {
     bloom: 0.7,
     letterbox: 0,
     camera: 1.25,
+    motionBlur: 3,
+  },
+  /** UI-first: keeps the screen crisp; energy comes from the camera, not the haze. */
+  "ui-daylight": {
+    name: "ui-daylight",
+    vignette: 0.14,
+    grain: 0.03,
+    bloom: 0.22,
+    letterbox: 0,
+    camera: 1.3,
     motionBlur: 3,
   },
 };

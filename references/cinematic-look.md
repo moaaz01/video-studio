@@ -11,7 +11,7 @@ footage felt flat.
 - `src/look/Camera.tsx` — one camera move per beat, plus Perlin handheld.
 - `film/film.json` → `"look": "cinema-warm"` — the film's declared look.
 
-## The four presets
+## The five presets
 
 | Look | Use it for | Character |
 | --- | --- | --- |
@@ -19,6 +19,7 @@ footage felt flat.
 | `paper-clean` | product/UI explainers, screen-recording heavy | almost neutral, low grain, gentle vignette |
 | `ink-noir` | premium teaser, dark UI | crushed blacks, 1.13 contrast, 2.39:1 bars, heavier grain |
 | `vivid-launch` | paid social, small screens | saturated, bright bloom, more camera movement |
+| `ui-daylight` | UI-first launch film; screens are the argument | paper stays paper-white, mild saturation, camera energy instead of haze |
 
 ## Rules
 
