@@ -27,6 +27,8 @@ export type Film = {
   height: number;
   frames: number;
   bpm: number;
+  /** named grade from src/look/looks.ts; absent = default */
+  look?: string;
   beats: Beat[];
 };
 

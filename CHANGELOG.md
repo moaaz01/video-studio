@@ -1,3 +1,39 @@
+## 1.2.0 — 2026-10-20
+
+The cinematic and agentic pass. Research first (primary sources only), then a
+working slice of it.
+
+### Added
+
+- **The look system** — `src/look/`: four named presets (`cinema-warm`,
+  `paper-clean`, `ink-noir`, `vivid-launch`) with grade, animated grain, vignette,
+  bloom and letterbox; `film.look` declares one per film. `@remotion/effects`
+  4.0.537 installed (70+ entry points) for the next optics layer.
+- **The camera** — one move per beat (`push-in`, `settle`, `drift`), Perlin
+  handheld, pure function of the frame so a still equals the video frame.
+- **`scripts/looks.py`** — the same frame in every look, for the client to pick
+  from pictures. Verified: two looks differ by mean 27.5/255 per channel.
+- **`scripts/storyboard.py`** + a `Storyboard` composition — one sheet of real
+  panels with the VO text, rendered by the engine, so the Arabic is shaped exactly
+  as it will ship.
+- **`scripts/advise.py`** — measured design review: reading time vs beat duration,
+  WCAG contrast from the theme tokens, adjacent beat kinds, CTA reachability, look
+  validity, frame arithmetic. Graded MUST / SHOULD / COULD, `--json`, `--strict`.
+- **`scripts/mcp_server.py`** — dependency-free MCP server (stdio, JSON-RPC 2.0,
+  protocol `2025-06-18`) exposing eight studio tools to any agent.
+- **`docs/ROADMAP-v2.md`** — the campaign: five axes, competitor matrix,
+  prioritised initiatives with acceptance gates, explicit non-goals, sources.
+- **`references/cinematic-look.md`** — the look system's rules, and why the LUT is
+  ours rather than borrowed.
+
+### Verified on this machine
+
+- `tsc --noEmit` clean; `py_compile` clean for every script.
+- Storyboard sheet: 1920x1080, 5 panels, VO captions.
+- MCP: `initialize` ok, 8 tools listed, `studio_doctor` executed, unknown tool
+  rejected with `-32602`.
+- Advisor: demo film 42.0 s, score 85/100, 0 MUST, 3 SHOULD.
+
 # Changelog
 
 ## 1.1.1 — 2026-10-20

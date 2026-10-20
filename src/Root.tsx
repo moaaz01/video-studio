@@ -2,6 +2,7 @@ import React from 'react';
 import {Composition} from 'remotion';
 import './fonts';
 import {FilmVertical, FilmWide, FILM} from './film/Film';
+import {Storyboard} from './film/Storyboard';
 
 const VERTICAL = {width: 1080, height: 1920} as const;
 
@@ -27,6 +28,14 @@ export const RemotionRoot: React.FC = () => (
       fps={FILM.fps}
       width={VERTICAL.width}
       height={VERTICAL.height}
+    />
+    <Composition
+      id="Storyboard"
+      component={Storyboard}
+      durationInFrames={60}
+      fps={FILM.fps}
+      width={1920}
+      height={1080}
     />
   </>
 );

@@ -23,6 +23,9 @@ python scripts/studio.py refs check --min 2   # are the references pinned?
 python scripts/studio.py timeline      # film/film.json -> src/generated/timeline.json
 python scripts/studio.py render        # out/film_1080p.mp4 + out/film_9x16.mp4
 python scripts/studio.py qa --stills 8 # gates + contact sheets, non-zero on failure
+python scripts/studio.py advise        # measured design review before you render
+python scripts/studio.py storyboard    # out/storyboard/sheet.png: real panels, real Arabic
+python scripts/studio.py looks         # one frame in every look: let the client choose
 ```
 
 ## How to make a new film
@@ -49,9 +52,13 @@ python scripts/studio.py qa --stills 8 # gates + contact sheets, non-zero on fai
    `src/components/DemoUI.tsx`, or the client's real screens. For real pixels, capture
    the device with REA (`references/fidelity-pipeline.md`). Scenes read copy from the
    timeline; keep components dumb.
-6. **Mix**: `python scripts/studio.py score` — 120 BPM bed, foley on cuts only
+6. **Look** *(before the first render)*: `studio.py looks` -> pick one preset -> set
+   `film.look`. Then `studio.py storyboard` and `studio.py advise`: the sheet is what
+the client annotates, the review is what you fix. Guide:
+   `references/cinematic-look.md`.
+7. **Mix**: `python scripts/studio.py score` — 120 BPM bed, foley on cuts only
    (see the foley table), levelled to peak −1.4 dBFS / RMS −20…−23.
-7. **QA**: run the gates. Report *measured* numbers, from the delivered MP4.
+8. **QA**: run the gates. Report *measured* numbers, from the delivered MP4.
    `python scripts/qa.py` also scans every source file for Arabic mojibake.
 
 ## Where things live
@@ -66,10 +73,17 @@ python scripts/studio.py qa --stills 8 # gates + contact sheets, non-zero on fai
 | `src/brand.ts` | Client identity: name, monogram/icon, accent, CTA, contacts. |
 | `src/scenes/*.tsx` | One component per beat kind. Copy arrives as props. |
 | `src/film/Film.tsx` | Sequences beats, inserts cuts, drives both aspects. |
+| `src/look/looks.ts` | The four looks. `film.look` names one; no ad-hoc grading in scenes. |
+| `src/film/Storyboard.tsx` | The storyboard sheet composition (`studio.py storyboard`). |
 | `src/components/DemoUI.tsx` | The mock product screen. Replace with the real UI. |
 | `scripts/` | Orchestrator + timeline compiler + Fish bridge + score engine + QA. |
 | `scripts/ui_source.py` | Reads an app project (screens/strings/tokens) + REA capture bridge. |
 | `scripts/corpus.py` | whatships + prompt-motion queries, card pinning, corpus gate. |
+| `scripts/advise.py` | Measured design review; exit 1 with `--strict` on a MUST. |
+| `scripts/looks.py` | Look variants as real frames, for the client to choose from. |
+| `scripts/storyboard.py` | Storyboard sheet + optional per-beat stills. |
+| `scripts/mcp_server.py` | MCP stdio server: doctor, scan, refs, advise, storyboard, still, render, qa. |
+| `docs/ROADMAP-v2.md` | The development campaign: axes, competitor matrix, priorities, gates. |
 
 ## Hard rules
 

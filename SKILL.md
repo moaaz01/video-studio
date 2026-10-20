@@ -42,6 +42,12 @@ open gate — a late discovery re-renders the whole film.
 | 7 | QA | `out/qa/` sheet + gates from `references/qa-gates.md` | every gate green, nothing read only from logs |
 | 8 | Deliver | masters in `out/`, the QA sheet, thumbnail/cover stills, and a case note in `examples/<slug>/` | names, durations, sizes and hashes read from the delivered files; the hand-off list matches what the user can actually open |
 
+The look belongs to phase 5, before the first render: `film.look` names one preset
+from [`references/cinematic-look.md`](references/cinematic-look.md), and
+`studio.py looks` shows the client the same frame in every look so the choice is a
+picture, not a preference. `studio.py advise` measures the plan before you spend
+render time (reading time, contrast, rhythm, cta, look, frame arithmetic).
+
 ## The command surface
 
 ```bash
@@ -57,6 +63,10 @@ python scripts/voice.py --script film/vo.json     # Fish Audio -> wavs + vo.json
 python scripts/ui_source.py --rea        # the capture commands (device, APK, web)
 python scripts/studio.py score           # original bed + foley, levelled
 python scripts/studio.py still 502       # one frame, 1:1 crop, for eyeballing
+python scripts/studio.py looks           # the same beat in every look, for the client
+python scripts/studio.py storyboard      # sheet.png: real panels + VO, to annotate
+python scripts/studio.py advise          # measured review before spending render time
+python scripts/mcp_server.py             # expose the studio to any agent (MCP, stdio)
 python scripts/studio.py render 16x9 9x16 # masters, concurrent
 python scripts/studio.py qa              # gates + contact sheets + thumbnails
 ```
@@ -97,6 +107,13 @@ Full rubric, palettes and motion signatures live in
    for the prompt structure those cards are written in.
 7. **Gates before praise.** Never report a render as good until
    `references/qa-gates.md` passes on the real file.
+8. **The look is declared, not improvised.** One preset per film, named in
+   `film/look` before the first render. Mixing looks between beats reads as a
+   mistake; changing the look to fix weak content is a lie. See
+   [`references/cinematic-look.md`](references/cinematic-look.md).
+9. **Critique with frames, not adjectives.** Before the client is asked to choose,
+   render the options: `studio.py looks` as real frames, `studio.py storyboard` as
+   the whole film on one sheet. A brief answered with a picture gets a decision.
 
 ## Layout of this skill
 
@@ -111,9 +128,16 @@ scripts/make_timeline.py  film.json -> timeline.json, grid + reading-time checks
 scripts/qa.py             probes, blackdetect, loudness, Arabic scan, sheets
 scripts/ui_source.py      scans a real app project -> film/ui-source.json; REA capture bridge
 scripts/corpus.py         what shipped (whatships), what the corpus has (prompt-motion), cards, gate
+scripts/advise.py         measured design review: reading time, contrast, rhythm, cta, look
+scripts/looks.py          the same beat in every look -> out/looks/, for the client
+scripts/storyboard.py     out/storyboard/sheet.png, rendered by the engine itself
+scripts/mcp_server.py     MCP over stdio: eight tools, no SDK, for any agent
 src/                      the Remotion engine (theme, type, motion, film, scenes)
+src/look/                 the look system: presets, grade/grain/vignette, one camera move per beat
 references/               the craft: direction, motion, type, audio, platforms, QA,
-                          fidelity-pipeline, prompt-anatomy, reference-sources, corpus/
+                          fidelity-pipeline, prompt-anatomy, reference-sources,
+                          cinematic-look, corpus/
+docs/ROADMAP-v2.md        what to build next, and the tests a candidate must pass
 examples/                 a shipped 118 s film as the worked example
 ```
 

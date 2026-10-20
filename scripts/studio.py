@@ -226,7 +226,13 @@ def new(args: argparse.Namespace) -> int:
     return 0
 
 
-DELEGATES = {"ui": "ui_source.py", "refs": "corpus.py"}
+DELEGATES = {
+    "ui": "ui_source.py",
+    "refs": "corpus.py",
+    "advise": "advise.py",
+    "storyboard": "storyboard.py",
+    "looks": "looks.py",
+}
 
 
 def main() -> None:

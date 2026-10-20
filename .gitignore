@@ -35,3 +35,7 @@ out/qa/
 film/ui-source.json
 references/corpus/.cache/
 references/corpus/evidence/
+
+# generated previews (rendered on demand)
+out/looks/
+out/storyboard/

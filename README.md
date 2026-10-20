@@ -165,6 +165,10 @@ python scripts/studio.py timeline --strict   # compile film/film.json -> src/gen
 python scripts/studio.py voice               # Fish Audio, measured
 python scripts/studio.py score               # 120 BPM bed + foley, levelled to -1.4 dBFS
 python scripts/studio.py still 502           # one frame at 1:1 for eyeballing Arabic
+python scripts/studio.py looks               # one frame in every look: the client picks
+python scripts/studio.py storyboard          # out/storyboard/sheet.png, panels + VO
+python scripts/studio.py advise              # measured review: time, contrast, rhythm, cta
+python scripts/mcp_server.py                 # the studio as MCP tools (stdio, no SDK)
 python scripts/studio.py render 16x9 9x16    # masters
 python scripts/studio.py qa --stills 8       # gates + contact sheets
 npm run dev                                  # Remotion Studio, live preview
@@ -193,6 +197,42 @@ source list (including the Remotion resource index, OpenFilm, Mixkit and the Ara
 type pool), [`references/fidelity-pipeline.md`](references/fidelity-pipeline.md) for the
 capture loop, and [`references/prompt-anatomy.md`](references/prompt-anatomy.md) for why
 the brief has six blocks.
+
+## Looks, storyboards, and a critic
+
+A film gets **one look**, declared in `film/film.json` as `"look": "cinema-warm"`
+(or `paper-clean`, `ink-noir`, `vivid-launch`). It is a grade, grain, vignette,
+bloom and optional letterbox — applied to the whole composite, deterministic, and
+free. [`references/cinematic-look.md`](references/cinematic-look.md) explains the
+presets and the rules.
+
+Three commands turn opinion into evidence:
+
+```powershell
+python scripts/studio.py looks        # the same frame in every look -> out/looks/
+python scripts/studio.py storyboard   # the whole film on one sheet with the VO text
+python scripts/studio.py advise       # 42.0s · score 85 · MUST 0 · SHOULD 3
+```
+
+`advise` reads the theme tokens, so contrast is computed rather than guessed; it
+measures each beat's copy against its duration, flags two device beats in a row,
+checks the CTA is reachable, validates the look name and re-derives the frame
+count from the bar grid. `--strict` exits non-zero on any MUST, which is how it
+goes into CI. `--json` is how an agent reads it.
+
+## Use it from any agent (MCP)
+
+[`scripts/mcp_server.py`](scripts/mcp_server.py) is a dependency-free MCP server
+over stdio (JSON-RPC 2.0, protocol `2025-06-18`). It exposes eight tools —
+`studio_doctor`, `app_scan`, `refs_search`, `film_advise`, `storyboard`, `still`,
+`render`, `qa` — so an agent can *call* the studio, not just read about it:
+
+```powershell
+claude mcp add video-studio -- python D:/deepseek-workspace/video-studio/scripts/mcp_server.py
+```
+
+The split is deliberate: `SKILL.md` carries judgement, MCP carries execution. See
+[`docs/ROADMAP-v2.md`](docs/ROADMAP-v2.md) for where this is going.
 
 ## Rules the studio will not break
 
