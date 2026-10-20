@@ -1,24 +1,22 @@
-# video-studio — install for every agent that can read a SKILL.md
+﻿# video-studio - link the skill into every agent that reads SKILL.md
 #
-#   .\install.ps1                 # link into every agent skill dir found on this machine
+#   .\install.ps1                 # every agent skill dir found on this machine
 #   .\install.ps1 -Targets dsh    # just one
-#   .\install.ps1 -Remove         # remove the links (the repo is untouched)
+#   .\install.ps1 -Remove         # remove the links (this repo is untouched)
 #
 # Links are junctions: editing this folder updates the skill everywhere, no copy step.
 
 [CmdletBinding()]
 param(
   [string[]]$Targets = @('dsh', 'claude', 'opencode', 'agents', 'hermes'),
-  [switch]$Remove,
-  [string]$ProjectRoot = ''
+  [switch]$Remove
 )
 
 $ErrorActionPreference = 'Stop'
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $skillName = 'video-studio'
 
-# Where each agent looks for skills. Windows paths first, then the ones that are
-# shared with WSL/macOS for reference.
+# Where each agent looks for skills.
 $map = [ordered]@{
   'dsh'      = Join-Path $HOME '.dsh\skills'
   'claude'   = Join-Path $HOME '.claude\skills'
@@ -28,7 +26,7 @@ $map = [ordered]@{
 }
 
 if (-not (Test-Path (Join-Path $here 'SKILL.md'))) {
-  throw "SKILL.md not found next to this script. Run it from the repo root."
+  throw 'SKILL.md not found next to this script. Run it from the repo root.'
 }
 
 $results = @()
@@ -56,7 +54,7 @@ foreach ($t in $Targets) {
       $item.Delete()
       $state = 'relinked'
     } else {
-      # a real directory is someone's work — never delete it
+      # a real directory is someone's work - never delete it
       Write-Host "skip: $link exists and is not a link (remove it by hand)"
       $results += [pscustomobject]@{ Agent = $t; Path = $link; State = 'skipped (real dir)' }
       continue
@@ -69,15 +67,15 @@ foreach ($t in $Targets) {
 $results | Format-Table -AutoSize
 
 if (-not $Remove) {
-  Write-Host ""
-  Write-Host "Verify:" -ForegroundColor Cyan
+  Write-Host ''
+  Write-Host 'Verify:' -ForegroundColor Cyan
   foreach ($r in $results) {
     if ($r.State -eq 'skipped (real dir)') { continue }
     $ok = Test-Path (Join-Path $r.Path 'SKILL.md')
     $mark = if ($ok) { 'OK ' } else { 'ERR' }
     Write-Host ("  [{0}] {1,-9} {2}" -f $mark, $r.Agent, $r.Path)
   }
-  Write-Host ""
-  Write-Host "Next: ask the agent for a video — the skill triggers on its own." -ForegroundColor Green
-  Write-Host "First run in the repo:  npm install  then  python scripts/studio.py doctor"
+  Write-Host ''
+  Write-Host 'Next: ask the agent for a video - the skill triggers on its own.' -ForegroundColor Green
+  Write-Host 'First run in the repo:  npm install  then  python scripts/studio.py doctor'
 }
