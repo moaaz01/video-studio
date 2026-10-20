@@ -2,6 +2,19 @@
 
 The campaign: everything on `docs/ROADMAP-v2.md`, built and measured step by step.
 
+### P2-2 — MCP resources, and the new verbs (done)
+
+- `resources/list` + `resources/read` for `studio://film`, `timeline`, `grade`,
+  `captions`, `ui-source`, `roadmap` and `skill`: an agent can read the studio's
+  state without a render and without hard-coding a path. Unknown URIs return
+  `-32602`; the wire protocol is still `2025-06-18`.
+- Five tools added, all verified by calling them over the wire:
+  `captions` (generate + check), `safe` (safe-area gate), `shotlist`,
+  `grade` (regenerate curves), `evals` (score the golden briefs).
+- Measured: 13 tools listed, 7 resources listed, `studio://film` reads 2189
+  chars, unknown resource rejected, `captions`/`safe`/`evals` return
+  `isError=false` with their real output.
+
 ### P1-4 — captions that are timed, not typed (done)
 
 - `scripts/captions.py` derives cues from the compiled film (never a second list)

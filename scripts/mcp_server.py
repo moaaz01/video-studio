@@ -8,7 +8,11 @@ stdio with one JSON-RPC 2.0 message per line - no SDK, no version drift.
     claude mcp add video-studio -- python D:/deepseek-workspace/video-studio/scripts/mcp_server.py
 
 Tools: studio_doctor, app_scan, refs_search, film_advise, storyboard, still,
-render, qa.
+render, qa, captions, safe, shotlist, grade, evals.
+
+Resources: the film, the compiled timeline, the generated grade and captions, the
+roadmap and the skill itself - so an agent can read the studio's state without a
+render and without guessing a path.
 """
 
 from __future__ import annotations
@@ -100,6 +104,44 @@ TOOLS = {
         [],
         lambda a: sh([PYTHON, "scripts/studio.py", "render", *(a.get("aspects") or ["16x9", "9x16"])]),
     ),
+    "captions": tool(
+        "captions",
+        "Generate burned-caption cues + wide/vertical SRT from the film, then verify them.",
+        {"film": {"type": "string", "description": "default film/film.json"}},
+        [],
+        lambda a: sh([PYTHON, "scripts/captions.py", "--film", a.get("film", "film/film.json"), "--check"]),
+    ),
+    "safe": tool(
+        "safe",
+        "Measure platform safe areas on a rendered still: reels, shorts, story or feed.",
+        {
+            "still": {"type": "string", "description": "path to a rendered PNG"},
+            "preset": {"type": "string", "enum": ["reels", "shorts", "story", "feed"]},
+        },
+        ["still"],
+        lambda a: sh([PYTHON, "scripts/safe_area.py", a["still"], "--preset", a.get("preset", "reels"), "--strict"]),
+    ),
+    "shotlist": tool(
+        "shotlist",
+        "Turn a written brief into a shot list and a plan the engine can compile.",
+        {"brief": {"type": "string", "description": "path to a markdown/text brief"}},
+        ["brief"],
+        lambda a: sh([PYTHON, "scripts/shotlist.py", a["brief"], "--json"]),
+    ),
+    "grade": tool(
+        "grade",
+        "Regenerate the palette-derived transfer curves and .cube LUTs, then verify them.",
+        {},
+        [],
+        lambda a: sh([PYTHON, "scripts/lut.py", "--json-only"]),
+    ),
+    "evals": tool(
+        "evals",
+        "Score the golden briefs: schema, timeline compile, and the design-review floor.",
+        {"min_score": {"type": "integer", "description": "default 90"}},
+        [],
+        lambda a: sh([PYTHON, "evals/run_evals.py", "--min-score", str(a.get("min_score", 90))]),
+    ),
     "qa": tool(
         "qa",
         "Run the delivery gates on the rendered files: probe, black frames, loudness, Arabic scan.",
@@ -108,6 +150,17 @@ TOOLS = {
         lambda a: sh([PYTHON, "scripts/studio.py", "qa", "--stills", str(a.get("stills", 0))]),
     ),
 }
+
+
+RESOURCES = [
+    ("studio://film", "film", "The film plan: beats, bars, copy, voice lines", "film/film.json", "application/json"),
+    ("studio://timeline", "timeline", "The compiled timeline the compositions read", "src/generated/timeline.json", "application/json"),
+    ("studio://grade", "grade", "Palette-derived transfer curves and saturation", "src/generated/grade.json", "application/json"),
+    ("studio://captions", "captions", "Frame-timed caption cues for both aspect families", "src/generated/captions.json", "application/json"),
+    ("studio://ui-source", "ui-source", "The real app's screens and strings, the fidelity source", "film/ui-source.json", "application/json"),
+    ("studio://roadmap", "roadmap", "What this studio admits, plans and refuses", "docs/ROADMAP-v2.md", "text/markdown"),
+    ("studio://skill", "skill", "The operating manual: phases, gates, commands", "SKILL.md", "text/markdown"),
+]
 
 
 def reply(msg_id, result=None, error=None) -> None:
@@ -130,8 +183,11 @@ def handle(msg: dict) -> None:
             msg_id,
             {
                 "protocolVersion": PROTOCOL,
-                "capabilities": {"tools": {"listChanged": False}},
-                "serverInfo": {"name": "video-studio", "version": "1.2.0"},
+                "capabilities": {
+                    "tools": {"listChanged": False},
+                    "resources": {"listChanged": False, "subscribe": False},
+                },
+                "serverInfo": {"name": "video-studio", "version": "2.0.0"},
             },
         )
         return
@@ -139,6 +195,35 @@ def handle(msg: dict) -> None:
         return
     if method == "ping":
         reply(msg_id, {})
+        return
+    if method == "resources/list":
+        reply(
+            msg_id,
+            {
+                "resources": [
+                    {
+                        "uri": uri,
+                        "name": name,
+                        "title": name,
+                        "description": description,
+                        "mimeType": mime,
+                    }
+                    for uri, name, description, _path, mime in RESOURCES
+                ]
+            },
+        )
+        return
+    if method == "resources/read":
+        uri = params.get("uri")
+        for candidate, _name, _description, path, mime in RESOURCES:
+            if candidate == uri:
+                target = ROOT / path
+                if not target.is_file():
+                    reply(msg_id, error={"code": -32602, "message": f"resource has no source file yet: {path}"})
+                    return
+                reply(msg_id, {"contents": [{"uri": uri, "mimeType": mime, "text": target.read_text(encoding="utf-8")}]})
+                return
+        reply(msg_id, error={"code": -32602, "message": f"unknown resource: {uri}"})
         return
     if method == "tools/list":
         reply(msg_id, {"tools": [t["definition"] for t in TOOLS.values()]})

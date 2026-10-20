@@ -88,7 +88,7 @@ the client annotates, the review is what you fix. Guide:
 | `scripts/advise.py` | Measured design review; exit 1 with `--strict` on a MUST. |
 | `scripts/looks.py` | Look variants as real frames, for the client to choose from. |
 | `scripts/storyboard.py` | Storyboard sheet + optional per-beat stills. |
-| `scripts/mcp_server.py` | MCP stdio server: doctor, scan, refs, advise, storyboard, still, render, qa. |
+| `scripts/mcp_server.py` | MCP stdio server: 13 tools + 7 resources (film, timeline, grade, captions, ui-source, roadmap, skill). |
 | `docs/ROADMAP-v2.md` | The development campaign: axes, competitor matrix, priorities, gates. |
 
 ## Hard rules

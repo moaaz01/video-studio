@@ -71,6 +71,9 @@ python scripts/studio.py lut             # palette -> grade curves (and .cube fo
 python scripts/studio.py safe <still> --preset reels --strict   # platform UI bands
 python scripts/studio.py captions        # cue JSON + wide/vertical SRT (--check verifies)
 python scripts/mcp_server.py             # expose the studio to any agent (MCP, stdio)
+                                          # tools: doctor, scan, refs, advise, storyboard, still,
+                                          # render, qa, captions, safe, shotlist, grade, evals
+                                          # resources: studio://film|timeline|grade|captions|ui-source|roadmap|skill
 python scripts/studio.py render 16x9 9x16 # masters, concurrent
 python scripts/studio.py qa              # gates + contact sheets + thumbnails
 ```
@@ -135,7 +138,7 @@ scripts/corpus.py         what shipped (whatships), what the corpus has (prompt-
 scripts/advise.py         measured design review: reading time, contrast, rhythm, cta, look
 scripts/looks.py          the same beat in every look -> out/looks/, for the client
 scripts/storyboard.py     out/storyboard/sheet.png, rendered by the engine itself
-scripts/mcp_server.py     MCP over stdio: eight tools, no SDK, for any agent
+scripts/mcp_server.py     MCP over stdio: 13 tools, 7 resources, no SDK, for any agent
 src/                      the Remotion engine (theme, type, motion, film, scenes)
 src/look/                 the look system: presets, grade/grain/vignette, one camera move per beat
 references/               the craft: direction, motion, type, audio, platforms, QA,

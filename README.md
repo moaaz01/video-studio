@@ -281,6 +281,24 @@ goes into CI. `--json` is how an agent reads it.
 
 ## Use it from any agent (MCP)
 
+Thirteen tools and seven resources published over stdio JSON-RPC. Resources are
+how an agent reads the studio's *state* without rendering anything:
+
+| resource | what it is |
+| --- | --- |
+| `studio://film` | the plan: beats, bars, copy, vo |
+| `studio://timeline` | the compiled timeline the compositions read |
+| `studio://grade` | palette-derived curves + saturation |
+| `studio://captions` | frame-timed cues for both aspect families |
+| `studio://ui-source` | the real app's screens and strings (the fidelity source) |
+| `studio://roadmap` | what this studio admits, plans and refuses |
+| `studio://skill` | `SKILL.md`, the operating manual |
+
+```text
+tools: studio_doctor app_scan refs_search film_advise storyboard still render qa
+       captions safe shotlist grade evals
+```
+
 [`scripts/mcp_server.py`](scripts/mcp_server.py) is a dependency-free MCP server
 over stdio (JSON-RPC 2.0, protocol `2025-06-18`). It exposes eight tools —
 `studio_doctor`, `app_scan`, `refs_search`, `film_advise`, `storyboard`, `still`,
