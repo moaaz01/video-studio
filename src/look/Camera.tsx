@@ -11,12 +11,20 @@ export type CameraMode = "push-in" | "settle" | "drift" | "still";
 
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
+/**
+ * A shutter can only blur motion that exists. The accent is a deliberate fast
+ * displacement in the first frames of a beat: the camera settles into place, so
+ * a 180-degree shutter has something to smear.
+ */
+const ACCENT_FRAMES = 7;
+
 export const Camera: React.FC<{
   children: React.ReactNode;
   duration: number;
   mode?: CameraMode;
   strength?: number;
-}> = ({children, duration, mode = "settle", strength = 1}) => {
+  accent?: boolean;
+}> = ({children, duration, mode = "settle", strength = 1, accent = true}) => {
   const frame = useCurrentFrame();
   const p = duration <= 1 ? 0 : Math.min(1, Math.max(0, frame / (duration - 1)));
   const eased = easeOut(p);
@@ -25,6 +33,13 @@ export const Camera: React.FC<{
   let scale = 1;
   let x = 0;
   let y = 0;
+
+  if (accent) {
+    const a = Math.max(0, 1 - frame / ACCENT_FRAMES);
+    const kick = a * a; // decays fast: the smear lives in 3-4 frames
+    scale += 0.055 * kick * s;
+    x += 7 * kick * s;
+  }
 
   if (mode === "push-in") scale = 1 + 0.045 * eased * s;
   if (mode === "settle") scale = 1 + 0.03 * (1 - eased) * s;

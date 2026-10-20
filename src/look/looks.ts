@@ -25,6 +25,8 @@ export type Look = {
   letterbox: number;
   /** how much camera drift the scenes get */
   camera: number;
+  /** 180-degree shutter samples; 0 = no motion blur (cheap), 3 = film cadence */
+  motionBlur: number;
 };
 
 const base = {brightness: 1, contrast: 1, saturate: 1, sepia: 0, hue: 0};
@@ -38,6 +40,7 @@ export const LOOKS: Record<LookName, Look> = {
     bloom: 0.55,
     letterbox: 0,
     camera: 1,
+    motionBlur: 3,
   },
   "paper-clean": {
     name: "paper-clean",
@@ -47,6 +50,7 @@ export const LOOKS: Record<LookName, Look> = {
     bloom: 0.18,
     letterbox: 0,
     camera: 0.55,
+    motionBlur: 0,
   },
   "ink-noir": {
     name: "ink-noir",
@@ -56,6 +60,7 @@ export const LOOKS: Record<LookName, Look> = {
     bloom: 0.3,
     letterbox: 0.055,
     camera: 0.8,
+    motionBlur: 2,
   },
   "vivid-launch": {
     name: "vivid-launch",
@@ -65,6 +70,7 @@ export const LOOKS: Record<LookName, Look> = {
     bloom: 0.7,
     letterbox: 0,
     camera: 1.25,
+    motionBlur: 3,
   },
 };
 

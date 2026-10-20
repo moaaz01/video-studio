@@ -3,6 +3,7 @@ import {AbsoluteFill, Sequence} from 'remotion';
 import timelineJson from '../generated/timeline.json';
 import {Wipe} from '../components/Overlays';
 import {FilmGrade} from '../look/FilmGrade';
+import {CameraMotionBlur} from '@remotion/motion-blur';
 import {Camera, CAMERA_BY_KIND} from '../look/Camera';
 import {resolveLook} from '../look/looks';
 import {C} from '../theme';
@@ -13,6 +14,16 @@ import {Stat} from '../scenes/Stat';
 import {Cta} from '../scenes/Cta';
 
 const T = timelineJson as unknown as Film;
+
+/** 180-degree shutter: a camera only blurs what moves, so this is opt-in per look. */
+const Shutter: React.FC<{look: {motionBlur: number}; children: React.ReactNode}> = ({look, children}) =>
+  look.motionBlur > 0 ? (
+    <CameraMotionBlur shutterAngle={180} samples={look.motionBlur}>
+      {children}
+    </CameraMotionBlur>
+  ) : (
+    <>{children}</>
+  );
 
 export const SCENES: Record<Beat['kind'], React.FC<{beat: Beat; vertical: boolean}>> = {
   hook: Hook,
@@ -26,9 +37,9 @@ const WIPES = ['paper', 'ink', 'emerald'] as const;
 /** The cut vocabulary: one opaque panel wipe, 12 frames, centred on the cut. */
 const CUT_FRAMES = 12;
 
-const Body: React.FC<{vertical: boolean; lookName?: string}> = ({vertical, lookName}) => {
+const Body: React.FC<{vertical: boolean; lookName?: string; blur?: number}> = ({vertical, lookName, blur}) => {
   const beats = T.beats;
-  const look = resolveLook(lookName ?? T.look);
+  const look = {...resolveLook(lookName ?? T.look), ...(typeof blur === 'number' ? {motionBlur: blur} : {})};
   return (
     <FilmGrade look={look}>
       <AbsoluteFill style={{background: C.inkBg}}>
@@ -37,9 +48,11 @@ const Body: React.FC<{vertical: boolean; lookName?: string}> = ({vertical, lookN
           const isLast = i === beats.length - 1;
           return (
             <Sequence key={beat.id} from={beat.start} durationInFrames={beat.dur} name={`${beat.id} · ${beat.kind}`}>
-              <Camera duration={beat.dur} mode={CAMERA_BY_KIND[beat.kind] ?? 'settle'} strength={look.camera}>
-                <Scene beat={beat} vertical={vertical} />
-              </Camera>
+              <Shutter look={look}>
+                <Camera duration={beat.dur} mode={CAMERA_BY_KIND[beat.kind] ?? 'settle'} strength={look.camera}>
+                  <Scene beat={beat} vertical={vertical} />
+                </Camera>
+              </Shutter>
               {!isLast ? (
                 <Sequence from={beat.dur - CUT_FRAMES / 2} durationInFrames={CUT_FRAMES} name="wipe">
                   <Wipe variant={WIPES[(i + 1) % WIPES.length]} half={CUT_FRAMES / 2} skew={7} softness={34} />
@@ -53,7 +66,11 @@ const Body: React.FC<{vertical: boolean; lookName?: string}> = ({vertical, lookN
   );
 };
 
-export const FilmWide: React.FC<{look?: string}> = ({look}) => <Body vertical={false} lookName={look} />;
-export const FilmVertical: React.FC<{look?: string}> = ({look}) => <Body vertical lookName={look} />;
+export const FilmWide: React.FC<{look?: string; blur?: number}> = ({look, blur}) => (
+  <Body vertical={false} lookName={look} blur={blur} />
+);
+export const FilmVertical: React.FC<{look?: string; blur?: number}> = ({look, blur}) => (
+  <Body vertical lookName={look} blur={blur} />
+);
 
 export const FILM = T;

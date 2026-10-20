@@ -1,3 +1,18 @@
+## Unreleased — v2.0.0
+
+The campaign: everything on `docs/ROADMAP-v2.md`, built and measured step by step.
+
+### P0-1 — 180-degree shutter (done)
+
+- `look.motionBlur` is now part of the look: 3 samples for `cinema-warm` and
+  `vivid-launch`, 2 for `ink-noir`, 0 for `paper-clean`. 3 samples at 1080p cost
+  **1.93x** render time on this laptop, not 3x.
+- `Camera` gains a 7-frame accent (fast settle) so the shutter has motion to
+  smear; without motion, motion blur is decoration.
+- Verified on the same look with blur on/off: mean frame difference 0.95-1.34/255,
+  exposure unchanged within +/-0.24 luma (the additive sample blend normalises).
+- `--props '{"blur":0}'` disables it per render, so a client can compare.
+
 ## 1.2.0 — 2026-10-20
 
 The cinematic and agentic pass. Research first (primary sources only), then a
