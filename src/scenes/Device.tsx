@@ -133,9 +133,13 @@ export const Device: React.FC<SceneProps> = ({beat, vertical}) => {
         <Glow x={-260} y={760} r={560} color={C.amberSoft} opacity={0.5} />
       </Ground>
 
-      <AbsoluteFill style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: `0 ${LAYOUT.marginX}px`}}>
+      <AbsoluteFill style={{alignItems: 'center'}}>
         <div
           style={{
+            position: 'absolute',
+            left: 430,
+            top: '50%',
+            marginTop: -((470 / 412) * 915) / 2,
             transform: `translateY(${(1 - enter) * 34}px)`,
             opacity: Math.min(1, enter * 1.15),
           }}
@@ -147,7 +151,9 @@ export const Device: React.FC<SceneProps> = ({beat, vertical}) => {
           </Phone>
         </div>
 
-        <div style={{width: 760, display: 'flex', justifyContent: 'flex-end'}}>{copy}</div>
+        <div style={{position: 'absolute', left: 1036, top: '50%', width: 800, transform: 'translateY(-50%)', display: 'flex', justifyContent: 'flex-end'}}>
+          {copy}
+        </div>
       </AbsoluteFill>
     </AbsoluteFill>
   );

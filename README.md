@@ -126,6 +126,7 @@ timeline carries the copy, so a new scene needs no changes to the script layer.
 
 ```powershell
 python scripts/studio.py doctor              # python deps · node · remotion · fonts · key · timeline
+python scripts/studio.py new my-film         # scaffold film/my-film.json + film/brief.md
 python scripts/studio.py timeline --strict   # compile film/film.json -> src/generated/timeline.json
 python scripts/studio.py voice               # Fish Audio, measured
 python scripts/studio.py score               # 120 BPM bed + foley, levelled to -1.4 dBFS

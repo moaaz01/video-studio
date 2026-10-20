@@ -18,8 +18,8 @@ export const AppIcon: React.FC<{size: number; radius?: number}> = ({size, radius
         flexShrink: 0,
         background: BRAND.icon
           ? C.paperRaised
-          : `linear-gradient(145deg, ${BRAND.accent}, ${BRAND.accentDeep})`,
-        boxShadow: `0 ${size * 0.06}px ${size * 0.18}px -${size * 0.06}px rgba(10,107,86,0.45)`,
+          : `linear-gradient(145deg, ${C.parchment}, ${C.parchmentSoft})`,
+        boxShadow: `0 ${size * 0.06}px ${size * 0.18}px -${size * 0.06}px rgba(10,107,86,0.45), inset 0 0 0 1px rgba(26,42,54,0.10)`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -34,7 +34,7 @@ export const AppIcon: React.FC<{size: number; radius?: number}> = ({size, radius
             fontWeight: 800,
             fontSize: size * 0.52,
             lineHeight: 1,
-            color: '#FFFFFF',
+            color: BRAND.accentDeep,
             letterSpacing: 0,
           }}
         >

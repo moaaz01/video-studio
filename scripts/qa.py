@@ -127,7 +127,7 @@ def arabic_scan() -> list[str]:
     return hits
 
 
-def stills(files: list[pathlib.Path], count: int) -> list[pathlib.Path]:
+def stills(files: list[pathlib.Path], count: int, dest_dir: pathlib.Path) -> list[pathlib.Path]:
     if not FFMPEG:
         return []
     made: list[pathlib.Path] = []
@@ -137,7 +137,7 @@ def stills(files: list[pathlib.Path], count: int) -> list[pathlib.Path]:
         tag = "wide" if (info["width"] or 0) >= (info["height"] or 0) else "vert"
         for i in range(count):
             t = dur * (i + 0.5) / count
-            dest = QA / f"{tag}_{i + 1:02d}.png"
+            dest = dest_dir / f"{tag}_{i + 1:02d}.png"
             subprocess.run(
                 [FFMPEG, "-hide_banner", "-loglevel", "error", "-y", "-ss", f"{t:.3f}",
                  "-i", str(path), "-frames:v", "1", str(dest)],
@@ -193,6 +193,11 @@ def main() -> None:
 
     failures: list[str] = []
     warnings: list[str] = []
+    frames_dir = QA / "frames"
+    if frames_dir.exists():
+        for old in frames_dir.glob("*.png"):
+            old.unlink()
+    frames_dir.mkdir(parents=True, exist_ok=True)
     print(f"{'file':28s} {'size':>7s} {'picture':>11s} {'fps':>6s} {'dur':>8s} {'peak':>7s} {'rms':>7s} {'clip':>5s} {'black':>6s}")
     for f in files:
         if not f.exists():
@@ -201,11 +206,14 @@ def main() -> None:
         info = probe(f)
         lvl = loudness(f) or {}
         black = black_frames(f)
+        peak = f"{lvl['peak_db']:7.2f}" if "peak_db" in lvl else "      -"
+        rms = f"{lvl['rms_db']:7.2f}" if "rms_db" in lvl else "      -"
+        clip = f"{lvl['clipped']:5d}" if "clipped" in lvl else "    -"
+        blk = f"{black:6d}" if black is not None else "     -"
         print(
             f"{info['file']:28s} {info['size_mb']:6.1f}M "
             f"{str(info['width']) + 'x' + str(info['height']):>11s} {info['fps']:6.2f} "
-            f"{info['duration']:7.2f}s {lvl.get('peak_db', 0):7.2f} {lvl.get('rms_db', 0):7.2f} "
-            f"{lvl.get('clipped', -1):5d} {(-1 if black is None else black):6d}"
+            f"{info['duration']:7.2f}s {peak} {rms} {clip} {blk}"
         )
         if lvl.get("peak_db", -99) > -1.0:
             failures.append(f"{f.name}: peak {lvl['peak_db']} dBFS is too hot (target ≤ -1.4)")
@@ -220,12 +228,12 @@ def main() -> None:
             (failures if a.require_audio else warnings).append(msg)
 
     if a.stills:
-        made = stills(files, a.stills)
-        print(f"\n{len(made)} stills -> out/qa/")
+        made = stills(files, a.stills, frames_dir)
+        print(f"\n{len(made)} stills -> {frames_dir.relative_to(ROOT)}/")
         if made and not a.no_sheets:
             for f in files:
                 tag = "wide" if (probe(f)["width"] or 0) >= (probe(f)["height"] or 0) else "vert"
-                sel = sorted(QA.glob(f"{tag}_*.png"))
+                sel = sorted(frames_dir.glob(f"{tag}_*.png"))
                 dest = sheet(sel, f"sheet_{tag}", cols=a.every)
                 if dest:
                     print(f"sheet -> {dest.relative_to(ROOT)}")

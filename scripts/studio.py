@@ -186,11 +186,85 @@ def qa(args: argparse.Namespace) -> int:
     return run(cmd)
 
 
+BRIEF = """# Brief: {slug}
+
+One sentence: for {audience}, the film proves {promise}, so they {action}.
+
+## Facts (no invention past this line)
+- Product:
+- Audience:
+- One promise:
+- One action (handle / store / link):
+- Contacts:
+- Aspects: 16:9 + 9:16
+- Length: {seconds:.0f}s ({bars} bars @ {bpm} BPM)
+- Language: Arabic (MSA), voice-over vocalised
+- Sources given (screenshots, app repo, brand kit):
+
+## Direction
+- Chosen direction: (see references/visual-direction.md)
+- Why this one:
+- The three moves that define it:
+
+## Beats
+| bars | kind | job |
+|---|---|---|
+| 3 | hook | |
+| 5 | device | |
+| 5 | device | |
+| 4 | stat | |
+| 4 | cta | |
+
+## Out of scope
+-
+"""
+
+
+def new(args: argparse.Namespace) -> int:
+    """Clone the demo film into a named slug, plus a brief to fill in."""
+    src = ROOT / "film" / "film.json"
+    dest = ROOT / "film" / f"{args.slug}.json"
+    if dest.exists() and not args.force:
+        print(f"{dest.relative_to(ROOT)} exists - pass --force to overwrite")
+        return 1
+    data = json.loads(src.read_text(encoding="utf-8"))
+    data["slug"] = args.slug
+    dest.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    frames = sum(float(b.get("bars", 0)) for b in data["beats"]) * (60 * 240 / data.get("bpm", 120)) / 60
+    brief = ROOT / "film" / "brief.md"
+    if not brief.exists():
+        brief.write_text(
+            BRIEF.format(
+                slug=args.slug,
+                audience="",
+                promise="",
+                action="",
+                seconds=frames / data.get("fps", 30),
+                bars=int(sum(float(b.get("bars", 0)) for b in data["beats"])),
+                bpm=data.get("bpm", 120),
+            ),
+            encoding="utf-8",
+        )
+        print(f"wrote {brief.relative_to(ROOT)}")
+    print(f"wrote {dest.relative_to(ROOT)}")
+    print("\nnext:")
+    print(f"  edit film/{args.slug}.json  (beats, bars, Arabic copy, vo lines)")
+    print(f"  python scripts/studio.py timeline --film film/{args.slug}.json")
+    print("  python scripts/studio.py voice")
+    print("  python scripts/studio.py score")
+    print("  python scripts/studio.py render")
+    return 0
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description="video-studio orchestrator")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     sub.add_parser("doctor")
+
+    n = sub.add_parser("new", help="scaffold a named film + brief")
+    n.add_argument("slug")
+    n.add_argument("--force", action="store_true")
 
     t = sub.add_parser("timeline")
     t.add_argument("--film", default="film/film.json")
@@ -218,6 +292,7 @@ def main() -> None:
     args = p.parse_args()
     handlers = {
         "doctor": lambda a: doctor(),
+        "new": new,
         "timeline": timeline,
         "voice": voice,
         "score": score,
