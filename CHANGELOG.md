@@ -12,7 +12,7 @@ regenerate from the same compiled timeline as the picture.
   shimmers where the film turns (stat and end card), pre-roll and tail fades.
 - It reads `src/generated/timeline.json` for `fps`, `frames`, `bpm` and every beat
   start, so a re-cut re-scores itself. Measured output: **42.00 s, 48 kHz stereo,
-  RMS -18.7 dBFS, peak -3.0 dBFS, 0 clipped samples** (the level is asserted in
+  RMS -19.9 dBFS, peak -3.0 dBFS, 0 clipped samples** (the level is asserted in
   the script, not hoped for).
 - `studio.py score` now falls back to this composer when no hand-written
   `--map` exists, which is the honest default: the map that `make_score.py`
@@ -53,6 +53,16 @@ regenerate from the same compiled timeline as the picture.
   (`start + measured + 0.25 s`) instead of the whole beat: the last cue moved
   from 41.8 s to 37.6 s, so the text leaves the screen with the speech.
 
+### The MCP server proves itself on the wire
+
+- `scripts/mcp_selftest.py` spawns the server over stdio and asserts the contract
+  instead of reading the source: protocol `2025-06-18`, server `video-studio
+  2.1.0`, **15 tools**, **7 resources**, `studio://film` readable, unknown URI
+  `-32602`, and two live calls — `captions` (generate then check) and `sound`
+  (bed composed + measured). **11/11 pass**, wired into CI.
+- `captions` over MCP now generates before it checks, so a clean checkout no
+  longer fails the tool (reported by the captions build).
+
 ### The final loudness is a mastering decision, not a re-render
 
 - `scripts/master_audio.py` does one gain stage over the delivered masters:
@@ -62,6 +72,20 @@ regenerate from the same compiled timeline as the picture.
 - Measured on the vertical master: peak **-5.63 → -1.51 dBFS**, RMS
   **-24.46 → -20.35 dBFS**, 0 clipped samples, video bit-identical (stream copy).
 - Wired as `studio.py master [files...] --target -1.5`.
+
+### Delivered masters (measured from the files)
+
+| master | picture | duration | peak | RMS | clipped |
+|---|---|---|---|---|---|
+| `film_1080p.mp4` | 1920x1080 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 |
+| `film_9x16.mp4` | 1080x1920 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 |
+| `film_4x5.mp4` | 1080x1350 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 |
+| `film_1x1.mp4` | 1080x1080 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 |
+
+`qa --require-audio` passes 4/4: 0 black frames, 0 clipped samples, Arabic scan
+clean. The wide master needed one retry after a host socket error
+(`ENOBUFS` while fetching a VO wav); the retry at 50 % concurrency completed with
+the audio track. `mcp_selftest.py` reports 11/11 and is now a CI step.
 
 ## 2.0.0 — 2026-10-20
 

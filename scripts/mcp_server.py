@@ -8,7 +8,7 @@ stdio with one JSON-RPC 2.0 message per line - no SDK, no version drift.
     claude mcp add video-studio -- python D:/deepseek-workspace/video-studio/scripts/mcp_server.py
 
 Tools: studio_doctor, app_scan, refs_search, film_advise, storyboard, still,
-render, qa, captions, safe, shotlist, grade, evals.
+render, qa, captions, safe, shotlist, grade, evals, master, sound.
 
 Resources: the film, the compiled timeline, the generated grade and captions, the
 roadmap and the skill itself - so an agent can read the studio's state without a
@@ -45,6 +45,15 @@ def tool(name: str, description: str, props: dict, required: list[str], run):
         },
         "run": run,
     }
+
+
+def captions_tool(a: dict) -> str:
+    """Generate then verify: --check reads the files generation writes, so a
+    clean checkout must not be asked to check before it has generated."""
+    film = a.get("film", "film/film.json")
+    generated = sh([PYTHON, "scripts/captions.py", "--film", film])
+    checked = sh([PYTHON, "scripts/captions.py", "--film", film, "--check"])
+    return f"{generated}" + chr(10) + chr(10) + f"{checked}"
 
 
 TOOLS = {
@@ -109,7 +118,7 @@ TOOLS = {
         "Generate burned-caption cues + wide/vertical SRT from the film, then verify them.",
         {"film": {"type": "string", "description": "default film/film.json"}},
         [],
-        lambda a: sh([PYTHON, "scripts/captions.py", "--film", a.get("film", "film/film.json"), "--check"]),
+        lambda a: captions_tool(a),
     ),
     "safe": tool(
         "safe",
@@ -134,6 +143,20 @@ TOOLS = {
         {},
         [],
         lambda a: sh([PYTHON, "scripts/lut.py", "--json-only"]),
+    ),
+    "master": tool(
+        "master",
+        "One measured audio gain stage over the rendered masters (video stream copied).",
+        {"files": {"type": "array", "items": {"type": "string"}, "description": "default every out/film_*.mp4"}},
+        [],
+        lambda a: sh([PYTHON, "scripts/master_audio.py", *(a.get("files") or [])]),
+    ),
+    "sound": tool(
+        "sound",
+        "Compose the music bed from the compiled timeline, then report its measured level.",
+        {},
+        [],
+        lambda a: sh([PYTHON, "scripts/make_bed.py", "--json"]),
     ),
     "evals": tool(
         "evals",
@@ -187,7 +210,7 @@ def handle(msg: dict) -> None:
                     "tools": {"listChanged": False},
                     "resources": {"listChanged": False, "subscribe": False},
                 },
-                "serverInfo": {"name": "video-studio", "version": "2.0.0"},
+                "serverInfo": {"name": "video-studio", "version": "2.1.0"},
             },
         )
         return

@@ -34,6 +34,9 @@ jobs:
         run: python evals/run_evals.py --min-score 90
       - name: declared captures match their hashes
         run: python scripts/provenance.py --strict
+
+      - name: MCP wire contract
+        run: python scripts/mcp_selftest.py
       - name: ui source scanner runs
         run: python scripts/ui_source.py --rea
 

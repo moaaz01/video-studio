@@ -163,7 +163,7 @@ python scripts/studio.py refs add --url ... --move ... --why ...
 python scripts/studio.py refs check --min 2  # phase-2 gate: references are pinned
 python scripts/studio.py timeline --strict   # compile film/film.json -> src/generated/timeline.json
 python scripts/studio.py voice               # Fish Audio lines -> public/audio/vo + measured vo.json
-python scripts/studio.py score               # compose the bed from the timeline (RMS -18.7 dBFS, peak -3.0)
+python scripts/studio.py score               # compose the bed from the timeline (RMS -19.9 dBFS, peak -3.0)
 python scripts/studio.py bed                 # the composer alone, with --json measurements
 python scripts/studio.py still 502           # one frame at 1:1 for eyeballing Arabic
 python scripts/studio.py looks               # one frame in every look: the client picks
@@ -176,6 +176,7 @@ python scripts/studio.py captions            # burned captions JSON + wide/verti
 python scripts/studio.py shotlist film/brief.md --out film/plan.json   # brief -> plan + shots
 python scripts/studio.py provenance --strict # every declared capture matches its hash
 python scripts/mcp_server.py                 # the studio as MCP tools (stdio, no SDK)
+python scripts/mcp_selftest.py               # 11 wire checks: protocol, 15 tools, 7 resources, live calls
 python scripts/studio.py render 16x9 9x16    # masters
 python scripts/studio.py master             # one audio gain stage; video stream copied
 python scripts/studio.py qa --stills 8 --require-audio   # gates, contact sheets, and a silence check
@@ -266,7 +267,7 @@ python scripts/studio.py qa --require-audio     # fail a silent master
   stacks per chord (G6 → Fmaj7 → C → Am7, one chord per four bars), a soft sub
   pulse on beats 1 and 3, filtered-noise shimmers on the stat and the end card.
   It reads `fps`, `frames`, `bpm` and every beat start from `timeline.json`, so a
-  re-cut re-scores itself. Measured: **42.00 s, 48 kHz stereo, RMS -18.7 dBFS,
+  re-cut re-scores itself. Measured: **42.00 s, 48 kHz stereo, RMS -19.9 dBFS,
   peak -3.0 dBFS, 0 clipped samples.**
 - **The voice** is Fish Audio TTS (`s2.1-pro-free`), fully vocalised Arabic and
   measured on return: 5 lines, **18.16 s of speech**. The voice prints the brand
@@ -406,6 +407,37 @@ The 118-second StudyAI promo (16:9 + 9:16, Telegram distribution, vocalised
 Arabic VO) is documented in [`examples/studyai/`](examples/studyai/) — brief, beat
 sheet, measurements, and what the first cut got wrong. It is the reference for
 what "done" looks like, not a template to copy.
+
+## Verified status (v2.1.0)
+
+Every number below was read from the delivered files or from a gate's own output
+on this machine — not from a log line that says it probably worked.
+
+| Master | picture | duration | peak | RMS | clipped | audio |
+|---|---|---|---|---|---|---|
+| `out/film_1080p.mp4` | 1920x1080 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 | AAC 48 kHz stereo |
+| `out/film_9x16.mp4` | 1080x1920 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 | AAC 48 kHz stereo |
+| `out/film_4x5.mp4` | 1080x1350 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 | AAC 48 kHz stereo |
+| `out/film_1x1.mp4` | 1080x1080 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 | AAC 48 kHz stereo |
+
+All four are mastered from one mix (`+4.13 dB`), so the loudness matches across
+aspects; the audio gain is applied without re-encoding a single frame.
+
+| Gate | Result |
+|---|---|
+| `tsc --noEmit` | exit 0 |
+| `make_timeline --film film/film.json --vo src/generated/vo.json --strict` | 21 bars, 1260 frames, 42.00 s, exit 0 |
+| `captions --check` | 10 cues agree with `captions.json` @ 30 fps |
+| `advise --strict` | 0 MUST (3 SHOULD, documented) |
+| `evals` | 3/3 briefs, scores 100 / 100 / 95 |
+| `safe_area.py --preset reels --strict` | device 0.0 %, CTA 3.5 % — PASS |
+| `provenance --strict` | no captures declared (honest reconstruction) |
+| `corpus check --min 3` | 3 pinned cards — PASS |
+| `qa --require-audio` | 4/4 masters, 0 black, 0 clipped, Arabic scan clean |
+| `mcp_selftest.py` | 11/11 checks over the wire (15 tools, 7 resources) |
+
+Voice: 5 lines, 18.16 s of measured speech, fully vocalised Arabic.
+Bed: 42.00 s, 48 kHz, RMS -19.9 dBFS, peak -3.0 dBFS, 0 clipped samples.
 
 ## CI
 
