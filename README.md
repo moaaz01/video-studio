@@ -168,6 +168,7 @@ python scripts/studio.py still 502           # one frame at 1:1 for eyeballing A
 python scripts/studio.py looks               # one frame in every look: the client picks
 python scripts/studio.py storyboard          # out/storyboard/sheet.png, panels + VO
 python scripts/studio.py advise              # measured review: time, contrast, rhythm, cta
+python scripts/studio.py eval                # three golden briefs must compile and score >= 90
 python scripts/mcp_server.py                 # the studio as MCP tools (stdio, no SDK)
 python scripts/studio.py render 16x9 9x16    # masters
 python scripts/studio.py qa --stills 8       # gates + contact sheets
@@ -265,6 +266,8 @@ billing talking, not the workflow. Everything the gates check also runs locally:
 ```powershell
 npx tsc --noEmit
 python scripts/make_timeline.py --strict
+python scripts/advise.py --strict           # no MUST on the shipped film
+python evals/run_evals.py --min-score 90    # three golden briefs still pass
 python scripts/qa.py --arabic-only
 python scripts/corpus.py check --min 3      # references are committed, so this works offline
 python scripts/studio.py qa --stills 8      # on rendered masters

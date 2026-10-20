@@ -1,0 +1,77 @@
+{
+  "look": "ink-noir",
+  "slug": "eval-arabic-editorial",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "bpm": 120,
+  "frames": 1320,
+  "beats": [
+    {
+      "id": "b01-hook",
+      "kind": "hook",
+      "bars": 2,
+      "tone": "ink",
+      "kicker": "الفكرة",
+      "line1": "لا تُقرأ مرتين",
+      "line2": "",
+      "vo": [
+        "الفكرة الجيدة، لا تُقرأ مرتين."
+      ]
+    },
+    {
+      "id": "b02-device",
+      "kind": "device",
+      "bars": 5,
+      "tone": "paper",
+      "kicker": "المصدر",
+      "line1": "كل جملة تعود إلى صفحتها",
+      "line2": "لا اجتهاد بلا مرجع",
+      "vo": [
+        "كل جملة، تعود إلى صفحتها."
+      ]
+    },
+    {
+      "id": "b03-stat",
+      "kind": "stat",
+      "bars": 4,
+      "tone": "ink",
+      "kicker": "الثقة",
+      "line1": "مرجع لكل فكرة",
+      "line2": "",
+      "stat": {
+        "from": 0,
+        "to": 1,
+        "suffix": "",
+        "label": "صفحة لكل اقتباس"
+      },
+      "vo": [
+        "صفحة، لكل اقتباس."
+      ]
+    },
+    {
+      "id": "b04-device",
+      "kind": "device",
+      "bars": 6,
+      "tone": "paper",
+      "kicker": "القراءة",
+      "line1": "نص عربي مريح للعين",
+      "line2": "تشكيل كامل، وتباعد صحيح",
+      "vo": [
+        "نص عربي، مريح للعين."
+      ]
+    },
+    {
+      "id": "b05-cta",
+      "kind": "cta",
+      "bars": 5,
+      "tone": "emerald",
+      "kicker": "",
+      "line1": "اقرأ بثقة",
+      "line2": "t.me/example",
+      "vo": [
+        "اقرأ بثقة، من الرابط في الوصف."
+      ]
+    }
+  ]
+}

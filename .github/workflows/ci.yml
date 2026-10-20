@@ -28,6 +28,10 @@ jobs:
         run: python scripts/qa.py --arabic-only
       - name: corpus gate (references are pinned, not remembered)
         run: python scripts/corpus.py check --min 3
+      - name: design review has no MUST findings
+        run: python scripts/advise.py --strict
+      - name: golden briefs compile and score above the floor
+        run: python evals/run_evals.py --min-score 90
       - name: ui source scanner runs
         run: python scripts/ui_source.py --rea
 

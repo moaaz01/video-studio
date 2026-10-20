@@ -232,6 +232,7 @@ DELEGATES = {
     "advise": "advise.py",
     "storyboard": "storyboard.py",
     "looks": "looks.py",
+    "eval": "../evals/run_evals.py",
 }
 
 

@@ -2,6 +2,21 @@
 
 The campaign: everything on `docs/ROADMAP-v2.md`, built and measured step by step.
 
+### P0-2 — the score floor and golden briefs (done)
+
+- `advise.py --min-score N` fails the build below a score; CI now runs
+  `advise.py --strict` on the shipped film (no MUST) and
+  `evals/run_evals.py --min-score 90` on three golden briefs.
+- `evals/briefs/`: device film, launch/kinetic, Arabic editorial. Each must satisfy
+  the schema, compile through `make_timeline.py --strict`, and score at or above
+  the floor. Current scores: 100, 100, 95 (the 95 is the emerald end card's
+  large-text-only contrast, caught on purpose).
+- Writing the evals found a real bug: the advisor's bar-to-frame arithmetic was
+  wrong (it implied 2 frames per bar instead of 60), so any film that declared
+  `frames` failed a check it should have passed. Fixed, and the demo film is
+  unaffected because it declares no `frames`.
+- `studio.py eval` runs the harness.
+
 ### P0-1 — 180-degree shutter (done)
 
 - `look.motionBlur` is now part of the look: 3 samples for `cinema-warm` and

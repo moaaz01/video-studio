@@ -181,7 +181,8 @@ def advise(film_path: pathlib.Path) -> dict:
         add("MUST", "-", "unknown look", f"'{look}' is not in src/look/looks.ts ({', '.join(known)})")
 
     # 7. the arithmetic of the timeline must be exact
-    frames = int(sum(float(b.get("bars", 0)) for b in beats) * 60 * 240 / film.get("bpm", 120) / 60) if beats else 0
+    # one bar = 240/bpm seconds, so frames per bar = (240/bpm) * fps
+    frames = round(sum(float(b.get("bars", 0)) for b in beats) * (240.0 / float(film.get("bpm", 120))) * float(fps)) if beats else 0
     declared = int(film.get("frames", 0))
     if frames and declared and frames != declared:
         add("MUST", "-", "frame count disagrees with the beat grid", f"bars imply {frames} frames, film declares {declared}")
@@ -206,6 +207,7 @@ def main() -> None:
     ap.add_argument("film", nargs="?", default="film/film.json")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--strict", action="store_true", help="exit 1 when a MUST fails")
+    ap.add_argument("--min-score", type=int, default=None, help="exit 1 below this score (CI floor)")
     args = ap.parse_args()
 
     path = pathlib.Path(args.film)
@@ -223,6 +225,8 @@ def main() -> None:
         for f in report["findings"]:
             print(f"[{f['level']:6s}] {f['beat']:>10s}  {f['title']}")
             print(f"            {f['detail']}")
+    if args.min_score is not None and report["score"] < args.min_score:
+        sys.exit(f"score {report['score']} is below the floor {args.min_score}")
     if args.strict and report["counts"]["MUST"]:
         sys.exit(1)
 

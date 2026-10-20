@@ -26,6 +26,7 @@ python scripts/studio.py qa --stills 8 # gates + contact sheets, non-zero on fai
 python scripts/studio.py advise        # measured design review before you render
 python scripts/studio.py storyboard    # out/storyboard/sheet.png: real panels, real Arabic
 python scripts/studio.py looks         # one frame in every look: let the client choose
+python scripts/studio.py eval          # golden briefs: schema + compile + score floor
 ```
 
 ## How to make a new film
