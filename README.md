@@ -87,6 +87,7 @@ src/lib/                animation + RTL/bidi helpers
 src/scenes/             Hook · Device · Stat · Cta  (the four beats every film needs)
 src/film/Film.tsx       timeline-driven assembler, one film → 16:9 and 9:16
 film/film.json          the film's whole structure: beats, bars, copy, VO lines
+film/README.md          how to write a beat; why the demo master is silent by design
 scripts/                studio.py · make_timeline.py · voice.py · make_score.py · qa.py
 public/fonts            Tajawal (UI) · Amiri + Noto Naskh (print-native) — OFL
 public/audio/sfx        42 one-shots, foley table in the audio reference
