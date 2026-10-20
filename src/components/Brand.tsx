@@ -232,7 +232,7 @@ export const ContactChip: React.FC<{contact: Contact; delay?: number; width?: nu
           {contact.label}
         </span>
         <span
-          dir={contact.kind === 'web' || contact.value.includes('@') || /[a-zA-Z]/.test(contact.value) ? 'ltr' : 'rtl'}
+          dir={/[\u0600-\u06FF]/.test(contact.value) ? 'rtl' : 'ltr'}
           style={{
             fontFamily: FONT.tajawal,
             fontWeight: 700,
