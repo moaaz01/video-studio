@@ -53,6 +53,16 @@ regenerate from the same compiled timeline as the picture.
   (`start + measured + 0.25 s`) instead of the whole beat: the last cue moved
   from 41.8 s to 37.6 s, so the text leaves the screen with the speech.
 
+### The final loudness is a mastering decision, not a re-render
+
+- `scripts/master_audio.py` does one gain stage over the delivered masters:
+  it measures peak/RMS with the same probes `qa.py` trusts, re-encodes the audio
+  stream only (`-c:v copy`, AAC 192k, faststart) and refuses the result if it
+  clips, overshoots the target by more than 0.5 dB, or changes the duration.
+- Measured on the vertical master: peak **-5.63 → -1.51 dBFS**, RMS
+  **-24.46 → -20.35 dBFS**, 0 clipped samples, video bit-identical (stream copy).
+- Wired as `studio.py master [files...] --target -1.5`.
+
 ## 2.0.0 — 2026-10-20
 
 The campaign: everything on `docs/ROADMAP-v2.md`, built and measured step by step.

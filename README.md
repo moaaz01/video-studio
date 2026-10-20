@@ -177,6 +177,7 @@ python scripts/studio.py shotlist film/brief.md --out film/plan.json   # brief -
 python scripts/studio.py provenance --strict # every declared capture matches its hash
 python scripts/mcp_server.py                 # the studio as MCP tools (stdio, no SDK)
 python scripts/studio.py render 16x9 9x16    # masters
+python scripts/studio.py master             # one audio gain stage; video stream copied
 python scripts/studio.py qa --stills 8 --require-audio   # gates, contact sheets, and a silence check
 npm run dev                                  # Remotion Studio, live preview
 ```
@@ -279,6 +280,21 @@ python scripts/studio.py qa --require-audio     # fail a silent master
 It is mounted once at the film root, next to the grade and captions, so every
 composition — wide, vertical, 4:5, square — carries the same mix. The control
 render (`--frames=0-90`) reports `acodec: aac, arate: 48000, ach: 2`.
+
+Final loudness is a separate, measured pass — the picture is never re-rendered
+to change the mix:
+
+```powershell
+python scripts/studio.py master                 # every master in out/
+python scripts/studio.py master out/film_9x16.mp4 --target -1.5
+```
+
+`master_audio.py` measures peak/RMS with the same probes the QA gate uses,
+re-encodes the audio stream only (`-c:v copy`, AAC 192k, faststart), and rejects
+its own output if it clips, overshoots the target by more than 0.5 dB or changes
+the duration. Measured on the vertical master: peak -5.63 → **-1.51 dBFS**, RMS
+-24.46 → **-20.35 dBFS**, 0 clipped. Picture frames are bit-identical because the
+video stream is copied, not encoded.
 
 ## Every aspect is a layout, not a crop
 

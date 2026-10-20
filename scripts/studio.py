@@ -239,6 +239,7 @@ DELEGATES = {
     "captions": "captions.py",
     "provenance": "provenance.py",
     "bed": "make_bed.py",
+    "master": "master_audio.py",
 }
 
 
@@ -276,6 +277,10 @@ def main() -> None:
     r.add_argument("aspects", nargs="*", default=["16x9", "9x16"])
     r.add_argument("--crf", type=int, default=15)
     r.add_argument("--concurrency", default=None)
+
+    m = sub.add_parser("master", help="one audio gain stage over the masters, video untouched")
+    m.add_argument("files", nargs="*", default=[])
+    m.add_argument("--target", type=float, default=-1.5)
 
     q = sub.add_parser("qa")
     q.add_argument("--stills", type=int, default=0)

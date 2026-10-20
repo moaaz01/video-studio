@@ -40,7 +40,7 @@ open gate — a late discovery re-renders the whole film.
 | 5 | Build | `film/ui-source.json` scanned from the real app, scenes in `src/scenes/`, assembled by `src/film/Film.tsx` | typecheck clean, still per beat rendered, every on-screen string exists in the app's own table |
 | 6 | Mix | bed composed from the timeline by `scripts/make_bed.py`, VO placed from `vo.json`, foley on the 120 BPM cuts by `src/audio/Soundtrack.tsx` | bed RMS ≈ −19 dBFS, peak ≤ −3 dBFS, 0 clipped samples, and `qa --require-audio` sees an AAC track |
 | 7 | QA | `out/qa/` sheet + gates from `references/qa-gates.md` | every gate green, nothing read only from logs |
-| 8 | Deliver | masters in `out/`, the QA sheet, thumbnail/cover stills, and a case note in `examples/<slug>/` | names, durations, sizes and hashes read from the delivered files; the hand-off list matches what the user can actually open |
+| 8 | Deliver | mastered `out/film_*.mp4`, the QA sheet, thumbnail/cover stills, and a case note in `examples/<slug>/` | names, durations, sizes and hashes read from the delivered files; the hand-off list matches what the user can actually open |
 
 The look belongs to phase 5, before the first render: `film.look` names one preset
 from [`references/cinematic-look.md`](references/cinematic-look.md), and

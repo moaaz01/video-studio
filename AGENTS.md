@@ -86,6 +86,7 @@ the client annotates, the review is what you fix. Guide:
 | `src/components/DemoUI.tsx` | The mock product screen. Replace with the real UI. |
 | `src/audio/Soundtrack.tsx` | The mix: bed, measured VO cues, foley on the cuts. Mounted once in `Film.tsx`. |
 | `scripts/make_bed.py` | Composes the bed from `timeline.json`; asserts RMS/peak. |
+| `scripts/master_audio.py` | One audio gain stage over the masters; video stream copied, result re-measured. |
 | `scripts/` | Orchestrator + timeline compiler + Fish bridge + bed composer + QA. |
 | `scripts/ui_source.py` | Reads an app project (screens/strings/tokens) + REA capture bridge. |
 | `scripts/corpus.py` | whatships + prompt-motion queries, card pinning, corpus gate. |
