@@ -44,12 +44,16 @@ def doctor() -> int:
     print(f"python      {v.major}.{v.minor}.{v.micro}  {'ok' if v >= (3, 10) else 'NEEDS 3.10+'}")
     ok &= v >= (3, 10)
 
-    for mod in ("numpy", "PIL"):
+    for mod, hint in (
+        ("numpy", "the score engine and every measurement"),
+        ("scipy", "make_score.py: the bed's filter design"),
+        ("PIL", "qa.py: contact sheets and crops"),
+    ):
         try:
-            __import__(mod)
-            print(f"{mod:11s} present")
+            m = __import__(mod)
+            print(f"{mod:11s} {getattr(m, '__version__', 'present'):11s} {hint}")
         except ImportError:
-            print(f"{mod:11s} MISSING — pip install numpy pillow")
+            print(f"{mod:11s} MISSING — pip install -r requirements.txt  ({hint})")
             ok = False
 
     npx = node_bin("npx") or shutil.which("npx")

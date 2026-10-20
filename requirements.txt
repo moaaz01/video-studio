@@ -1,0 +1,5 @@
+# video-studio python deps (python 3.10+)
+# node 18+ and ffmpeg are separate; ffmpeg ships with Remotion.
+numpy>=1.24
+scipy>=1.10      # make_score.py: filter design for the 120 BPM bed
+pillow>=9.5      # qa.py: contact sheets and 1:1 crops

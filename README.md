@@ -28,6 +28,7 @@ It is not a template with placeholders. It is a small studio with an opinion:
 ```powershell
 cd video-studio
 npm install
+pip install -r requirements.txt   # numpy · scipy · pillow
 .\install.ps1                 # يربط المهارة بكل وكلاء الذكاء الاصطناعي على الجهاز
 python scripts/studio.py doctor
 python scripts/studio.py render    # يخرج الفيلم التجريبي 16:9 و 9:16
@@ -51,11 +52,17 @@ the environment it needs. Link it where your agent looks for skills:
 | **OpenClaw** (and anything else on the Agent Skills standard) | `~/.agents/skills/video-studio/SKILL.md` | `.\install.ps1 -Targets agents` |
 | **Hermes Agent** | `~/.hermes/skills/video-studio/SKILL.md` | `.\install.ps1 -Targets hermes` |
 
-`./install.sh` does the same on macOS/Linux. Links are junctions/symlinks, so
+Python deps are declared in [`requirements.txt`](requirements.txt) (numpy, scipy, pillow);
+`studio.py doctor` names any that are missing. `./install.sh` does the same on macOS/Linux. Links are junctions/symlinks, so
 editing this folder updates the skill everywhere with no copy step.
 
 If your agent has no skill loader, point it at [`AGENTS.md`](AGENTS.md) — it is
 the same protocol written as a plain instruction file.
+
+The repo intentionally sets `"private": true` in `package.json`: it is a skill +
+a Remotion project, distributed by clone/link, not by `npm publish`. That flag is
+what stops an accidental publish of the film's build. Remove it only if you ever
+decide to ship the engine as a package.
 
 ---
 

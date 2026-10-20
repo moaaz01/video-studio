@@ -26,7 +26,7 @@ own QA never ships.
 
 Not for: editing third-party footage, live-action, or audio-only podcasts.
 
-## The seven phases
+## The eight phases
 
 Run them in order. Each phase has an exit gate; do not enter the next phase with an
 open gate — a late discovery re-renders the whole film.
@@ -40,6 +40,7 @@ open gate — a late discovery re-renders the whole film.
 | 5 | Build | `film/ui-source.json` scanned from the real app, scenes in `src/scenes/`, assembled by `src/film/Film.tsx` | typecheck clean, still per beat rendered, every on-screen string exists in the app's own table |
 | 6 | Mix | score from `scripts/make_score.py`, SFX on the 120 BPM grid | peak ≤ −1.4 dBFS, no clipped sample |
 | 7 | QA | `out/qa/` sheet + gates from `references/qa-gates.md` | every gate green, nothing read only from logs |
+| 8 | Deliver | masters in `out/`, the QA sheet, thumbnail/cover stills, and a case note in `examples/<slug>/` | names, durations, sizes and hashes read from the delivered files; the hand-off list matches what the user can actually open |
 
 ## The command surface
 
