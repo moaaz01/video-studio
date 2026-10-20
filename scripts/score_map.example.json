@@ -1,0 +1,2926 @@
+{
+  "$description": "Musical score map for the StudyAI promo film - TECH EDIT. Same engine as script/score_map_cinematic_v1.json but re-arranged as modern electronic/tech: four-on-the-floor kick, offbeat open hats, 16th pluck arp, driving saw bass, no piano/strings. Full energy from bar 1, drops landing on the picture cuts, one modern breakdown before the CTA. Every bar sits on the 120 BPM grid (1 bar = 2.0 s).",
+  "meta": {
+    "title": "StudyAI - From Page to Understanding (tech edit)",
+    "composer": "procedural (numpy/scipy additive + VA synthesis; no samples)",
+    "bpm": 120.0,
+    "beats_per_bar": 4,
+    "beat_seconds": 0.5,
+    "bar_seconds": 2.0,
+    "bars": 59,
+    "duration_seconds": 118.0,
+    "sample_rate": 48000,
+    "channels": 2,
+    "bit_depth": 24,
+    "peak_ceiling_dbfs": -3.0,
+    "fade_in_seconds": 0.01,
+    "fade_out_seconds": 1.4,
+    "fade_out_end": 117.6,
+    "tail_silence_until": 118.0,
+    "reverb": {
+      "ir_seconds": 1.5,
+      "predelay_ms": 18,
+      "decay": 3.9,
+      "tilt_hz": 4200,
+      "lowpass_hz": 8200,
+      "send": {
+        "drums": 0.055,
+        "bass": 0.02,
+        "harmony": 0.19,
+        "lead": 0.24,
+        "fx": 0.165
+      }
+    },
+    "lead_delay": {
+      "time_seconds": 0.375,
+      "feedback": 0.22,
+      "wet": 0.15,
+      "lowpass_hz": 3600,
+      "pingpong": true
+    }
+  },
+  "key": {
+    "start": "D minor",
+    "end": "D major",
+    "scale_minor": [
+      "D",
+      "E",
+      "F",
+      "G",
+      "A",
+      "Bb",
+      "C"
+    ],
+    "temperament": "equal (A4 = 440 Hz)",
+    "note": "Pedal D minor with bVI/bVII motion; the last three bars resolve to D major as the single optimism point."
+  },
+  "chord_library": {
+    "Dm": {
+      "roman": "i",
+      "bass": 38,
+      "pad": [
+        50,
+        53,
+        57,
+        62
+      ],
+      "pad_hi": [
+        50,
+        57,
+        62,
+        65,
+        69
+      ],
+      "arp": [
+        62,
+        65,
+        69,
+        74,
+        77,
+        81
+      ],
+      "bell": 81
+    },
+    "Bb": {
+      "roman": "bVI",
+      "bass": 34,
+      "pad": [
+        53,
+        58,
+        62,
+        65
+      ],
+      "pad_hi": [
+        46,
+        58,
+        62,
+        65,
+        70
+      ],
+      "arp": [
+        62,
+        65,
+        70,
+        74,
+        77,
+        82
+      ],
+      "bell": 82
+    },
+    "F": {
+      "roman": "bIII",
+      "bass": 41,
+      "pad": [
+        53,
+        57,
+        60,
+        65
+      ],
+      "pad_hi": [
+        41,
+        57,
+        60,
+        65,
+        69
+      ],
+      "arp": [
+        65,
+        69,
+        72,
+        77,
+        81
+      ],
+      "bell": 84
+    },
+    "C": {
+      "roman": "bVII",
+      "bass": 36,
+      "pad": [
+        55,
+        60,
+        64,
+        67
+      ],
+      "pad_hi": [
+        48,
+        55,
+        60,
+        64,
+        67
+      ],
+      "arp": [
+        64,
+        67,
+        72,
+        76,
+        79
+      ],
+      "bell": 86
+    },
+    "A": {
+      "roman": "V",
+      "bass": 33,
+      "pad": [
+        57,
+        61,
+        64,
+        69
+      ],
+      "pad_hi": [
+        45,
+        57,
+        61,
+        64,
+        69
+      ],
+      "arp": [
+        61,
+        64,
+        69,
+        73,
+        76,
+        81
+      ],
+      "bell": 85
+    },
+    "A7": {
+      "roman": "V7",
+      "bass": 33,
+      "pad": [
+        57,
+        61,
+        64,
+        67
+      ],
+      "pad_hi": [
+        45,
+        57,
+        61,
+        64,
+        67
+      ],
+      "arp": [
+        61,
+        64,
+        67,
+        69,
+        76,
+        79
+      ],
+      "bell": 88
+    },
+    "D": {
+      "roman": "I (major)",
+      "bass": 38,
+      "pad": [
+        50,
+        54,
+        57,
+        62
+      ],
+      "pad_hi": [
+        50,
+        54,
+        57,
+        62,
+        66,
+        69
+      ],
+      "arp": [
+        62,
+        66,
+        69,
+        74,
+        78,
+        81
+      ],
+      "bell": 86
+    }
+  },
+  "chord_plan": [
+    "Dm",
+    "Dm",
+    "Bb",
+    "Dm",
+    "Bb",
+    "C",
+    "Dm",
+    "Bb",
+    "F",
+    "C",
+    "Dm",
+    "Bb",
+    "F",
+    "C",
+    "Dm",
+    "Bb",
+    "F",
+    "C",
+    "Dm",
+    "Bb",
+    "F",
+    "C",
+    "Dm",
+    "Bb",
+    "F",
+    "C",
+    "Dm",
+    "Bb",
+    "F",
+    "C",
+    "A",
+    "Dm",
+    "Bb",
+    "F",
+    "C",
+    "Dm",
+    "Bb",
+    "F",
+    "C",
+    "Dm",
+    "Bb",
+    "F",
+    "C",
+    "Dm",
+    "Bb",
+    "F",
+    "C",
+    "Dm",
+    "Bb",
+    "F",
+    "Dm",
+    "Bb",
+    "F",
+    "A",
+    "A",
+    "A7",
+    "D",
+    "D",
+    "D"
+  ],
+  "instruments": {
+    "bass": {
+      "bus": "bass",
+      "gain": 0.225,
+      "t60": 0.34,
+      "attack": 0.004,
+      "drive": 0.88,
+      "lp_hz": 560,
+      "sub_oct": 0.3,
+      "harm2": 0.26,
+      "harm3": 0.09,
+      "glide_seconds": 0.03
+    },
+    "sub": {
+      "bus": "bass",
+      "gain": 0.252,
+      "t60": 0.26,
+      "attack": 0.005,
+      "drive": 0.45,
+      "lp_hz": 150,
+      "sub_oct": 0.5,
+      "harm2": 0.12,
+      "harm3": 0.03,
+      "glide_seconds": 0.0
+    },
+    "kick": {
+      "bus": "drums",
+      "gain": 0.52,
+      "f_start": 152.0,
+      "f_end": 46.0,
+      "pitch_seconds": 0.062,
+      "t60": 0.245,
+      "click": 0.215,
+      "click_hz": 3300
+    },
+    "clap": {
+      "bus": "drums",
+      "gain": 0.175,
+      "body_hz": 195.0
+    },
+    "hat": {
+      "bus": "drums",
+      "gain": 0.062
+    },
+    "openhat": {
+      "bus": "drums",
+      "gain": 0.05
+    },
+    "snare": {
+      "bus": "drums",
+      "gain": 0.13
+    },
+    "pad": {
+      "bus": "harmony",
+      "gain": 0.07,
+      "sample_seconds": 2.6,
+      "release": 0.45,
+      "detune_cents": [
+        -9.0,
+        8.0
+      ],
+      "harmonics": 16,
+      "rolloff": 1.1,
+      "inharmonic": 0.0001,
+      "t60_div": 0.09
+    },
+    "strings": {
+      "bus": "harmony",
+      "gain": 0.05,
+      "release": 0.48,
+      "detune_cents": [
+        -9.0,
+        7.0
+      ],
+      "harmonics": 9,
+      "rolloff": 1.14,
+      "inharmonic": 0.00018,
+      "t60_div": 0.07,
+      "vibrato": 0.0026,
+      "vibrato_hz": 4.7
+    },
+    "arp": {
+      "bus": "lead",
+      "gain": 0.108,
+      "t60": 0.3,
+      "attack": 0.0035,
+      "harmonics": 12,
+      "rolloff": 1.08,
+      "inharmonic": 0.00014,
+      "t60_div": 0.62,
+      "pan_spread": 0.34
+    },
+    "piano": {
+      "bus": "lead",
+      "gain": 0.17,
+      "t60": 2.0,
+      "attack": 0.006,
+      "harmonics": 11,
+      "rolloff": 1.3,
+      "inharmonic": 0.00012,
+      "t60_div": 0.62
+    },
+    "lead": {
+      "bus": "lead",
+      "gain": 0.12,
+      "t60": 0.62,
+      "attack": 0.004,
+      "harmonics": 13,
+      "rolloff": 1.02,
+      "inharmonic": 8e-05,
+      "t60_div": 0.58,
+      "pan_spread": 0.14
+    },
+    "bell": {
+      "bus": "lead",
+      "gain": 0.046,
+      "t60": 2.1,
+      "attack": 0.003,
+      "partial_ratios": [
+        1.0,
+        2.76,
+        5.4,
+        8.93,
+        13.32
+      ],
+      "partial_amps": [
+        1.0,
+        0.52,
+        0.28,
+        0.15,
+        0.07
+      ],
+      "t60_div": 0.85
+    },
+    "roomtone": {
+      "bus": "fx",
+      "gain": 0.011
+    },
+    "riser": {
+      "bus": "fx",
+      "gain": 0.175
+    },
+    "subdrop": {
+      "bus": "fx",
+      "gain": 0.36
+    },
+    "impact": {
+      "bus": "fx",
+      "gain": 0.225
+    },
+    "swell": {
+      "bus": "fx",
+      "gain": 0.085
+    },
+    "reverse": {
+      "bus": "fx",
+      "gain": 0.09
+    },
+    "tension": {
+      "bus": "fx",
+      "gain": 0.065
+    },
+    "downlifter": {
+      "bus": "fx",
+      "gain": 0.07
+    }
+  },
+  "patterns": {
+    "sub_q": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          0.9
+        ],
+        [
+          4,
+          0.62
+        ],
+        [
+          8,
+          0.78
+        ],
+        [
+          12,
+          0.58
+        ]
+      ]
+    },
+    "sub_tech": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          0.88
+        ],
+        [
+          2,
+          0.52
+        ],
+        [
+          4,
+          0.78
+        ],
+        [
+          6,
+          0.52
+        ],
+        [
+          8,
+          0.84
+        ],
+        [
+          10,
+          0.52
+        ],
+        [
+          12,
+          0.78
+        ],
+        [
+          14,
+          0.58
+        ]
+      ]
+    },
+    "sub_drop": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          0.72
+        ],
+        [
+          8,
+          0.55
+        ]
+      ]
+    },
+    "sub_8": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          0.85
+        ],
+        [
+          2,
+          0.5
+        ],
+        [
+          4,
+          0.72
+        ],
+        [
+          6,
+          0.5
+        ],
+        [
+          8,
+          0.8
+        ],
+        [
+          10,
+          0.5
+        ],
+        [
+          12,
+          0.74
+        ],
+        [
+          14,
+          0.52
+        ]
+      ]
+    },
+    "sub_16": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          0.85
+        ],
+        [
+          1,
+          0.42
+        ],
+        [
+          2,
+          0.58
+        ],
+        [
+          3,
+          0.44
+        ],
+        [
+          4,
+          0.76
+        ],
+        [
+          5,
+          0.44
+        ],
+        [
+          6,
+          0.6
+        ],
+        [
+          7,
+          0.46
+        ],
+        [
+          8,
+          0.82
+        ],
+        [
+          9,
+          0.46
+        ],
+        [
+          10,
+          0.64
+        ],
+        [
+          11,
+          0.48
+        ],
+        [
+          12,
+          0.8
+        ],
+        [
+          13,
+          0.52
+        ],
+        [
+          14,
+          0.7
+        ],
+        [
+          15,
+          0.58
+        ]
+      ]
+    },
+    "bass_off": {
+      "type": "bass",
+      "hits": [
+        [
+          2,
+          0,
+          0.9
+        ],
+        [
+          6,
+          0,
+          0.92
+        ],
+        [
+          10,
+          0,
+          0.88
+        ],
+        [
+          14,
+          0,
+          0.94
+        ]
+      ]
+    },
+    "bass_off_b": {
+      "type": "bass",
+      "hits": [
+        [
+          2,
+          0,
+          0.92
+        ],
+        [
+          4,
+          12,
+          0.44
+        ],
+        [
+          6,
+          0,
+          0.9
+        ],
+        [
+          10,
+          0,
+          0.92
+        ],
+        [
+          12,
+          12,
+          0.46
+        ],
+        [
+          14,
+          0,
+          0.88
+        ]
+      ]
+    },
+    "bass_drive": {
+      "type": "bass",
+      "hits": [
+        [
+          2,
+          0,
+          0.92
+        ],
+        [
+          6,
+          0,
+          0.86
+        ],
+        [
+          10,
+          0,
+          0.92
+        ],
+        [
+          12,
+          12,
+          0.52
+        ],
+        [
+          14,
+          0,
+          0.88
+        ]
+      ]
+    },
+    "bass_push": {
+      "type": "bass",
+      "hits": [
+        [
+          0,
+          0,
+          1.0
+        ],
+        [
+          2,
+          0,
+          0.8
+        ],
+        [
+          4,
+          12,
+          0.5
+        ],
+        [
+          6,
+          0,
+          0.84
+        ],
+        [
+          8,
+          0,
+          0.96
+        ],
+        [
+          10,
+          0,
+          0.8
+        ],
+        [
+          12,
+          12,
+          0.54
+        ],
+        [
+          14,
+          0,
+          0.86
+        ]
+      ]
+    },
+    "bass_a": {
+      "type": "bass",
+      "hits": [
+        [
+          0,
+          0,
+          1.0
+        ],
+        [
+          4,
+          0,
+          0.78
+        ],
+        [
+          8,
+          0,
+          0.92
+        ],
+        [
+          12,
+          12,
+          0.6
+        ]
+      ]
+    },
+    "bass_build": {
+      "type": "bass",
+      "hits": [
+        [
+          0,
+          0,
+          1.0
+        ],
+        [
+          4,
+          0,
+          0.82
+        ],
+        [
+          8,
+          0,
+          0.92
+        ],
+        [
+          12,
+          0,
+          0.88
+        ]
+      ]
+    },
+    "bass_res": {
+      "type": "bass",
+      "hits": [
+        [
+          0,
+          0,
+          1.0
+        ]
+      ]
+    },
+    "kick_4a": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          1.0
+        ],
+        [
+          4,
+          0.94
+        ],
+        [
+          8,
+          0.98
+        ],
+        [
+          12,
+          0.96
+        ]
+      ]
+    },
+    "kick_4b": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          1.0
+        ],
+        [
+          4,
+          0.95
+        ],
+        [
+          8,
+          0.99
+        ],
+        [
+          12,
+          0.97
+        ],
+        [
+          15,
+          0.34
+        ]
+      ]
+    },
+    "kick_4pick": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          1.0
+        ],
+        [
+          4,
+          0.95
+        ],
+        [
+          8,
+          0.99
+        ],
+        [
+          12,
+          0.97
+        ],
+        [
+          14,
+          0.44
+        ],
+        [
+          15,
+          0.4
+        ]
+      ]
+    },
+    "kick_half": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          1.0
+        ],
+        [
+          8,
+          0.9
+        ]
+      ]
+    },
+    "kick_res": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          1.0
+        ]
+      ]
+    },
+    "clap_24": {
+      "type": "hits",
+      "hits": [
+        [
+          4,
+          0.74
+        ],
+        [
+          12,
+          0.82
+        ]
+      ]
+    },
+    "clap_24b": {
+      "type": "hits",
+      "hits": [
+        [
+          4,
+          0.76
+        ],
+        [
+          12,
+          0.84
+        ],
+        [
+          15,
+          0.3
+        ]
+      ]
+    },
+    "hat_16a": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          0.3
+        ],
+        [
+          1,
+          0.16
+        ],
+        [
+          2,
+          0.56
+        ],
+        [
+          3,
+          0.17
+        ],
+        [
+          4,
+          0.24
+        ],
+        [
+          5,
+          0.16
+        ],
+        [
+          6,
+          0.58
+        ],
+        [
+          7,
+          0.18
+        ],
+        [
+          8,
+          0.26
+        ],
+        [
+          9,
+          0.16
+        ],
+        [
+          10,
+          0.56
+        ],
+        [
+          11,
+          0.17
+        ],
+        [
+          12,
+          0.24
+        ],
+        [
+          13,
+          0.18
+        ],
+        [
+          14,
+          0.62
+        ],
+        [
+          15,
+          0.2
+        ]
+      ]
+    },
+    "hat_16b": {
+      "type": "hits",
+      "hits": [
+        [
+          0,
+          0.32
+        ],
+        [
+          1,
+          0.18
+        ],
+        [
+          2,
+          0.6
+        ],
+        [
+          3,
+          0.19
+        ],
+        [
+          4,
+          0.26
+        ],
+        [
+          5,
+          0.18
+        ],
+        [
+          6,
+          0.62
+        ],
+        [
+          7,
+          0.2
+        ],
+        [
+          8,
+          0.28
+        ],
+        [
+          9,
+          0.18
+        ],
+        [
+          10,
+          0.6
+        ],
+        [
+          11,
+          0.19
+        ],
+        [
+          12,
+          0.26
+        ],
+        [
+          13,
+          0.2
+        ],
+        [
+          14,
+          0.66
+        ],
+        [
+          15,
+          0.22
+        ]
+      ]
+    },
+    "ohat_off": {
+      "type": "hits",
+      "hits": [
+        [
+          2,
+          0.34
+        ],
+        [
+          6,
+          0.38
+        ],
+        [
+          10,
+          0.34
+        ],
+        [
+          14,
+          0.42
+        ]
+      ]
+    },
+    "ohat_off_b": {
+      "type": "hits",
+      "hits": [
+        [
+          2,
+          0.3
+        ],
+        [
+          6,
+          0.36
+        ],
+        [
+          10,
+          0.32
+        ],
+        [
+          14,
+          0.44
+        ],
+        [
+          15,
+          0.24
+        ]
+      ]
+    },
+    "roll_8": {
+      "type": "roll",
+      "steps": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14
+      ],
+      "v0": 0.18,
+      "v1": 0.56
+    },
+    "roll_16": {
+      "type": "roll",
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "v0": 0.28,
+      "v1": 0.8
+    },
+    "roll_32": {
+      "type": "roll",
+      "steps": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        3.5,
+        4,
+        4.5,
+        5,
+        5.5,
+        6,
+        6.5,
+        7,
+        7.5,
+        8,
+        8.5,
+        9,
+        9.5,
+        10,
+        10.5,
+        11,
+        11.5,
+        12,
+        12.5,
+        13,
+        13.5,
+        14,
+        14.5,
+        15,
+        15.5
+      ],
+      "v0": 0.4,
+      "v1": 1.0
+    },
+    "arp_16a": {
+      "type": "arp",
+      "hits": [
+        [
+          0,
+          0,
+          0.95
+        ],
+        [
+          1,
+          2,
+          0.48
+        ],
+        [
+          2,
+          1,
+          0.72
+        ],
+        [
+          3,
+          3,
+          0.5
+        ],
+        [
+          4,
+          2,
+          0.86
+        ],
+        [
+          6,
+          1,
+          0.72
+        ],
+        [
+          7,
+          4,
+          0.5
+        ],
+        [
+          8,
+          3,
+          0.9
+        ],
+        [
+          9,
+          1,
+          0.48
+        ],
+        [
+          10,
+          4,
+          0.74
+        ],
+        [
+          12,
+          2,
+          0.86
+        ],
+        [
+          14,
+          3,
+          0.78
+        ],
+        [
+          15,
+          5,
+          0.52
+        ]
+      ]
+    },
+    "arp_16b": {
+      "type": "arp",
+      "hits": [
+        [
+          0,
+          0,
+          0.98
+        ],
+        [
+          1,
+          1,
+          0.52
+        ],
+        [
+          2,
+          2,
+          0.76
+        ],
+        [
+          3,
+          3,
+          0.54
+        ],
+        [
+          4,
+          4,
+          0.88
+        ],
+        [
+          5,
+          5,
+          0.54
+        ],
+        [
+          6,
+          2,
+          0.78
+        ],
+        [
+          7,
+          1,
+          0.52
+        ],
+        [
+          8,
+          3,
+          0.94
+        ],
+        [
+          9,
+          4,
+          0.54
+        ],
+        [
+          10,
+          5,
+          0.8
+        ],
+        [
+          12,
+          2,
+          0.86
+        ],
+        [
+          13,
+          4,
+          0.56
+        ],
+        [
+          14,
+          3,
+          0.84
+        ],
+        [
+          15,
+          5,
+          0.58
+        ]
+      ]
+    },
+    "arp_off": {
+      "type": "arp",
+      "hits": [
+        [
+          2,
+          0,
+          0.82
+        ],
+        [
+          6,
+          2,
+          0.72
+        ],
+        [
+          10,
+          1,
+          0.82
+        ],
+        [
+          14,
+          3,
+          0.78
+        ]
+      ]
+    },
+    "arp_drop": {
+      "type": "arp",
+      "hits": [
+        [
+          0,
+          0,
+          0.92
+        ],
+        [
+          4,
+          2,
+          0.7
+        ],
+        [
+          8,
+          1,
+          0.86
+        ],
+        [
+          12,
+          3,
+          0.74
+        ]
+      ]
+    },
+    "arp_c": {
+      "type": "arp",
+      "hits": [
+        [
+          0,
+          0,
+          1.0
+        ],
+        [
+          2,
+          2,
+          0.68
+        ],
+        [
+          4,
+          1,
+          0.76
+        ],
+        [
+          6,
+          3,
+          0.76
+        ],
+        [
+          8,
+          4,
+          0.88
+        ],
+        [
+          10,
+          2,
+          0.7
+        ],
+        [
+          12,
+          3,
+          0.76
+        ],
+        [
+          14,
+          5,
+          0.8
+        ]
+      ]
+    },
+    "arp_res": {
+      "type": "arp",
+      "hits": [
+        [
+          0,
+          0,
+          0.8
+        ],
+        [
+          4,
+          2,
+          0.58
+        ],
+        [
+          8,
+          1,
+          0.7
+        ],
+        [
+          12,
+          3,
+          0.5
+        ]
+      ]
+    }
+  },
+  "sections": [
+    {
+      "id": "hook_hit",
+      "group": "intro_pulse",
+      "from_bar": 1,
+      "to_bar": 2,
+      "picture": "HOOK - the page stack, the deadline",
+      "picture_ar": "350 صفحة والامتحان بعد أسبوع",
+      "intent": "No intro. Impact + four-on-the-floor + offbeat bass + 16th arp straight away.",
+      "energy_target_dbfs": -18.0,
+      "layers": {
+        "pad": {
+          "voicing": "pad",
+          "level": 0.74,
+          "attack": 0.04
+        },
+        "kick": {
+          "pattern": "kick_4a",
+          "level": 1.0
+        },
+        "bass": {
+          "pattern": "bass_off",
+          "level": 1.0
+        },
+        "sub": {
+          "pattern": "sub_tech",
+          "level": 0.55
+        },
+        "arp": {
+          "pattern": "arp_16a",
+          "level": 0.92
+        },
+        "hat": {
+          "pattern": "hat_16a",
+          "level": 0.82
+        }
+      }
+    },
+    {
+      "id": "pre_drop",
+      "group": "silence_hold",
+      "from_bar": 3,
+      "to_bar": 3,
+      "picture": "One breath before the drop",
+      "picture_ar": "نفس واحد… ثم النزول",
+      "intent": "One bar with the kick out: sub pulse + reverse into the drop at 6.0 s.",
+      "energy_target_dbfs": -27.0,
+      "layers": {
+        "pad": {
+          "voicing": "pad",
+          "level": 0.62,
+          "attack": 0.1,
+          "release": 0.3
+        },
+        "sub": {
+          "pattern": "sub_q",
+          "level": 0.62
+        },
+        "roomtone": {
+          "level": 0.35
+        }
+      }
+    },
+    {
+      "id": "relief",
+      "group": "groove_a",
+      "from_bar": 4,
+      "to_bar": 6,
+      "picture": "Brand line - open the book",
+      "picture_ar": "افتح الكتاب… واترك الباقي علينا",
+      "intent": "Drop 1: full groove with clap and open hats.",
+      "energy_target_dbfs": -17.0,
+      "layers": {
+        "pad": {
+          "voicing": "pad",
+          "level": 0.84,
+          "attack": 0.06
+        },
+        "kick": {
+          "pattern": "kick_4a",
+          "level": 1.0
+        },
+        "clap": {
+          "pattern": "clap_24",
+          "level": 1.0
+        },
+        "bass": {
+          "pattern": "bass_off_b",
+          "level": 1.0
+        },
+        "sub": {
+          "pattern": "sub_tech",
+          "level": 0.58
+        },
+        "arp": {
+          "pattern": "arp_16a",
+          "level": 0.96
+        },
+        "hat": {
+          "pattern": "hat_16b",
+          "level": 0.88
+        },
+        "openhat": {
+          "pattern": "ohat_off",
+          "level": 0.85
+        }
+      }
+    },
+    {
+      "id": "reveal",
+      "group": "drop",
+      "from_bar": 7,
+      "to_bar": 10,
+      "picture": "DROP - logo bloom + phone rises",
+      "picture_ar": "هذا ستادي آي… تطبيق واحد يقرأ كتابك",
+      "intent": "Sub drop + impact, widest groove, lead stabs.",
+      "energy_target_dbfs": -15.5,
+      "layers": {
+        "pad": {
+          "voicing": "pad_hi",
+          "level": 0.92,
+          "attack": 0.05
+        },
+        "kick": {
+          "pattern": "kick_4b",
+          "level": 1.0
+        },
+        "clap": {
+          "pattern": "clap_24b",
+          "level": 1.0
+        },
+        "bass": {
+          "pattern": "bass_push",
+          "level": 1.0
+        },
+        "sub": {
+          "pattern": "sub_tech",
+          "level": 0.62
+        },
+        "arp": {
+          "pattern": "arp_16b",
+          "level": 0.98
+        },
+        "hat": {
+          "pattern": "hat_16b",
+          "level": 0.9
+        },
+        "openhat": {
+          "pattern": "ohat_off_b",
+          "level": 1.0
+        },
+        "lead": {
+          "level": 1.0
+        }
+      }
+    },
+    {
+      "id": "upload",
+      "group": "groove_a",
+      "from_bar": 11,
+      "to_bar": 16,
+      "picture": "UPLOAD - any file",
+      "picture_ar": "من أي ملف… PDF وWord وPowerPoint",
+      "intent": "Driving groove, snare pickup every fourth bar.",
+      "energy_target_dbfs": -16.5,
+      "layers": {
+        "pad": {
+          "voicing": "pad",
+          "level": 0.86,
+          "attack": 0.06
+        },
+        "kick": {
+          "pattern": "kick_4a",
+          "level": 1.0
+        },
+        "clap": {
+          "pattern": "clap_24",
+          "level": 0.92
+        },
+        "bass": {
+          "pattern": "bass_off",
+          "level": 1.0
+        },
+        "sub": {
+          "pattern": "sub_tech",
+          "level": 0.56
+        },
+        "arp": {
+          "pattern": "arp_16a",
+          "level": 0.96
+        },
+        "hat": {
+          "pattern": "hat_16a",
+          "level": 0.88
+        },
+        "openhat": {
+          "pattern": "ohat_off",
+          "level": 0.8
+        },
+        "snare": [
+          {
+            "pattern": "roll_16",
+            "level": 0.55,
+            "on_bars": [
+              14
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "chat",
+      "group": "groove_b_bells",
+      "from_bar": 17,
+      "to_bar": 21,
+      "picture": "CHAT - page-cited answers",
+      "picture_ar": "كل إجابة بصفحتها وفقرتها",
+      "intent": "Brighter arp, glass accents, the melody entrance.",
+      "energy_target_dbfs": -16.0,
+      "layers": {
+        "pad": {
+          "voicing": "pad",
+          "level": 0.88,
+          "attack": 0.06
+        },
+        "kick": {
+          "pattern": "kick_4b",
+          "level": 1.0
+        },
+        "clap": {
+          "pattern": "clap_24",
+          "level": 0.96
+        },
+        "bass": {
+          "pattern": "bass_off_b",
+          "level": 1.0
+        },
+        "sub": {
+          "pattern": "sub_tech",
+          "level": 0.58
+        },
+        "arp": {
+          "pattern": "arp_16b",
+          "level": 0.96
+        },
+        "hat": {
+          "pattern": "hat_16b",
+          "level": 0.9
+        },
+        "openhat": {
+          "pattern": "ohat_off",
+          "level": 0.88
+        },
+        "lead": {
+          "level": 1.0
+        },
+        "bell": {
+          "level": 0.6
+        }
+      }
+    },
+    {
+      "id": "summary",
+      "group": "lift_strings",
+      "from_bar": 22,
+      "to_bar": 25,
+      "picture": "SUMMARY - Arabic PDF, print ready",
+      "picture_ar": "ملخص عربي أنيق… جاهز للطباعة",
+      "intent": "Lift: 16th open hats, wider pad, bell shimmer.",
+      "energy_target_dbfs": -15.5,
+      "layers": {
+        "pad": {
+          "voicing": "pad_hi",
+          "level": 0.94,
+          "attack": 0.06
+        },
+        "kick": {
+          "pattern": "kick_4b",
+          "level": 1.0
+        },
+        "clap": {
+          "pattern": "clap_24b",
+          "level": 1.0
+        },
+        "bass": {
+          "pattern": "bass_push",
+          "level": 1.0
+        },
+        "sub": {
+          "pattern": "sub_tech",
+          "level": 0.6
+        },
+        "arp": {
+          "pattern": "arp_16b",
+          "level": 0.98
+        },
+        "hat": {
+          "pattern": "hat_16b",
+          "level": 0.92
+        },
+        "openhat": {
+          "pattern": "ohat_off_b",
+          "level": 1.0
+        },
+        "lead": {
+          "level": 1.0
+        },
+        "bell": {
+          "level": 0.72
+        }
+      }
+    },
+    {
+      "id": "quiz",
+      "group": "full",
+      "from_bar": 26,
+      "to_bar": 31,
+      "picture": "QUIZ - grade with a why",
+      "picture_ar": "اختبر نفسك… ولكل إجابة تفسير",
+      "intent": "Full energy, claps and rolls.",
+      "energy_target_dbfs": -15.0,
+      "layers": {
+        "pad": {
+          "voicing": "pad_hi",
+          "level": 0.96,
+          "attack": 0.05
+        },
+        "kick": {
+          "pattern": "kick_4b",
+          "level": 1.0
+        },
+        "clap": {
+          "pattern": "clap_24b",
+          "level": 1.0
+        },
+        "bass": {
+          "pattern": "bass_push",
+          "level": 1.0
+        },
+        "sub": {
+          "pattern": "sub_tech",
+          "level": 0.62
+        },
+        "arp": {
+          "pattern": "arp_16b",
+          "level": 1.0
+        },
+        "hat": {
+          "pattern": "hat_16b",
+          "level": 0.94
+        },
+        "openhat": {
+          "pattern": "ohat_off_b",
+          "level": 1.0
+        },
+        "lead": {
+          "level": 1.0
+        },
+        "bell": {
+          "level": 0.78
+        },
+        "snare": [
+          {
+            "pattern": "roll_16",
+            "level": 0.62,
+            "on_bars": [
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "diagram",
+      "group": "lift_strings",
+      "from_bar": 32,
+      "to_bar": 34,
+      "picture": "DIAGRAM - the syllabus as a map",
+      "picture_ar": "المنهج في خريطة واحدة",
+      "intent": "Impact + filter opening over the diagram.",
+      "energy_target_dbfs": -15.0,
+      "layers": {
+        "pad": {
+          "voicing": "pad_hi",
+          "level": 0.98,
+          "attack": 0.04
+        },
+        "kick": {
+          "pattern": "kick_4b",
+          "level": 1.0
+        },
+        "clap": {
+          "pattern": "clap_24",
+          "level": 1.0
+        },
+        "bass": {
+          "pattern": "bass_push",
+          "level": 1.0
+        },
+        "sub": {
+          "pattern": "sub_tech",
+          "level": 0.6
+        },
+        "arp": {
+          "pattern": "arp_c",
+          "level": 1.0
+        },
+        "hat": {
+          "pattern": "hat_16b",
+          "level": 0.92
+        },
+        "openhat": {
+          "pattern": "ohat_off",
+          "level": 0.95
+        },
+        "lead": {
+          "level": 1.0
+        }
+      }
+    },
+    {
+      "id": "reader",
+      "group": "full",
+      "from_bar": 35,
+      "to_bar": 38,
+      "picture": "READER - highlight, note, explain",
+      "picture_ar": "اقرأ… علّم… واسأل عن المقطع",
+      "intent": "Steady full groove.",
+      "energy_target_dbfs": -15.0,
+      "layers": {
+        "pad": {
+          "voicing": "pad_hi",
+          "level": 0.96,
+          "attack": 0.05
+        },
+        "kick": {
+          "pattern": "kick_4a",
+          "level": 1.0
+        },
+        "clap": {
+          "pattern": "clap_24",
+          "level": 1.0
+        },
+        "bass": {
+          "pattern": "bass_off_b",
+          "level": 1.0
+        },
+        "sub": {
+          "pattern": "sub_tech",
+          "level": 0.6
+        },
+        "arp": {
+          "pattern": "arp_16a",
+          "level": 0.98
+        },
+        "hat": {
+          "pattern": "hat_16b",
+          "level": 0.92
+        },
+        "openhat": {
+          "pattern": "ohat_off",
+          "level": 0.92
+        },
+        "lead": {
+          "level": 1.0
+        },
+        "bell": {
+          "level": 0.7
+        }
+      }
+    },
+    {
+      "id": "planner",
+      "group": "build",
+      "from_bar": 39,
+      "to_bar": 42,
+      "picture": "PLANNER - the day, ordered",
+      "picture_ar": "خطة يومك جاهزة على وقتك المتاح",
+      "intent": "Build: snare rolls accelerating into the teacher section.",
+      "energy_target_dbfs": -16.5,
+      "layers": {
+        "pad": {
+          "voicing": "pad_hi",
+          "level": 0.92,
+          "attack": 0.06
+        },
+        "kick": {
+          "pattern": "kick_4a",
+          "level": 1.0
+        },
+        "clap": {
+          "pattern": "clap_24",
+          "level": 0.9
+        },
+        "bass": {
+          "pattern": "bass_drive",
+          "level": 0.96
+        },
+        "arp": {
+          "pattern": "arp_16a",
+          "level": 0.94
+        },
+        "hat": {
+          "pattern": "hat_16a",
+          "level": 0.86
+        },
+        "sub": [
+          {
+            "pattern": "sub_tech",
+            "level": 0.52
+          },
+          {
+            "pattern": "sub_8",
+            "level": 0.42,
+            "on_bars": [
+              41,
+              42
+            ]
+          }
+        ],
+        "snare": [
+          {
+            "pattern": "roll_8",
+            "level": 0.5,
+            "on_bars": [
+              41
+            ]
+          },
+          {
+            "pattern": "roll_16",
+            "level": 0.68,
+            "on_bars": [
+              42
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "teacher",
+      "group": "full",
+      "from_bar": 43,
+      "to_bar": 47,
+      "picture": "TEACHER - a full test in minutes",
+      "picture_ar": "اختبار كامل في دقائق… نسختان",
+      "intent": "Peak energy, widest arrangement.",
+      "energy_target_dbfs": -14.5,
+      "layers": {
+        "pad": {
+          "voicing": "pad_hi",
+          "level": 1.0,
+          "attack": 0.04
+        },
+        "kick": {
+          "pattern": "kick_4pick",
+          "level": 1.0
+        },
+        "clap": {
+          "pattern": "clap_24b",
+          "level": 1.0
+        },
+        "bass": {
+          "pattern": "bass_push",
+          "level": 1.0
+        },
+        "sub": {
+          "pattern": "sub_tech",
+          "level": 0.64
+        },
+        "arp": {
+          "pattern": "arp_16b",
+          "level": 1.0
+        },
+        "hat": {
+          "pattern": "hat_16b",
+          "level": 0.96
+        },
+        "openhat": {
+          "pattern": "ohat_off_b",
+          "level": 1.0
+        },
+        "lead": {
+          "level": 1.0
+        },
+        "bell": {
+          "level": 0.8
+        },
+        "snare": [
+          {
+            "pattern": "roll_16",
+            "level": 0.6,
+            "on_bars": [
+              47
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "notify",
+      "group": "build",
+      "from_bar": 48,
+      "to_bar": 50,
+      "picture": "NOTIFICATIONS - ping when it is ready",
+      "picture_ar": "كل ما يجهز يصلك هنا",
+      "intent": "Tension: half-time kick, rises into the trust breakdown.",
+      "energy_target_dbfs": -17.5,
+      "layers": {
+        "pad": {
+          "voicing": "pad",
+          "level": 0.84,
+          "attack": 0.1
+        },
+        "kick": {
+          "pattern": "kick_half",
+          "level": 1.0
+        },
+        "bass": {
+          "pattern": "bass_drive",
+          "level": 0.85
+        },
+        "arp": {
+          "pattern": "arp_off",
+          "level": 0.86
+        },
+        "hat": {
+          "pattern": "hat_16a",
+          "level": 0.66
+        },
+        "openhat": {
+          "pattern": "ohat_off",
+          "level": 0.7
+        },
+        "sub": [
+          {
+            "pattern": "sub_tech",
+            "level": 0.52
+          },
+          {
+            "pattern": "sub_16",
+            "level": 0.4,
+            "on_bars": [
+              50
+            ]
+          }
+        ],
+        "snare": [
+          {
+            "pattern": "roll_8",
+            "level": 0.55,
+            "on_bars": [
+              50
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "trust",
+      "group": "breakdown",
+      "from_bar": 51,
+      "to_bar": 53,
+      "picture": "TRUST - built in Arabic",
+      "picture_ar": "بُنيت بالعربية",
+      "intent": "Modern breakdown: kick out, sub + dark pad + sparse pluck, no piano.",
+      "energy_target_dbfs": -23.5,
+      "layers": {
+        "pad": {
+          "voicing": "pad",
+          "level": 0.78,
+          "attack": 0.28,
+          "release": 0.7
+        },
+        "sub": {
+          "pattern": "sub_q",
+          "level": 0.62
+        },
+        "bass": {
+          "pattern": "bass_a",
+          "level": 0.55
+        },
+        "arp": {
+          "pattern": "arp_off",
+          "level": 0.74
+        },
+        "bell": {
+          "level": 0.55
+        },
+        "roomtone": {
+          "level": 0.45
+        }
+      }
+    },
+    {
+      "id": "cta_build",
+      "group": "build",
+      "from_bar": 54,
+      "to_bar": 56,
+      "picture": "CTA build - download now",
+      "picture_ar": "حمّله الآن مجاناً… من تلغرام",
+      "intent": "Riser + accelerating snare roll on a held A dominant.",
+      "energy_target_dbfs": -17.0,
+      "layers": {
+        "pad": {
+          "voicing": "pad_hi",
+          "level": 0.94,
+          "attack": 0.06
+        },
+        "bass": {
+          "pattern": "bass_build",
+          "level": 0.92
+        },
+        "arp": {
+          "pattern": "arp_c",
+          "level": 0.84
+        },
+        "hat": {
+          "pattern": "hat_16a",
+          "level": 0.7
+        },
+        "sub": [
+          {
+            "pattern": "sub_q",
+            "level": 0.55
+          },
+          {
+            "pattern": "sub_8",
+            "level": 0.44,
+            "on_bars": [
+              55,
+              56
+            ]
+          },
+          {
+            "pattern": "sub_16",
+            "level": 0.38,
+            "on_bars": [
+              56
+            ]
+          }
+        ],
+        "snare": [
+          {
+            "pattern": "roll_8",
+            "level": 0.58,
+            "on_bars": [
+              54
+            ]
+          },
+          {
+            "pattern": "roll_16",
+            "level": 0.74,
+            "on_bars": [
+              55
+            ]
+          },
+          {
+            "pattern": "roll_32",
+            "level": 0.94,
+            "on_bars": [
+              56
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "cta_drop",
+      "group": "final_resolve",
+      "from_bar": 57,
+      "to_bar": 59,
+      "picture": "Logo lockup + handle",
+      "picture_ar": "من الصفحة… إلى الفهم",
+      "intent": "Final drop on D major, then a long clean tail into the fade.",
+      "energy_target_dbfs": -16.0,
+      "layers": {
+        "pad": {
+          "voicing": "pad_hi",
+          "level": 1.04,
+          "attack": 0.05,
+          "release": 1.8
+        },
+        "kick": {
+          "pattern": "kick_res",
+          "level": 1.0,
+          "on_bars": [
+            57
+          ]
+        },
+        "bass": {
+          "pattern": "bass_res",
+          "level": 1.0,
+          "on_bars": [
+            57
+          ]
+        },
+        "sub": {
+          "pattern": "sub_drop",
+          "level": 0.68,
+          "on_bars": [
+            57
+          ]
+        },
+        "arp": {
+          "pattern": "arp_res",
+          "level": 0.78,
+          "on_bars": [
+            57,
+            58
+          ]
+        },
+        "lead": {
+          "level": 1.0
+        },
+        "bell": {
+          "level": 0.85
+        },
+        "openhat": {
+          "pattern": "ohat_off",
+          "level": 0.7,
+          "on_bars": [
+            58
+          ]
+        },
+        "roomtone": {
+          "level": 0.35
+        }
+      }
+    }
+  ],
+  "motifs": {
+    "A": {
+      "bars": 4,
+      "notes": [
+        [
+          0,
+          0,
+          74,
+          2,
+          0.8
+        ],
+        [
+          0,
+          4,
+          81,
+          2,
+          0.66
+        ],
+        [
+          0,
+          8,
+          77,
+          2,
+          0.7
+        ],
+        [
+          0,
+          12,
+          81,
+          2,
+          0.6
+        ],
+        [
+          1,
+          0,
+          76,
+          2,
+          0.78
+        ],
+        [
+          1,
+          4,
+          72,
+          2,
+          0.62
+        ],
+        [
+          1,
+          8,
+          79,
+          2,
+          0.68
+        ],
+        [
+          1,
+          12,
+          84,
+          2,
+          0.58
+        ],
+        [
+          2,
+          0,
+          74,
+          2,
+          0.8
+        ],
+        [
+          2,
+          4,
+          81,
+          2,
+          0.66
+        ],
+        [
+          2,
+          8,
+          77,
+          2,
+          0.7
+        ],
+        [
+          2,
+          12,
+          81,
+          2,
+          0.6
+        ],
+        [
+          3,
+          0,
+          79,
+          2,
+          0.82
+        ],
+        [
+          3,
+          4,
+          76,
+          2,
+          0.64
+        ],
+        [
+          3,
+          8,
+          72,
+          2,
+          0.7
+        ],
+        [
+          3,
+          12,
+          79,
+          2,
+          0.74
+        ]
+      ]
+    }
+  },
+  "motif_plan": [],
+  "bell_plan": [
+    {
+      "from_bar": 22,
+      "to_bar": 25,
+      "every": 2,
+      "steps": [
+        12
+      ],
+      "level": 0.55
+    },
+    {
+      "from_bar": 43,
+      "to_bar": 47,
+      "every": 2,
+      "steps": [
+        0,
+        12
+      ],
+      "level": 0.62
+    },
+    {
+      "from_bar": 57,
+      "to_bar": 57,
+      "every": 1,
+      "steps": [
+        1
+      ],
+      "level": 0.95
+    },
+    {
+      "from_bar": 58,
+      "to_bar": 58,
+      "every": 1,
+      "steps": [
+        8
+      ],
+      "level": 0.7
+    }
+  ],
+  "hero_notes": [
+    {
+      "bar": 7,
+      "step": 0,
+      "inst": "lead",
+      "midi": 74,
+      "dur": 1.2,
+      "vel": 0.72,
+      "level": 0.62,
+      "pan": 0.0,
+      "why": "first drop stab at 12.0 s"
+    },
+    {
+      "bar": 11,
+      "step": 0,
+      "inst": "lead",
+      "midi": 77,
+      "dur": 0.9,
+      "vel": 0.62,
+      "level": 0.52,
+      "pan": 0.06
+    },
+    {
+      "bar": 17,
+      "step": 0,
+      "inst": "lead",
+      "midi": 81,
+      "dur": 1.0,
+      "vel": 0.66,
+      "level": 0.55,
+      "pan": -0.05
+    },
+    {
+      "bar": 26,
+      "step": 0,
+      "inst": "lead",
+      "midi": 84,
+      "dur": 1.1,
+      "vel": 0.7,
+      "level": 0.58,
+      "pan": 0.04
+    },
+    {
+      "bar": 32,
+      "step": 0,
+      "inst": "lead",
+      "midi": 79,
+      "dur": 1.0,
+      "vel": 0.68,
+      "level": 0.56,
+      "pan": 0.0
+    },
+    {
+      "bar": 43,
+      "step": 0,
+      "inst": "lead",
+      "midi": 86,
+      "dur": 1.2,
+      "vel": 0.74,
+      "level": 0.62,
+      "pan": -0.04
+    },
+    {
+      "bar": 57,
+      "step": 0,
+      "inst": "lead",
+      "midi": 74,
+      "dur": 2.4,
+      "vel": 0.78,
+      "level": 0.72,
+      "pan": 0.0,
+      "why": "final D-major stab at 112.0 s"
+    },
+    {
+      "bar": 58,
+      "step": 8,
+      "inst": "bell",
+      "midi": 86,
+      "dur": 3.0,
+      "vel": 0.42,
+      "level": 0.66,
+      "pan": 0.22,
+      "why": "last glass shimmer before the fade"
+    }
+  ],
+  "fx_cues": [
+    {
+      "bar": 1,
+      "step": 0,
+      "kind": "impact",
+      "dur": 1.2,
+      "level": 0.95
+    },
+    {
+      "bar": 1,
+      "step": 0,
+      "kind": "subdrop",
+      "dur": 0.7,
+      "level": 0.8
+    },
+    {
+      "bar": 3,
+      "step": 8,
+      "kind": "reverse",
+      "dur": 1.0,
+      "level": 1.0
+    },
+    {
+      "bar": 4,
+      "step": 0,
+      "kind": "impact",
+      "dur": 1.3,
+      "level": 1.0
+    },
+    {
+      "bar": 6,
+      "step": 0,
+      "kind": "riser",
+      "dur": 2.0,
+      "level": 0.9
+    },
+    {
+      "bar": 7,
+      "step": 0,
+      "kind": "subdrop",
+      "dur": 0.9,
+      "level": 1.0
+    },
+    {
+      "bar": 7,
+      "step": 0,
+      "kind": "impact",
+      "dur": 1.5,
+      "level": 1.0
+    },
+    {
+      "bar": 10,
+      "step": 0,
+      "kind": "riser",
+      "dur": 2.0,
+      "level": 0.55
+    },
+    {
+      "bar": 16,
+      "step": 0,
+      "kind": "riser",
+      "dur": 2.0,
+      "level": 0.62
+    },
+    {
+      "bar": 17,
+      "step": 0,
+      "kind": "impact",
+      "dur": 1.2,
+      "level": 0.42
+    },
+    {
+      "bar": 21,
+      "step": 0,
+      "kind": "riser",
+      "dur": 1.0,
+      "level": 0.45
+    },
+    {
+      "bar": 22,
+      "step": 0,
+      "kind": "impact",
+      "dur": 1.3,
+      "level": 0.4
+    },
+    {
+      "bar": 25,
+      "step": 0,
+      "kind": "riser",
+      "dur": 1.0,
+      "level": 0.5
+    },
+    {
+      "bar": 26,
+      "step": 0,
+      "kind": "impact",
+      "dur": 1.4,
+      "level": 0.46
+    },
+    {
+      "bar": 31,
+      "step": 0,
+      "kind": "riser",
+      "dur": 1.0,
+      "level": 0.6
+    },
+    {
+      "bar": 32,
+      "step": 0,
+      "kind": "impact",
+      "dur": 1.5,
+      "level": 0.52
+    },
+    {
+      "bar": 38,
+      "step": 0,
+      "kind": "riser",
+      "dur": 1.0,
+      "level": 0.48
+    },
+    {
+      "bar": 42,
+      "step": 0,
+      "kind": "riser",
+      "dur": 2.0,
+      "level": 0.72
+    },
+    {
+      "bar": 43,
+      "step": 0,
+      "kind": "impact",
+      "dur": 1.6,
+      "level": 0.6
+    },
+    {
+      "bar": 47,
+      "step": 8,
+      "kind": "downlifter",
+      "dur": 1.2,
+      "level": 0.7
+    },
+    {
+      "bar": 50,
+      "step": 0,
+      "kind": "riser",
+      "dur": 1.0,
+      "level": 0.55
+    },
+    {
+      "bar": 51,
+      "step": 0,
+      "kind": "impact",
+      "dur": 1.6,
+      "level": 0.34
+    },
+    {
+      "bar": 54,
+      "step": 0,
+      "kind": "riser",
+      "dur": 6.0,
+      "level": 1.0
+    },
+    {
+      "bar": 54,
+      "step": 0,
+      "kind": "subdrop",
+      "dur": 0.8,
+      "level": 0.6
+    },
+    {
+      "bar": 57,
+      "step": 0,
+      "kind": "subdrop",
+      "dur": 1.2,
+      "level": 1.0
+    },
+    {
+      "bar": 57,
+      "step": 0,
+      "kind": "impact",
+      "dur": 2.2,
+      "level": 1.0
+    },
+    {
+      "bar": 57,
+      "step": 0,
+      "kind": "swell",
+      "dur": 2.6,
+      "level": 0.7
+    }
+  ],
+  "harmony_filter_automation": [
+    [
+      1,
+      1250
+    ],
+    [
+      4,
+      1500
+    ],
+    [
+      7,
+      1750
+    ],
+    [
+      11,
+      1850
+    ],
+    [
+      17,
+      2050
+    ],
+    [
+      22,
+      2300
+    ],
+    [
+      26,
+      2500
+    ],
+    [
+      32,
+      2750
+    ],
+    [
+      38,
+      2900
+    ],
+    [
+      43,
+      3100
+    ],
+    [
+      50,
+      2400
+    ],
+    [
+      51,
+      1150
+    ],
+    [
+      54,
+      1500
+    ],
+    [
+      57,
+      2600
+    ],
+    [
+      59,
+      2800
+    ]
+  ],
+  "ducking": {
+    "depth_db": 3.6,
+    "attack_seconds": 0.006,
+    "release_seconds": 0.15,
+    "targets": [
+      "harmony"
+    ]
+  },
+  "sfx": [
+    {
+      "name": "sub_drop",
+      "file": "sub_drop.wav",
+      "duration": 0.9,
+      "bus_note": "60 -> 28 Hz exponential glide, saturated so it reads on phone speakers",
+      "spec": {
+        "f0": 60.0,
+        "f1": 28.0,
+        "glide": "exponential",
+        "curve": 1.8,
+        "drive": 1.6,
+        "noise": 0.1
+      }
+    },
+    {
+      "name": "riser",
+      "file": "riser.wav",
+      "duration": 4.0,
+      "bus_note": "noise sweep + sine glissando; peaks exactly at the end",
+      "spec": {
+        "noise_f0": 240.0,
+        "noise_f1": 9000.0,
+        "sine_f0": 55.0,
+        "sine_f1": 880.0,
+        "shape": 1.7,
+        "q": 2.2
+      }
+    },
+    {
+      "name": "paper_flip",
+      "file": "paper_flip.wav",
+      "duration": 0.4,
+      "bus_note": "granular paper rustle, 1.2-9 kHz",
+      "spec": {
+        "grains": 9,
+        "band": [
+          1200.0,
+          9000.0
+        ],
+        "spread": 0.62
+      }
+    },
+    {
+      "name": "stamp_thud",
+      "file": "stamp_thud.wav",
+      "duration": 0.3,
+      "bus_note": "rubber stamp: 95 Hz body + paper slap",
+      "spec": {
+        "body_hz": 95.0,
+        "body_t60": 0.16,
+        "click": 0.55,
+        "slap": 0.4,
+        "slap_hz": 720.0
+      }
+    },
+    {
+      "name": "whoosh_rtl",
+      "file": "whoosh_rtl.wav",
+      "duration": 0.32,
+      "bus_note": "right-to-left whoosh, pan +1 -> -1",
+      "spec": {
+        "pan_from": 1.0,
+        "pan_to": -1.0,
+        "band": [
+          500.0,
+          6500.0
+        ],
+        "shape": 1.4
+      }
+    },
+    {
+      "name": "ui_pop",
+      "file": "ui_pop.wav",
+      "duration": 0.09,
+      "bus_note": "sine 400 -> 180 Hz + click",
+      "spec": {
+        "f0": 400.0,
+        "f1": 180.0,
+        "click": 0.35,
+        "t60": 0.055
+      }
+    }
+  ],
+  "stems": [
+    "drums",
+    "bass",
+    "harmony",
+    "lead",
+    "fx"
+  ]
+}

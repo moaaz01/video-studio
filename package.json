@@ -1,0 +1,32 @@
+{
+  "name": "@video-studio/film",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Remotion film engine for the video-studio skill: timeline-driven scenes, Arabic-first type, generated score and foley.",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "remotion studio src/index.ts",
+    "compositions": "remotion compositions src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "render:16x9": "remotion render src/index.ts Studio16x9 out/film_1080p.mp4 --scale=1 --codec=h264 --crf=15 --x264-preset=medium --pixel-format=yuv420p --color-space=bt709 --image-format=jpeg --concurrency=75% --overwrite",
+    "render:9x16": "remotion render src/index.ts Studio9x16 out/film_9x16.mp4 --scale=1 --codec=h264 --crf=15 --x264-preset=medium --pixel-format=yuv420p --color-space=bt709 --image-format=jpeg --concurrency=75% --overwrite"
+  },
+  "dependencies": {
+    "@iconify-json/material-symbols": "^1.2.95",
+    "@remotion/cli": "^4.0.537",
+    "@remotion/fonts": "^4.0.537",
+    "@remotion/layout-utils": "^4.0.537",
+    "@remotion/media": "^4.0.537",
+    "@remotion/motion-blur": "^4.0.537",
+    "@remotion/noise": "^4.0.537",
+    "@remotion/paths": "^4.0.537",
+    "@remotion/shapes": "^4.0.537",
+    "@remotion/transitions": "^4.0.537",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.537",
+    "typescript": "^7.0.2"
+  }
+}

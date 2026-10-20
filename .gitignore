@@ -1,0 +1,34 @@
+# secrets — never commit
+.env
+.env.*
+!.env.example
+
+# renders (large, regenerable)
+out/
+*.mp4
+*.mov
+*.webm
+*.mkv
+
+# generated audio that can be re-synthesised / re-scored
+public/audio/vo/
+public/audio/score/
+!public/audio/score/.gitkeep
+!public/audio/sfx/
+
+# tooling
+node_modules/
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# editor
+.vscode/
+.idea/
+*.swp
+
+# QA artefacts
+out/qa/

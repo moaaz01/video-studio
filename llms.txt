@@ -1,0 +1,65 @@
+# video-studio
+
+> A production environment for Arabic-first product films — timeline-driven
+> Remotion engine, generated score, Fish Audio voice, measured QA — packaged as a
+> portable Agent Skill for DeepSeek Harness, Claude Code, opencode, OpenClaw and
+> Hermes Agent.
+
+The repo is the skill. Read `SKILL.md` for the protocol; use the section below to
+find the exact file for a question.
+
+## Protocol
+
+- [SKILL.md](SKILL.md): eight phases (Brief → Direction → Script → Voice → Build
+  → Mix → QA → Deliver), exit gates, six non-negotiables, command surface.
+- [AGENTS.md](AGENTS.md): the same protocol for agents without a skill loader;
+  hard rules, file map, how to extend.
+- [README.md](README.md): what this is, install for five agents, quickstart.
+
+## Knowledge
+
+- [references/brief-recipes.md](references/brief-recipes.md): brief shape + five
+  recipes (product film, launch trailer, UI walkthrough, Arabic editorial, reel).
+- [references/visual-direction.md](references/visual-direction.md): twelve
+  directions with palette, type, motion, structure and fail-mode; a 60-second
+  chooser; a five-axis scoring rubric.
+- [references/reference-sources.md](references/reference-sources.md): how to mine
+  prompt-motion.com, whatships.com and the `rea` toolkit without copying them.
+- [references/motion-grammar.md](references/motion-grammar.md): grid and clock,
+  easing family, universal entrance, two-transition rule, camera, rhythm curve.
+- [references/arabic-type.md](references/arabic-type.md): the five hard rules,
+  bidi isolation, type scale, reading speed, review cheat-sheet.
+- [references/audio-and-voice.md](references/audio-and-voice.md): Fish Audio
+  endpoint and constraints, Arabic VO writing, score engine, foley table, mix
+  targets, measurement recipe.
+- [references/platform-specs.md](references/platform-specs.md): sizes, 9:16 safe
+  areas, durations, encode settings, measured render speeds, platform notes.
+- [references/qa-gates.md](references/qa-gates.md): gates 0–9 with the exact
+  commands and what each one proves.
+
+## Engine
+
+- [film/film.json](film/film.json): the demo film — beats, bars, Arabic copy, VO.
+- [src/theme.ts](src/theme.ts): design tokens (palette, type scale, phone geometry).
+- [src/brand.ts](src/brand.ts): the only file that changes between clients.
+- [src/film/Film.tsx](src/film/Film.tsx): timeline assembler, wipes, both aspects.
+- [src/scenes/](src/scenes/): Hook, Device, Stat, Cta — one per beat kind.
+- [src/components/](src/components/): Phone, Surfaces, Overlays, Text, Ico, Brand, DemoUI.
+- [src/lib/](src/lib/): animation primitives and RTL/bidi helpers.
+- [scripts/studio.py](scripts/studio.py): doctor, timeline, voice, score, still,
+  render, qa.
+- [scripts/voice.py](scripts/voice.py): Fish Audio bridge with a WAV reader that
+  survives placeholder headers.
+- [scripts/qa.py](scripts/qa.py): probes, audio levels, black detect, Arabic scan,
+  contact sheets.
+- [install.ps1](install.ps1) / [install.sh](install.sh): link the skill into every
+  agent directory on the machine.
+
+## Example
+
+- [examples/studyai/README.md](examples/studyai/README.md): the shipped 118-second
+  Arabic promo — brief, beat sheet, measurements, post-mortem.
+
+## Optional
+
+- [CHANGELOG.md](CHANGELOG.md), [LICENSE](LICENSE) (MIT; fonts are SIL OFL).

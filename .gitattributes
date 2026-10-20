@@ -1,0 +1,12 @@
+﻿# Normalise line endings: text is LF everywhere, Windows scripts keep CRLF.
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.ttf binary
+*.otf binary
+*.wav binary
+*.mp3 binary
+*.png binary
+*.jpg binary
+*.mp4 binary
+*.woff2 binary
