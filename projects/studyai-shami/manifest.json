@@ -67,7 +67,13 @@
       }
     ],
     "total_seconds": 28.542,
-    "asr_report": "out/qa/vo-asr-check.json (5/5 lines, worst similarity 0.953)"
+    "asr_report": "out/qa/vo-asr-check.json (5/5 lines, worst similarity 0.953)",
+    "asr_master": {
+      "source": "out/film_1080p.mp4",
+      "worst_similarity": 0.968,
+      "lines_passing": "5/5 at >= 0.86",
+      "note": "the delivered mix was transcribed per line; b04 reads 'لا خطوات' in ASR but the raw line says 'تلات خطوات' (music masks the first syllable)"
+    }
   },
   "files": [
     {
@@ -177,6 +183,12 @@
       "path": "projects/studyai-shami/assets/vo-asr-check.json",
       "bytes": 2329,
       "sha256": "8476676675ae78acd058e5a805efea4e77d65ca43cf115225530679852ef711c"
+    },
+    {
+      "path": "projects/studyai-shami/assets/vo-asr-master.json",
+      "role": "asset",
+      "bytes": 976,
+      "sha256": "4075a5361e2eea2f6947093e7575799b9177fcf868198f4ce8baedc0a85eb2b3"
     }
   ],
   "stills": [

@@ -67,6 +67,10 @@ project is only reproducible after `package_project.py` has copied that state in
   RMS, peak −3.0 dBFS, 0 clipped samples**.
 - VO is measurable, not hand-tuned: `assets/vo.json` holds the duration of every line,
   `scripts/make_timeline.py` refuses a beat whose VO does not fit with 0.35 s of air.
+- **End-to-end check on the mix itself:** each line was cut out of the finished 1080p
+  master and transcribed; 5/5 land at 0.968–0.990 similarity (b04 transcribes as
+  «لا خطوات» although the line says «تلات خطوات» — the music masks the first
+  syllable, the raw line is clean). Report: `assets/vo-asr-master.json`.
 - **No-AI-glitch gate:** every delivered line is transcribed back with Fish ASR
   (`scripts/voice_check.py`); Arabic orthography is normalised, then character
   similarity and word count are compared against the script. 5/5 lines pass at ≥0.953
