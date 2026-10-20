@@ -159,6 +159,21 @@ Arabic VO) is documented in [`examples/studyai/`](examples/studyai/) — brief, 
 sheet, measurements, and what the first cut got wrong. It is the reference for
 what "done" looks like, not a template to copy.
 
+## CI
+
+`.github/workflows/ci.yml` runs the type check, the Python syntax pass, the strict
+timeline compile, the Arabic scan and a Remotion bundle on every push. It needs
+GitHub Actions minutes: on an account whose minutes/spending limit is exhausted,
+every run in every repo dies at startup (`startup_failure`, 0 jobs, ~1 s) — that is
+billing talking, not the workflow. Everything the gates check also runs locally:
+
+```powershell
+npx tsc --noEmit
+python scripts/make_timeline.py --strict
+python scripts/qa.py --arabic-only
+python scripts/studio.py qa --stills 8      # on rendered masters
+```
+
 ## License
 
 MIT for the code and docs. Bundled fonts are SIL OFL (Tajawal, Amiri, Noto Naskh
