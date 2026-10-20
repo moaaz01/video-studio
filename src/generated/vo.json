@@ -1,0 +1,42 @@
+[
+  {
+    "id": "b01-hook-1",
+    "text": "من صفحةٍ واحدة، إلى فهمٍ كامل.",
+    "wav": "audio/vo/b01-hook-1.wav",
+    "dur": 3.603,
+    "speed": 0.97,
+    "voice": "fish-default"
+  },
+  {
+    "id": "b02-device-1",
+    "text": "كلُّ ما تراه في الفيديو، موجودٌ في التطبيق.",
+    "wav": "audio/vo/b02-device-1.wav",
+    "dur": 3.938,
+    "speed": 0.97,
+    "voice": "fish-default"
+  },
+  {
+    "id": "b03-device-1",
+    "text": "التفاصيلُ الصغيرة، هي ما يجعل الشيءَ مُصدَّقًا.",
+    "wav": "audio/vo/b03-device-1.wav",
+    "dur": 4.225,
+    "speed": 0.97,
+    "voice": "fish-default"
+  },
+  {
+    "id": "b04-stat-1",
+    "text": "ستّةُ أضعافِ السرعة، في نفس الوقت.",
+    "wav": "audio/vo/b04-stat-1.wav",
+    "dur": 3.028,
+    "speed": 0.97,
+    "voice": "fish-default"
+  },
+  {
+    "id": "b05-cta-1",
+    "text": "حمّل التطبيقَ الآن، وابدأ بصفحتك الأولى.",
+    "wav": "audio/vo/b05-cta-1.wav",
+    "dur": 3.363,
+    "speed": 0.97,
+    "voice": "fish-default"
+  }
+]

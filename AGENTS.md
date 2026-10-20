@@ -84,7 +84,9 @@ the client annotates, the review is what you fix. Guide:
 | `src/look/looks.ts` | The four looks. `film.look` names one; no ad-hoc grading in scenes. |
 | `src/film/Storyboard.tsx` | The storyboard sheet composition (`studio.py storyboard`). |
 | `src/components/DemoUI.tsx` | The mock product screen. Replace with the real UI. |
-| `scripts/` | Orchestrator + timeline compiler + Fish bridge + score engine + QA. |
+| `src/audio/Soundtrack.tsx` | The mix: bed, measured VO cues, foley on the cuts. Mounted once in `Film.tsx`. |
+| `scripts/make_bed.py` | Composes the bed from `timeline.json`; asserts RMS/peak. |
+| `scripts/` | Orchestrator + timeline compiler + Fish bridge + bed composer + QA. |
 | `scripts/ui_source.py` | Reads an app project (screens/strings/tokens) + REA capture bridge. |
 | `scripts/corpus.py` | whatships + prompt-motion queries, card pinning, corpus gate. |
 | `scripts/advise.py` | Measured design review; exit 1 with `--strict` on a MUST. |

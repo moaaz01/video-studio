@@ -10,10 +10,13 @@ out/
 *.webm
 *.mkv
 
-# generated audio that can be re-synthesised / re-scored
-public/audio/vo/
-public/audio/score/
-!public/audio/score/.gitkeep
+# audio: the delivered VO and bed are committed so a fresh clone renders with
+# sound; the Fish call and the composer reproduce them (voice.py / make_bed.py)
+!public/audio/vo/
+!public/audio/vo/*.wav
+!public/audio/score/
+!public/audio/score/*.wav
+public/audio/score/music.orig.wav
 !public/audio/sfx/
 
 # tooling

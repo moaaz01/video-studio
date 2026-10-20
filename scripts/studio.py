@@ -126,15 +126,15 @@ def voice(args: argparse.Namespace) -> int:
 
 
 def score(args: argparse.Namespace) -> int:
-    script = ROOT / "scripts" / "make_score.py"
-    if not script.exists():
-        print("scripts/make_score.py is missing")
-        return 1
+    """Compose the bed. The timeline-driven composer is the default: it needs no
+    hand-written score map, so a re-cut re-scores itself. A hand-written map is
+    still honoured when one exists."""
     map_path = ROOT / args.map
-    if not map_path.exists():
-        print(f"{map_path} not found — copy scripts/score_map.example.json and adapt it")
-        return 1
-    rc = run([PY, str(script), "--map", str(map_path)])
+    score_script = ROOT / "scripts" / "make_score.py"
+    if map_path.exists() and score_script.exists():
+        rc = run([PY, str(score_script), "--map", str(map_path)])
+    else:
+        rc = run([PY, str(ROOT / "scripts" / "make_bed.py")])
     if rc:
         return rc
     leveler = ROOT / "scripts" / "level_score.py"
@@ -238,6 +238,7 @@ DELEGATES = {
     "safe": "safe_area.py",
     "captions": "captions.py",
     "provenance": "provenance.py",
+    "bed": "make_bed.py",
 }
 
 

@@ -1,3 +1,58 @@
+## 2.1.0 — 2026-10-21
+
+The sound. v2.0.0 shipped a film that looked finished and was silent; this release
+gives it the three layers a viewer actually hears — a composed bed, original
+foley on every cut, and a measured Arabic voice-over — and makes all three
+regenerate from the same compiled timeline as the picture.
+
+### The bed is composed from the timeline, not from a sample pack
+
+- `scripts/make_bed.py`: four detuned sine stacks per chord (G6 → Fmaj7 → C →
+  Am7, one chord per four bars), a soft sub pulse on beats 1 and 3, filtered-noise
+  shimmers where the film turns (stat and end card), pre-roll and tail fades.
+- It reads `src/generated/timeline.json` for `fps`, `frames`, `bpm` and every beat
+  start, so a re-cut re-scores itself. Measured output: **42.00 s, 48 kHz stereo,
+  RMS -18.7 dBFS, peak -3.0 dBFS, 0 clipped samples** (the level is asserted in
+  the script, not hoped for).
+- `studio.py score` now falls back to this composer when no hand-written
+  `--map` exists, which is the honest default: the map that `make_score.py`
+  expects was never in the repository, so `score` used to exit 1 on a clean
+  checkout. `--map` still wins when a map is present.
+
+### The voice is synthetic and measured
+
+- `python scripts/studio.py voice` builds `film/vo.json` from the film's own
+  `vo` lines and calls Fish Audio (`FISH_API_KEY` from the environment or
+  `.env`, never tracked). `film/vo-script.json` is the committed, reproducible
+  spec (`s2.1-pro-free`, speed 0.97) — the audio itself stays gitignored.
+- 5 fully vocalised lines, **18.16 s of speech**, 44.1 kHz mono:
+  hook 3.60 s · interface 3.94 s · interaction 4.23 s · stat 3.03 s · CTA 3.36 s.
+  Each was measured on return (`voice.py` parses the streamed RIFF header by
+  hand; Fish declares placeholder data sizes).
+- The timeline is then recompiled with `--vo`, so every beat length, caption cue
+  and sound cue is derived from the speech that actually came back.
+
+### `Soundtrack` was dead code; it now renders
+
+- The old component imported `T.vo`, `T.sfx` and `T.total` — fields the compiler
+  stopped writing — and its cut list was pinned to a 107-second edit. It would
+  have rendered silence (or thrown) against the current `timeline.json`.
+- Rewritten against the real schema: music bed via one `Html5Audio` with a
+  frame-pure volume curve (fade in 1.2 s, fade out 1.4 s, -6 dB duck inside
+  every measured VO window), VO cues resolved from `vo.json` + beat starts, and
+  foley (`whoosh_rtl` on each cut, `stamp_thud` on stat, `ui_chirp` on CTA).
+- Mounted once at the film root in `src/film/Film.tsx`, inside the root
+  `AbsoluteFill` and outside the grade, so it plays for every composition and
+  aspect without being graded.
+- Proof the audio reaches the file: a 91-frame control render reports
+  `acodec: aac, arate: 48000, ach: 2`.
+
+### Captions now follow the voice, not the beat tail
+
+- `captions.py --vo src/generated/vo.json` clamps each cue to the measured line
+  (`start + measured + 0.25 s`) instead of the whole beat: the last cue moved
+  from 41.8 s to 37.6 s, so the text leaves the screen with the speech.
+
 ## 2.0.0 — 2026-10-20
 
 The campaign: everything on `docs/ROADMAP-v2.md`, built and measured step by step.

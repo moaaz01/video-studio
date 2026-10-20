@@ -38,7 +38,7 @@ open gate — a late discovery re-renders the whole film.
 | 3 | Script | `film/film.json` — beat grid, on-screen copy, VO lines with tashkeel | every beat matches one line; reading time ≤ beat length |
 | 4 | Voice | `src/generated/vo.json` + wavs via `scripts/voice.py` | every line measured; total speech ≥ 55 % of runtime |
 | 5 | Build | `film/ui-source.json` scanned from the real app, scenes in `src/scenes/`, assembled by `src/film/Film.tsx` | typecheck clean, still per beat rendered, every on-screen string exists in the app's own table |
-| 6 | Mix | score from `scripts/make_score.py`, SFX on the 120 BPM grid | peak ≤ −1.4 dBFS, no clipped sample |
+| 6 | Mix | bed composed from the timeline by `scripts/make_bed.py`, VO placed from `vo.json`, foley on the 120 BPM cuts by `src/audio/Soundtrack.tsx` | bed RMS ≈ −19 dBFS, peak ≤ −3 dBFS, 0 clipped samples, and `qa --require-audio` sees an AAC track |
 | 7 | QA | `out/qa/` sheet + gates from `references/qa-gates.md` | every gate green, nothing read only from logs |
 | 8 | Deliver | masters in `out/`, the QA sheet, thumbnail/cover stills, and a case note in `examples/<slug>/` | names, durations, sizes and hashes read from the delivered files; the hand-off list matches what the user can actually open |
 
@@ -59,9 +59,9 @@ python scripts/studio.py refs add --url ... --title ... --move ... --why ...
 python scripts/studio.py refs check --min 2            # the phase-2 gate
 python scripts/studio.py new <slug>      # scaffold a film from the template
 python scripts/studio.py timeline        # film.json -> src/generated/timeline.json
-python scripts/voice.py --script film/vo.json     # Fish Audio -> wavs + vo.json
+python scripts/studio.py voice           # Fish Audio lines -> wavs + measured vo.json
 python scripts/ui_source.py --rea        # the capture commands (device, APK, web)
-python scripts/studio.py score           # original bed + foley, levelled
+python scripts/studio.py score           # compose the bed from the timeline, then level it
 python scripts/studio.py still 502       # one frame, 1:1 crop, for eyeballing
 python scripts/studio.py looks           # the same beat in every look, for the client
 python scripts/studio.py storyboard      # sheet.png: real panels + VO, to annotate
@@ -131,7 +131,8 @@ SKILL.md                  this file
 AGENTS.md                 portable entry for any non-DSH agent
 scripts/studio.py         orchestrator: doctor/new/ui/refs/timeline/voice/score/render/qa
 scripts/voice.py          Fish Audio TTS -> measured VO manifest
-scripts/make_score.py     additive synth: music bed + foley, no samples
+scripts/make_bed.py       additive synth: the bed, from timeline.json, measured
+scripts/make_score.py     legacy map-driven composer (only when a --map exists)+ foley, no samples
 scripts/level_score.py    loudness/peak leveller
 scripts/make_timeline.py  film.json -> timeline.json, grid + reading-time checks
 scripts/qa.py             probes, blackdetect, loudness, Arabic scan, sheets

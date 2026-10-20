@@ -162,8 +162,9 @@ python scripts/studio.py refs whatships "<product>"   # what already shipped
 python scripts/studio.py refs add --url ... --move ... --why ...
 python scripts/studio.py refs check --min 2  # phase-2 gate: references are pinned
 python scripts/studio.py timeline --strict   # compile film/film.json -> src/generated/timeline.json
-python scripts/studio.py voice               # Fish Audio, measured
-python scripts/studio.py score               # 120 BPM bed + foley, levelled to -1.4 dBFS
+python scripts/studio.py voice               # Fish Audio lines -> public/audio/vo + measured vo.json
+python scripts/studio.py score               # compose the bed from the timeline (RMS -18.7 dBFS, peak -3.0)
+python scripts/studio.py bed                 # the composer alone, with --json measurements
 python scripts/studio.py still 502           # one frame at 1:1 for eyeballing Arabic
 python scripts/studio.py looks               # one frame in every look: the client picks
 python scripts/studio.py storyboard          # out/storyboard/sheet.png, panels + VO
@@ -176,7 +177,7 @@ python scripts/studio.py shotlist film/brief.md --out film/plan.json   # brief -
 python scripts/studio.py provenance --strict # every declared capture matches its hash
 python scripts/mcp_server.py                 # the studio as MCP tools (stdio, no SDK)
 python scripts/studio.py render 16x9 9x16    # masters
-python scripts/studio.py qa --stills 8       # gates + contact sheets
+python scripts/studio.py qa --stills 8 --require-audio   # gates, contact sheets, and a silence check
 npm run dev                                  # Remotion Studio, live preview
 ```
 
@@ -247,6 +248,37 @@ length is capped at 34 (wide) / 22 (vertical) non-space characters, long VO is
 split into consecutive cues rather than shrunk, and SRT timestamps are
 `HH:MM:SS,mmm`. Social masters (9:16, 4:5, 1:1) ship with captions burned in;
 the wide film stays clean unless `--props '{"captions":true}'`.
+
+## The film has a voice and a score
+
+Sound is generated, not licensed. Three layers, all derived from the compiled
+timeline so the picture and the soundtrack cannot drift apart:
+
+```powershell
+python scripts/studio.py voice                  # film.json vo lines -> Fish Audio -> vo.json
+python scripts/studio.py timeline --strict      # re-fit the beats to the measured speech
+python scripts/studio.py score                  # compose the bed -> public/audio/score/music.wav
+python scripts/studio.py qa --require-audio     # fail a silent master
+```
+
+- **The bed** (`scripts/make_bed.py`) is additive synthesis: four detuned sine
+  stacks per chord (G6 → Fmaj7 → C → Am7, one chord per four bars), a soft sub
+  pulse on beats 1 and 3, filtered-noise shimmers on the stat and the end card.
+  It reads `fps`, `frames`, `bpm` and every beat start from `timeline.json`, so a
+  re-cut re-scores itself. Measured: **42.00 s, 48 kHz stereo, RMS -18.7 dBFS,
+  peak -3.0 dBFS, 0 clipped samples.**
+- **The voice** is Fish Audio TTS (`s2.1-pro-free`), fully vocalised Arabic and
+  measured on return: 5 lines, **18.16 s of speech**. The voice prints the brand
+  name in English and reads the copy as written. `FISH_API_KEY` lives in `.env`
+  or the environment and is never tracked; `public/audio/vo/` and
+  `public/audio/score/` are gitignored because they regenerate.
+- **`Soundtrack.tsx`** places each line on its beat from `vo.json`, ducks the bed
+  -6 dB inside every measured window, and puts original foley on the cuts
+  (`whoosh_rtl`, `stamp_thud` on the stat, `ui_chirp` on the CTA).
+
+It is mounted once at the film root, next to the grade and captions, so every
+composition — wide, vertical, 4:5, square — carries the same mix. The control
+render (`--frames=0-90`) reports `acodec: aac, arate: 48000, ach: 2`.
 
 ## Every aspect is a layout, not a crop
 

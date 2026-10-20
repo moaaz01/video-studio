@@ -13,6 +13,7 @@ import {Device} from '../scenes/Device';
 import {Stat} from '../scenes/Stat';
 import {Cta} from '../scenes/Cta';
 import {Captions} from './Captions';
+import {Soundtrack} from '../audio/Soundtrack';
 
 const T = timelineJson as unknown as Film;
 
@@ -73,6 +74,7 @@ const Body: React.FC<{vertical: boolean; lookName?: string; blur?: number; capti
       </AbsoluteFill>
     </FilmGrade>
     {showCaptions ? <Captions vertical={vertical} /> : null}
+    <Soundtrack />
     </AbsoluteFill>
   );
 };
