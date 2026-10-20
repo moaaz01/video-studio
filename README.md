@@ -66,6 +66,28 @@ decide to ship the engine as a package.
 
 ---
 
+## Verify the local install
+
+Installing is one command, and proving it is another:
+
+```powershell
+.\install.ps1            # junction, all five discovery paths
+.\install.ps1 -Verify    # links + frontmatter + every file an agent reads, through the link
+python scripts/install_check.py   # same check, any OS, exit 1 on any gap
+```
+
+```
+agent                    link   state         detail
+DeepSeek Harness         yes    ok            video-studio, 10 files visible
+Claude Code              yes    ok            video-studio, 10 files visible
+opencode                 yes    ok            video-studio, 10 files visible
+OpenClaw / Agent Skills  yes    ok            video-studio, 10 files visible
+Hermes Agent             yes    ok            video-studio, 10 files visible
+```
+
+The check reads *through* each link, so a stale copy, a broken junction or a
+half-installed skill fails instead of passing on the installer's word.
+
 ## What the agent gets
 
 **A protocol** — [`SKILL.md`](SKILL.md): eight phases, each with an exit gate, and

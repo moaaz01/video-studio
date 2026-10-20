@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# video-studio — link the skill into every agent that reads SKILL.md.
+# video-studio - link the skill into every agent that reads SKILL.md.
 #
 #   ./install.sh              # dsh, claude, opencode, agents, hermes
 #   ./install.sh dsh claude   # only these
@@ -10,7 +10,7 @@ NAME="video-studio"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [[ ! -f "$HERE/SKILL.md" ]]; then
-  echo "SKILL.md not found next to this script — run it from the repo root." >&2
+  echo "SKILL.md not found next to this script - run it from the repo root." >&2
   exit 1
 fi
 
@@ -62,6 +62,9 @@ done
 
 if [[ $REMOVE -eq 0 ]]; then
   echo
-  echo "Next: ask the agent for a video — the skill triggers on its own."
-  echo "First run in the repo:  npm install  &&  python scripts/studio.py doctor"
+  echo "Next: ask the agent for a video - the skill triggers on its own."
+  echo "First run in the repo:  npm install  &&  pip install -r requirements.txt  &&  python scripts/studio.py doctor"
+  echo
+  echo "Deep check (links, frontmatter, every file an agent needs):"
+  python "$here/scripts/install_check.py" || true
 fi

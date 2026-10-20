@@ -16,6 +16,7 @@ Read in this order, and stop when you have what you need:
 
 ```powershell
 npm install
+python scripts/install_check.py       # am I actually installed for every agent?
 python scripts/studio.py doctor        # environment check, no network
 python scripts/studio.py ui --dir <app>  # scan the real project -> film/ui-source.json
 python scripts/studio.py refs check --min 2   # are the references pinned?

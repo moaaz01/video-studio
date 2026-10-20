@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.1 — 2026-10-20
+- `scripts/install_check.py`: proves the install instead of trusting it — every
+  discovery path must be a link to this repo, `SKILL.md` must parse, and ten files
+  must be readable *through* the link. Exit 1 on any gap. `-Verify` in
+  `install.ps1` runs it; `install.sh` runs it too.
+- `install.sh` output was mojibake (an em dash written as UTF-8, read as cp1252);
+  now ASCII-clean, like `install.ps1`.
+- README/AGENTS: the verify step is part of the install, not a footnote.
+
 ## 1.1.0 — 2026-10-20
 Sources wired in as tools instead of reading material.
 
