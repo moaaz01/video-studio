@@ -1,6 +1,7 @@
 import React from "react";
 import {AbsoluteFill, useCurrentFrame} from "remotion";
 import type {Look} from "./looks";
+import {gradeFilterId, gradeFor, tableValues} from "./grade";
 
 /**
  * A 220px grain tile: fractal noise, desaturated, tiled. Rasterised once by
@@ -15,22 +16,35 @@ const GRAIN_TILE =
       "<rect width='100%' height='100%' filter='url(#n)' opacity='0.5'/></svg>",
   );
 
-export const FilmGrade: React.FC<{look: Look; children: React.ReactNode}> = ({look, children}) => {
+export const FilmGrade: React.FC<{look: Look; children: React.ReactNode; overlays?: boolean}> = ({
+  look,
+  children,
+  overlays = true,
+}) => {
   const frame = useCurrentFrame();
-  const g = look.grade;
+  const grade = gradeFor(look.name);
+  const id = gradeFilterId(look.name);
   const barH = `${look.letterbox * 100}%`;
 
   return (
     <AbsoluteFill style={{background: "#000"}}>
-      <AbsoluteFill
-        style={{
-          filter: `brightness(${g.brightness}) contrast(${g.contrast}) saturate(${g.saturate}) sepia(${g.sepia}) hue-rotate(${g.hue}deg)`,
-        }}
-      >
-        {children}
-      </AbsoluteFill>
+      {/* the grade itself: three transfer curves and one saturation matrix */}
+      <svg aria-hidden style={{position: "absolute", width: 0, height: 0}}>
+        <defs>
+          <filter id={id} colorInterpolationFilters="sRGB">
+            <feComponentTransfer>
+              <feFuncR type="table" tableValues={tableValues(grade.curves.r)} />
+              <feFuncG type="table" tableValues={tableValues(grade.curves.g)} />
+              <feFuncB type="table" tableValues={tableValues(grade.curves.b)} />
+            </feComponentTransfer>
+            <feColorMatrix type="saturate" values={String(grade.saturate)} />
+          </filter>
+        </defs>
+      </svg>
 
-      {look.bloom > 0 ? (
+      <AbsoluteFill style={{filter: `url(#${id})`}}>{children}</AbsoluteFill>
+
+      {overlays && look.bloom > 0 ? (
         <AbsoluteFill
           style={{
             background: `radial-gradient(120% 85% at 50% -12%, rgba(255,238,208,${0.12 * look.bloom}), rgba(255,238,208,0) 64%)`,
@@ -40,7 +54,7 @@ export const FilmGrade: React.FC<{look: Look; children: React.ReactNode}> = ({lo
         />
       ) : null}
 
-      {look.vignette > 0 ? (
+      {overlays && look.vignette > 0 ? (
         <AbsoluteFill
           style={{
             background: `radial-gradient(118% 92% at 50% 46%, rgba(0,0,0,0) 50%, rgba(0,0,0,${0.6 * look.vignette}) 100%)`,
@@ -49,7 +63,7 @@ export const FilmGrade: React.FC<{look: Look; children: React.ReactNode}> = ({lo
         />
       ) : null}
 
-      {look.grain > 0 ? (
+      {overlays && look.grain > 0 ? (
         <AbsoluteFill
           style={{
             backgroundImage: `url("${GRAIN_TILE}")`,
@@ -62,7 +76,7 @@ export const FilmGrade: React.FC<{look: Look; children: React.ReactNode}> = ({lo
         />
       ) : null}
 
-      {look.letterbox > 0 ? (
+      {overlays && look.letterbox > 0 ? (
         <>
           <div style={{position: "absolute", left: 0, right: 0, top: 0, height: barH, background: "#000"}} />
           <div style={{position: "absolute", left: 0, right: 0, bottom: 0, height: barH, background: "#000"}} />

@@ -39,3 +39,4 @@ references/corpus/evidence/
 # generated previews (rendered on demand)
 out/looks/
 out/storyboard/
+public/luts/

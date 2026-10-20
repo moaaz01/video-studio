@@ -27,6 +27,7 @@ python scripts/studio.py advise        # measured design review before you rende
 python scripts/studio.py storyboard    # out/storyboard/sheet.png: real panels, real Arabic
 python scripts/studio.py looks         # one frame in every look: let the client choose
 python scripts/studio.py eval          # golden briefs: schema + compile + score floor
+python scripts/studio.py lut           # palette-derived grade curves + .cube LUTs
 ```
 
 ## How to make a new film

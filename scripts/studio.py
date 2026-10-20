@@ -233,6 +233,7 @@ DELEGATES = {
     "storyboard": "storyboard.py",
     "looks": "looks.py",
     "eval": "../evals/run_evals.py",
+    "lut": "lut.py",
 }
 
 

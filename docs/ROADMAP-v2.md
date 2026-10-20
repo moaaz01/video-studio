@@ -28,6 +28,7 @@ impressive it looks in a demo:
 | MCP server so any agent can call the studio | `python scripts/mcp_server.py` | initialize ok, 8 tools listed, `studio_doctor` executed, unknown tool rejected |
 | 180-degree shutter, opt-in per look | `look.motionBlur` | 3 samples cost 1.93x; same-look A/B differs by 0.95-1.34/255 with exposure within 0.24 luma |
 | Score floor + golden briefs in CI | `python evals/run_evals.py --min-score 90` | 100 / 100 / 95 on device, launch and editorial plans |
+| Palette-derived grading, not CSS | `python scripts/lut.py` | `GradeLab` matches `grade.json` within 1 code value (mean 0.46, 8-bit rounding) |
 
 The look is not a filter preset bolted on top. It is derived from what the app
 already does — warm paper, ink text, one emerald accent — so the film's grade and

@@ -169,6 +169,7 @@ python scripts/studio.py looks               # one frame in every look: the clie
 python scripts/studio.py storyboard          # out/storyboard/sheet.png, panels + VO
 python scripts/studio.py advise              # measured review: time, contrast, rhythm, cta
 python scripts/studio.py eval                # three golden briefs must compile and score >= 90
+python scripts/studio.py lut                 # palette -> grade curves + .cube LUTs, verified
 python scripts/mcp_server.py                 # the studio as MCP tools (stdio, no SDK)
 python scripts/studio.py render 16x9 9x16    # masters
 python scripts/studio.py qa --stills 8       # gates + contact sheets
@@ -200,6 +201,21 @@ capture loop, and [`references/prompt-anatomy.md`](references/prompt-anatomy.md)
 the brief has six blocks.
 
 ## Looks, storyboards, and a critic
+
+The grade is not a CSS approximation: `scripts/lut.py` reads the app's palette
+(`src/theme.ts`), builds a per-channel transfer curve plus a saturation scalar,
+and writes `src/generated/grade.json`. The film applies it as a real
+`feComponentTransfer` filter — same maths, three checkpoints:
+
+```powershell
+python scripts/lut.py                       # curves + public/luts/*.cube (33^3), verified
+npx remotion still src/index.ts GradeLab out/qa/grade_lab.png --frame=1
+# the 16 patches must match grade.json within 1 code value (measured 0.46 mean)
+```
+
+White is protected on purpose: the paper surfaces belong to the app, so the
+curve works the midtones and leaves 251 where the app says 251 (before this,
+the CSS grade pushed them to 255 — a fidelity bug dressed as a look).
 
 A film gets **one look**, declared in `film/film.json` as `"look": "cinema-warm"`
 (or `paper-clean`, `ink-noir`, `vivid-launch`). It is a grade, grain, vignette,

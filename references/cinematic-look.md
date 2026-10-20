@@ -52,11 +52,30 @@ The frames land in `out/looks/`. Send them to the client, get one answer, set
 `film.look`, then render. This replaces the "which style do you prefer?" question
 asked in words.
 
-## Next: a LUT we own
+## The grade is generated, not borrowed
 
-`@remotion/effects` provides `lut()` for inline 3D `.cube` LUTs and
-`createEffect()` for custom WebGL2/WebGPU shaders. The plan is a film-print
-emulation generated from our own palette, applied through `<HtmlInCanvas>` with
-an `isSupported()` fallback to the CSS grade above. Non-negotiable: the fallback
-path and the LUT path must produce the same *reading* of the image — a viewer
-should not be able to tell which one rendered.
+`scripts/lut.py` reads the app's palette (`src/theme.ts`) and turns it into
+transfer curves: highlights lean to the parchment token, shadows to ink, and the
+paper surfaces stay at their real value instead of being pushed to white.
+`src/generated/grade.json` is the committed artefact; `FilmGrade` applies it as a
+real `feComponentTransfer` filter, and the same maths writes 33-cube LUTs into
+`public/luts/` (gitignored, regenerated in under a second).
+
+Check parity with the probe, not with your eyes:
+
+```bash
+npx remotion still src/index.ts GradeLab out/qa/grade_lab.png --frame=1
+python scripts/lut.py --json-only
+```
+
+Sixteen neutral patches must match the JSON within one code value — measured
+mean 0.46, i.e. 8-bit rounding only. If they diverge, the look is a bug.
+
+## Next: applying the LUT to the DOM
+
+`@remotion/effects` offers `lut()` and `createEffect()` for canvas layers, and
+`<HtmlInCanvas>` would let a shader grade the whole composite. The LUT already
+exists in `public/luts/<look>.cube`; what is missing is the Chrome flag, not the
+colour. Until then the SVG filter is the path, and when the flag ships both paths
+must produce the same reading of the image — a viewer should not be able to tell
+which one rendered.

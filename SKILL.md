@@ -67,6 +67,7 @@ python scripts/studio.py looks           # the same beat in every look, for the 
 python scripts/studio.py storyboard      # sheet.png: real panels + VO, to annotate
 python scripts/studio.py advise          # measured review before spending render time
 python scripts/studio.py eval            # golden briefs must compile and score >= 90
+python scripts/studio.py lut             # palette -> grade curves (and .cube for later)
 python scripts/mcp_server.py             # expose the studio to any agent (MCP, stdio)
 python scripts/studio.py render 16x9 9x16 # masters, concurrent
 python scripts/studio.py qa              # gates + contact sheets + thumbnails

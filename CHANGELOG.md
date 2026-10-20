@@ -2,6 +2,22 @@
 
 The campaign: everything on `docs/ROADMAP-v2.md`, built and measured step by step.
 
+### P0-3 — the grade comes from the palette (done)
+
+- `scripts/lut.py` reads `src/theme.ts`, derives per-channel transfer curves from
+  the parchment/ink anchors (highlights lean to parchment, shadows to ink) and
+  writes `src/generated/grade.json`. `FilmGrade` applies them as a real
+  `feComponentTransfer` + `feColorMatrix` filter instead of a CSS approximation.
+- The same maths also emits 33-cube `.cube` LUTs into `public/luts/` (gitignored,
+  regenerated in 0.9 s) so the day `HtmlInCanvas` ships, `lut()` gets a
+  palette-faithful LUT rather than a downloaded one.
+- Parity is measured, not asserted: the `GradeLab` composition renders 16 neutral
+  steps through the filter and matches the generator within **1 code value**
+  (mean 0.46) — i.e. 8-bit rounding only.
+- White protection is a fidelity decision: the earlier CSS grade pushed the app's
+  paper surfaces to 255; the curve keeps them at 251. Curve grade also renders
+  faster than the CSS stack on this laptop (12.6 s vs 17.2 s for 20 frames).
+
 ### P0-2 — the score floor and golden briefs (done)
 
 - `advise.py --min-score N` fails the build below a score; CI now runs

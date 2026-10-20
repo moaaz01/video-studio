@@ -13,8 +13,11 @@ export type LookName = "cinema-warm" | "paper-clean" | "ink-noir" | "vivid-launc
 
 export type Look = {
   name: LookName;
-  /** CSS filter stack, applied to the whole composite */
-  grade: {brightness: number; contrast: number; saturate: number; sepia: number; hue: number};
+  /**
+   * The grading curves live in `src/generated/grade.json`, derived from the app's
+   * own palette by `scripts/lut.py`. One definition, so the SVG filter and the
+   * 3D LUT can never disagree.
+   */
   /** 0..1 edge darkening */
   vignette: number;
   /** 0..0.12 grain opacity */
@@ -29,12 +32,9 @@ export type Look = {
   motionBlur: number;
 };
 
-const base = {brightness: 1, contrast: 1, saturate: 1, sepia: 0, hue: 0};
-
 export const LOOKS: Record<LookName, Look> = {
   "cinema-warm": {
     name: "cinema-warm",
-    grade: {...base, brightness: 1.02, contrast: 1.07, saturate: 0.95, sepia: 0.06, hue: -6},
     vignette: 0.32,
     grain: 0.055,
     bloom: 0.55,
@@ -44,7 +44,6 @@ export const LOOKS: Record<LookName, Look> = {
   },
   "paper-clean": {
     name: "paper-clean",
-    grade: {...base, brightness: 1.01, contrast: 1.03, saturate: 1.0},
     vignette: 0.12,
     grain: 0.03,
     bloom: 0.18,
@@ -54,7 +53,6 @@ export const LOOKS: Record<LookName, Look> = {
   },
   "ink-noir": {
     name: "ink-noir",
-    grade: {...base, brightness: 0.99, contrast: 1.13, saturate: 0.82, sepia: 0.04, hue: 4},
     vignette: 0.42,
     grain: 0.07,
     bloom: 0.3,
@@ -64,7 +62,6 @@ export const LOOKS: Record<LookName, Look> = {
   },
   "vivid-launch": {
     name: "vivid-launch",
-    grade: {...base, brightness: 1.03, contrast: 1.1, saturate: 1.12},
     vignette: 0.24,
     grain: 0.04,
     bloom: 0.7,
