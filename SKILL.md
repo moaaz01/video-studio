@@ -69,6 +69,7 @@ python scripts/studio.py advise          # measured review before spending rende
 python scripts/studio.py eval            # golden briefs must compile and score >= 90
 python scripts/studio.py lut             # palette -> grade curves (and .cube for later)
 python scripts/studio.py safe <still> --preset reels --strict   # platform UI bands
+python scripts/studio.py captions        # cue JSON + wide/vertical SRT (--check verifies)
 python scripts/mcp_server.py             # expose the studio to any agent (MCP, stdio)
 python scripts/studio.py render 16x9 9x16 # masters, concurrent
 python scripts/studio.py qa              # gates + contact sheets + thumbnails

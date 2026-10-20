@@ -24,6 +24,7 @@ python scripts/studio.py timeline      # film/film.json -> src/generated/timelin
 python scripts/studio.py render        # out/film_1080p.mp4 + out/film_9x16.mp4
 python scripts/studio.py qa --stills 8 # gates + contact sheets, non-zero on failure
 python scripts/studio.py safe <still>  # platform safe-area check (reels/shorts/story/feed)
+python scripts/studio.py captions      # cue JSON + wide/vertical SRT, self-checked
 python scripts/studio.py advise        # measured design review before you render
 python scripts/studio.py storyboard    # out/storyboard/sheet.png: real panels, real Arabic
 python scripts/studio.py looks         # one frame in every look: let the client choose

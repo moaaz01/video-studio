@@ -171,6 +171,7 @@ python scripts/studio.py advise              # measured review: time, contrast, 
 python scripts/studio.py eval                # three golden briefs must compile and score >= 90
 python scripts/studio.py lut                 # palette -> grade curves + .cube LUTs, verified
 python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict   # platform UI bands
+python scripts/studio.py captions            # burned captions JSON + wide/vertical SRT, checked
 python scripts/mcp_server.py                 # the studio as MCP tools (stdio, no SDK)
 python scripts/studio.py render 16x9 9x16    # masters
 python scripts/studio.py qa --stills 8       # gates + contact sheets
@@ -200,6 +201,24 @@ source list (including the Remotion resource index, OpenFilm, Mixkit and the Ara
 type pool), [`references/fidelity-pipeline.md`](references/fidelity-pipeline.md) for the
 capture loop, and [`references/prompt-anatomy.md`](references/prompt-anatomy.md) for why
 the brief has six blocks.
+
+## Captions are generated, timed, and checked
+
+`scripts/captions.py` reads the same `film.json` the renderer reads and writes
+`src/generated/captions.json` (frame-timed cues for both aspect families) plus
+`out/captions/wide.srt` and `out/captions/vertical.srt`. `Captions.tsx` picks the
+active cue from the frame alone, so a still is pixel-identical to the video frame.
+
+```powershell
+python scripts/studio.py captions                      # generate + assert
+python scripts/studio.py captions --check              # re-read the SRT and verify it
+```
+
+The gate is arithmetic, not taste: cues are monotonic with a 2-frame gap, line
+length is capped at 34 (wide) / 22 (vertical) non-space characters, long VO is
+split into consecutive cues rather than shrunk, and SRT timestamps are
+`HH:MM:SS,mmm`. Social masters (9:16, 4:5, 1:1) ship with captions burned in;
+the wide film stays clean unless `--props '{"captions":true}'`.
 
 ## Every aspect is a layout, not a crop
 

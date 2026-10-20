@@ -31,6 +31,7 @@ impressive it looks in a demo:
 | Palette-derived grading, not CSS | `python scripts/lut.py` | `GradeLab` matches `grade.json` within 1 code value (mean 0.46, 8-bit rounding) |
 | 1:1 and 4:5 as real layouts | `Portrait4x5`, `Square1x1` | stills rendered and read; the phone card recomputes from the canvas |
 | Measured platform safe areas | `python scripts/safe_area.py --preset reels` | vertical device beat 35.2% -> 0.0%, CTA 3.5%, synthetic violation 11.8% (fails) |
+| Captions with real timing | `python scripts/studio.py captions --check` | 10 cues agree with captions.json at 30 fps; max line 29/21 chars; 2-frame gaps |
 
 The look is not a filter preset bolted on top. It is derived from what the app
 already does — warm paper, ink text, one emerald accent — so the film's grade and

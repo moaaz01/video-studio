@@ -12,6 +12,7 @@ import {Hook} from '../scenes/Hook';
 import {Device} from '../scenes/Device';
 import {Stat} from '../scenes/Stat';
 import {Cta} from '../scenes/Cta';
+import {Captions} from './Captions';
 
 const T = timelineJson as unknown as Film;
 
@@ -37,10 +38,18 @@ const WIPES = ['paper', 'ink', 'emerald'] as const;
 /** The cut vocabulary: one opaque panel wipe, 12 frames, centred on the cut. */
 const CUT_FRAMES = 12;
 
-const Body: React.FC<{vertical: boolean; lookName?: string; blur?: number}> = ({vertical, lookName, blur}) => {
+const Body: React.FC<{vertical: boolean; lookName?: string; blur?: number; captions?: boolean}> = ({
+  vertical,
+  lookName,
+  blur,
+  captions,
+}) => {
   const beats = T.beats;
   const look = {...resolveLook(lookName ?? T.look), ...(typeof blur === 'number' ? {motionBlur: blur} : {})};
+  // social masters ship with burned captions; the wide film stays cinematic
+  const showCaptions = captions ?? vertical;
   return (
+    <AbsoluteFill>
     <FilmGrade look={look}>
       <AbsoluteFill style={{background: C.inkBg}}>
         {beats.map((beat, i) => {
@@ -63,14 +72,16 @@ const Body: React.FC<{vertical: boolean; lookName?: string; blur?: number}> = ({
         })}
       </AbsoluteFill>
     </FilmGrade>
+    {showCaptions ? <Captions vertical={vertical} /> : null}
+    </AbsoluteFill>
   );
 };
 
-export const FilmWide: React.FC<{look?: string; blur?: number}> = ({look, blur}) => (
-  <Body vertical={false} lookName={look} blur={blur} />
+export const FilmWide: React.FC<{look?: string; blur?: number; captions?: boolean}> = ({look, blur, captions}) => (
+  <Body vertical={false} lookName={look} blur={blur} captions={captions} />
 );
-export const FilmVertical: React.FC<{look?: string; blur?: number}> = ({look, blur}) => (
-  <Body vertical lookName={look} blur={blur} />
+export const FilmVertical: React.FC<{look?: string; blur?: number; captions?: boolean}> = ({look, blur, captions}) => (
+  <Body vertical lookName={look} blur={blur} captions={captions} />
 );
 
 export const FILM = T;

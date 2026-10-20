@@ -235,6 +235,7 @@ DELEGATES = {
     "eval": "../evals/run_evals.py",
     "lut": "lut.py",
     "safe": "safe_area.py",
+    "captions": "captions.py",
 }
 
 

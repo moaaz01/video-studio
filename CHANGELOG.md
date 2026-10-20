@@ -2,6 +2,22 @@
 
 The campaign: everything on `docs/ROADMAP-v2.md`, built and measured step by step.
 
+### P1-4 — captions that are timed, not typed (done)
+
+- `scripts/captions.py` derives cues from the compiled film (never a second list)
+  and writes `src/generated/captions.json` plus wide/vertical `.srt`.
+  Timing: beat start, beat end minus a 6-frame tail, measured VO takes precedence
+  when `--vo` is supplied; cues never touch (2-frame gap) and the script asserts it.
+- Line length is capped at 34 (wide) / 22 (vertical) non-space characters; long VO
+  splits into consecutive cues inside the same beat instead of shrinking type.
+- `src/film/Captions.tsx` is a pure function of the frame (no timers, no backdrop
+  filter), mounted outside `FilmGrade` so the grade cannot tint the white type.
+- Social masters (9:16, 4:5, 1:1) burn captions in; the wide film stays clean
+  unless asked. The vertical caption plate sits above the Reels UI band
+  (`safe_area.py --preset reels` on a caption frame: 0.0%).
+- `--check` re-reads the SRT and verifies monotonicity, overlap, and that cue
+  count matches the JSON: 10 cues agree at 30 fps.
+
 ### P2-1 — every aspect is a layout (done)
 
 - New masters: `Portrait4x5` (1080x1350) and `Square1x1` (1080x1080), same film,
