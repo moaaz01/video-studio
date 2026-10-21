@@ -21,7 +21,7 @@ python scripts/studio.py doctor        # environment check, no network
 python scripts/studio.py ui --dir <app>  # scan the real project -> film/ui-source.json
 python scripts/studio.py refs check --min 2   # are the references pinned?
 python scripts/studio.py timeline      # film/film.json -> src/generated/timeline.json
-python scripts/studio.py render        # out/film_1080p.mp4 + out/film_9x16.mp4
+python scripts/studio.py render        # 1080p masters (CRF 10 / png for the hero cuts)
 python scripts/studio.py qa --stills 8 # gates + contact sheets, non-zero on failure
 python scripts/studio.py safe <still>  # platform safe-area check (reels/shorts/story/feed)
 python scripts/studio.py captions      # cue JSON + wide/vertical SRT, self-checked
@@ -60,14 +60,17 @@ python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict
    `src/components/DemoUI.tsx`, or the client's real screens. For real pixels, capture
    the device with REA (`references/fidelity-pipeline.md`). Scenes read copy from the
    timeline; keep components dumb.
-6. **Look** *(before the first render)*: `studio.py looks` -> pick one preset -> set
-   `film.look`. Then `studio.py storyboard` and `studio.py advise`: the sheet is what
-the client annotates, the review is what you fix. Guide:
-   `references/cinematic-look.md`.
+6. **Look and cut** *(before the first render)*: `studio.py looks` -> pick one preset
+   -> write `film/style.json` (`look`, `motion`, `background`, `transitions`, `sfx`).
+   Then `studio.py storyboard` and `studio.py advise`: the sheet is what the client
+   annotates, the review is what you fix. Guide: `references/cinematic-look.md`.
 7. **Mix**: `python scripts/studio.py score` — 120 BPM bed, foley on cuts only
    (see the foley table), levelled to peak −1.4 dBFS / RMS −20…−23.
 8. **QA**: run the gates. Report *measured* numbers, from the delivered MP4.
    `python scripts/qa.py` also scans every source file for Arabic mojibake.
+9. **Deliver**: `python scripts/package_project.py --project projects/<slug>` — the
+   only step that produces the folder you hand over (assets + masters + 11 stills +
+   manifest + SHA256SUMS). Commit the stills and the manifest; masters stay ignored.
 
 ## Where things live
 
@@ -80,9 +83,11 @@ the client annotates, the review is what you fix. Guide:
 | `src/generated/timeline.json` | Compiled output. Never hand-edit. |
 | `src/brand.ts` | Client identity: name, monogram/icon, accent, CTA, contacts. |
 | `src/scenes/*.tsx` | One component per beat kind. Copy arrives as props. |
-| `src/film/Film.tsx` | Sequences beats, inserts cuts, drives both aspects. |
-| `src/look/looks.ts` | The five looks (`ui-daylight` is the UI-first one). `film.look` names one; no ad-hoc grading in scenes. |
+| `src/film/Film.tsx` | Sequences beats, hands scenes over on the cut axis (pre-roll + 10-frame overlap), drives every aspect. |
+| `src/look/looks.ts` | The six looks; `premium-warm` is the device-led default, `ui-daylight` is the flat cautionary one. `film/style.json` names one; no ad-hoc grading in scenes. |
 | `src/film/Storyboard.tsx` | The storyboard sheet composition (`studio.py storyboard`). |
+| `src/film/Captions.tsx` | Burned captions from `src/generated/captions.json`; 9:16 only, display copy without tashkeel. |
+| `film/style.json` + `film/voices.json` | The film's declared cut and its voice catalogue (clones + verified stock ids). |
 | `src/components/DemoUI.tsx` | The mock product screen. Replace with the real UI. |
 | `src/audio/Soundtrack.tsx` | The mix: bed, measured VO cues, foley on the cuts. Mounted once in `Film.tsx`. |
 | `scripts/make_bed.py` | Composes the bed from `timeline.json`; asserts RMS/peak. |
@@ -119,7 +124,8 @@ the client annotates, the review is what you fix. Guide:
 - **New platform** → `references/platform-specs.md` + a new `<Composition>` in
   `src/Root.tsx`; add the aspect to `RENDERS` in `scripts/studio.py`.
 - **New voice model** → `scripts/voice.py` takes `--model`; keep `s2.1-pro-free`
-  as the default so the repo stays runnable without spend.
+  as the default so the repo stays runnable without spend. Add the id to
+  `film/voices.json` only after a real TTS + ASR round-trip (`references/voices.md`).
 - **New language** → the type and bidi rules live in `references/arabic-type.md`;
   add a parallel note (e.g. `references/hebrew-type.md`) rather than editing the
   Arabic one, and keep `lib/rtl.ts` as the single place that knows direction.

@@ -1,0 +1,114 @@
+{
+  "id": "ui-morph",
+  "title": "UI morph: one element through the states, never a cut",
+  "when": {
+    "kind": [
+      "ui-film",
+      "feature-reveal",
+      "app-demo"
+    ],
+    "aspects": [
+      "16x9",
+      "9x16"
+    ],
+    "energy": "mid",
+    "audience": [
+      "students",
+      "designers"
+    ],
+    "dialect": [
+      "ar-msa",
+      "ar-levant"
+    ],
+    "duration": [
+      30,
+      60
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "hook",
+        "bars": 3,
+        "role": "the promise, one line"
+      },
+      {
+        "kind": "device",
+        "bars": 4,
+        "role": "the element at rest, real UI"
+      },
+      {
+        "kind": "stat",
+        "bars": 3,
+        "role": "the value that changes"
+      },
+      {
+        "kind": "device",
+        "bars": 4,
+        "role": "the same element after the change"
+      },
+      {
+        "kind": "cta",
+        "bars": 3,
+        "role": "the action"
+      }
+    ],
+    "total_bars": 17
+  },
+  "look": "ui-daylight",
+  "palette": {
+    "ground": "#FBF7F0",
+    "surface": "#FFFFFF",
+    "ink": "#1A2A36",
+    "accent": "#0E8A6E",
+    "support": "#EADFCD"
+  },
+  "typography": {
+    "face": "Tajawal",
+    "display_px": [
+      56,
+      80
+    ],
+    "body_px": [
+      30,
+      40
+    ],
+    "line_height": 1.2,
+    "weights": [
+      500,
+      700
+    ],
+    "rules": [
+      "UI labels are quoted verbatim from the app, never retitled for the film.",
+      "One element morphs; the rest of the frame holds still.",
+      "Crops of real UI only; no redrawn screens."
+    ]
+  },
+  "layouts": [
+    "screen-detail-crop",
+    "device-left-copy-right",
+    "paper-card",
+    "end-card"
+  ],
+  "transitions": [
+    "blur",
+    "slide"
+  ],
+  "sfx": {
+    "intro": "ui_pop",
+    "cut": "whoosh_rtl",
+    "accent": "card_pop"
+  },
+  "background": "paper-glow",
+  "motion": 0.6,
+  "reference": {
+    "site": "prompt-motion.com",
+    "url": "https://prompt-motion.com/twoclipping-5cba86",
+    "pattern": "shapes",
+    "move": "One element morphs through UI states, a pure spring per change, never cuts.",
+    "note": "Pattern from prompt-motion's shape-morph reference card (twoclipping-5cba86), adapted to UI states."
+  },
+  "guardrails": [
+    "Spring values stay deterministic: a pure function of seek(t), no state."
+  ]
+}

@@ -1,6 +1,22 @@
 {
   "fps": 30,
-  "look": "cinema-warm",
+  "look": "premium-warm",
+  "style": {
+    "template": "launch-hero",
+    "look": "premium-warm",
+    "motion": 1.0,
+    "background": "paper-glow",
+    "transitions": [
+      "whip",
+      "slide",
+      "blur"
+    ],
+    "sfx": {
+      "intro": "riser_short",
+      "cut": "whoosh_rtl",
+      "accent": "card_pop"
+    }
+  },
   "width": 1920,
   "height": 1080,
   "bpm": 120,
@@ -18,6 +34,8 @@
       "line2": "الفكرة التي تُفهَم، لا التي تُقرأ مرّتين",
       "stat": null,
       "screen": null,
+      "emphasis": [],
+      "sfx": [],
       "vo": [
         "من صفحةٍ واحدة\\، إلى فهمٍ كامل."
       ]
@@ -34,6 +52,8 @@
       "line2": "نفس الشاشات، ونفس التفاصيل، ونفس اللغة",
       "stat": null,
       "screen": null,
+      "emphasis": [],
+      "sfx": [],
       "vo": [
         "كلُّ ما تراه في الفيديو\\، موجودٌ في التطبيق."
       ]
@@ -50,6 +70,8 @@
       "line2": "التمرير، والضغط، والانتقال — كما يستخدمها الناس",
       "stat": null,
       "screen": null,
+      "emphasis": [],
+      "sfx": [],
       "vo": [
         "التفاصيلُ الصغيرة\\، هي ما يجعل الشيءَ مُصدَّقًا."
       ]
@@ -71,6 +93,8 @@
         "label": "أسرع في الوصول إلى الفكرة"
       },
       "screen": null,
+      "emphasis": [],
+      "sfx": [],
       "vo": [
         "ستّةُ أضعافِ السرعة\\، في نفس الوقت."
       ]
@@ -87,6 +111,8 @@
       "line2": "",
       "stat": null,
       "screen": null,
+      "emphasis": [],
+      "sfx": [],
       "vo": [
         "حمّل التطبيقَ الآن\\، وابدأ بصفحتك الأولى."
       ]

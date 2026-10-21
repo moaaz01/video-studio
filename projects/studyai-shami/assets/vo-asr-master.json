@@ -1,28 +1,39 @@
 {
-  "source": "out/film_1080p.mp4",
+  "source": "out/masters/film_16x9.mp4",
+  "method": "each VO window cut out of the mastered 16:9 mix (bed + foley + voice), transcribed with Fish ASR, compared to the scripted line after orthography normalisation",
   "lines": [
     {
       "id": "b01-hook-1",
-      "similarity": 0.975,
-      "heard": "من أول صفحة لآخر امتحان بتفهمه مرة واحدة."
+      "start": 0.0,
+      "duration": 4.117,
+      "similarity": 0.988,
+      "heard": "من أول صفحة لآخر امتحان بتفهمها مرة واحدة."
     },
     {
       "id": "b02-device-1",
-      "similarity": 0.983,
-      "heard": "ارفع ملزمتك PDF وخلت التطبيق يشتغل عنك يلخص ويجاوب ويختبرك."
+      "start": 6.0,
+      "duration": 6.562,
+      "similarity": 0.927,
+      "heard": "ارفع ملفك PDF وخلت تطبيق يشتغل عنك ينخس ويجاوب ويختبرك."
     },
     {
       "id": "b03-device-1",
-      "similarity": 0.968,
-      "heard": "اسأل أي شيء ببساطة وكل جواب بيجيك مع رقم الصفحة اللي ينطلق منه."
+      "start": 16.0,
+      "duration": 5.193,
+      "similarity": 0.992,
+      "heard": "اسأل أي شيء ببساطة وكل جواب بيجيك مع رقم الصفحة اللي انطلق منها."
     },
     {
       "id": "b04-stat-1",
-      "similarity": 0.976,
-      "heard": "لا خطوات بس، ارفع، اسأل، وافهم، والباقي علينا."
+      "start": 26.0,
+      "duration": 4.997,
+      "similarity": 0.953,
+      "heard": "ثلاث خطوات بس ارفع اسأل وافهم والباقي علينا."
     },
     {
       "id": "b05-cta-1",
+      "start": 34.0,
+      "duration": 4.9,
       "similarity": 0.99,
       "heard": "حمل التطبيق من تليجرام مجاناً وبلش من أول صفحة عندك."
     }

@@ -1,0 +1,117 @@
+{
+  "id": "app-demo",
+  "title": "App demo: the device is the frame, one screen per beat",
+  "when": {
+    "kind": [
+      "app-demo",
+      "device-demo",
+      "ui-film"
+    ],
+    "aspects": [
+      "16x9",
+      "9x16"
+    ],
+    "energy": "mid",
+    "audience": [
+      "students",
+      "consumer",
+      "parents"
+    ],
+    "dialect": [
+      "ar-msa",
+      "ar-levant"
+    ],
+    "duration": [
+      40,
+      75
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "hook",
+        "bars": 3,
+        "role": "the pain, named in one line"
+      },
+      {
+        "kind": "device",
+        "bars": 5,
+        "role": "the real app, first screen, whole phone"
+      },
+      {
+        "kind": "device",
+        "bars": 5,
+        "role": "second screen, one variable changed"
+      },
+      {
+        "kind": "stat",
+        "bars": 4,
+        "role": "one number the app itself shows"
+      },
+      {
+        "kind": "cta",
+        "bars": 4,
+        "role": "where the app comes from, spelled out"
+      }
+    ],
+    "total_bars": 21
+  },
+  "look": "premium-warm",
+  "palette": {
+    "ground": "#FBF7F0",
+    "surface": "#FFFFFF",
+    "ink": "#1A2A36",
+    "accent": "#0E8A6E",
+    "support": "#EADFCD"
+  },
+  "typography": {
+    "face": "Tajawal",
+    "display_px": [
+      56,
+      84
+    ],
+    "body_px": [
+      30,
+      40
+    ],
+    "line_height": 1.25,
+    "weights": [
+      500,
+      700,
+      800
+    ],
+    "rules": [
+      "Inside the device the app's own Type scale holds: the UI is quoted, not restyled.",
+      "Captions live outside the phone; never over the screen.",
+      "Two lines maximum outside the device; the phone is the evidence."
+    ]
+  },
+  "layouts": [
+    "device-left-copy-right",
+    "device-stacked-caption",
+    "screen-detail-crop",
+    "end-card"
+  ],
+  "transitions": [
+    "slide",
+    "blur"
+  ],
+  "sfx": {
+    "intro": "ui_chirp",
+    "cut": "whoosh_rtl",
+    "accent": "button_click"
+  },
+  "background": "paper-glow",
+  "motion": 0.45,
+  "reference": {
+    "site": "prompt-motion.com",
+    "url": "https://prompt-motion.com/",
+    "pattern": "product-ui",
+    "move": "One screen per beat, UI animates inside the frame, captions outside the device.",
+    "note": "Anatomy from prompt-motion's product-ui reference set; pattern, not asset."
+  },
+  "guardrails": [
+    "Screens are rebuilt from the app's own code and tokens, not redrawn from a screenshot.",
+    "No invented number on the stat beat; it must be repeatable from the app."
+  ]
+}

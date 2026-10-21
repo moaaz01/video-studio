@@ -1,0 +1,116 @@
+{
+  "id": "arabic-editorial",
+  "title": "Arabic editorial: ink on paper, margins as the design",
+  "when": {
+    "kind": [
+      "editorial",
+      "testimonial",
+      "explainer"
+    ],
+    "aspects": [
+      "16x9",
+      "1x1"
+    ],
+    "energy": "low",
+    "audience": [
+      "institutions",
+      "students",
+      "parents"
+    ],
+    "dialect": [
+      "ar-msa"
+    ],
+    "duration": [
+      40,
+      90
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "hook",
+        "bars": 3,
+        "role": "the claim, set as a title"
+      },
+      {
+        "kind": "device",
+        "bars": 5,
+        "role": "the evidence, framed as a card"
+      },
+      {
+        "kind": "stat",
+        "bars": 4,
+        "role": "one number, printed, not glowing"
+      },
+      {
+        "kind": "device",
+        "bars": 5,
+        "role": "the second piece of evidence"
+      },
+      {
+        "kind": "cta",
+        "bars": 4,
+        "role": "the stamp and the action"
+      }
+    ],
+    "total_bars": 21
+  },
+  "look": "paper-clean",
+  "palette": {
+    "ground": "#F1E9DC",
+    "surface": "#FBF7F0",
+    "ink": "#1A2A36",
+    "accent": "#DB6048",
+    "support": "#FADDD4"
+  },
+  "typography": {
+    "face": "Amiri",
+    "display_px": [
+      64,
+      140
+    ],
+    "body_px": [
+      30,
+      42
+    ],
+    "line_height": 1.4,
+    "weights": [
+      400,
+      700
+    ],
+    "rules": [
+      "Naskh-based display; a humanist sans for labels only.",
+      "Margins are the design: 96 px minimum on every edge.",
+      "No full-bleed type; everything sits on the paper."
+    ]
+  },
+  "layouts": [
+    "paper-card",
+    "stamp-corner",
+    "evidence-grid",
+    "quote-card",
+    "end-card"
+  ],
+  "transitions": [
+    "slide",
+    "blur"
+  ],
+  "sfx": {
+    "intro": "pen_scribe",
+    "cut": "paper_whoosh",
+    "accent": "stamp_thud"
+  },
+  "background": "paper-glow",
+  "motion": 0.25,
+  "reference": {
+    "site": "prompt-motion.com",
+    "url": "https://prompt-motion.com/",
+    "pattern": "photos/editorial",
+    "move": "Ink on paper: rules, margins and one stamp carry the credibility.",
+    "note": "Editorial ink-on-paper anatomy from prompt-motion's photos and editorial tags; pattern, not asset."
+  },
+  "guardrails": [
+    "No pseudo-Arabic and no Latinised Arabic; the copy is set as Arabic or it is not used.",
+    "On-screen copy is unvocalised; tashkeel belongs to the VO line, not the card."
+  ]
+}

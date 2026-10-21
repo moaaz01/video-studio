@@ -1,0 +1,106 @@
+{
+  "id": "product-teaser",
+  "title": "Product teaser: withhold, reveal once, name it",
+  "when": {
+    "kind": [
+      "teaser",
+      "launch"
+    ],
+    "aspects": [
+      "16x9",
+      "1x1"
+    ],
+    "energy": "mid",
+    "audience": [
+      "consumer",
+      "students"
+    ],
+    "dialect": [
+      "ar-msa"
+    ],
+    "duration": [
+      10,
+      20
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "hook",
+        "bars": 2,
+        "role": "a question, no product yet"
+      },
+      {
+        "kind": "device",
+        "bars": 3,
+        "role": "one full-bleed reveal, the only one"
+      },
+      {
+        "kind": "stat",
+        "bars": 2,
+        "role": "the name or the one number"
+      },
+      {
+        "kind": "cta",
+        "bars": 3,
+        "role": "the name and the action"
+      }
+    ],
+    "total_bars": 10
+  },
+  "look": "ink-noir",
+  "palette": {
+    "ground": "#13110D",
+    "surface": "#1D1A14",
+    "ink": "#F1E9DC",
+    "accent": "#D9982F",
+    "support": "#FAE9CC"
+  },
+  "typography": {
+    "face": "Amiri",
+    "display_px": [
+      80,
+      160
+    ],
+    "body_px": [
+      28,
+      36
+    ],
+    "line_height": 1.15,
+    "weights": [
+      400,
+      700
+    ],
+    "rules": [
+      "The teaser says one thing; the product name is the last card.",
+      "No feature list; a list makes it a promo, not a teaser.",
+      "Silence before the reveal is part of the edit, not a gap to fill."
+    ]
+  },
+  "layouts": [
+    "full-bleed-type",
+    "card-column",
+    "end-card"
+  ],
+  "transitions": [
+    "blur",
+    "flash"
+  ],
+  "sfx": {
+    "intro": "riser",
+    "cut": "sub_thump",
+    "accent": "reverse_hit"
+  },
+  "background": "ink-aurora",
+  "motion": 0.7,
+  "reference": {
+    "site": "whatships.com",
+    "url": "https://whatships.com/",
+    "pattern": "teaser",
+    "move": "Withhold, then one full-bleed reveal, then the name.",
+    "note": "Teaser edit pattern catalogued on whatships.com; pattern only."
+  },
+  "guardrails": [
+    "No feature claims; a teaser that explains is a promo, use launch-hero instead."
+  ]
+}

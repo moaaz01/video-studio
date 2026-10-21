@@ -50,27 +50,40 @@ beat — never speed up the existing ones.
 Master, H.264 8-bit 4:2:0 BT.709:
 
 ```bash
-npx remotion render src/index.ts Studio16x9 out/film_1080p.mp4 \
-  --scale=1 --codec=h264 --crf=15 --x264-preset=medium \
+# hero master: the file you archive and build thumbnails from
+npx remotion render src/index.ts Studio16x9 out/masters/film_16x9.mp4 \
+  --scale=1 --codec=h264 --crf=10 --x264-preset=slow \
+  --pixel-format=yuv420p --color-space=bt709 --image-format=png \
+  --concurrency=75% --overwrite
+
+# teaser / secondary aspect: same picture, half the encode cost
+npx remotion render src/index.ts Portrait4x5 out/masters/film_4x5.mp4 \
+  --scale=1 --codec=h264 --crf=16 --x264-preset=medium \
   --pixel-format=yuv420p --color-space=bt709 --image-format=jpeg \
   --concurrency=75% --overwrite
 ```
 
-- **CRF 15** for a master that will be re-encoded by a platform; CRF 18–20 for a
-  single-purpose upload.
+- **CRF 10 with PNG frames** for the hero master: the studio's grade, grain and
+  motion blur are the product, and `jpeg` frames soften grain before the encoder
+  ever sees it. `slow` costs minutes, not hours.
+- **CRF 16 / medium** for teasers and secondary aspects, CRF 18–20 for a
+  single-purpose upload. A platform will re-encode anyway; feed it a clean master.
 - `--concurrency` 75 % of cores for one render; if you run both aspects at once,
   split 75/25 (two 1080p renders saturate the CPU and thrash without it).
 - `faststart` (`-movflags +faststart`) if the file is streamed rather than posted.
 - Audio: AAC 48 kHz stereo, 192 kbps.
 
-Measured on an 8C/12T laptop-class CPU: **~3 fps at 1080p** → a 118 s film ≈ 20 min
-per master. 4K (`--scale=2`) measured 0.156 fps ≈ **6 h** — do not start it casually.
+Measured on an 8C/12T laptop-class CPU at `--concurrency=75%`: the 16:9 CRF 10 / PNG
+hero ran **~1.3 fps** (1260 frames in ~16 min, including the first bundle); the 9:16
+hero **~3.5 fps** (~6 min); the CRF 16 teasers **7–9 fps** (2–3 min). A 118 s film at
+hero settings is therefore ~1.5 h, not ~20 min — budget accordingly. 4K (`--scale=2`)
+measured 0.156 fps ≈ **6 h** — do not start it casually.
 
 ## Stills
 
 ```bash
 # exact frame from the finished master (what you should do)
-ffmpeg -ss 20.2 -i out/film_1080p.mp4 -frames:v 1 -vf scale=1280:720:flags=lanczos out/thumb.png
+ffmpeg -ss 20.2 -i out/masters/film_16x9.mp4 -frames:v 1 -vf scale=1280:720:flags=lanczos out/thumb.png
 # a frame from the composition, while iterating
 npx remotion still src/index.ts Studio16x9 out/qa/f.png --frame=502
 ```
@@ -81,7 +94,8 @@ sees in the thumbnail is literally in the film.
 ## File naming
 
 ```
-<slug>_1080p.mp4        <slug>_9x16.mp4        <slug>_1x1.mp4
+<slug>-16x9-1080p.mp4   <slug>-9x16-1080p.mp4
+<slug>-4x5-1080p.mp4    <slug>-1x1-1080p.mp4
 <slug>_thumb_1280x720.png    <slug>_cover_9x16.png
 <slug>_<lang>_<aspect>_v<n>.mp4      # when versions exist
 ```
@@ -95,5 +109,7 @@ sees in the thumbnail is literally in the film.
 - **YouTube:** title/description are separate assets; the first 3 s decide retention;
   add the end card 8–12 s before the end so it is not cut by the end screen.
 - **Reels / Shorts / TikTok:** no letterboxing, no burned-in captions the platform
-  will also draw — burn the *designed* captions only.
+  will also draw — burn the *designed* captions only, and keep them above the bottom
+  UI band (the shipped plate's bottom inset is 0.175 h; `safe_area.py --preset reels`
+  is the gate).
 - **X:** autoplays muted at small size; type ≥ 48 px equivalent, high contrast.

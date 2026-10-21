@@ -1,0 +1,113 @@
+{
+  "id": "reel-vertical",
+  "title": "Reel, vertical first: a claim per bar, captions burned",
+  "when": {
+    "kind": [
+      "reel",
+      "launch",
+      "teaser"
+    ],
+    "aspects": [
+      "9x16"
+    ],
+    "energy": "high",
+    "audience": [
+      "students",
+      "consumer"
+    ],
+    "dialect": [
+      "ar-msa",
+      "ar-levant"
+    ],
+    "duration": [
+      15,
+      30
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "hook",
+        "bars": 2,
+        "role": "claim in the first frame"
+      },
+      {
+        "kind": "device",
+        "bars": 2,
+        "role": "the product, card layout"
+      },
+      {
+        "kind": "device",
+        "bars": 2,
+        "role": "second screen, same card"
+      },
+      {
+        "kind": "stat",
+        "bars": 2,
+        "role": "one figure for the thumb-stoppers"
+      },
+      {
+        "kind": "cta",
+        "bars": 3,
+        "role": "the action, clear of platform chrome"
+      }
+    ],
+    "total_bars": 11
+  },
+  "look": "vivid-launch",
+  "palette": {
+    "ground": "#0A2E29",
+    "surface": "#0A6B56",
+    "ink": "#FBF7F0",
+    "accent": "#36C4A0",
+    "support": "#D6EFE6"
+  },
+  "typography": {
+    "face": "Tajawal",
+    "display_px": [
+      88,
+      128
+    ],
+    "body_px": [
+      40,
+      56
+    ],
+    "line_height": 1.15,
+    "weights": [
+      700,
+      800
+    ],
+    "rules": [
+      "Two lines maximum, 68-120 px; the thumb reads at 30 cm.",
+      "Keep the top 220 px and bottom 320 px clear of anything readable.",
+      "Burn designed captions only; never emulate platform UI."
+    ]
+  },
+  "layouts": [
+    "card-column",
+    "device-stacked-caption",
+    "full-bleed-type",
+    "end-card"
+  ],
+  "transitions": [
+    "whip",
+    "flash"
+  ],
+  "sfx": {
+    "intro": "sub_drop",
+    "cut": "whoosh_rtl",
+    "accent": "ui_pop"
+  },
+  "background": "emerald-depth",
+  "motion": 0.9,
+  "reference": {
+    "site": "whatships.com",
+    "url": "https://whatships.com/",
+    "pattern": "vertical-first-launch",
+    "move": "First frame carries a claim, every cut is a bar, end card safe from chrome.",
+    "note": "Adapted from the vertical cuts in the launches catalogued on whatships.com; re-composed, never cropped."
+  },
+  "guardrails": [
+    "Vertical is a second edit, not a scaled crop; re-compose every beat."
+  ]
+}

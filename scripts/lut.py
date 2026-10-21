@@ -66,6 +66,9 @@ LOOKS = {
     # UI-first launch film: crisp paper, mild saturation, no crush — the phone screen
     # must read as the product, not as a graded photograph of it.
     "ui-daylight": {"contrast": 0.10, "gamma": 1.00, "lift": 0.004, "gain": 1.00, "sat": 1.06, "warm": 0.18},
+    # Hero launch look: richer contrast and a warm key, paper whites protected so
+    # the app screen still reads as the product (graded, not Instagram-filtered).
+    "premium-warm": {"contrast": 0.18, "gamma": 0.995, "lift": 0.005, "gain": 1.005, "sat": 1.10, "warm": 0.30},
 }
 
 

@@ -42,18 +42,31 @@ same move at 0.4× distance and 0.6× duration, reversed.
 
 ## Cuts
 
-A film gets **two** transitions, no more:
+A cut is a **hand-off**, not a curtain. The outgoing beat leaves while the next
+arrives on the same axis — both scenes are full-size for ~10 frames, so the eye
+reads one continuous move and never sees a blank frame.
 
-1. **Hard cut** (default) — no transition is the best transition.
-2. **One signature wipe** — 6–14 frames, opaque, with a 6–8° skew and a soft
-   leading edge. Runs on the beat.
+The vocabulary (`style.transitions`, one word per bar line, cycled):
 
-Do not chain fades; a cross-dissolve says "I could not decide". Do not wipe in
-different directions per cut — the signature move repeats.
+| word | move |
+|---|---|
+| `whip` | the two scenes slide on a skewed axis with a leak and a kiss of flash |
+| `slide` | a clean push, outgoing right, incoming left (RTL reading direction) |
+| `blur` | defocus crossfade: incoming sharpens in, outgoing softens out |
+| `flash` | light bloom across the seam; the swap happens in the flash |
 
-Cut variants worth having: *panel wipe* (a surface sweeps across), *flash frame*
-(2 frames at 85 % white), *punch-in* (scale 1.0→1.06 across the cut), *match-cut*
-(same object, new context). Each is a spice: once or twice per film.
+A film gets **two or three** of these, no more. Rules:
+
+- Never a solid wipe or dip-to-paper: an opaque panel across the frame is a blank
+  cream frame at the seam, the single most "primitive" artefact a cut can make.
+- Never chain fades; a cross-dissolve says "I could not decide".
+- Don't change axis per cut — the move repeats so it reads as grammar.
+- A cut must carry *energy*: the incoming scene is already mid-entrance when the
+  bar lands (8-frame pre-roll), the outgoing is still settled. Cutting between two
+  static frames reads as a slideshow.
+
+Spice, once or twice per film: *match-cut* (same object, new context), *punch-in*
+(scale 1.0→1.06 across the cut), *flash frame* (2 frames at 85 % white).
 
 ## Camera
 

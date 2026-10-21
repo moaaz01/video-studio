@@ -10,6 +10,10 @@ be broken in the MP4. **Probe the artifact.**
 - [ ] Every beat length ≥ its VO line + 0.35 s; ≥ its on-screen copy read twice.
 - [ ] Cuts land on the 120 BPM grid (multiple of 30 frames at 30 fps).
 - [ ] One direction, two transitions, one easing family, one type scale.
+- [ ] `film/style.json` compiles: `make_timeline.py --strict` validates the look,
+      the background, every transition word and every `sfx` stem.
+- [ ] Captions were regenerated from *this* film (`scripts/captions.py --film
+      <film>`): a stale demo cue inside a client film is a copy error, not a bug.
 
 ## Gate 1 — compiles
 
@@ -39,6 +43,11 @@ headlines fighting, text under 32 px that is meant to be read, Latin numerals mi
 with Arabic-Indic in the same film, a status bar or device chrome that should not be
 there.
 
+Then render the seams, not only the beats: one still at `cut ± 5` for every cut.
+Reject if the frame is blank, if either scene is not at full size, or if the hand-off
+reads as a dip to paper. That failure is invisible in beat stills and in a contact
+sheet.
+
 Below 1:1 nothing can be judged — a contact sheet is for rhythm, crops are for type.
 
 ## Gate 4 — picture integrity
@@ -46,9 +55,9 @@ Below 1:1 nothing can be judged — a contact sheet is for rhythm, crops are for
 ```bash
 ffprobe -v error -select_streams v:0 -count_frames \
   -show_entries stream=width,height,r_frame_rate,nb_read_frames,pix_fmt,codec_name \
-  -of default=nw=1 out/film_1080p.mp4
+  -of default=nw=1 out/masters/film_16x9.mp4
 
-ffmpeg -hide_banner -nostats -i out/film_1080p.mp4 \
+ffmpeg -hide_banner -nostats -i out/masters/film_16x9.mp4 \
   -vf "blackdetect=d=0.10:pix_th=0.06:pic_th=0.98" -f null NUL
 ```
 
@@ -60,7 +69,7 @@ faking it, and say so.)
 ## Gate 5 — audio
 
 ```bash
-ffmpeg -y -i out/film_1080p.mp4 -vn -acodec pcm_s16le -ar 48000 -ac 2 out/qa/probe.wav
+ffmpeg -y -i out/masters/film_16x9.mp4 -vn -acodec pcm_s16le -ar 48000 -ac 2 out/qa/probe.wav
 ```
 
 Then, over the PCM: **peak ≤ −1.4 dBFS**, **no sample with |x| ≥ 0.999**, RMS
@@ -81,7 +90,13 @@ Fix the line, never the gate. This is a proxy for intelligibility, not for accen
 - [ ] Both masters have the same frame rate, the same duration ±1 frame, the same
   script and the same clock.
 - [ ] The vertical is re-composed (card layout), not the horizontal scaled.
-- [ ] Nothing important sits inside the 9:16 top 220 px / bottom 320 px.
+- [ ] Nothing important sits inside the 9:16 top 220 px / bottom 320 px. Measure it,
+      do not eyeball it: `python scripts/safe_area.py out/qa/final/vert_*.png --preset
+      reels --strict` must be PASS (strong-edge share in the platform bands ≤ 6 %).
+- [ ] Burned captions exist only where the safe band does (9:16). The 16:9 master and
+      the 4:5 / 1:1 teasers ship clean; if a strip is burned in, it must not touch copy
+      and its plate must sit **above** the Reels bottom band — the shipped plate's
+      bottom inset is 0.175 h (336 px of 1920), so its last line clears y = 1620.
 
 ## Gate 7 — mute test
 
@@ -100,6 +115,10 @@ beat only works because of the music, it has no picture and needs one.
 ## Gate 9 — the handoff
 
 - [ ] Files named per `platform-specs.md`, in one folder, with a thumbnail/cover.
+- [ ] The project folder is produced by `scripts/package_project.py` — assets,
+      masters, stills, `manifest.json`, `SHA256SUMS` — and the README states what is
+      a reconstruction rather than a claim.
+- [ ] `sha256sum -c SHA256SUMS` passes on the delivered folder.
 - [ ] Sizes sane for the channel; duration matches the brief.
 - [ ] One paragraph in the delivery note: what changed, what was measured, what is
   deliberately not there.

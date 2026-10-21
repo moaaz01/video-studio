@@ -24,7 +24,7 @@ const SIZE = {wide: 44, vertical: 38} as const;
 /** Bottom inset as a fraction of height; wide clears the bottom brand row, 9:16 clears platform chrome. */
 const PLATE = {
   wide: {bottom: 0.11, maxWidth: 0.8},
-  vertical: {bottom: 0.19, maxWidth: 0.86},
+  vertical: {bottom: 0.175, maxWidth: 0.84},
 } as const;
 const FADE_FRAMES = 3;
 const SCRIM = 'rgba(12,10,8,0.55)';

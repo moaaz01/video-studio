@@ -40,13 +40,44 @@ open gate — a late discovery re-renders the whole film.
 | 5 | Build | `film/ui-source.json` scanned from the real app, scenes in `src/scenes/`, assembled by `src/film/Film.tsx` | typecheck clean, still per beat rendered, every on-screen string exists in the app's own table |
 | 6 | Mix | bed composed from the timeline by `scripts/make_bed.py`, VO placed from `vo.json`, foley on the 120 BPM cuts by `src/audio/Soundtrack.tsx` | bed RMS ≈ −19 dBFS, peak ≤ −3 dBFS, 0 clipped samples, and `qa --require-audio` sees an AAC track |
 | 7 | QA | `out/qa/` sheet + gates from `references/qa-gates.md` | every gate green, nothing read only from logs |
-| 8 | Deliver | mastered `out/film_*.mp4`, the QA sheet, thumbnail/cover stills, and a case note in `examples/<slug>/` | names, durations, sizes and hashes read from the delivered files; the hand-off list matches what the user can actually open |
+| 8 | Deliver | `out/masters/film_*.mp4` (CRF 10 / png hero, CRF 16 teasers), the QA sheet, thumbnail/cover stills, and `python scripts/package_project.py` -> `projects/<slug>/` with `manifest.json` + `SHA256SUMS` | names, durations, sizes and hashes read from the delivered files; `sha256sum -c` passes; the hand-off list matches what the user can actually open |
 
-The look belongs to phase 5, before the first render: `film.look` names one preset
-from [`references/cinematic-look.md`](references/cinematic-look.md), and
-`studio.py looks` shows the client the same frame in every look so the choice is a
-picture, not a preference. `studio.py advise` measures the plan before you spend
-render time (reading time, contrast, rhythm, cta, look, frame arithmetic).
+The look belongs to phase 5, before the first render, and it is **declared, not
+improvised**: `film/style.json` names one preset from
+[`references/cinematic-look.md`](references/cinematic-look.md), and `studio.py looks`
+shows the client the same frame in every look so the choice is a picture, not a
+preference. `studio.py advise` measures the plan before you spend render time
+(reading time, contrast, rhythm, cta, look, frame arithmetic).
+
+### The style contract (one file per film)
+
+`film/style.json` — compiled by `make_timeline.py` into `src/generated/style.json`
+— declares how the film moves, so a new film inherits a direction instead of
+improvising one. A project carries its own copy (`projects/<slug>/style.json`).
+
+- `look`: one of six presets (`premium-warm` is the device-led default; `ui-daylight`
+  is documented as the flat lesson). See [`references/cinematic-look.md`](references/cinematic-look.md).
+- `background`: `paper-glow` | `ink-aurora` | `emerald-depth` — the stage each scene paints on.
+- `transitions`: the cut vocabulary, cycled — `whip` | `slide` | `blur` | `flash`.
+  A cut is a **hand-off**: the outgoing beat leaves while the next arrives on the
+  same axis (8-frame pre-roll, 10-frame overlap). Never a solid wipe: it renders a
+  blank frame at the seam.
+- `sfx`: `{intro, cut, accent}` stems; `--strict` fails on any missing stem.
+- `motion`: 1.0 is the designed pace; camera strength and floats scale with it.
+
+The scene system is the same contract in code: `Ground` + `CornerMarks` +
+`FloatCard`/`PaperCard` + one headline per beat, with `emphasis` words coloured and
+`mode="words"` reveals. Variety comes from beat type and content, not from a new
+transition per scene.
+
+### Voices: the endorsed set
+
+The four Shami probes the client called excellent are cloned and catalogued
+(`film/voices.json`, [`references/voices.md`](references/voices.md)) with their
+reference ids, measured pitch and pace; the delivered StudyAI cut uses
+`shami-m-deep` at speed 0.95. The same page lists MSA, Gulf, Saudi, Egyptian,
+Lebanese and Shami stock ids, each actually spoken and ASR-checked — start there
+before auditioning strangers, and always run `voice_check.py` before a mix.
 
 ## The command surface
 
@@ -117,10 +148,13 @@ Full rubric, palettes and motion signatures live in
 7. **Gates before praise.** Never report a render as good until
    `references/qa-gates.md` passes on the real file.
 8. **The look is declared, not improvised.** One preset per film, named in
-   `film/look` before the first render. Mixing looks between beats reads as a
+   `film/style.json` before the first render. Mixing looks between beats reads as a
    mistake; changing the look to fix weak content is a lie. See
    [`references/cinematic-look.md`](references/cinematic-look.md).
-9. **Critique with frames, not adjectives.** Before the client is asked to choose,
+9. **A cut moves the film, it does not hide it.** Scenes hand over on one axis; no
+   solid wipe, no dip to a blank colour, no cut where both frames are static. The
+   seam is where the energy is.
+10. **Critique with frames, not adjectives.** Before the client is asked to choose,
    render the options: `studio.py looks` as real frames, `studio.py storyboard` as
    the whole film on one sheet. A brief answered with a picture gets a decision.
 
@@ -162,8 +196,10 @@ examples/                 a shipped 118 s film as the worked example
 | Design in the render loop | Text and timing are decided in `film.json`; renders are just confirmation |
 | "Looks good" from a 0.2-scale contact sheet | Arabic and kerning are unjudgeable below 1:1 — crop and read the still |
 | Adding a new transition per scene | One cut vocabulary per film; variety lives in the content |
+| A "clean" flat look for a UI film | Flat is not neutral: `ui-daylight` reads as a slide deck. Paper needs grain, vignette and bloom, and the cut needs to move |
+| A wipe or flash-to-paper at the seam | It renders a blank cream frame. Hand the beats over: outgoing leaves, incoming arrives, both full-size |
 | Music louder than speech | Duck the bed under every VO line, then re-level, then re-check peak |
-| 4K because "premium" | 4K at this complexity costs ~6 h/film. 1080p at CRF 15 is the deliverable |
+| 4K because "premium" | 4K at this complexity costs ~6 h/film. 1080p CRF 10 / `--image-format=png` is the master; 1080p CRF 16 / medium is the teaser |
 | Trusting the encoder's log | Probe the output file itself: dimensions, fps, duration, peak, black frames |
 | Rebuilding the UI from memory | Scan the project first — one command turns "how did the header look" into a string table |
 | Collecting references in a browser tab | A reference is a card: the move, the source, what it buys. Tabs are not evidence |

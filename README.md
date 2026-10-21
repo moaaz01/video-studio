@@ -18,7 +18,7 @@ It is not a template with placeholders. It is a small studio with an opinion:
 
 ```
  Brief ─▶ Direction ─▶ Script ─▶ Voice ─▶ Build ─▶ Mix ─▶ QA ─▶ Masters
-                        film.json  Fish    Remotion  wav    ffprobe  16:9 · 9:16
+                        film.json  Fish    Remotion  wav    ffprobe  16:9 · 9:16 · 4:5 · 1:1
 ```
 
 ---
@@ -111,10 +111,11 @@ six non-negotiables that override any aesthetic preference.
 ```
 src/theme.ts            design tokens (paper/ink palette, type scale, phone geometry)
 src/brand.ts            the only file that changes between clients
-src/components/         Phone · Surfaces · Overlays · Text · Ico · Brand · DemoUI
+src/components/         Phone · Surfaces · Overlays · Text · Ico · Brand · StudyAIScreen · DemoUI
 src/lib/                animation + RTL/bidi helpers
 src/scenes/             Hook · Device · Stat · Cta  (the four beats every film needs)
-src/film/Film.tsx       timeline-driven assembler, one film → 16:9 and 9:16
+src/film/Film.tsx       timeline-driven assembler, one film → 16:9 · 9:16 · 4:5 · 1:1
+src/film/types.ts       the style contract: look, background, cut vocabulary, sfx
 film/film.json          the film's whole structure: beats, bars, copy, VO lines
 film/README.md          how to write a beat; why the demo master is silent by design
 scripts/                studio.py · make_timeline.py · voice.py · make_score.py · qa.py
@@ -248,8 +249,10 @@ python scripts/studio.py captions --check              # re-read the SRT and ver
 The gate is arithmetic, not taste: cues are monotonic with a 2-frame gap, line
 length is capped at 34 (wide) / 22 (vertical) non-space characters, long VO is
 split into consecutive cues rather than shrunk, and SRT timestamps are
-`HH:MM:SS,mmm`. Social masters (9:16, 4:5, 1:1) ship with captions burned in;
-the wide film stays clean unless `--props '{"captions":true}'`.
+`HH:MM:SS,mmm`. The 9:16 reel ships with captions burned in the platform-safe band;
+the wide master and the 4:5 / 1:1 teasers stay clean (the strip would sit on the
+copy), unless `--props '{"captions":true}'`. Burned captions drop tashkeel: the
+diacritics are a TTS hint, not display type.
 
 ## The film has a voice and a score
 
@@ -287,7 +290,7 @@ to change the mix:
 
 ```powershell
 python scripts/studio.py master                 # every master in out/
-python scripts/studio.py master out/film_9x16.mp4 --target -1.5
+python scripts/studio.py master out/masters/film_9x16.mp4 --target -1.5
 ```
 
 `master_audio.py` measures peak/RMS with the same probes the QA gate uses,
@@ -336,12 +339,17 @@ White is protected on purpose: the paper surfaces belong to the app, so the
 curve works the midtones and leaves 251 where the app says 251 (before this,
 the CSS grade pushed them to 255 — a fidelity bug dressed as a look).
 
-A film gets **one look**, declared in `film/film.json` as `"look": "cinema-warm"`
-(or `paper-clean`, `ink-noir`, `vivid-launch`, `ui-daylight` — the last keeps paper
-surfaces crisp for UI-first films). It is a grade, grain, vignette,
-bloom and optional letterbox — applied to the whole composite, deterministic, and
-free. [`references/cinematic-look.md`](references/cinematic-look.md) explains the
-presets and the rules.
+A film gets **one look**, declared in `film/style.json` (compiled into
+`src/generated/style.json`) as `"look": "premium-warm"` — the device-led default
+(`cinema-warm`, `paper-clean`, `ink-noir`, `vivid-launch`, `ui-daylight`; the last
+is the flat cautionary one). The same file declares `motion`, `background`
+(`paper-glow` / `ink-aurora` / `emerald-depth`), the `transitions` vocabulary and the
+`sfx` stems. A transition is a **hand-off**: the outgoing beat leaves while the next
+arrives on the same axis (8-frame pre-roll, 10-frame overlap), never a solid wipe —
+that renders a blank cream frame at the seam. It is a grade, grain, vignette, bloom
+and optional letterbox — applied to the whole composite, deterministic, and free.
+[`references/cinematic-look.md`](references/cinematic-look.md) explains the presets,
+the contract and the rules.
 
 Three commands turn opinion into evidence:
 
@@ -436,38 +444,45 @@ checksums. Two gates were added with the first project:
   component and the app resources drift. The screens in the film render `t('key')`
   only, so the copy in the video cannot be invented.
 
-Shipped project: [`projects/studyai-shami/`](projects/studyai-shami/) — 42 s, Shami
-voice, four aspects, CRF 12 masters, `ui-daylight` look.
+Shipped project: [`projects/studyai-shami/`](projects/studyai-shami/) — 42 s,
+`shami-m-deep` cloned voice (ASR 5/5), four aspects, CRF 10 / png masters,
+`premium-warm` look. Voice catalogue and the four endorsed probes:
+[`references/voices.md`](references/voices.md), [`film/voices.json`](film/voices.json).
 
-## Verified status (v2.1.0)
+## Verified status (v2.2.0)
 
 Every number below was read from the delivered files or from a gate's own output
 on this machine — not from a log line that says it probably worked.
 
-| Master | picture | duration | peak | RMS | clipped | audio |
+| Master | picture | duration | size | peak | RMS | clipped |
 |---|---|---|---|---|---|---|
-| `out/film_1080p.mp4` | 1920x1080 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 | AAC 48 kHz stereo |
-| `out/film_9x16.mp4` | 1080x1920 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 | AAC 48 kHz stereo |
-| `out/film_4x5.mp4` | 1080x1350 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 | AAC 48 kHz stereo |
-| `out/film_1x1.mp4` | 1080x1080 | 42.01 s | -1.51 dBFS | -20.35 dBFS | 0 | AAC 48 kHz stereo |
+| `out/masters/film_16x9.mp4` | 1920x1080 | 42.01 s | 92.4 MB | -1.62 dBFS | -20.74 dBFS | 0 |
+| `out/masters/film_9x16.mp4` | 1080x1920 | 42.01 s | 90.1 MB | -1.62 dBFS | -20.74 dBFS | 0 |
+| `out/masters/film_4x5.mp4` | 1080x1350 | 42.01 s | 22.3 MB | -1.62 dBFS | -20.74 dBFS | 0 |
+| `out/masters/film_1x1.mp4` | 1080x1080 | 42.01 s | 18.1 MB | -1.62 dBFS | -20.74 dBFS | 0 |
 
-All four are mastered from one mix (`+4.13 dB`), so the loudness matches across
-aspects; the audio gain is applied without re-encoding a single frame.
+All four are mastered from one mix (`+3.14 dB`), so the loudness matches across
+aspects; the audio gain is applied without re-encoding a single frame. The two hero
+masters are CRF 10 / `slow` / PNG frames; the 4:5 and 1:1 teasers are CRF 16 / `medium`.
 
 | Gate | Result |
 |---|---|
 | `tsc --noEmit` | exit 0 |
-| `make_timeline --film film/film.json --vo src/generated/vo.json --strict` | 21 bars, 1260 frames, 42.00 s, exit 0 |
-| `captions --check` | 10 cues agree with `captions.json` @ 30 fps |
-| `advise --strict` | 0 MUST (3 SHOULD, documented) |
+| `make_timeline --film film/film.json --strict` | 21 bars, 1260 frames, 42.00 s, exit 0 (`launch-hero` · `premium-warm`) |
+| `make_timeline --film projects/studyai-shami/film.json --strict` | same clock, `app-demo` · `premium-warm` |
+| `captions --check` (project film) | 13 cues agree with `captions.json` @ 30 fps (5 wide, 8 vertical) |
+| `advise --strict` (project film) | 0 MUST, score 85 (3 SHOULD, documented) |
 | `evals` | 3/3 briefs, scores 100 / 100 / 95 |
-| `safe_area.py --preset reels --strict` | device 0.0 %, CTA 3.5 % — PASS |
+| `safe_area.py --preset reels --strict` | PASS on all six delivered vertical stills, max band share 5.9 % |
 | `provenance --strict` | no captures declared (honest reconstruction) |
 | `corpus check --min 3` | 3 pinned cards — PASS |
 | `qa --require-audio` | 4/4 masters, 0 black, 0 clipped, Arabic scan clean |
 | `mcp_selftest.py` | 11/11 checks over the wire (15 tools, 7 resources) |
 
-Voice: 5 lines, 18.16 s of measured speech, fully vocalised Arabic.
+Voice: Fish clone `shami-m-deep` (client's own recorded probe), 5 lines,
+**25.769 s of measured speech**, fully vocalised, ASR gate 5/5 ≥ 0.90 (worst 0.954).
+The same lines cut back out of the delivered mix transcribe at 0.927–0.992
+(`assets/vo-asr-master.json`) — the words survive the music.
 Bed: 42.00 s, 48 kHz, RMS -19.9 dBFS, peak -3.0 dBFS, 0 clipped samples.
 
 ## CI

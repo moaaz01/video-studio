@@ -1,0 +1,121 @@
+{
+  "id": "launch-hero",
+  "title": "Launch hero: claim, drop, product on the kick",
+  "when": {
+    "kind": [
+      "launch",
+      "product-launch",
+      "event"
+    ],
+    "aspects": [
+      "16x9",
+      "9x16"
+    ],
+    "energy": "high",
+    "audience": [
+      "consumer",
+      "students",
+      "early-adopters"
+    ],
+    "dialect": [
+      "ar-msa",
+      "ar-levant"
+    ],
+    "duration": [
+      20,
+      35
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "hook",
+        "bars": 2,
+        "role": "the claim as full-bleed type, 3 words"
+      },
+      {
+        "kind": "device",
+        "bars": 2,
+        "role": "the product enters on the drop"
+      },
+      {
+        "kind": "stat",
+        "bars": 2,
+        "role": "one figure lands as the proof"
+      },
+      {
+        "kind": "hook",
+        "bars": 2,
+        "role": "escalate the claim, new words, same scale"
+      },
+      {
+        "kind": "device",
+        "bars": 2,
+        "role": "one UI detail, on the beat"
+      },
+      {
+        "kind": "cta",
+        "bars": 3,
+        "role": "the end card holds"
+      }
+    ],
+    "total_bars": 13
+  },
+  "look": "vivid-launch",
+  "palette": {
+    "ground": "#13110D",
+    "surface": "#1D1A14",
+    "ink": "#F1E9DC",
+    "accent": "#0E8A6E",
+    "support": "#36C4A0"
+  },
+  "typography": {
+    "face": "Tajawal",
+    "display_px": [
+      120,
+      240
+    ],
+    "body_px": [
+      32,
+      44
+    ],
+    "line_height": 1.1,
+    "weights": [
+      700,
+      800,
+      900
+    ],
+    "rules": [
+      "Full-bleed display type: 3 words max per beat, no paragraph copy.",
+      "One emphasis per beat: a word changes size, never colour.",
+      "Arabic keeps letterSpacing 0 and no text-transform; the size is the drama."
+    ]
+  },
+  "layouts": [
+    "full-bleed-type",
+    "device-left-copy-right",
+    "end-card"
+  ],
+  "transitions": [
+    "whip",
+    "flash"
+  ],
+  "sfx": {
+    "intro": "riser",
+    "cut": "whoosh_rtl",
+    "accent": "sub_drop"
+  },
+  "background": "ink-aurora",
+  "motion": 0.85,
+  "reference": {
+    "site": "whatships.com",
+    "url": "https://whatships.com/",
+    "pattern": "launch-trailer",
+    "move": "Open on the claim, cut the product in on the drop, hold the end card.",
+    "note": "Pattern adapted from the launch films catalogued on whatships.com; the anatomy only, no frames or prompts reused."
+  },
+  "guardrails": [
+    "No metric, rating or countdown the product cannot repeat.",
+    "The end card holds long enough to read the handle twice."
+  ]
+}

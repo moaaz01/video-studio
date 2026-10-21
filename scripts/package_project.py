@@ -26,11 +26,13 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import qa  # noqa: E402  (probe/loudness are the studio's own measurements)
 
+# Hero masters live in out/masters/ (CRF 10 / png); the legacy studio.py render
+# writes out/film_*.mp4, so both locations are accepted.
 MASTERS = {
-    "16x9": ("out/film_1080p.mp4", "studyai-shami-16x9-1080p.mp4"),
-    "9x16": ("out/film_9x16.mp4", "studyai-shami-9x16-1080p.mp4"),
-    "4x5": ("out/film_4x5.mp4", "studyai-shami-4x5-1080p.mp4"),
-    "1x1": ("out/film_1x1.mp4", "studyai-shami-1x1-1080p.mp4"),
+    "16x9": ("out/masters/film_16x9.mp4", "studyai-shami-16x9-1080p.mp4"),
+    "9x16": ("out/masters/film_9x16.mp4", "studyai-shami-9x16-1080p.mp4"),
+    "4x5": ("out/masters/film_4x5.mp4", "studyai-shami-4x5-1080p.mp4"),
+    "1x1": ("out/masters/film_1x1.mp4", "studyai-shami-1x1-1080p.mp4"),
 }
 
 # Global state the film consumed, copied into assets/ so the project is self-contained.
@@ -44,7 +46,25 @@ ASSETS = {
     "captions/wide.srt": "out/captions/wide.srt",
     "captions/vertical.srt": "out/captions/vertical.srt",
     "vo-asr-check.json": "out/qa/vo-asr-check.json",
+    "vo-asr-master.json": "out/qa/vo-asr-master.json",
 }
+
+
+def asr_summary() -> str:
+    """Read the ASR report instead of repeating a number from memory."""
+    p = ROOT / "out/qa/vo-asr-check.json"
+    if not p.exists():
+        return "out/qa/vo-asr-check.json (not run)"
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return "out/qa/vo-asr-check.json (unreadable)"
+    rows = data if isinstance(data, list) else data.get("lines", [])
+    sims = [float(r.get("sim", r.get("similarity", 0))) for r in rows]
+    if not sims:
+        return "out/qa/vo-asr-check.json (empty)"
+    ok = sum(1 for s in sims if s >= 0.90)
+    return f"out/qa/vo-asr-check.json ({ok}/{len(sims)} lines >= 0.90, worst {min(sims):.3f})"
 
 
 def sha256(path: pathlib.Path) -> str:
@@ -74,11 +94,12 @@ def main() -> None:
     proj = (ROOT / args.project).resolve()
     film = json.loads((proj / "film.json").read_text(encoding="utf-8"))
     vo = json.loads((ROOT / "src/generated/vo.json").read_text(encoding="utf-8"))
+    style = json.loads((ROOT / "src/generated/style.json").read_text(encoding="utf-8"))
     timeline = json.loads((ROOT / "src/generated/timeline.json").read_text(encoding="utf-8"))
 
     files: list[dict] = []
     # 1. the script itself (already authored in the project)
-    for name in ("brief.md", "film.json", "vo-script.json", "README.md"):
+    for name in ("brief.md", "film.json", "style.json", "vo-script.json", "README.md"):
         p = proj / name
         if p.exists():
             files.append({"path": p.relative_to(ROOT).as_posix(), "role": "document",
@@ -99,6 +120,12 @@ def main() -> None:
     masters = []
     for aspect, (src_rel, name) in MASTERS.items():
         src = ROOT / src_rel
+        if not src.exists():
+            legacy = {
+                "16x9": "out/film_1080p.mp4", "9x16": "out/film_9x16.mp4",
+                "4x5": "out/film_4x5.mp4", "1x1": "out/film_1x1.mp4",
+            }[aspect]
+            src = ROOT / legacy if (ROOT / legacy).exists() else src
         if not src.exists():
             print(f"  !! missing {src_rel} — run the render first")
             continue
@@ -130,7 +157,8 @@ def main() -> None:
         "slug": film.get("slug", proj.name),
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "film": {
-            "look": timeline.get("look") or film.get("look"),
+            "look": (style or {}).get("look") or timeline.get("look") or film.get("look"),
+            "style": style,
             "fps": timeline["fps"],
             "frames": timeline["frames"],
             "seconds": round(timeline["frames"] / timeline["fps"], 3),
@@ -143,7 +171,7 @@ def main() -> None:
             "speed": (film.get("voice") or {}).get("speed"),
             "lines": [{"id": e["id"], "seconds": round(e["dur"], 3)} for e in vo],
             "total_seconds": round(sum(e["dur"] for e in vo), 3),
-            "asr_report": "out/qa/vo-asr-check.json (5/5 lines, worst similarity 0.953)",
+            "asr_report": asr_summary(),
         },
         "files": files,
         "stills": stills,

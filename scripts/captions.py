@@ -46,6 +46,9 @@ MIN_CUE_FRAMES = 3  # shorter than this and the fade cannot resolve
 
 SRT_TIME = re.compile(r"^(\d{2}):(\d{2}):(\d{2}),(\d{3}) --> (\d{2}):(\d{2}):(\d{2}),(\d{3})$")
 WHITESPACE = re.compile(r"\s+")
+# HARAKAT: fatha/kasra/damma/sukun/shadda/tanwin + superscript alef. The VO script
+# carries them so the model pronounces the word; burned captions drop them.
+HARAKAT = re.compile("[\u0617-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]")
 
 
 @dataclass(frozen=True, slots=True)
@@ -180,7 +183,8 @@ def measured_seconds(beat: Beat, lines: dict[str, float], beats: dict[str, float
 def clean_text(text: str) -> str:
     """Display copy. The film escapes the Arabic comma with a literal backslash —
     a prosody hint for the voice step, not something to burn into the picture."""
-    return WHITESPACE.sub(" ", text.replace("\\", "")).strip()
+    plain = HARAKAT.sub("", text.replace("\\", ""))
+    return WHITESPACE.sub(" ", plain).strip()
 
 
 def visible_len(text: str) -> int:

@@ -1,31 +1,34 @@
 {
   "voice": {
     "model": "s2.1-pro-free",
-    "reference_id": "e58b89675fc345148a88d8bad896f28b",
-    "speed": 0.98
+    "reference_id": "e2328a22742c40888b891ba66fc114fe",
+    "speed": 0.95
   },
   "out_dir": "public/audio/vo",
   "manifest": "src/generated/vo.json",
+  "lead_silence": 0.0,
+  "note": "Shami (Levantine) read for the StudyAI film. reference_id is the clone of out/vo-probe/shami-m-deep.wav (the user-preferred audition) - see film/voices.json and references/voices.md. Diacritics carry only what changes the reading: geminated consonants (يُلَخِّص، مِلَفّك، خَلّي، مَجّانًا، حَمِّل، بَلَّش، تَلات) and the vowels around them; the ASR round-trip is the gate (scripts/voice_check.py).",
   "lines": [
     {
       "id": "b01-hook-1",
-      "text": "من أوّل صفحة لآخر امتحان — بتفهمها مرّة وحدة."
+      "text": "مِن أوّل صَفْحة لآخِر امتِحان — بِتْفَهْمها مَرّة وَحدة."
     },
     {
       "id": "b02-device-1",
-      "text": "ارفع ملزمتك PDF، وخلي التطبيق يشتغل عنك: يلخّص، ويجاوب، ويختبرك."
+      "text": "ارفع مِلَفّك PDF، وخَلِّي التطبيق يِشْتغِل عنك: يُلَخِّص، ويجاوب، ويِخْتَبِرك."
     },
     {
       "id": "b03-device-1",
-      "text": "اسأل أي شي ببساطة، وكل جواب بيجيك مع رقم الصفحة اللي انطلق منها."
+      "text": "اِسْأل أي شي بِبَساطة، وكل جَواب بيجيك مع رقم الصفحة اللي انطَلَق منها."
     },
     {
       "id": "b04-stat-1",
-      "text": "تلات خطوات بس: ارفع، اسأل، وافهم — والباقي علينا."
+      "text": "تلات خَطَوات بس: ارفع، اسأل، وافهم — والباقي علينا.",
+      "speed": 0.95
     },
     {
       "id": "b05-cta-1",
-      "text": "حمّل التطبيق من تيليجرام، مجانًا، وبلّش من أول صفحة عندك."
+      "text": "حَمِّل التطبيق من تيليجرام، مَجّانًا، وبَلَّش من أول صفحة عندك."
     }
   ]
 }

@@ -293,6 +293,7 @@ const Home: React.FC<{dp: number; local: number}> = ({dp, local}) => {
 const Agent: React.FC<{dp: number; local: number}> = ({dp, local}) => {
   const bubble = Math.min(1, Math.max(0, (local - 8) / 12));
   const reply = Math.min(1, Math.max(0, (local - 22) / 14));
+  const job = Math.min(1, Math.max(0, (local - 40) / 16));
   return (
     <div dir="rtl" lang="ar" style={{width: 412 * dp, height: 915 * dp, background: C.paper, display: 'flex', flexDirection: 'column', fontFamily: FONT.tajawal, overflow: 'hidden'}}>
       {/* header */}
@@ -354,6 +355,45 @@ const Agent: React.FC<{dp: number; local: number}> = ({dp, local}) => {
             <span style={{fontSize: 10 * dp, fontWeight: 700, color: C.emeraldDeep}}>
               {t('quiz_page_reference').replace('%1$s', '42')}
             </span>
+          </div>
+        </div>
+      </div>
+
+      {/* the app's own background job pipeline, so the thread keeps breathing */}
+      <div
+        style={{
+          padding: `${SP.md * dp}px ${SP.screen * dp}px 0`,
+          display: 'flex',
+          justifyContent: 'flex-end',
+          opacity: job,
+          transform: `translateY(${(1 - job) * 12}px)`,
+        }}
+      >
+        <div
+          style={{
+            width: 300 * dp,
+            background: C.paperRaised,
+            border: `${1 * dp}px solid ${C.hairline}`,
+            borderRadius: R.md * dp,
+            padding: `${11 * dp}px ${12 * dp}px`,
+            boxShadow: shadow.card,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8 * dp,
+          }}
+        >
+          <div style={{display: 'flex', alignItems: 'center', gap: 8 * dp}}>
+            <div style={{width: 28 * dp, height: 28 * dp, borderRadius: 999, background: C.plumSoft, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <Ico name="autoAwesome" size={15 * dp} color={C.dreamIris} />
+            </div>
+            <span style={{fontSize: T.labelLarge.size * dp, fontWeight: 700, color: C.ink}}>{t('agent_attachment_job_processing')}</span>
+          </div>
+          <div style={{height: 5 * dp, borderRadius: 999, background: C.paperSunken, overflow: 'hidden'}}>
+            <div style={{width: `${Math.max(8, Math.min(96, (local - 46) * 2.2))}%`, height: '100%', borderRadius: 999, background: `linear-gradient(90deg, ${C.dreamIris}, ${C.plum})`}} />
+          </div>
+          <div style={{display: 'flex', alignItems: 'center', gap: 6 * dp}}>
+            <Ico name="descriptionOutline" size={13 * dp} color={C.emeraldDeep} />
+            <span style={{fontSize: T.labelSmall.size * dp, fontWeight: 500, color: C.inkFaint}}>{t('samp_doc_d2_title')}</span>
           </div>
         </div>
       </div>

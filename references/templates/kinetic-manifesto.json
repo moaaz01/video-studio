@@ -1,0 +1,114 @@
+{
+  "id": "kinetic-manifesto",
+  "title": "Kinetic manifesto: words as the only object",
+  "when": {
+    "kind": [
+      "kinetic",
+      "launch",
+      "editorial"
+    ],
+    "aspects": [
+      "16x9",
+      "9x16"
+    ],
+    "energy": "high",
+    "audience": [
+      "students",
+      "consumer"
+    ],
+    "dialect": [
+      "ar-msa",
+      "ar-levant"
+    ],
+    "duration": [
+      20,
+      40
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "hook",
+        "bars": 3,
+        "role": "the sentence starts, words masked in"
+      },
+      {
+        "kind": "device",
+        "bars": 3,
+        "role": "one product proof, 0.6 s of real UI"
+      },
+      {
+        "kind": "stat",
+        "bars": 4,
+        "role": "a word-sized figure"
+      },
+      {
+        "kind": "hook",
+        "bars": 3,
+        "role": "the sentence lands, one emphasis"
+      },
+      {
+        "kind": "cta",
+        "bars": 3,
+        "role": "the action, set as the last line"
+      }
+    ],
+    "total_bars": 16
+  },
+  "look": "ink-noir",
+  "palette": {
+    "ground": "#13110D",
+    "surface": "#1D1A14",
+    "ink": "#F1E9DC",
+    "accent": "#0E8A6E",
+    "support": "#36C4A0"
+  },
+  "typography": {
+    "face": "Tajawal",
+    "display_px": [
+      96,
+      320
+    ],
+    "body_px": [
+      28,
+      36
+    ],
+    "line_height": 1.05,
+    "weights": [
+      700,
+      800,
+      900
+    ],
+    "rules": [
+      "Word-level reveals only; never letter-by-letter, never per-glyph.",
+      "Size is the only variable that changes inside a beat.",
+      "Line breaks are punctuation: break where the sentence breathes."
+    ]
+  },
+  "layouts": [
+    "full-bleed-type",
+    "lower-third",
+    "end-card"
+  ],
+  "transitions": [
+    "whip",
+    "blur"
+  ],
+  "sfx": {
+    "intro": "sub_thump",
+    "cut": "whoosh_rtl",
+    "accent": "haptic_thud"
+  },
+  "background": "ink-aurora",
+  "motion": 0.8,
+  "reference": {
+    "site": "prompt-motion.com",
+    "url": "https://prompt-motion.com/",
+    "pattern": "kinetic-type",
+    "move": "Words enter by mask, one idea per beat, size is the emphasis.",
+    "note": "Kinetic-type grammar adapted from prompt-motion's archive; Arabic reveal rules applied, no assets copied."
+  },
+  "guardrails": [
+    "If the words do not survive muting, the beat is decoration; cut it."
+  ]
+}

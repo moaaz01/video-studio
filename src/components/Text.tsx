@@ -123,7 +123,8 @@ export const Ar: React.FC<ArProps> = ({
 
   // ── words ────────────────────────────────────────────────────────────────
   const ws = arWords(text);
-  const justify = align === 'center' ? 'center' : align === 'left' ? 'flex-start' : 'flex-end';
+  // dir="rtl" flips the main axis: flex-start is the right edge, not the left.
+  const justify = align === 'center' ? 'center' : align === 'right' ? 'flex-start' : 'flex-end';
   return (
     <div
       dir="rtl"

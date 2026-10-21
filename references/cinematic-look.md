@@ -9,9 +9,10 @@ footage felt flat.
 - `src/look/looks.ts` — the presets. Every number here is a deliberate choice.
 - `src/look/FilmGrade.tsx` — grade (CSS filter), bloom, vignette, grain, letterbox.
 - `src/look/Camera.tsx` — one camera move per beat, plus Perlin handheld.
-- `film/film.json` → `"look": "cinema-warm"` — the film's declared look.
+- `film/style.json` → `"look": "premium-warm"` — the film's declared look
+  (the whole cut is declared there: look, motion, background, transitions, sfx).
 
-## The five presets
+## The six presets
 
 | Look | Use it for | Character |
 | --- | --- | --- |
@@ -19,7 +20,55 @@ footage felt flat.
 | `paper-clean` | product/UI explainers, screen-recording heavy | almost neutral, low grain, gentle vignette |
 | `ink-noir` | premium teaser, dark UI | crushed blacks, 1.13 contrast, 2.39:1 bars, heavier grain |
 | `vivid-launch` | paid social, small screens | saturated, bright bloom, more camera movement |
-| `ui-daylight` | UI-first launch film; screens are the argument | paper stays paper-white, mild saturation, camera energy instead of haze |
+| `premium-warm` | a device-led launch film with paper beats | cinema-warm's atmosphere without the haze: bloom .62, vignette .30, grain .05, camera 1.12, a warm LUT (sat 1.10, warm .30) |
+| `ui-daylight` | UI-first explainer where the screen is the only subject | almost flat: vignette .14, bloom .22 — the look that taught us a screen-only film reads as a slide deck |
+
+## The style contract
+
+`film/style.json` (or a project `style.json`) declares the whole cut, and
+`make_timeline.py` compiles it into `src/generated/style.json`:
+
+```json
+{
+  "template": "app-demo",
+  "look": "premium-warm",
+  "motion": 1.0,
+  "background": "paper-glow",
+  "transitions": ["whip", "slide", "blur"],
+  "sfx": {"intro": "riser_short", "cut": "whoosh_rtl", "accent": "card_pop"}
+}
+```
+
+- `motion` scales every camera move and float (0.2–1.5); 1.0 is the designed pace.
+- `background` is the stage a scene paints on: `paper-glow` (warm paper + aurora +
+  rule + dust), `ink-aurora` (night green aurora for type beats), `emerald-depth`
+  (the end card's deep green). Each scene declares a `tone` and the ground resolves
+  to the matching variant; the film's `background` is the declared nominal stage,
+  and `make_timeline --strict` refuses a name that is not in this list.
+- `transitions` is the **cut vocabulary**, one word per bar line, cycling. The cut
+  is a hand-off, not a curtain: each beat is pre-rolled by 8 frames, then hands
+  over across 10 frames while the next scene arrives on the same axis
+  (`whip` = skewed slide + leak, `slide` = push, `blur` = defocus crossfade,
+  `flash` = light bloom). A solid wipe is not in the vocabulary — it renders a
+  blank cream frame at the seam, which is exactly the "primitives" note.
+- `sfx` names the three stems the mix uses: intro rise, per-cut whoosh, accent pop.
+  Every stem must exist in `public/audio/sfx/` or `--strict` fails.
+
+## Backgrounds and stage colour
+
+The paper is a material, not a hex: `Ground` layers a 118° gradient
+(`#FFF9EE → #F8EBD5 → #F2DFC4`), an aurora, two soft glows, optional ruled lines,
+grain and a vignette. Ink beats swap the same structure for `#08110F` aurora and
+emerald type. Every scene states its `tone`, so a viewer feels the film move
+between *printed page* and *night screen* without a single hard cut.
+
+## Captions
+
+`Captions` burns `src/generated/captions.json` (built by `scripts/captions.py`)
+**only where the safe band exists**: 9:16 reels. The 16:9 master and the 4:5 / 1:1
+teasers ship clean, because the strip would sit on the copy. Captions are display
+copy: `clean_text()` strips tashkeel and the escaped-comma prosody hint, so the
+burned line is readable even though the VO script carries full vocalisation.
 
 ## Rules
 

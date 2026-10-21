@@ -9,7 +9,13 @@
  * Looks are a budget, not a palette: pick one per film, never mix.
  */
 
-export type LookName = "cinema-warm" | "paper-clean" | "ink-noir" | "vivid-launch" | "ui-daylight";
+export type LookName =
+  | "cinema-warm"
+  | "premium-warm"
+  | "paper-clean"
+  | "ink-noir"
+  | "vivid-launch"
+  | "ui-daylight";
 
 export type Look = {
   name: LookName;
@@ -68,6 +74,20 @@ export const LOOKS: Record<LookName, Look> = {
     letterbox: 0,
     camera: 1.25,
     motionBlur: 3,
+  },
+  /**
+   * The launch-film look: cinema-warm's atmosphere with the product still
+   * breathing — deeper vignette, real bloom, and a shutter that blurs movement
+   * without smearing the UI type. This is the one a hero cut ships with.
+   */
+  "premium-warm": {
+    name: "premium-warm",
+    vignette: 0.30,
+    grain: 0.05,
+    bloom: 0.62,
+    letterbox: 0,
+    camera: 1.12,
+    motionBlur: 2,
   },
   /** UI-first: keeps the screen crisp; energy comes from the camera, not the haze. */
   "ui-daylight": {

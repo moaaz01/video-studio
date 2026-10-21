@@ -1,0 +1,115 @@
+{
+  "id": "before-after",
+  "title": "Before/after: the old workflow, replaced by the real screen",
+  "when": {
+    "kind": [
+      "before-after",
+      "impact",
+      "app-demo"
+    ],
+    "aspects": [
+      "16x9"
+    ],
+    "energy": "mid",
+    "audience": [
+      "students",
+      "parents",
+      "teachers"
+    ],
+    "dialect": [
+      "ar-msa",
+      "ar-levant"
+    ],
+    "duration": [
+      25,
+      45
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "hook",
+        "bars": 2,
+        "role": "the old workflow, named plainly"
+      },
+      {
+        "kind": "device",
+        "bars": 4,
+        "role": "the before state as it really looks"
+      },
+      {
+        "kind": "stat",
+        "bars": 3,
+        "role": "the change counted"
+      },
+      {
+        "kind": "device",
+        "bars": 4,
+        "role": "the after state, same framing"
+      },
+      {
+        "kind": "cta",
+        "bars": 3,
+        "role": "the one action"
+      }
+    ],
+    "total_bars": 16
+  },
+  "look": "paper-clean",
+  "palette": {
+    "ground": "#F1E9DB",
+    "surface": "#FBF7F0",
+    "ink": "#1A2A36",
+    "accent": "#D9982F",
+    "support": "#FAE9CC"
+  },
+  "typography": {
+    "face": "Tajawal",
+    "display_px": [
+      72,
+      120
+    ],
+    "body_px": [
+      30,
+      40
+    ],
+    "line_height": 1.15,
+    "weights": [
+      700,
+      800
+    ],
+    "rules": [
+      "Before and after use the same type scale, so the contrast is the content.",
+      "One accent only: no red/green moralising of the two states.",
+      "Keep the label above the frame, not inside the evidence."
+    ]
+  },
+  "layouts": [
+    "split-screen",
+    "device-left-copy-right",
+    "evidence-grid",
+    "end-card"
+  ],
+  "transitions": [
+    "slide",
+    "flash"
+  ],
+  "sfx": {
+    "intro": "paper_flip",
+    "cut": "paper_whoosh",
+    "accent": "impact"
+  },
+  "background": "paper-glow",
+  "motion": 0.6,
+  "reference": {
+    "site": "whatships.com",
+    "url": "https://whatships.com/",
+    "pattern": "before-after-launch",
+    "move": "State the old workflow, then replace it with the real screen.",
+    "note": "Launch-edit pattern catalogued on whatships.com; no footage reused."
+  },
+  "guardrails": [
+    "The after state must be a shipped screen, not a mock.",
+    "The before state is a real workflow, not a strawman."
+  ]
+}

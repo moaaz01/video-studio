@@ -1,3 +1,82 @@
+## 2.2.0 — 2026-10-21
+
+The second film, and the studio around it. The first StudyAI cut was judged by the
+client as the right *kind* of film — montage, effects, warm grade — and the second
+cut as too flat: static 5 s device holds, no entry/exit on the beats, pale grounds,
+lost SFX. This release rebuilds the film with a declared style contract, a
+hand-off edit, a voice whose accent the client approved, and gates that caught two
+real defects (captions that never rendered, captions under the Reels UI).
+
+### The style contract is now a file per film
+
+- `film/style.json` / `projects/<slug>/style.json`: six fields, no more —
+  `template · look · motion · background · transitions · sfx`. `make_timeline.py`
+  resolves it, merges it over safe defaults and compiles it to
+  `src/generated/style.json`; `--strict` refuses a look, background, transition or
+  stem the engine does not have.
+- Six looks in `src/look/looks.ts`; the shipped film is `premium-warm` (vignette
+  .30, grain .05, bloom .62, camera 1.12, warm LUT at sat 1.10). `ui-daylight` is
+  kept as the documented flat look — it is why the first rebuild read as a slide
+  deck.
+- `references/templates/` (13 recipes) + `scripts/templates.py pick|apply` choose a
+  contract from a brief (golden-brief self-test: 4/4 picks, all 13 valid), so the
+  studio can lift a fitting template instead of inventing one per film.
+
+### Every cut is a hand-off, and every cut has an edge
+
+- `Film.tsx` pre-rolls each beat 8 frames, overlaps the outgoing beat 10 frames, and
+  drives the seam with `BeatShell` translate/scale/skew/blur plus `LightLeak`/`Flash`
+  — the solid `Wipe` is gone; it produced blank cream frames at cut ± 5.
+- Transitions rotate through `whip` / `slide` / `blur`; `Soundtrack` reads
+  `style.sfx` for the intro riser, the per-cut `whoosh_rtl`, the accent stem, and
+  honors per-beat `sfx` cues declared in `film.json`.
+
+### The voice, and what the client actually asked for
+
+- New Fish clone `shami-m-deep` made from the client's own recorded Shami probe
+  (`audio/voices/shami-m-deep.wav`), speed 0.95, 5 lines, **25.769 s of speech**;
+  ASR gate 5/5 ≥ 0.90 (worst 0.954, word delta 0).
+- The four probes the client picked are catalogued as the endorsed set in
+  `film/voices.json` + `references/voices.md`: `shami-m-deep`, `shami-m-young`,
+  `syria-f-bright`, `syrian-m-warm`; three English stock voices (`en-adrian`,
+  `en-ethan`, `en-abby`, all ASR 0.994) were added for English narration.
+- The old copy bug is dead: the delivered line is «ارفع مِلَفّك PDF، وخَلِّي
+  التطبيق يِشْتغِل عنك: يِلَخِّص، ويجاوب، ويختبرك» — shadda kept in the TTS script,
+  whole words on screen.
+- The composite-mix ASR pass was re-run on the delivered cut: 5/5 at 0.927–0.992
+  (`projects/studyai-shami/assets/vo-asr-master.json`).
+
+### Two caption bugs the gates caught
+
+- `showCaptions` compared `T.height` (the 16:9 design grid, 1080) instead of the
+  composition height, so **the 9:16 master shipped without captions**. It now reads
+  `useVideoConfig().height`; the re-render is the one in `output/`.
+- The 9:16 plate sat at bottom 0.055 h — inside the Reels/Shorts bottom band, where
+  the platform paints its own UI. It is now 0.175 h (336 px of 1920), so its last
+  line clears y = 1620; `safe_area.py --preset reels --strict` passes on the
+  delivered vertical stills (max band share 5.9 %).
+
+### Deliverables
+
+- Four masters, measured after mastering: 16:9 92.4 MB · 9:16 90.1 MB · 4:5 22.3 MB
+  · 1:1 18.1 MB, all 42.01 s, 30 fps, peak −1.62 dBFS, RMS −20.74 dBFS, 0 clipped,
+  one measured `+3.14 dB` audio pass (`-c:v copy`).
+- `package_project.py` reads `out/masters/film_*.mp4` first, copies the four finals,
+  13 stills, 20 assets, and writes `manifest.json` + `SHA256SUMS` (verified with
+  `sha256sum -c`). `assets/vo-asr-master.json` is now refreshed on every package.
+- `projects/studyai-shami/README.md` rewritten from the measured files: masters,
+  voice, gates, reproduction commands, and the reconstruction-vs-claim section.
+
+### Fixed
+
+- Stale `out/film_*.mp4` examples in `references/platform-specs.md`,
+  `references/qa-gates.md` and `README.md` now point at `out/masters/`.
+- Measured render throughput corrected in `platform-specs.md`: the 16:9 CRF 10 / PNG
+  hero runs ~1.3 fps (~16 min for this 1260-frame film), not the ~3 fps of a CRF 15
+  JPEG render; CRF 16 teasers measured 7–9 fps.
+- `docs/templates.md` now states exactly which style fields the renderer consumes
+  (`background` is validated only; a scene's tone selects its ground).
+
 ## 2.1.0 — 2026-10-21
 
 The sound. v2.0.0 shipped a film that looked finished and was silent; this release

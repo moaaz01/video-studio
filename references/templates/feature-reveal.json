@@ -1,0 +1,114 @@
+{
+  "id": "feature-reveal",
+  "title": "Feature reveal: one feature, one screen, one change per beat",
+  "when": {
+    "kind": [
+      "feature-reveal",
+      "app-demo",
+      "ui-film"
+    ],
+    "aspects": [
+      "16x9",
+      "9x16"
+    ],
+    "energy": "mid",
+    "audience": [
+      "students",
+      "consumer"
+    ],
+    "dialect": [
+      "ar-msa",
+      "ar-levant"
+    ],
+    "duration": [
+      20,
+      40
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "hook",
+        "bars": 2,
+        "role": "name the feature's job, not its name"
+      },
+      {
+        "kind": "device",
+        "bars": 4,
+        "role": "the screen where the feature lives"
+      },
+      {
+        "kind": "stat",
+        "bars": 2,
+        "role": "the one measurable outcome"
+      },
+      {
+        "kind": "device",
+        "bars": 4,
+        "role": "the same feature after the action"
+      },
+      {
+        "kind": "cta",
+        "bars": 3,
+        "role": "the action repeats the promise"
+      }
+    ],
+    "total_bars": 15
+  },
+  "look": "paper-clean",
+  "palette": {
+    "ground": "#FBF7F0",
+    "surface": "#FFFFFF",
+    "ink": "#1A2A36",
+    "accent": "#0E8A6E",
+    "support": "#D6EFE6"
+  },
+  "typography": {
+    "face": "Tajawal",
+    "display_px": [
+      64,
+      96
+    ],
+    "body_px": [
+      28,
+      36
+    ],
+    "line_height": 1.2,
+    "weights": [
+      500,
+      700
+    ],
+    "rules": [
+      "The feature label uses the app's own wording, quoted verbatim.",
+      "One UI state per beat: do not animate two variables in one change.",
+      "Captions clear the screen edge by at least 96 px."
+    ]
+  },
+  "layouts": [
+    "device-left-copy-right",
+    "screen-detail-crop",
+    "lower-third",
+    "end-card"
+  ],
+  "transitions": [
+    "blur",
+    "slide"
+  ],
+  "sfx": {
+    "intro": "card_pop",
+    "cut": "whoosh_rtl",
+    "accent": "correct_chime"
+  },
+  "background": "paper-glow",
+  "motion": 0.55,
+  "reference": {
+    "site": "prompt-motion.com",
+    "url": "https://prompt-motion.com/",
+    "pattern": "product-ui",
+    "move": "One variable changes per beat: the screen, not the layout.",
+    "note": "Product-UI cut pattern from prompt-motion's archive; adapted, not copied."
+  },
+  "guardrails": [
+    "A feature beat needs a real screen; if the screen does not exist, cut the beat."
+  ]
+}

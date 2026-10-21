@@ -1,0 +1,16 @@
+{
+  "template": "launch-hero",
+  "look": "premium-warm",
+  "motion": 1.0,
+  "background": "paper-glow",
+  "transitions": [
+    "whip",
+    "slide",
+    "blur"
+  ],
+  "sfx": {
+    "intro": "riser_short",
+    "cut": "whoosh_rtl",
+    "accent": "card_pop"
+  }
+}

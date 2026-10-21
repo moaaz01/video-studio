@@ -1,0 +1,114 @@
+{
+  "id": "stats-impact",
+  "title": "Stats impact: one number, counted, landed, labelled",
+  "when": {
+    "kind": [
+      "stats-impact",
+      "impact",
+      "explainer"
+    ],
+    "aspects": [
+      "16x9",
+      "9x16"
+    ],
+    "energy": "high",
+    "audience": [
+      "students",
+      "institutions"
+    ],
+    "dialect": [
+      "ar-msa"
+    ],
+    "duration": [
+      20,
+      35
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "hook",
+        "bars": 2,
+        "role": "the claim, before the evidence"
+      },
+      {
+        "kind": "stat",
+        "bars": 4,
+        "role": "the figure counts and lands"
+      },
+      {
+        "kind": "hook",
+        "bars": 2,
+        "role": "the implication, one line"
+      },
+      {
+        "kind": "stat",
+        "bars": 4,
+        "role": "the second figure resolves the claim"
+      },
+      {
+        "kind": "cta",
+        "bars": 3,
+        "role": "the action"
+      }
+    ],
+    "total_bars": 15
+  },
+  "look": "ink-noir",
+  "palette": {
+    "ground": "#13110D",
+    "surface": "#1D1A14",
+    "ink": "#F1E9DC",
+    "accent": "#D9982F",
+    "support": "#FAE9CC"
+  },
+  "typography": {
+    "face": "Tajawal",
+    "display_px": [
+      160,
+      320
+    ],
+    "body_px": [
+      28,
+      36
+    ],
+    "line_height": 1.0,
+    "weights": [
+      800,
+      900
+    ],
+    "rules": [
+      "The number occupies 30-45 percent of frame height; the label sits under it.",
+      "Counter is integer only, settles once, stops one frame before the label.",
+      "The unit arrives last; the number is never read twice."
+    ]
+  },
+  "layouts": [
+    "number-centre",
+    "full-bleed-type",
+    "lower-third",
+    "end-card"
+  ],
+  "transitions": [
+    "flash",
+    "whip"
+  ],
+  "sfx": {
+    "intro": "riser_short",
+    "cut": "whoosh_rtl",
+    "accent": "ding"
+  },
+  "background": "ink-aurora",
+  "motion": 0.5,
+  "reference": {
+    "site": "prompt-motion.com",
+    "url": "https://prompt-motion.com/",
+    "pattern": "charts",
+    "move": "One figure counts up and lands; the label arrives after the number.",
+    "note": "Data-beat anatomy from prompt-motion's charts reference set; pattern only."
+  },
+  "guardrails": [
+    "Only numbers the product actually measured and can repeat.",
+    "One number per beat; two numbers is two beats."
+  ]
+}

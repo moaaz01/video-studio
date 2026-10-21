@@ -1,10 +1,11 @@
 {
-  "look": "cinema-warm",
+  "look": "premium-warm",
   "slug": "demo-film",
   "fps": 30,
   "width": 1920,
   "height": 1080,
   "bpm": 120,
+  "style": "style.json",
   "voice": {
     "model": "s2.1-pro-free",
     "reference_id": "",
