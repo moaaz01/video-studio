@@ -43,7 +43,7 @@ so RMS sits low while every word is above the bed.
 | `film.json` | the film's source of truth — beats, copy, `screen` routing, `emphasis`, per-beat `sfx`, voice |
 | `style.json` | the cut contract: template · look · motion · background · transitions · sfx |
 | `vo-script.json` | the exact lines sent to Fish, with the voice parameters |
-| `output/` | the four finals + `stills/` + `captions/` (SRT). **Not committed** — see below |
+| `output/` | the four finals + `stills/` (PNG). The masters are **not committed** — see below |
 | `assets/` | every file the film consumed: VO wavs, music bed, compiled `timeline.json`, `vo.json`, `captions.json`, `grade.json`, app strings, both ASR reports |
 | `manifest.json` | machine-written: durations, codecs, loudness, sizes, SHA-256 for everything above |
 | `SHA256SUMS` | the same hashes as a plain file, verifiable with `sha256sum -c` |
@@ -94,7 +94,7 @@ project is only reproducible after `package_project.py` has copied that state in
 
 ## Captions
 
-`assets/captions.json`: **5 wide cues** and **8 vertical cues**, frame-timed from the
+`assets/captions.json` (+ `assets/captions/{wide,vertical}.srt`): **5 wide cues** and **8 vertical cues**, frame-timed from the
 measured VO. The 9:16 master has them burned in; the wide master and the 4:5 / 1:1
 teasers ship clean, because the strip would sit on the copy. The vertical plate's bottom
 inset is **0.175 h (336 px of 1920)**, so the last line clears the Reels/Shorts bottom
