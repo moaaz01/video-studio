@@ -1,7 +1,7 @@
 /**
  * Demo copy for the film's screens — every string traces to the app's own tables.
  *
- * Sources (read-only app at `bot-store-saas/webapp/src`):
+ * Sources (read-only app repo (`webapp/src`)):
  *   - store identity, products, packages, prices, wallet ledger: `lib/api/mock/fixtures.ts`
  *     (SAMPLE DATA — labelled on the end card, never presented as real customers)
  *   - storefront strings: `storefront/screens/{Home,Product,Search,Wallet,Orders}.svelte`

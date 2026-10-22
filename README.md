@@ -511,9 +511,26 @@ python scripts/corpus.py check --min 3      # references are committed, so this 
 python scripts/studio.py qa --stills 8      # on rendered masters
 ```
 
-## License
+## Open source
 
-MIT for the code and docs. Bundled fonts are SIL OFL (Tajawal, Amiri, Noto Naskh
-Arabic) — keep their licences with any redistribution. Audio one-shots in
-`public/audio/sfx` are generated in-repo by `scripts/make_score.py` and are MIT
-with everything else.
+This repository is meant to be cloned, read and extended. The **code, scenes,
+scripts and original documentation are MIT** (`LICENSE`). The bundled fonts are
+**SIL OFL 1.1**; the full licence and copyright notices are in
+[`public/fonts/OFL.txt`](public/fonts/OFL.txt). The renderer (Remotion) has its own
+licence, separate from MIT. Demo product names, strings, prices and contacts are a
+technical example, not a relicensed product. Read
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) before a commercial release.
+
+- **No secrets are committed.** `.env` is ignored; keys come from the environment.
+  See [`SECURITY.md`](SECURITY.md) for private reporting.
+- **Contributions:** [`CONTRIBUTING.md`](CONTRIBUTING.md) lists the gates and the
+  no-client-data rule.
+- **Start a film from a recipe, not from zero:** `SKILL.md`, `AGENTS.md`,
+  `references/PLAYBOOK-cobalt-ledger.md`, `references/templates/cobalt-ledger.json`.
+- **Reference film:** `projects/cobalt-store-launch/` (48 s, 24 bars, 3 aspects).
+  Masters are local/gitignored; the recipe, copy, style, voice spec and QA reports
+  are in the repo.
+
+Audio one-shots in `public/audio/sfx` are generated in-repo by the studio scripts.
+The delivered voice and music are included so a fresh clone renders with sound; they
+do not grant rights to a third-party voice identity or a client's product content.

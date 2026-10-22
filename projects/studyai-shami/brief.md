@@ -20,7 +20,7 @@ engine.
 - **Language / voice:** Arabic (Shami), lightly vocalised so the TTS reads MSA words
   correctly; brand name spoken in English ("StudyAI").
 - **Assets given:** the app's source tree at
-  `…/Desktop/usd/app-studint/android` — `res/values-ar/strings_*.xml` (the real Arabic
+  `<APP>/android` — `res/values-ar/strings_*.xml` (the real Arabic
   copy), `ui/theme/*.kt` (palette, type, spacing); no device and no screenshots.
 - **Facts I may print:** only what the app source proves — upload, chat with document,
   Arabic summary, page-cited quiz, diagram, planner/agent; free on Telegram.

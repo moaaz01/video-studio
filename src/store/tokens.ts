@@ -1,8 +1,8 @@
 /**
  * The store app's design tokens — transcribed from the real Mini App.
  *
- * Source of truth (read-only): `bot-store-saas/webapp/src/styles/tokens.css`
- * (values also tabulated in `docs/apps/tg-store-brief.md` §2.3–§2.5).
+ * Source of truth (read-only): the app's `webapp/src/styles/tokens.css`
+ * (values also tabulated in the app's own tokens.css §2.3–§2.5).
  * The film may only use these colours, fonts and radii; the stage palette below
  * is the film's own lighting, derived from the same two brand hues.
  */

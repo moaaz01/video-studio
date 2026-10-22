@@ -7,7 +7,7 @@
  *
  * Provenance / honesty:
  *  - tokens (colours, radii, fonts, glass, shadows) come from `../tokens`, transcribed from
- *    `bot-store-saas/webapp/src/styles/tokens.css` + `fonts.css`.
+ *    the app's `webapp/src/styles/tokens.css` + `fonts.css`.
  *  - every Arabic string comes from `../demo` (which traces to the app's own string tables and
  *    `mock/fixtures.ts` sample data) or from the app's `admin/sections.ts` label+blurb pair.
  *  - copy that is *designed*, not shipped by the app, is marked `[DESIGN]` inline and listed in

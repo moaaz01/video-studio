@@ -43,3 +43,6 @@ references/corpus/evidence/
 out/looks/
 out/storyboard/
 public/luts/
+
+# private client notes — never public
+docs/private/
