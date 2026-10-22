@@ -46,3 +46,11 @@ public/luts/
 
 # private client notes — never public
 docs/private/
+
+# the Cobalt reference is a recipe in the repo; its heavy delivery stays local
+projects/cobalt-store-launch/assets/
+projects/cobalt-store-launch/manifest.json
+projects/cobalt-store-launch/SHA256SUMS
+projects/cobalt-store-launch/ui-source.json
+projects/cobalt-store-launch/output/qa/contact-*.png
+projects/cobalt-store-launch/output/stills/*.png
