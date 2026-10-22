@@ -52,8 +52,8 @@ Replace them with your own product, your own strings and your own demo data befo
 shipping a commercial film.
 
 The contacts printed in the reference films (`t.me/abumooaz1`,
-`wa.me/905528552420`) are the operator's business contacts, included with permission
-for the example. Replace them in your own film.
+`wa.me/905528552420`) are the operator's business contacts, included as part of the
+example. Replace them with your own before publishing a new film.
 
 ## Reference cards and prompt packs
 
