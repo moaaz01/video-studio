@@ -1,16 +1,26 @@
 {
-  "template": "launch-hero",
-  "look": "premium-warm",
-  "motion": 1,
-  "background": "paper-glow",
+  "template": "cobalt-ledger",
+  "look": "cobalt-atelier",
+  "motion": 1.2,
+  "background": "cobalt",
   "transitions": [
-    "whip",
-    "slide",
+    "maskline",
+    "flood",
+    "iris",
     "blur"
   ],
   "sfx": {
-    "intro": "riser_short",
+    "intro": "impact",
     "cut": "whoosh_rtl",
-    "accent": "card_pop"
+    "accent": "button_click",
+    "tick": "type_tick",
+    "drop": "sub_drop",
+    "success": "correct_chime",
+    "stamp": "stamp_thud",
+    "rise": "riser_short",
+    "sweep": "pan_whoosh",
+    "seal": "haptic_thud",
+    "reward": "level_up",
+    "land": "card_pop"
   }
 }

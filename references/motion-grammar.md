@@ -54,6 +54,9 @@ The vocabulary (`style.transitions`, one word per bar line, cycled):
 | `slide` | a clean push, outgoing right, incoming left (RTL reading direction) |
 | `blur` | defocus crossfade: incoming sharpens in, outgoing softens out |
 | `flash` | light bloom across the seam; the swap happens in the flash |
+| `flood` | the incoming scene is revealed inside an expanding shape (a circle from the object just tapped); the outgoing frame scales and blooms under it |
+| `iris` | a circular iris from the centre; no translation, only aperture |
+| `maskline` | a gold perforation line sweeps the frame and the new scene is revealed behind it |
 
 A film gets **two or three** of these, no more. Rules:
 

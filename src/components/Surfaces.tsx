@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {AbsoluteFill, random, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, random, useCurrentFrame, useVideoConfig} from 'remotion';
 import {C} from '../theme';
 
 const noiseSvg = (freq: number, octaves: number) =>
@@ -247,13 +247,81 @@ export const CornerMarks: React.FC<{color?: string; inset?: number; label?: stri
 );
 
 export type Tone = 'paper' | 'paperRaised' | 'sunken' | 'ink' | 'emerald';
-export type GroundVariant = 'auto' | 'paper-glow' | 'ink-aurora' | 'emerald-depth';
+export type GroundVariant =
+  | 'auto'
+  | 'paper-glow'
+  | 'ink-aurora'
+  | 'emerald-depth'
+  | 'souk-night'
+  | 'golden-souk'
+  | 'vault-night'
+  | 'vault-warm'
+  | 'atelier'
+  | 'cobalt';
 
 /**
  * The film's ground. Light = the product world (warm paper); ink = the problem
  * and the closing statement. Never a flat CSS colour: always paper + ambient
  * blooms + ruling + grain, because flat colour is what makes a render look cheap.
  */
+/** An eight-point star lattice, the souk's tile, at a whisper of opacity. */
+export const Arabesque: React.FC<{color?: string; opacity?: number; size?: number}> = ({
+  color = 'rgba(255,206,140,0.55)',
+  opacity = 0.06,
+  size = 96,
+}) => (
+  <AbsoluteFill style={{pointerEvents: 'none', opacity, mixBlendMode: 'screen'}}>
+    <svg width="100%" height="100%">
+      <defs>
+        <pattern id="arabesque-star" width={size} height={size} patternUnits="userSpaceOnUse">
+          <g fill="none" stroke={color} strokeWidth={1.1}>
+            <path
+              d={`M${size / 2} 6 L${size / 2 + 10} ${size / 2 - 10} L${size - 6} ${size / 2} L${size / 2 + 10} ${size / 2 + 10} L${size / 2} ${size - 6} L${size / 2 - 10} ${size / 2 + 10} L6 ${size / 2} L${size / 2 - 10} ${size / 2 - 10} Z`}
+            />
+            <circle cx={size / 2} cy={size / 2} r={size * 0.11} />
+          </g>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#arabesque-star)" />
+    </svg>
+  </AbsoluteFill>
+);
+
+/** Warm out-of-focus lights: the market behind the shop, not a gradient. */
+export const Bokeh: React.FC<{count?: number; opacity?: number}> = ({count = 12, opacity = 0.5}) => {
+  const frame = useCurrentFrame();
+  const {width, height} = useVideoConfig();
+  return (
+    <AbsoluteFill style={{pointerEvents: 'none', opacity}}>
+      {Array.from({length: count}).map((_, i) => {
+        const seed = (i * 6151 + 27449) % 93643;
+        const r = (n: number) => ((Math.sin(seed * (n + 3.1)) * 10000) % 1 + 1) % 1;
+        const w = width * (0.03 + r(1) * 0.07);
+        const x = r(2) * width + Math.sin(frame * 0.004 + i) * 30;
+        const y = (r(3) * height + frame * (0.05 + r(4) * 0.12)) % height;
+        const gold = i % 3 !== 1;
+        return (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              left: x,
+              top: y,
+              width: w,
+              height: w,
+              borderRadius: '50%',
+              background: gold
+                ? 'radial-gradient(circle, rgba(255,193,102,0.55), rgba(255,160,70,0.08) 60%, transparent 72%)'
+                : 'radial-gradient(circle, rgba(150,240,236,0.4), rgba(60,180,180,0.06) 60%, transparent 72%)',
+              filter: `blur(${w * 0.28}px)`,
+            }}
+          />
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
+
 export const Ground: React.FC<{
   tone?: Tone;
   ruled?: boolean;
@@ -291,12 +359,90 @@ export const Ground: React.FC<{
           <Rays color="rgba(241,233,220,0.10)" opacity={0.5} angle={18} x={70} />
         </>
       )}
+      {v === 'golden-souk' && (
+        <>
+          <AbsoluteFill style={{background: 'linear-gradient(150deg,#241307 0%,#3A1F0E 22%,#2A1610 46%,#122528 76%,#08171B 100%)'}} />
+          <Aurora colors={['rgba(255,176,74,0.42)', 'rgba(255,104,72,0.16)', 'rgba(42,165,169,0.55)']} opacity={0.8} speed={0.5} />
+          <Glow x="16%" y="6%" r={1020} color="#F2A93B" opacity={0.4} />
+          <Glow x="86%" y="2%" r={900} color="#2AA5A9" opacity={0.42} />
+          <Glow x="22%" y="100%" r={900} color="#7A2E1A" opacity={0.4} />
+          <Rays color="rgba(255,214,150,0.16)" opacity={0.7} angle={14} x={24} />
+          <Rays color="rgba(190,246,240,0.11)" opacity={0.5} angle={-8} x={78} />
+          <Arabesque opacity={0.07} />
+          <AbsoluteFill style={{background: 'radial-gradient(64% 68% at 50% 46%, rgba(14,6,3,0) 0%, rgba(14,6,3,0.56) 100%)'}} />
+        </>
+      )}
+      {v === 'vault-warm' && (
+        <>
+          <AbsoluteFill style={{background: 'radial-gradient(96% 86% at 50% 44%, #2A1810 0%, #1A0F0B 54%, #070C0F 100%)'}} />
+          <Rays color="rgba(255,190,110,0.20)" opacity={0.75} angle={0} x={50} />
+          <Glow x="50%" y="40%" r={820} color="#F2A93B" opacity={0.26} />
+          <Glow x="86%" y="10%" r={560} color="#2AA5A9" opacity={0.16} />
+          <Arabesque opacity={0.045} />
+        </>
+      )}
+      {v === 'souk-night' && (
+        <>
+          <AbsoluteFill style={{background: 'linear-gradient(166deg,#0B2B33 0%,#06171F 44%,#030A0F 100%)'}} />
+          <Aurora colors={['rgba(42,165,169,0.55)', 'rgba(242,169,59,0.16)', 'rgba(15,58,60,0.72)']} opacity={0.9} speed={0.55} />
+          <Glow x="78%" y="4%" r={900} color="#0F7C80" opacity={0.5} />
+          <Glow x="10%" y="94%" r={780} color="#F2A93B" opacity={0.14} />
+          <Rays color="rgba(190,246,240,0.10)" opacity={0.55} angle={16} x={72} />
+          <AbsoluteFill style={{background: 'radial-gradient(58% 62% at 50% 44%, rgba(4,10,14,0) 0%, rgba(4,10,14,0.5) 100%)'}} />
+        </>
+      )}
+      {v === 'vault-night' && (
+        <>
+          <AbsoluteFill style={{background: 'radial-gradient(92% 82% at 50% 42%, #0B1A22 0%, #050B12 58%, #02050A 100%)'}} />
+          <Rays color="rgba(242,169,59,0.14)" opacity={0.6} angle={0} x={50} />
+          <Glow x="50%" y="42%" r={760} color="#0F7C80" opacity={0.22} />
+          <Glow x="84%" y="8%" r={520} color="#F2A93B" opacity={0.10} />
+        </>
+      )}
       {v === 'emerald-depth' && (
         <>
           <AbsoluteFill style={{background: 'radial-gradient(120% 90% at 70% 0%, #12916F 0%, #0B6B56 46%, #073A33 100%)'}} />
           <Aurora colors={['rgba(54,196,160,0.5)', 'rgba(10,62,54,0.6)', 'rgba(255,238,205,0.26)']} opacity={0.85} speed={0.6} />
           <Rays color="rgba(255,245,225,0.16)" opacity={0.45} angle={24} x={64} />
           <Glow x="84%" y="-10%" r={760} color="#3FE0B4" opacity={0.28} />
+        </>
+      )}
+      {v === 'atelier' && (
+        <>
+          <AbsoluteFill style={{background: 'linear-gradient(152deg,#071C1A 0%,#0A2420 26%,#0B1B1F 54%,#070F16 100%)'}} />
+          <Aurora colors={['rgba(38,196,160,0.34)', 'rgba(120,186,255,0.18)', 'rgba(255,236,205,0.12)']} opacity={0.72} speed={0.45} />
+          <Glow x="82%" y="4%" r={980} color="#25B893" opacity={0.32} />
+          <Glow x="18%" y="96%" r={860} color="#3A6FB0" opacity={0.22} />
+          <Rays color="rgba(212,255,244,0.08)" opacity={0.5} angle={18} x={70} />
+          <AbsoluteFill
+            style={{
+              backgroundImage:
+                'linear-gradient(rgba(180,255,240,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(180,255,240,0.035) 1px, transparent 1px)',
+              backgroundSize: '72px 72px',
+              maskImage: 'radial-gradient(75% 70% at 50% 42%, #000 0%, transparent 78%)',
+              WebkitMaskImage: 'radial-gradient(75% 70% at 50% 42%, #000 0%, transparent 78%)',
+            }}
+          />
+          <AbsoluteFill style={{background: 'radial-gradient(62% 64% at 50% 44%, rgba(2,8,10,0) 0%, rgba(2,8,10,0.56) 100%)'}} />
+        </>
+      )}
+      {v === 'cobalt' && (
+        <>
+          <AbsoluteFill style={{background: 'linear-gradient(152deg,#040814 0%,#08142A 28%,#0B1730 52%,#050A14 100%)'}} />
+          <Aurora colors={['rgba(47,107,255,0.38)', 'rgba(120,160,255,0.18)', 'rgba(244,227,200,0.14)']} opacity={0.78} speed={0.45} />
+          <Glow x="82%" y="0%" r={980} color="#2F6BFF" opacity={0.38} />
+          <Glow x="14%" y="100%" r={860} color="#F2A93B" opacity={0.10} />
+          <Rays color="rgba(210,230,255,0.09)" opacity={0.55} angle={20} x={72} />
+          <AbsoluteFill
+            style={{
+              backgroundImage:
+                'linear-gradient(rgba(190,220,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(190,220,255,0.04) 1px, transparent 1px)',
+              backgroundSize: '80px 80px',
+              maskImage: 'radial-gradient(78% 72% at 50% 42%, #000 0%, transparent 78%)',
+              WebkitMaskImage: 'radial-gradient(78% 72% at 50% 42%, #000 0%, transparent 78%)',
+            }}
+          />
+          <AbsoluteFill style={{background: 'radial-gradient(62% 64% at 50% 44%, rgba(1,4,10,0) 0%, rgba(1,4,10,0.58) 100%)'}} />
         </>
       )}
       {ruled && <Ruled color={dark ? C.hairlineDark : C.hairline} opacity={dark ? 0.5 : 0.6} />}

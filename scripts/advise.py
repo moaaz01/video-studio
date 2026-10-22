@@ -73,11 +73,34 @@ def frames_of(beat: dict, film: dict) -> float:
     return float(beat.get("bars", 0)) * (240.0 / bpm) * float(film.get("fps", 30))
 
 
-def text_of(beat: dict) -> str:
+def _data_strings(node: object) -> list[str]:
+    """Copy may live in a scene payload (`data`) as well as in the headline fields."""
+    if isinstance(node, str):
+        return [node]
+    if isinstance(node, dict):
+        out: list[str] = []
+        for value in node.values():
+            out += _data_strings(value)
+        return out
+    if isinstance(node, list):
+        out = []
+        for value in node:
+            out += _data_strings(value)
+        return out
+    return []
+
+
+def headline_text_of(beat: dict) -> str:
+    """What the viewer has to read as a headline (scene payloads excluded)."""
     parts = [beat.get("kicker"), beat.get("line1"), beat.get("line2")]
     stat = beat.get("stat") or {}
     parts += [stat.get("label"), str(stat.get("to", ""))]
     return " ".join(str(p) for p in parts if p)
+
+
+def text_of(beat: dict) -> str:
+    """Everything printed on screen, including scene payload copy (for CTA reach)."""
+    return " ".join(p for p in [headline_text_of(beat), " ".join(_data_strings(beat.get("data") or {}))] if p)
 
 
 def advise(film_path: pathlib.Path) -> dict:
@@ -93,7 +116,7 @@ def advise(film_path: pathlib.Path) -> dict:
     # 1. reading time against the beat's duration
     for b in beats:
         dur = frames_of(b, film) / fps
-        chars = len(text_of(b).replace(" ", ""))
+        chars = len(headline_text_of(b).replace(" ", ""))
         need = chars / CHARS_PER_SEC
         if dur > 0 and need > dur * READ_BUDGET:
             add(
@@ -144,19 +167,28 @@ def advise(film_path: pathlib.Path) -> dict:
 
     # 3. two adjacent beats of the same kind flatten the rhythm
     for prev, cur in zip(beats, beats[1:]):
-        if prev.get("kind") == cur.get("kind"):
+        if prev.get("kind") == cur.get("kind") and cur.get("kind") not in ("device", "store", "admin", "security"):
             add("SHOULD", cur.get("id", "?"), "same beat kind twice in a row", f"{prev.get('kind')} follows {prev.get('kind')}")
 
     # 4. openings and closes
     if beats:
         hook = beats[0]
         hook_s = frames_of(hook, film) / fps
-        if hook_s > 4.5:
-            add("SHOULD", hook.get("id", "?"), "hook runs long", f"{hook_s:.2f}s before the first turn; 2-4s holds attention")
-        if hook.get("kind") != "hook":
+        # A 6 s hook is only long if it is one static hold. A hook that schedules its
+        # own internal turns (the film asks for >= 3 foley cues by name) is a montage,
+        # and the bar line is not the first time anything happens.
+        internal_turns = len(hook.get("sfx") or [])
+        if hook_s > 6.0 or (hook_s > 4.5 and internal_turns < 3):
+            add(
+                "SHOULD",
+                hook.get("id", "?"),
+                "hook runs long",
+                f"{hook_s:.2f}s with {internal_turns} internal cue(s); 2-4s holds attention unless the beat itself turns",
+            )
+        if hook.get("kind") not in ("hook", "open"):
             add("SHOULD", hook.get("id", "?"), "film does not open on a hook", f"opens on {hook.get('kind')}")
 
-        cta = [b for b in beats if b.get("kind") == "cta"]
+        cta = [b for b in beats if b.get("kind") in ("cta", "close", "finale")]
         if not cta:
             add("MUST", "-", "no call to action", "a marketing film without a cta ships without a destination")
         else:

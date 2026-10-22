@@ -72,4 +72,11 @@ export const CAMERA_BY_KIND: Record<string, CameraMode> = {
   device: "settle",
   stat: "drift",
   cta: "push-in",
+  open: "push-in",
+  store: "push-in",
+  design: "drift",
+  admin: "push-in",
+  security: "settle",
+  close: "push-in",
+  finale: "push-in",
 };

@@ -11,6 +11,8 @@ Read in this order, and stop when you have what you need:
 3. `references/arabic-type.md` — hard rules; violating them is a defect, not a taste.
 4. `references/audio-and-voice.md` — if the request includes voice or music.
 5. `references/qa-gates.md` — the commands that decide whether you are done.
+6. `references/PLAYBOOK-cobalt-ledger.md` — the 48 s data-film recipe, if the brief
+   is a store/economics film. Copy it; do not start from a blank `film.json`.
 
 ## The 30-second version
 
@@ -83,8 +85,9 @@ python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict
 | `src/generated/timeline.json` | Compiled output. Never hand-edit. |
 | `src/brand.ts` | Client identity: name, monogram/icon, accent, CTA, contacts. |
 | `src/scenes/*.tsx` | One component per beat kind. Copy arrives as props. |
-| `src/film/Film.tsx` | Sequences beats, hands scenes over on the cut axis (pre-roll + 10-frame overlap), drives every aspect. |
-| `src/look/looks.ts` | The six looks; `premium-warm` is the device-led default, `ui-daylight` is the flat cautionary one. `film/style.json` names one; no ad-hoc grading in scenes. |
+| `src/film/Film.tsx` | Sequences beats, hands scenes over on the cut axis (pre-roll + 8-frame overlap), drives every aspect. |
+| `src/look/looks.ts` | The nine looks; `premium-warm` is the device-led default, `ui-daylight` is the flat cautionary one, `midnight-souk` is the store-launch look, `cobalt-atelier` is the data-film look. `film/style.json` names one; no ad-hoc grading in scenes. |
+| `projects/cobalt-store-launch/` | 48 s Cobalt Ledger reference film: 6 beats, 24 bars, sources/pricing/payments; docs + prompt pack + manifest. |
 | `src/film/Storyboard.tsx` | The storyboard sheet composition (`studio.py storyboard`). |
 | `src/film/Captions.tsx` | Burned captions from `src/generated/captions.json`; 9:16 only, display copy without tashkeel. |
 | `film/style.json` + `film/voices.json` | The film's declared cut and its voice catalogue (clones + verified stock ids). |
@@ -116,6 +119,10 @@ python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict
 - **Never claim "done" without the gate output in hand** — peak, RMS, clipped
   samples, black stretches, Arabic scan.
 - **One idea per beat.** If a beat needs two headlines, it is two beats.
+- **Never sell with a price line.** The CTA is «التفاصيل على الخاص» or «للحصول على
+  متجرك — تواصل معنا», never «السعر على الخاص».
+- **Data scenes are checked at 1:1.** A product card over a headline or a price
+  panel over the sub is invisible on a contact sheet.
 
 ## Extending
 

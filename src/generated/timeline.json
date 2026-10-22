@@ -1,120 +1,454 @@
 {
   "fps": 30,
-  "look": "premium-warm",
+  "look": "cobalt-atelier",
   "style": {
-    "template": "launch-hero",
-    "look": "premium-warm",
-    "motion": 1.0,
-    "background": "paper-glow",
+    "template": "cobalt-ledger",
+    "look": "cobalt-atelier",
+    "motion": 1.2,
+    "background": "cobalt",
     "transitions": [
-      "whip",
-      "slide",
+      "maskline",
+      "flood",
+      "iris",
       "blur"
     ],
     "sfx": {
-      "intro": "riser_short",
+      "intro": "impact",
       "cut": "whoosh_rtl",
-      "accent": "card_pop"
+      "accent": "button_click",
+      "tick": "type_tick",
+      "drop": "sub_drop",
+      "success": "correct_chime",
+      "stamp": "stamp_thud",
+      "rise": "riser_short",
+      "sweep": "pan_whoosh",
+      "seal": "haptic_thud",
+      "reward": "level_up",
+      "land": "card_pop"
     }
   },
   "width": 1920,
   "height": 1080,
   "bpm": 120,
-  "frames": 1260,
+  "frames": 1440,
   "beats": [
     {
       "id": "b01-hook",
-      "kind": "hook",
+      "kind": "open",
       "tone": "ink",
       "start": 0,
       "end": 180,
       "dur": 180,
-      "kicker": "استوديو الفيديو",
-      "line1": "صفحةٌ واحدة تكفي لتبدأ",
-      "line2": "الفكرة التي تُفهَم، لا التي تُقرأ مرّتين",
+      "kicker": "",
+      "line1": "متجرك الرقمي… جاهز باسمك",
+      "line2": "بدون تطبيق. بدون موقع. من تلجرام.",
       "stat": null,
       "screen": null,
-      "emphasis": [],
-      "sfx": [],
-      "vo": [
-        "من صفحةٍ واحدة\\، إلى فهمٍ كامل."
-      ]
-    },
-    {
-      "id": "b02-device",
-      "kind": "device",
-      "tone": "paper",
-      "start": 180,
-      "end": 480,
-      "dur": 300,
-      "kicker": "الواجهة",
-      "line1": "واجهةٌ حقيقية، بنفس أبعادها",
-      "line2": "نفس الشاشات، ونفس التفاصيل، ونفس اللغة",
-      "stat": null,
-      "screen": null,
-      "emphasis": [],
-      "sfx": [],
-      "vo": [
-        "كلُّ ما تراه في الفيديو\\، موجودٌ في التطبيق."
-      ]
-    },
-    {
-      "id": "b03-device",
-      "kind": "device",
-      "tone": "paper",
-      "start": 480,
-      "end": 780,
-      "dur": 300,
-      "kicker": "التفاعل",
-      "line1": "كلُّ حركةٍ في موضعها",
-      "line2": "التمرير، والضغط، والانتقال — كما يستخدمها الناس",
-      "stat": null,
-      "screen": null,
-      "emphasis": [],
-      "sfx": [],
-      "vo": [
-        "التفاصيلُ الصغيرة\\، هي ما يجعل الشيءَ مُصدَّقًا."
-      ]
-    },
-    {
-      "id": "b04-stat",
-      "kind": "stat",
-      "tone": "ink",
-      "start": 780,
-      "end": 1020,
-      "dur": 240,
-      "kicker": "الأثر",
-      "line1": "أسرع في الوصول إلى الفكرة",
-      "line2": "",
-      "stat": {
-        "from": 0,
-        "to": 6,
-        "suffix": "×",
-        "label": "أسرع في الوصول إلى الفكرة"
+      "data": {
+        "stage": "cobalt",
+        "headLines": [
+          "متجرك الرقمي…",
+          "جاهز باسمك."
+        ],
+        "sub": "بدون تطبيق. بدون موقع. من تلجرام.",
+        "chat": {
+          "title": "متجر الشام للشحن",
+          "handle": "@shamshop_bot",
+          "received": "أهلاً بك في متجر الشام. اشحن ألعابك واشترِ بطاقاتك بثوانٍ من رصيدك.",
+          "bubble": "كل شي جاهز من أول رسالة.",
+          "badge": "Mini App"
+        }
       },
-      "screen": null,
       "emphasis": [],
-      "sfx": [],
+      "sfx": [
+        {
+          "at": 30,
+          "name": "sub_thump",
+          "gain": 0.5
+        },
+        {
+          "at": 62,
+          "name": "ui_pop",
+          "gain": 0.4
+        },
+        {
+          "at": 96,
+          "name": "pan_whoosh",
+          "gain": 0.55
+        }
+      ],
       "vo": [
-        "ستّةُ أضعافِ السرعة\\، في نفس الوقت."
+        "مَتْجَرُكَ الرَّقْمِيُّ... جَاهِزٌ بِاسْمِكَ. بِلَا تَطْبِيق."
       ]
     },
     {
-      "id": "b05-cta",
-      "kind": "cta",
-      "tone": "emerald",
+      "id": "b02-setup",
+      "kind": "setup",
+      "tone": "ink",
+      "start": 180,
+      "end": 420,
+      "dur": 240,
+      "kicker": "",
+      "line1": "من أول خطوة… إلى الإطلاق",
+      "line2": "هوية، عملة، دفع، مصادر، منتجات — وإطلاق في دقائق.",
+      "stat": null,
+      "screen": null,
+      "data": {
+        "stage": "cobalt",
+        "head": [
+          "من أول خطوة…",
+          "إلى الإطلاق."
+        ],
+        "sub": "هوية، عملة، دفع، مصادر، منتجات — وإطلاق في دقائق."
+      },
+      "emphasis": [],
+      "sfx": [
+        {
+          "at": 20,
+          "name": "type_tick",
+          "gain": 0.35
+        },
+        {
+          "at": 76,
+          "name": "button_click",
+          "gain": 0.45
+        },
+        {
+          "at": 140,
+          "name": "ui_chirp",
+          "gain": 0.4
+        },
+        {
+          "at": 200,
+          "name": "correct_chime",
+          "gain": 0.4
+        }
+      ],
+      "vo": [
+        "هُوِيَّتُكَ، عُمْلَتُكَ، دَفْعُكَ، وَمَصَادِرُكَ... كُلُّهَا فِي مَكَانٍ وَاحِد."
+      ]
+    },
+    {
+      "id": "b03-store",
+      "kind": "store",
+      "tone": "ink",
+      "start": 420,
+      "end": 720,
+      "dur": 300,
+      "kicker": "",
+      "line1": "يشتري… يدفع… ويستلم — بثواني",
+      "line2": "بطاقات رقمية، شحن ألعاب، اشتراكات — والدفع بالطريقة التي تناسبه.",
+      "stat": null,
+      "screen": null,
+      "data": {
+        "stage": "cobalt",
+        "payments": [
+          "محفظة المتجر",
+          "شام كاش",
+          "سيريتل كاش",
+          "MTN كاش",
+          "USDT",
+          "Binance Pay"
+        ],
+        "product": {
+          "name": "شدّات ببجي موبايل (UC)",
+          "desc": "شحن فوري على آيدي اللاعب، بدون كلمة سر."
+        },
+        "checkout": {
+          "title": "مراجعة الطلب",
+          "pay": "ادفع $9.99",
+          "balanceLabel": "رصيدك الآن",
+          "balance": "$12.56",
+          "afterLabel": "بعد الدفع",
+          "after": "$3.07"
+        },
+        "success": {
+          "title": "تم الدفع وبدأ تنفيذ طلبك",
+          "order": "طلب #1047",
+          "code": "UC-660-8821-4471"
+        }
+      },
+      "emphasis": [],
+      "sfx": [
+        {
+          "at": 74,
+          "name": "button_click",
+          "gain": 0.5
+        },
+        {
+          "at": 118,
+          "name": "type_tick",
+          "gain": 0.4
+        },
+        {
+          "at": 150,
+          "name": "card_pop",
+          "gain": 0.45
+        },
+        {
+          "at": 212,
+          "name": "button_click",
+          "gain": 0.6
+        },
+        {
+          "at": 240,
+          "name": "correct_chime",
+          "gain": 0.45
+        }
+      ],
+      "vo": [
+        "عُمَلَاؤُكَ يَدْفَعُونَ مِنْ رَصِيدِهِمْ، أَوْ بِالطَّرِيقَةِ الَّتِي تُنَاسِبُهُم... وَالْكُودُ يَصِلُهُمْ فَوْرًا."
+      ]
+    },
+    {
+      "id": "b04-sources",
+      "kind": "sources",
+      "tone": "ink",
+      "start": 720,
+      "end": 1020,
+      "dur": 300,
+      "kicker": "",
+      "line1": "من عدة مصادر… أفضل سعر، وأعلى ربح",
+      "line2": "نقارن التكلفة، نختار الأرخص، ونحدّث سعرك تلقائياً.",
+      "stat": null,
+      "screen": null,
+      "data": {
+        "stage": "cobalt",
+        "head": [
+          "من عدة مصادر…",
+          "أفضل سعر، وأعلى ربح."
+        ],
+        "sub": "نقارن التكلفة، نختار الأرخص، ونحدّث سعرك تلقائياً.",
+        "marginPct": 15,
+        "sources": [
+          {
+            "name": "مصدر ١",
+            "cost": 8.2,
+            "available": true
+          },
+          {
+            "name": "مصدر ٢",
+            "cost": 8.45,
+            "available": true
+          },
+          {
+            "name": "مصدر ٣",
+            "cost": 8.6,
+            "available": true
+          }
+        ]
+      },
+      "emphasis": [],
+      "sfx": [
+        {
+          "at": 30,
+          "name": "ui_chirp",
+          "gain": 0.35
+        },
+        {
+          "at": 86,
+          "name": "card_pop",
+          "gain": 0.4
+        },
+        {
+          "at": 148,
+          "name": "button_click",
+          "gain": 0.45
+        },
+        {
+          "at": 168,
+          "name": "type_tick",
+          "gain": 0.4
+        },
+        {
+          "at": 230,
+          "name": "correct_chime",
+          "gain": 0.42
+        }
+      ],
+      "vo": [
+        "اِرْبِطْ كُلَّ مُنْتَجٍ بِعِدَّةِ مَصَادِر. نَخْتَارُ الْأَرْخَص، وَإِذَا اِرْتَفَعَ سِعْرُ الْمَصْدَر، يَرْتَفِعُ سِعْرُكَ تِلْقَائِيًّا."
+      ]
+    },
+    {
+      "id": "b05-admin",
+      "kind": "admin",
+      "tone": "ink",
       "start": 1020,
       "end": 1260,
       "dur": 240,
       "kicker": "",
-      "line1": "جاهز أن تبدأ؟",
-      "line2": "",
+      "line1": "كل شيء… تحت سيطرتك",
+      "line2": "طلبات، أرباح، إشعارات، وبث لعملائك — من نفس الجوال.",
       "stat": null,
       "screen": null,
+      "data": {
+        "stage": "cobalt",
+        "head": [
+          "كل شيء…",
+          "تحت سيطرتك."
+        ],
+        "kpis": [
+          {
+            "label": "الطلبات",
+            "value": "128",
+            "hint": "4 قيد التنفيذ"
+          },
+          {
+            "label": "المبيعات",
+            "value": "$3,420",
+            "hint": "الطلبات المنفّذة فقط"
+          },
+          {
+            "label": "صافي الربح",
+            "value": "$1,180",
+            "hint": "بعد تكلفة المصدر"
+          },
+          {
+            "label": "بانتظارك",
+            "value": "3",
+            "hint": "اضغط لفتح القائمة"
+          }
+        ],
+        "orders": [
+          {
+            "id": "#1047",
+            "product": "ببجي · 660 UC",
+            "status": "قيد التنفيذ",
+            "amount": "$9.99"
+          },
+          {
+            "id": "#1046",
+            "product": "آيتونز · بطاقة 10$",
+            "status": "مكتمل",
+            "amount": "$10.60"
+          },
+          {
+            "id": "#1045",
+            "product": "فري فاير · 520 جوهرة",
+            "status": "مكتمل",
+            "amount": "$4.80"
+          }
+        ],
+        "broadcast": {
+          "title": "راسل عملائك",
+          "audience": "كل العملاء",
+          "estimate": "1,248 مستلم",
+          "progress": 0.64,
+          "sent": "798"
+        },
+        "stats": {
+          "title": "الإحصائيات",
+          "sub": "المبيعات والأرباح مقارنة بالفترة السابقة",
+          "points": [
+            12,
+            18,
+            15,
+            26,
+            31,
+            24,
+            38,
+            44,
+            39,
+            52,
+            48,
+            61
+          ]
+        },
+        "vip": [
+          {
+            "name": "فضي",
+            "pct": "3%"
+          },
+          {
+            "name": "ذهبي",
+            "pct": "5%"
+          },
+          {
+            "name": "ماسي",
+            "pct": "8%"
+          }
+        ],
+        "actions": [
+          "المنتجات",
+          "طلبات الشحن",
+          "الكوبونات",
+          "القنوات"
+        ]
+      },
       "emphasis": [],
-      "sfx": [],
+      "sfx": [
+        {
+          "at": 66,
+          "name": "type_tick",
+          "gain": 0.35
+        },
+        {
+          "at": 128,
+          "name": "button_click",
+          "gain": 0.5
+        },
+        {
+          "at": 196,
+          "name": "ui_chirp",
+          "gain": 0.4
+        },
+        {
+          "at": 258,
+          "name": "level_up",
+          "gain": 0.4
+        }
+      ],
       "vo": [
-        "حمّل التطبيقَ الآن\\، وابدأ بصفحتك الأولى."
+        "وَمِنْ نَفْسِ الْجَوَّال: طَلَبَاتُكَ، أَرْبَاحُكَ، وَبَثٌّ لِعُمَلَائِك."
+      ]
+    },
+    {
+      "id": "b06-finale",
+      "kind": "finale",
+      "tone": "ink",
+      "start": 1260,
+      "end": 1440,
+      "dur": 180,
+      "kicker": "",
+      "line1": "متجرك الرقمي… جاهز باسمك",
+      "line2": "للمزيد من التفاصيل أو لمتجرك — تواصل معنا على الخاص.",
+      "stat": null,
+      "screen": null,
+      "data": {
+        "stage": "cobalt",
+        "head": [
+          "متجرك الرقمي",
+          "جاهز باسمك."
+        ],
+        "sub": "للمزيد من التفاصيل أو لمتجرك — تواصل معنا على الخاص.",
+        "foot": "لقطات الواجهة ببيانات تجريبية · التفاصيل على الخاص"
+      },
+      "emphasis": [],
+      "sfx": [
+        {
+          "at": 0,
+          "name": "sub_drop",
+          "gain": 0.7
+        },
+        {
+          "at": 14,
+          "name": "impact",
+          "gain": 0.45
+        },
+        {
+          "at": 62,
+          "name": "ding",
+          "gain": 0.35
+        },
+        {
+          "at": 120,
+          "name": "shimmer",
+          "gain": 0.3
+        }
+      ],
+      "vo": [
+        "لِمَزِيدٍ مِنَ التَّفَاصِيل، تَوَاصَلْ مَعَنَا عَلَى الْخَاصّ."
       ]
     }
   ]

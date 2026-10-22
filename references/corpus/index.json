@@ -27,6 +27,62 @@
       "move": "One element, never cut: size, radius and colour morph while the content swaps with a short blur, every value a closed-form spring summed per event, all of it a pure function of seek(t); drags are direct manipulation and the loop closes on frame 0.",
       "why": "This is exactly how a UI beat should behave in our engine: no transitions, no state, one spring per change, so --concurrency=75% cannot change the picture.",
       "added": "2026-10-20"
+    },
+    {
+      "title": "One-take flood handoff (photo print)",
+      "url": "https://prompt-motion.com/twoclipping-221cab",
+      "source": "other",
+      "direction": "launch",
+      "move": "the camera flies through a printed photo and the print becomes the next scene, so the cut happens inside one continuous move",
+      "why": "The store film must never cut; the storefront grows out of a Telegram bubble and the phone becomes the room — same flood grammar, no seam.",
+      "added": "2026-10-21"
+    },
+    {
+      "title": "Beat-locked 120 BPM UGC with event per bar",
+      "url": "https://prompt-motion.com/twoclipping-6dd14e",
+      "source": "other",
+      "direction": "launch",
+      "move": "one visual event per bar, hand-held micro-shake and a 3D hero camera instead of a new transition per scene",
+      "why": "Gives the 20-bar store film its rhythm: the same phone held by one continuous camera, with a new state in the UI on every bar.",
+      "added": "2026-10-21"
+    },
+    {
+      "title": "HadiType showreel — whole-word Arabic kinetic type",
+      "url": "https://www.behance.net/gallery/221542845/haditype_foundry-showreel-2025",
+      "source": "other",
+      "direction": "kinetic",
+      "move": "Arabic words land as whole shaped units with weight flex and mask, not letter-by-letter",
+      "why": "The hook and CTA headlines are Arabic: shaping must never break, so the motion is word-level masks while the weight visibly flexes.",
+      "added": "2026-10-21"
+    },
+    {
+      "title": "Sahi — scale reveal / macro-to-context",
+      "url": "https://prompt-motion.com/dale-vaz-cc612a",
+      "source": "other",
+      "direction": "launch",
+      "move": "macro detail snaps back to full context in one move, proving scale instead of stating it",
+      "why": "The paid order and the admin dashboard are shown macro-first, then pulled back to the phone so the audience knows it is all in one hand.",
+      "added": "2026-10-21"
+    },
+    {
+      "title": "ElevenLabs Brand Kit — campaigns stay on-brand",
+      "url": "https://whatships.com/videos/elevenlabs-brand-kit/",
+      "source": "whatships",
+      "direction": "ui-film",
+      "move": "show the same asset across applications (type, colour, card, environment) as one system rather than a settings list, with every application snapping into place on the beat",
+      "why": "Gives the store-design beat a way to show swatches, type and cards as one coherent identity instead of a generic settings screen.",
+      "added": "2026-10-22"
+    },
+    {
+      "title": "zero — Opus 5.5 UI motion showreel prompt",
+      "url": "https://omo.space/workflows/opus-5-5-ui-motion-design-showreel",
+      "source": "other",
+      "direction": "ui-film",
+      "move": "One element never cuts: it morphs size, radius and colour while its content swaps with a short blur; a cursor drives every change; the last frame equals the first.",
+      "why": "The sourcing and setup scenes are built on the same rule: one ledger line and one glass card family carry the eye, while the data changes on the bar instead of hard-cutting every card.",
+      "added": "2026-10-22"
     }
+  ]
+}
   ]
 }

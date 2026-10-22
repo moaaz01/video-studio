@@ -12,7 +12,7 @@ footage felt flat.
 - `film/style.json` → `"look": "premium-warm"` — the film's declared look
   (the whole cut is declared there: look, motion, background, transitions, sfx).
 
-## The six presets
+## The seven presets
 
 | Look | Use it for | Character |
 | --- | --- | --- |
@@ -22,6 +22,7 @@ footage felt flat.
 | `vivid-launch` | paid social, small screens | saturated, bright bloom, more camera movement |
 | `premium-warm` | a device-led launch film with paper beats | cinema-warm's atmosphere without the haze: bloom .62, vignette .30, grain .05, camera 1.12, a warm LUT (sat 1.10, warm .30) |
 | `ui-daylight` | UI-first explainer where the screen is the only subject | almost flat: vignette .14, bloom .22 — the look that taught us a screen-only film reads as a slide deck |
+| `midnight-souk` | a store/product launch whose only light source is the UI itself | deep teal-ink stage, bloom .78, vignette .40, grain .06, camera 1.35 — the product is the lamp, saffron is the money |
 
 ## The style contract
 
@@ -42,7 +43,9 @@ footage felt flat.
 - `motion` scales every camera move and float (0.2–1.5); 1.0 is the designed pace.
 - `background` is the stage a scene paints on: `paper-glow` (warm paper + aurora +
   rule + dust), `ink-aurora` (night green aurora for type beats), `emerald-depth`
-  (the end card's deep green). Each scene declares a `tone` and the ground resolves
+  (the end card's deep green), `souk-night` (midnight teal stage for a store film) and
+  `vault-night` (black vault, a single raking shaft, for a security beat). Each scene
+  declares a `tone` and the ground resolves
   to the matching variant; the film's `background` is the declared nominal stage,
   and `make_timeline --strict` refuses a name that is not in this list.
 - `transitions` is the **cut vocabulary**, one word per bar line, cycling. The cut
@@ -51,8 +54,10 @@ footage felt flat.
   (`whip` = skewed slide + leak, `slide` = push, `blur` = defocus crossfade,
   `flash` = light bloom). A solid wipe is not in the vocabulary — it renders a
   blank cream frame at the seam, which is exactly the "primitives" note.
-- `sfx` names the three stems the mix uses: intro rise, per-cut whoosh, accent pop.
-  Every stem must exist in `public/audio/sfx/` or `--strict` fails.
+- `sfx` names the stems the mix uses: `intro` rise, `cut` whoosh, `accent` pop, and
+  optional named stems (`tick · drop · success · stamp · rise · seal · reward · land ·
+  sweep · open · close`) that a beat can cue by name. Every stem must exist in
+  `public/audio/sfx/` or `--strict` fails.
 
 ## Backgrounds and stage colour
 

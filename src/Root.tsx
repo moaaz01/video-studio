@@ -4,6 +4,7 @@ import './fonts';
 import {FilmVertical, FilmWide, FILM} from './film/Film';
 import {Storyboard} from './film/Storyboard';
 import {GradeLab} from './lab/GradeLab';
+import {StoreDev} from './store/DevScreens';
 
 const VERTICAL = {width: 1080, height: 1920} as const;
 
@@ -29,6 +30,7 @@ export const RemotionRoot: React.FC = () => (
       fps={FILM.fps}
       width={VERTICAL.width}
       height={VERTICAL.height}
+      defaultProps={{captions: false}}
     />
     <Composition
       id="Storyboard"
@@ -61,6 +63,16 @@ export const RemotionRoot: React.FC = () => (
       fps={FILM.fps}
       width={1920}
       height={1080}
+    />
+    {/* Dev stills for the store kit; never a master. 824×1830 = one screen at 2×. */}
+    <Composition
+      id="StoreDev"
+      component={StoreDev}
+      durationInFrames={120}
+      fps={FILM.fps}
+      width={824}
+      height={1830}
+      defaultProps={{screen: 'home', t: 40, dp: 2, frame: true}}
     />
   </>
 );

@@ -77,6 +77,7 @@ not seen — the grade is measured on the artifact, not on the file.
 | a date, a place, a programme | `event-promo` | what, when, where, then urgency |
 | a name and not much else | `product-teaser` | withhold, reveal once, name it |
 | one UI element is the story | `ui-morph` | one element through its states, never a cut |
+| the store's economics need explaining | `cobalt-ledger` | 24-bar data film: setup, payments, sources, margin, auto-repricing, CTA |
 
 If none of these is the request, the right move is the adaptive rules below —
 not a fifteenth template invented from taste.
@@ -109,8 +110,8 @@ copy, the real numbers and the real screens are still the work.
 | `template` | string | a recipe id | names what was applied; the provenance of the style |
 | `look` | string | the `LookName` union in `src/look/looks.ts` | one look per film (see `src/look/cinematic-look.md`) |
 | `motion` | number | `0.0–1.5` | the film's motion weight; a recipe contributes `0.0–1.0` |
-| `background` | string | `paper-glow`, `ink-aurora`, `emerald-depth` | the ground the type sits on |
-| `transitions` | list of 1–2 strings | `whip`, `slide`, `blur`, `flash` | one cut vocabulary; a cross-dissolve is not in the budget |
+| `background` | string | `paper-glow`, `ink-aurora`, `emerald-depth`, `souk-night`, `golden-souk`, `vault-night`, `vault-warm`, `atelier`, `cobalt` | the ground the type sits on |
+| `transitions` | list of 1–3 strings | `whip`, `slide`, `blur`, `flash`, `flood`, `iris`, `maskline` | one cut vocabulary; a cross-dissolve is not in the budget |
 | `sfx` | object | `intro`, `cut`, `accent`, each a stem in `public/audio/sfx/` | the foley map; every stem must exist as `<stem>.wav` |
 
 The worked example, written for the current StudyAI Shami film
@@ -152,9 +153,9 @@ from `src/look/looks.ts` at runtime, so the list below is the file's, not a copy
 
 | capability | values | source of truth |
 | --- | --- | --- |
-| looks | `cinema-warm`, `premium-warm`, `paper-clean`, `ink-noir`, `vivid-launch`, `ui-daylight` | `src/look/looks.ts` |
-| backgrounds | `paper-glow`, `ink-aurora`, `emerald-depth` | this layer's contract |
-| transitions | `whip`, `slide`, `blur`, `flash` | this layer's contract |
+| looks | `cinema-warm`, `premium-warm`, `paper-clean`, `ink-noir`, `vivid-launch`, `ui-daylight`, `midnight-souk` | `src/look/looks.ts` |
+| backgrounds | `paper-glow`, `ink-aurora`, `emerald-depth`, `souk-night`, `golden-souk`, `vault-night`, `vault-warm`, `atelier`, `cobalt` | this layer's contract |
+| transitions | `whip`, `slide`, `blur`, `flash`, `flood`, `iris`, `maskline` | this layer's contract |
 | SFX stems | 42 one-shots under `public/audio/sfx/` (cuts: `whoosh_rtl`, `paper_whoosh`, `sub_thump`; accents: `button_click`, `card_pop`, `ding`, `impact`, `stamp_thud`, `ui_chirp`, `shimmer`, …) | the folder itself |
 | palette | the `src/theme.ts` tokens only | `theme.ts` |
 | faces | `Tajawal`, `Amiri`, `NotoNaskhArabic` | `src/fonts.ts` |
@@ -187,9 +188,9 @@ Measured in this repo:
 
 ```
 $ python scripts/templates.py --check
-template archive: references/templates (13 recipes)
-capabilities: 6 looks (...); 3 backgrounds; 4 transitions; 42 sfx stems; 30 theme colours
-PASS: 13/13 recipes valid; style contract keys: template, look, motion, background, transitions, sfx
+template archive: references/templates (14 recipes)
+capabilities: 7 looks (...); 5 backgrounds; 7 transitions; 42 sfx stems; 52 theme colours
+PASS: 14/14 recipes valid; style contract keys: template, look, motion, background, transitions, sfx
 
 $ python scripts/templates.py --self-test
 PASS pick device-launch: expected app-demo, picked app-demo (100, margin 16)
@@ -238,6 +239,6 @@ claims a verification this repo did not measure.
   invent them.
 - **A template is not a claim.** It does not certify quality, performance or
   originality; it records a pattern that worked for this kind of film.
-- **The archive is small on purpose.** Thirteen recipes cover the studio's
+- **The archive is small on purpose.** Fourteen recipes cover the studio's
   requests; a fourteenth is added only when the adaptive rules say the gap is
   real and a reference backs it.

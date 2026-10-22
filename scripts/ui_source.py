@@ -225,29 +225,63 @@ def main() -> None:
         print(f"not a directory: {root}")
         sys.exit(2)
 
-    screens, warnings = scan_screens(root)
-    routes = scan_routes(root)
-    strings = scan_strings(root)
-    colors = scan_colors(root)
-    fonts = scan_fonts(root)
-
-    data = {
-        "source_dir": str(root),
-        "package": scan_package(root),
-        "scanned_at": dt.datetime.now().isoformat(timespec="seconds"),
-        "counts": {
-            "files_kt": len(list(root.rglob("*.kt"))),
+    kotlin_files = len(list(root.rglob("*.kt")))
+    if kotlin_files:
+        screens, warnings = scan_screens(root)
+        routes = scan_routes(root)
+        strings = scan_strings(root)
+        colors = scan_colors(root)
+        fonts = scan_fonts(root)
+        mode = "android"
+        counts = {
+            "files_kt": kotlin_files,
             "screens": len(screens),
             "routes": len(routes),
             "locales": len(strings),
             "strings": {k: len(v) for k, v in sorted(strings.items())},
             "colors": len(colors),
             "fonts": len(fonts),
-        },
+        }
+        tokens: dict[str, str] = {}
+    else:
+        web = scan_web(root)
+        screens = web["screens"]
+        routes = web["routes"]
+        strings = web["strings"]
+        colors = web["colors"]
+        fonts = web["fonts"]
+        tokens = web["tokens"]
+        mode = "web"
+        warnings = []
+        if not screens:
+            warnings.append("no Svelte/Vue/React components found — is --dir the app root?")
+        else:
+            warnings.append(
+                "web mode: pixels still need a real capture — run the dev server and "
+                "screenshot the Mini App at 1:1 (see references/fidelity-pipeline.md)"
+            )
+        counts = {
+            "files_web": web["files_web"],
+            "screens": len(screens),
+            "routes": len(routes),
+            "files_with_copy": len(strings),
+            "strings": {"web": sum(len(v) for v in strings.values())},
+            "colors": len(colors),
+            "tokens": len(tokens),
+            "fonts": len(fonts),
+        }
+
+    data = {
+        "source_dir": str(root),
+        "mode": mode,
+        "package": scan_package(root),
+        "scanned_at": dt.datetime.now().isoformat(timespec="seconds"),
+        "counts": counts,
         "screens": screens,
         "routes": routes,
         "strings": strings,
         "colors": colors,
+        "tokens": tokens,
         "fonts": fonts,
         "warnings": warnings,
     }
@@ -257,19 +291,99 @@ def main() -> None:
     out.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     c = data["counts"]
+    print(f"mode        {data['mode']}")
     print(f"package     {data['package'] or '-'}")
-    print(f"kotlin      {c['files_kt']} files")
+    if data["mode"] == "android":
+        print(f"kotlin      {c['files_kt']} files")
+    else:
+        print(f"web files   {c['files_web']} (components {c['screens']})")
     print(f"screens     {c['screens']}")
     print(f"routes      {c['routes']}")
     print(f"strings     " + ", ".join(f"{k}:{v}" for k, v in c["strings"].items()))
     print(f"colors      {c['colors']}")
     print(f"fonts       {c['fonts']}")
+    if data["mode"] == "web":
+        print(f"tokens      {c['tokens']} css variables")
+        print(f"copy        {c['strings']['web']} Arabic strings in {c['files_with_copy']} files")
     print(f"\nwrote {out}")
     print("\nthe film now has a source of truth for names, copy and tokens.")
     print("ground truth for pixels: python scripts/ui_source.py --rea")
     for w in warnings:
         print(f"warning: {w}")
 
+
+# --------------------------------------------------------------------------- #
+# Web mode: Svelte / Vue / React apps (a Mini App is a web app)
+# --------------------------------------------------------------------------- #
+
+WEB_GLOBS = ("*.svelte", "*.vue", "*.tsx", "*.jsx")
+ARABIC_RUN = re.compile(
+    r"[\u0600-\u06FF][\u0600-\u06FF\s\u060C\u061B\u061F\u0640\u064B-\u0652\u0670"
+    r"\u0660-\u0669A-Za-z0-9$%.,:!?()\[\]«»/+\-]*"
+)
+CSS_VAR = re.compile(r"--([a-z0-9-]+)\s*:\s*([^;]+);")
+FONT_FAMILY = re.compile(r"font-family\s*:\s*([^;\n}]+)")
+HASH_ROUTE = re.compile(r"['\"`](#/[a-z0-9/_\-]*)['\"`]")
+WEB_SKIP = ("node_modules", "dist", "build", ".git", "coverage", ".svelte-kit")
+
+
+def _web_files(root: pathlib.Path) -> list[pathlib.Path]:
+    out: list[pathlib.Path] = []
+    for pattern in WEB_GLOBS:
+        for path in root.rglob(pattern):
+            rel = path.relative_to(root).as_posix()
+            if any(part in rel for part in WEB_SKIP):
+                continue
+            out.append(path)
+    return sorted(out)
+
+
+def scan_web(root: pathlib.Path) -> dict:
+    """An inventory of a web UI: screens, Arabic copy, colour tokens, faces, routes."""
+    files = _web_files(root)
+    screens: list[dict] = []
+    strings: dict[str, list[str]] = {}
+    colors: set[str] = set()
+    tokens: dict[str, str] = {}
+    fonts: set[str] = set()
+    routes: set[str] = set()
+    for path in files:
+        rel = path.relative_to(root).as_posix()
+        text = read(path)
+        seen: list[str] = []
+        for match in ARABIC_RUN.finditer(text):
+            value = match.group(0).strip()
+            if len(value) >= 3 and value not in seen:
+                seen.append(value)
+        if seen:
+            strings[rel] = seen[:400]
+        colors.update(value.upper() for value in re.findall(r"#[0-9A-Fa-f]{6}", text))
+        for name, value in CSS_VAR.findall(text):
+            tokens.setdefault(name, value.strip())
+        for family in FONT_FAMILY.findall(text):
+            for name in family.split(","):
+                name = name.strip().strip("'\"")
+                if name and not name.startswith("var(") and name.lower() not in ("inherit", "sans-serif", "serif", "monospace"):
+                    fonts.add(name)
+        routes.update(HASH_ROUTE.findall(text))
+        if path.suffix in (".svelte", ".vue", ".tsx", ".jsx"):
+            screens.append(
+                {
+                    "file": rel,
+                    "strings": len(seen),
+                    "rtl": "rtl" in text,
+                }
+            )
+    screens.sort(key=lambda s: s["file"])
+    return {
+        "screens": screens,
+        "strings": strings,
+        "colors": sorted(colors),
+        "tokens": dict(sorted(tokens.items())),
+        "fonts": sorted(fonts),
+        "routes": sorted(routes),
+        "files_web": len(files),
+    }
 
 if __name__ == "__main__":
     main()

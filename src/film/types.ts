@@ -1,6 +1,24 @@
 /** The compiled timeline: the only thing the composition reads. */
 
-export type BeatKind = 'hook' | 'device' | 'stat' | 'cta';
+export type BeatKind =
+  | 'hook'
+  | 'device'
+  | 'stat'
+  | 'cta'
+  /** product-demo grammar: a live shop is shown, not described */
+  | 'open'
+  | 'store'
+  | 'admin'
+  | 'security'
+  | 'close'
+  /** the brand atelier: real swatches + card styles, live preview */
+  | 'design'
+  /** the guided setup wizard: identity -> launch */
+  | 'setup'
+  /** multi-source sourcing, margin, automatic repricing */
+  | 'sources'
+  /** contact-first end card with the two real handles */
+  | 'finale';
 export type Tone = 'ink' | 'paper' | 'emerald';
 
 export type Stat = {from: number; to: number; suffix: string; label: string};
@@ -8,8 +26,15 @@ export type Stat = {from: number; to: number; suffix: string; label: string};
 /** One foley cue inside a beat; `at` is beat-local frames. */
 export type SfxCue = {at: number; name: string; gain?: number};
 
-export type BackgroundVariant = 'paper-glow' | 'ink-aurora' | 'emerald-depth';
-export type TransitionName = 'whip' | 'slide' | 'blur' | 'flash';
+export type BackgroundVariant =
+  | 'paper-glow'
+  | 'ink-aurora'
+  | 'emerald-depth'
+  | 'souk-night'
+  | 'vault-night'
+  | 'atelier'
+  | 'cobalt';
+export type TransitionName = 'whip' | 'slide' | 'blur' | 'flash' | 'flood' | 'iris' | 'maskline';
 
 /**
  * The template layer's output: which look, how much motion, which background
@@ -45,6 +70,12 @@ export type Beat = {
   sfx?: SfxCue[];
   /** VO lines for this beat, in order — audio is placed by the mix, not here. */
   vo?: string[];
+  /**
+   * Scene copy that is not a headline (chat, product, KPI, guard slabs, CTA card).
+   * Passed through by the compiler untouched; a scene may only render strings that
+   * exist in the product's own tables or are explicitly marked as sample data.
+   */
+  data?: Record<string, unknown>;
 };
 
 export type Film = {

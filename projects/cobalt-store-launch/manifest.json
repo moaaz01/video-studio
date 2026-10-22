@@ -1,0 +1,426 @@
+{
+  "slug": "cobalt-store-launch",
+  "generated_at": "2026-10-22T11:17:38+00:00",
+  "film": {
+    "look": "cobalt-atelier",
+    "style": {
+      "template": "cobalt-ledger",
+      "look": "cobalt-atelier",
+      "motion": 1.2,
+      "background": "cobalt",
+      "transitions": [
+        "maskline",
+        "flood",
+        "iris",
+        "blur"
+      ],
+      "sfx": {
+        "intro": "impact",
+        "cut": "whoosh_rtl",
+        "accent": "button_click",
+        "tick": "type_tick",
+        "drop": "sub_drop",
+        "success": "correct_chime",
+        "stamp": "stamp_thud",
+        "rise": "riser_short",
+        "sweep": "pan_whoosh",
+        "seal": "haptic_thud",
+        "reward": "level_up",
+        "land": "card_pop"
+      }
+    },
+    "fps": 30,
+    "frames": 1440,
+    "seconds": 48.0,
+    "beats": [
+      {
+        "id": "b01-hook",
+        "kind": "open",
+        "frames": 180,
+        "screen": null
+      },
+      {
+        "id": "b02-setup",
+        "kind": "setup",
+        "frames": 240,
+        "screen": null
+      },
+      {
+        "id": "b03-store",
+        "kind": "store",
+        "frames": 300,
+        "screen": null
+      },
+      {
+        "id": "b04-sources",
+        "kind": "sources",
+        "frames": 300,
+        "screen": null
+      },
+      {
+        "id": "b05-admin",
+        "kind": "admin",
+        "frames": 240,
+        "screen": null
+      },
+      {
+        "id": "b06-finale",
+        "kind": "finale",
+        "frames": 180,
+        "screen": null
+      }
+    ]
+  },
+  "voice": {
+    "engine": "Fish Audio TTS",
+    "model": "drama-3",
+    "reference_id": "6e52d5af60ee4d27895a40db98f5b0cd",
+    "label": "damascus-m · drama-3",
+    "speed": 1.0,
+    "lines": [
+      {
+        "id": "b01-hook-1",
+        "seconds": 5.341
+      },
+      {
+        "id": "b02-setup-1",
+        "seconds": 7.105
+      },
+      {
+        "id": "b03-store-1",
+        "seconds": 8.127
+      },
+      {
+        "id": "b04-sources-1",
+        "seconds": 9.616
+      },
+      {
+        "id": "b05-admin-1",
+        "seconds": 6.409
+      },
+      {
+        "id": "b06-finale-1",
+        "seconds": 4.571
+      }
+    ],
+    "total_seconds": 41.169,
+    "asr_report": "out/qa/vo-asr-check.json (6/6 lines >= 0.90, worst 0.985)"
+  },
+  "disclosure": {
+    "sample_data": "The store, its products, prices, wallet and dashboard numbers are the app's demo fixture (labelled «لقطات الواجهة ببيانات تجريبية» on the end card).",
+    "public_copy": "The cut names no platform, tenant or infrastructure; it shows the storefront, the owner panel, the identity controls and the two supplied contacts.",
+    "security": "This cut makes no security claim; every product statement is limited to the store behaviour shown on screen."
+  },
+  "files": [
+    {
+      "path": "projects/cobalt-store-launch/brief.md",
+      "role": "document",
+      "bytes": 5453,
+      "sha256": "65597004792cf6fa0948f17a025196364341e9e37aa0ebc5702060539cf06768"
+    },
+    {
+      "path": "projects/cobalt-store-launch/film.json",
+      "role": "document",
+      "bytes": 10949,
+      "sha256": "91c094919fa7eaeefd987b233606b1a7919f75c8f31c4a2d824538cb45bdcef4"
+    },
+    {
+      "path": "projects/cobalt-store-launch/style.json",
+      "role": "document",
+      "bytes": 513,
+      "sha256": "704aebc7a82634d9510436ebb23cf2a2f37ec0e54e0f5a33b62f7311e46a2d1e"
+    },
+    {
+      "path": "projects/cobalt-store-launch/vo-script.json",
+      "role": "document",
+      "bytes": 1689,
+      "sha256": "1ed2217b5eca23c00ec87ae5e446dfdff0f32ce8b4c87d8c041277466401d17b"
+    },
+    {
+      "path": "projects/cobalt-store-launch/README.md",
+      "role": "document",
+      "bytes": 4834,
+      "sha256": "c604fe56e1ae1ed499ee8260d4d0084068caf8448a4a66f46b18353f85ac830d"
+    },
+    {
+      "path": "projects/cobalt-store-launch/ui-source.json",
+      "role": "document",
+      "bytes": 181882,
+      "sha256": "5ff1a81718e2aad8276d06f6947e40be43d48ceecfb4ac43de26372ba690c357"
+    },
+    {
+      "role": "vo:b01-hook-1",
+      "path": "projects/cobalt-store-launch/assets/vo/b01-hook-1.wav",
+      "bytes": 471118,
+      "sha256": "899ac2c90eeea9a1d759b2b95b7a30cac40ef89c8e681a2b65d80d62772e4694"
+    },
+    {
+      "role": "vo:b02-setup-1",
+      "path": "projects/cobalt-store-launch/assets/vo/b02-setup-1.wav",
+      "bytes": 626766,
+      "sha256": "510002ba4b2ebad2b2f7b569e6f68c4b40f7ba5ffe1df06c8fb94992f0e43e90"
+    },
+    {
+      "role": "vo:b03-store-1",
+      "path": "projects/cobalt-store-launch/assets/vo/b03-store-1.wav",
+      "bytes": 716878,
+      "sha256": "057729ea21f042319205cf4c4f29936f06706a82acb90e5af95eaefd97148b6e"
+    },
+    {
+      "role": "vo:b04-sources-1",
+      "path": "projects/cobalt-store-launch/assets/vo/b04-sources-1.wav",
+      "bytes": 848202,
+      "sha256": "103f79891229d0b332064677e059c4a7db90c0cd8934a7d7dc9ed27713145dbb"
+    },
+    {
+      "role": "vo:b05-admin-1",
+      "path": "projects/cobalt-store-launch/assets/vo/b05-admin-1.wav",
+      "bytes": 565326,
+      "sha256": "633ed8b5a7ea4bb0600b01cca22204ecd26fd07371c60edd76acc66dd506a60d"
+    },
+    {
+      "role": "vo:b06-finale-1",
+      "path": "projects/cobalt-store-launch/assets/vo/b06-finale-1.wav",
+      "bytes": 403268,
+      "sha256": "8ab149fbdf766b97ac3c718c07ab11dbc553b92e344a000a3a4a97d59d4fc059"
+    },
+    {
+      "role": "asset",
+      "path": "projects/cobalt-store-launch/assets/timeline.json",
+      "bytes": 11959,
+      "sha256": "f031211c28f0b2568df826685dfa50b948149659fad1c4379d5bf5b02e442cc7"
+    },
+    {
+      "role": "asset",
+      "path": "projects/cobalt-store-launch/assets/vo.json",
+      "bytes": 2042,
+      "sha256": "0a500039ae54f16caeb345c22949568b59fa576895265010318cb8b8467221f9"
+    },
+    {
+      "role": "asset",
+      "path": "projects/cobalt-store-launch/assets/captions.json",
+      "bytes": 2799,
+      "sha256": "998b7bfdad3b865618d80be8d9333b9ba6443943da4b66e6d9a854094b2bf22e"
+    },
+    {
+      "role": "asset",
+      "path": "projects/cobalt-store-launch/assets/style.json",
+      "bytes": 512,
+      "sha256": "c636321cc4c31bd6b6a94d3a20dbbfe4e80f32ad8424b1cbb95cc52c1cc9014e"
+    },
+    {
+      "role": "asset",
+      "path": "projects/cobalt-store-launch/assets/music.wav",
+      "bytes": 9216044,
+      "sha256": "234e1e69a896178244106e28f3beb7819653ba09d3854763c7b2247cdc33bb46"
+    },
+    {
+      "role": "asset",
+      "path": "projects/cobalt-store-launch/assets/captions/wide.srt",
+      "bytes": 848,
+      "sha256": "acdc36fbb738e20bfaa16040b9fb31ac08a216a6caf39a515fcc541f4cbca255"
+    },
+    {
+      "role": "asset",
+      "path": "projects/cobalt-store-launch/assets/captions/vertical.srt",
+      "bytes": 926,
+      "sha256": "fb5157ffbd1a37a555f807259f63c06f8fdfed94734f3a1f2d4fc38931cd6cc9"
+    },
+    {
+      "role": "asset",
+      "path": "projects/cobalt-store-launch/assets/score-report.json",
+      "bytes": 13093,
+      "sha256": "5cf3e69e6636149c4751770b72d963b52f52f933a7ec600c2bca667d04ef17b0"
+    },
+    {
+      "role": "asset",
+      "path": "projects/cobalt-store-launch/assets/vo-audit.json",
+      "bytes": 2671,
+      "sha256": "4afc7404bcb9bebf8f5ac4c06b7996ef36fbc1488a38151b7cd7fb88db9a8887"
+    }
+  ],
+  "stills": [
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/16x9_01_hook.png",
+      "bytes": 1099450,
+      "sha256": "ec79a1d55c7aadfe06968245dbf9166ab41fa0bdeb6e6565938c993bd41d145e"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/16x9_02_setup.png",
+      "bytes": 895409,
+      "sha256": "4dba12842769f74742984956266bf4b4bc1c0c9582f774dd177d19f115979e1f"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/16x9_03_store.png",
+      "bytes": 1079857,
+      "sha256": "86775a48110ba6bcec0719888c848821d3cbb5553e4328b06e5900fd238e3527"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/16x9_04_sources_before.png",
+      "bytes": 930795,
+      "sha256": "3629b42699d70e1deed7715d611d2e0830b57abfcc8f289767ef9b407a75c582"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/16x9_05_sources_alert.png",
+      "bytes": 932264,
+      "sha256": "12b82fdb7bd78bc9e37eb6c4bb2cf697c27f69f16527f6a0df675d5123a0e473"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/16x9_06_owner.png",
+      "bytes": 1029546,
+      "sha256": "64333a8a2190352bd85edc14a96085a43bbeb083c8288d4db108faa4f3b8cf7c"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/16x9_07_cta.png",
+      "bytes": 861948,
+      "sha256": "00ff0424b9a6a3da6ff2b4ea38f20f9366d235a9fc88d175eeefd29a1742b4a1"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/16x9_08_last.png",
+      "bytes": 883994,
+      "sha256": "249e6a3b5da3de019b5953baae3d09e4adfcda9301d38e7c32b05f0d4ad66f3b"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/1x1_01_hook.png",
+      "bytes": 662444,
+      "sha256": "59b53e539f7c89191dfe70aef5ef6e927870164a7327b9773df315ee2de4b2ed"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/1x1_02_setup.png",
+      "bytes": 495018,
+      "sha256": "c213860a39f28e359b2af2a4e526f8ffb7ab09ad495d034f90cbbd557637a7e9"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/1x1_03_store.png",
+      "bytes": 573062,
+      "sha256": "73857fea0cfe050c458a6004fd3a659328f7cf84285935cce184df12f2c030e9"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/1x1_04_sources.png",
+      "bytes": 526709,
+      "sha256": "80132ace1ffc112d99277632fb5e121d1e0e7a75b7b12777dab1c104e64e3fc6"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/1x1_05_cta.png",
+      "bytes": 497770,
+      "sha256": "33eafc061fb31ceb787d0902d291e0331c5da2ba23fcf9a3374f9d13c0be5209"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/9x16_01_hook.png",
+      "bytes": 1067606,
+      "sha256": "2a670ebfffb1700342228101dbba7e3a10187a55973a3d40d45f406cd6b23f6c"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/9x16_02_setup.png",
+      "bytes": 768122,
+      "sha256": "b5dcae8b5686bdde37c39a95c01b2f8c2231d5dc274bcc11384efb7c2aa7cbbe"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/9x16_03_store.png",
+      "bytes": 938919,
+      "sha256": "36dcda4326b09de02c7a01b2a78516f56d16690b6aeb42a057d0030e104272cb"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/9x16_04_sources_before.png",
+      "bytes": 854901,
+      "sha256": "48e048483377e5e13e10f089ed25dad4200e49e3297b680c21588de6306a4155"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/9x16_05_sources_alert.png",
+      "bytes": 897182,
+      "sha256": "9e511beeb60e8b270c75d8161e02e171e5852de595db3303345940a4da315e9d"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/9x16_06_owner.png",
+      "bytes": 929708,
+      "sha256": "bcec42e4c77c120f05a78895b2fbea63698a8e9c20fb61e58a7729e6a16a5e14"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/9x16_07_cta.png",
+      "bytes": 830639,
+      "sha256": "214890fd8394ad24c1ae65144034e1ea76fbb15032cc98f65865266523cff4fc"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/cover_16x9.png",
+      "bytes": 1099450,
+      "sha256": "ec79a1d55c7aadfe06968245dbf9166ab41fa0bdeb6e6565938c993bd41d145e"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/cover_1x1.png",
+      "bytes": 662444,
+      "sha256": "59b53e539f7c89191dfe70aef5ef6e927870164a7327b9773df315ee2de4b2ed"
+    },
+    {
+      "role": "stills",
+      "path": "projects/cobalt-store-launch/output/stills/cover_9x16.png",
+      "bytes": 1067606,
+      "sha256": "2a670ebfffb1700342228101dbba7e3a10187a55973a3d40d45f406cd6b23f6c"
+    }
+  ],
+  "masters": [
+    {
+      "aspect": "16x9",
+      "path": "projects/cobalt-store-launch/output/masters/cobalt-store-launch-16x9-1080p.mp4",
+      "bytes": 64258848,
+      "sha256": "e5306f3f6fe42face0a8c61856387fea440842ba9ed3138b8d87104ef6b41eab",
+      "duration": 48.021,
+      "picture": "1920x1080",
+      "fps": 30.0,
+      "vcodec": "h264",
+      "acodec": "aac",
+      "peak_db": -1.56,
+      "rms_db": -18.71,
+      "clipped": 0
+    },
+    {
+      "aspect": "9x16",
+      "path": "projects/cobalt-store-launch/output/masters/cobalt-store-launch-9x16-1080p.mp4",
+      "bytes": 58489953,
+      "sha256": "c66f8a5e264d74f5c3b3dbe274ee3176245cbdb8b3610914327f2f8e5c9e693b",
+      "duration": 48.021,
+      "picture": "1080x1920",
+      "fps": 30.0,
+      "vcodec": "h264",
+      "acodec": "aac",
+      "peak_db": -1.56,
+      "rms_db": -18.71,
+      "clipped": 0
+    },
+    {
+      "aspect": "1x1",
+      "path": "projects/cobalt-store-launch/output/masters/cobalt-store-launch-1x1-1080p.mp4",
+      "bytes": 34865331,
+      "sha256": "96f09b2484fc7bbbdea03194e1d7d10269ec5a0449ea821ddcaf7036a65d4c20",
+      "duration": 48.021,
+      "picture": "1080x1080",
+      "fps": 30.0,
+      "vcodec": "h264",
+      "acodec": "aac",
+      "peak_db": -1.56,
+      "rms_db": -18.71,
+      "clipped": 0
+    }
+  ]
+}

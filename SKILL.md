@@ -55,17 +55,28 @@ preference. `studio.py advise` measures the plan before you spend render time
 — declares how the film moves, so a new film inherits a direction instead of
 improvising one. A project carries its own copy (`projects/<slug>/style.json`).
 
-- `look`: one of six presets (`premium-warm` is the device-led default; `ui-daylight`
-  is documented as the flat lesson). See [`references/cinematic-look.md`](references/cinematic-look.md).
-- `background`: `paper-glow` | `ink-aurora` | `emerald-depth` — the stage each scene paints on.
-- `transitions`: the cut vocabulary, cycled — `whip` | `slide` | `blur` | `flash`.
+- `look`: one of nine presets (`premium-warm` is the device-led default; `ui-daylight`
+  is the flat lesson; `midnight-souk` is the store-launch look; `cobalt-atelier` is
+  the data-film look; `atelier-emerald` is the brand-atelier look). See
+  [`references/cinematic-look.md`](references/cinematic-look.md).
+- `background`: `paper-glow` | `ink-aurora` | `emerald-depth` | `souk-night` |
+  `golden-souk` | `vault-night` | `vault-warm` | `atelier` | `cobalt` — the stage each
+  scene paints on.
+- `transitions`: the cut vocabulary, cycled — `whip` | `slide` | `blur` | `flash` |
+  `flood` | `iris` | `maskline` (the last three are clips: the outgoing frame stays
+  alive underneath while a shape opens over it).
   A cut is a **hand-off**: the outgoing beat leaves while the next arrives on the
-  same axis (8-frame pre-roll, 10-frame overlap). Never a solid wipe: it renders a
+  same axis (8-frame pre-roll, 8-frame overlap). Never a solid wipe: it renders a
   blank frame at the seam.
-- `sfx`: `{intro, cut, accent}` stems; `--strict` fails on any missing stem.
+- `sfx`: `{intro, cut, accent}` plus optional named stems; `--strict` fails on any
+  missing stem.
 - `motion`: 1.0 is the designed pace; camera strength and floats scale with it.
 
-The scene system is the same contract in code: `Ground` + `CornerMarks` +
+The scene system is the same contract in code: beat `kind` names a scene grammar
+(`hook · device · stat · cta` for the launch grammar; `open · store · admin ·
+security · close` and the data grammar `design · setup · sources · finale` in
+`src/store/`), then
+`Ground` + `CornerMarks` +
 `FloatCard`/`PaperCard` + one headline per beat, with `emphasis` words coloured and
 `mode="words"` reveals. Variety comes from beat type and content, not from a new
 transition per scene.
@@ -75,9 +86,34 @@ transition per scene.
 The four Shami probes the client called excellent are cloned and catalogued
 (`film/voices.json`, [`references/voices.md`](references/voices.md)) with their
 reference ids, measured pitch and pace; the delivered StudyAI cut uses
-`shami-m-deep` at speed 0.95. The same page lists MSA, Gulf, Saudi, Egyptian,
+`shami-m-deep` at speed 0.95, and the Cobalt cut uses Fish **`drama-3`** with the
+Damascene male (`6e52d5af…`), temperature 0.6, per-line speed lifts. ElevenLabs
+library voices are blocked on the free API (`402 paid_plan_required`); do not spend
+credits retrying one. The same page lists MSA, Gulf, Saudi, Egyptian,
 Lebanese and Shami stock ids, each actually spoken and ASR-checked — start there
 before auditioning strangers, and always run `voice_check.py` before a mix.
+
+### The Cobalt Ledger recipe (48 s feature film)
+
+The reusable answer to "explain the store, don't just show it". Start from
+`references/templates/cobalt-ledger.json` and
+[`references/PLAYBOOK-cobalt-ledger.md`](references/PLAYBOOK-cobalt-ledger.md),
+not from a blank `film.json`.
+
+- **Clock:** 24 bars / 48.00 s — open 3, setup 4, store 5, sources 5, owner 4,
+  finale 3. One data event per bar.
+- **Look:** `cobalt-atelier` on `cobalt`; Tajawal 700/800; champagne only for money.
+- **Scenes:** `setup` (real wizard steps + `≈ 15 دقيقة` condition), `sources`
+  (three source cards → cheapest → 15% margin → source rise → automatic repricing),
+  `store` (buyer path + payment-method row), `admin`, `finale`.
+- **Data rule:** the product card sits below the sub, the price panel starts after
+  the headline's right edge, and the source numbers are labelled «مثال».
+- **CTA:** «للمزيد من التفاصيل أو لمتجرك — تواصل معنا على الخاص.» Never
+  «السعر على الخاص».
+- **Voice:** `drama-3` + Damascene male; ASR 6/6 worst 0.985; the delivered line
+  set is 41.2 s. The exact spec is `projects/cobalt-store-launch/vo-script.json`.
+- **Gate that matters:** every data scene is rendered as a 1:1 still *before* the
+  first video frame; overlap defects are invisible on a contact sheet.
 
 ## The command surface
 
@@ -123,6 +159,7 @@ Anything that takes a flag accepts `--help`; read it rather than guessing.
 | an explainer with a mechanism | Diagram / schematic | `#diagram` |
 | a phone app shown faithfully | Device film | `#device` |
 | a calm, premium, editorial pitch | Editorial / paper | `#editorial` |
+| the product's economics need explaining | Data film / Cobalt Ledger | `#data-film` + `PLAYBOOK-cobalt-ledger.md` |
 
 Full rubric, palettes and motion signatures live in
 [`references/visual-direction.md`](references/visual-direction.md).

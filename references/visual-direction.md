@@ -69,6 +69,27 @@ direction that shows the product, because trust is the harder problem.
 - **Structure:** one screen per 2.5–3.5 s; every beat changes one variable.
 - **Fail mode:** re-drawing the UI in a different style "to make it cinematic".
 
+## `#data-film` — Cobalt Ledger
+
+- **When:** the product's economics are the argument: sourcing, margin, automatic
+  repricing, payment coverage, setup speed. A phone alone cannot explain it; a data
+  scene can.
+- **Palette:** cobalt/navy `#0B1730`, ink `#040814`, ivory `#F3F7FF`, ice
+  `#9CC8FF`, champagne `#F2A93B` (money only). Not green; the product's teal stays
+  inside its own UI.
+- **Type:** Tajawal 700/800 for headlines, IBM Plex Sans Arabic for body, Reem Kufi
+  only inside the phone. Whole words, 1.28–1.35 line-height, no tracking.
+- **Motion:** 120 BPM, one data event per bar; maskline/flood/iris hand-offs; one
+  champagne ledger line that becomes the setup path, the source graph and the ticket
+  perforation. Glass cards, not floating screenshots.
+- **Structure:** 24 bars — open 3, setup 4, store 5, sources 5, owner 4, finale 3.
+  Each scene is a pure function of frame; stills at every beat before render.
+- **Fail mode:** a product card covering the headline, a price panel covering the
+  sub, unlabelled example numbers, a video-model UI with fake Arabic, or a CTA that
+  says «السعر على الخاص».
+- **Start from:** `references/templates/cobalt-ledger.json`,
+  `references/PLAYBOOK-cobalt-ledger.md`, `references/prompt-packs/cobalt-ledger.md`.
+
 ## `#launch` — launch trailer
 
 - **When:** something ships, the audience already wants it, the job is hype.

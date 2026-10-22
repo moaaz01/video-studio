@@ -1,0 +1,649 @@
+{
+  "style": "souk-drop",
+  "file": "public/audio/score/music.wav",
+  "timeline": "src/generated/timeline.json",
+  "slug": "store-launch",
+  "bpm": 120,
+  "fps": 30,
+  "bars": 24,
+  "seconds": 48.0,
+  "samples": 2304000,
+  "rate": 48000,
+  "channels": 2,
+  "bits": 16,
+  "rms_dbfs": -19.27,
+  "peak_dbfs": -3.51,
+  "true_peak_dbfs_4x": -3.02,
+  "crest_db": 15.76,
+  "lufs_i": -20.64,
+  "clipped_samples": 0,
+  "dc_offset": 1.6e-05,
+  "mono_below_hz": 120,
+  "target_rms_dbfs": -19.0,
+  "peak_ceiling_dbfs": -3.0,
+  "level_stage": {
+    "rms_in_dbfs": -17.91,
+    "limiter_engaged": true,
+    "limiter_rounds": 10,
+    "ceiling_dbfs": -3.25,
+    "peak_after_solve_dbfs": -3.25,
+    "true_peak_trim_db": -0.26
+  },
+  "mix_contract": {
+    "source": "src/audio/Soundtrack.tsx",
+    "bed_gain": 0.375,
+    "bed_gain_db": -8.52,
+    "duck": 0.5,
+    "duck_db": -6.02,
+    "duck_ramp_s": 0.26,
+    "duck_window_s": {
+      "lead": 0.16,
+      "tail": 0.3
+    },
+    "fade_in_s": 1.2,
+    "fade_out_s": 1.4,
+    "sfx_trim": 0.56,
+    "sfx_trim_db": -5.04,
+    "vo_lane_volume": 1.18,
+    "vo_lane_volume_db": 1.44,
+    "bed_rms_under_vo_dbfs": -27.79,
+    "bed_rms_ducked_dbfs": -33.81,
+    "bed_peak_after_gain_dbfs": -12.03,
+    "bed_true_peak_after_gain_dbfs": -11.54,
+    "mix_stage_rule": "bed is already at the contract level: apply BED_GAIN, the duck and the film's fades, nothing else",
+    "peak_driver": "vo lane x1.18 and sfx, never the bed: the bed tops out at -12.03 dBFS in the mix"
+  },
+  "buses": {
+    "drums": {
+      "peak_dbfs": -2.42,
+      "rms_dbfs": -22.89
+    },
+    "bass": {
+      "peak_dbfs": -2.05,
+      "rms_dbfs": -21.71
+    },
+    "pad": {
+      "peak_dbfs": -12.23,
+      "rms_dbfs": -28.37
+    },
+    "pluck": {
+      "peak_dbfs": -14.66,
+      "rms_dbfs": -34.73
+    },
+    "bell": {
+      "peak_dbfs": -13.93,
+      "rms_dbfs": -45.56
+    },
+    "fx": {
+      "peak_dbfs": -13.9,
+      "rms_dbfs": -37.53
+    },
+    "reverb": {
+      "peak_dbfs": -11.69,
+      "rms_dbfs": -28.33
+    },
+    "delay": {
+      "peak_dbfs": -19.1,
+      "rms_dbfs": -33.59
+    }
+  },
+  "sections": [
+    {
+      "id": "b01-hook",
+      "kind": "open",
+      "start": 0.0,
+      "end": 6.0,
+      "bars": 3,
+      "layers": [
+        "room",
+        "sub pulse",
+        "dark pad",
+        "bells",
+        "block figure",
+        "swish"
+      ],
+      "cues": {
+        "sub_pulse_1": 0.5,
+        "sub_pulse_2": 2.0,
+        "swish": 2.9,
+        "block_build": 4.0
+      },
+      "frames": 180,
+      "rms_dbfs": -23.25,
+      "peak_dbfs": -6.37,
+      "lufs_i": -25.77,
+      "band_rms_dbfs": {
+        "20-60": -27.46,
+        "60-250": -29.41,
+        "250-2000": -30.75,
+        "2000-8000": -42.89,
+        "8000-20000": -49.87
+      },
+      "side_minus_mid_db": -7.45
+    },
+    {
+      "id": "b02-setup",
+      "kind": "setup",
+      "start": 6.0,
+      "end": 14.0,
+      "bars": 4,
+      "layers": [
+        "room",
+        "sub pulse",
+        "dark pad",
+        "bells",
+        "block figure",
+        "swish"
+      ],
+      "cues": {
+        "sub_pulse_1": 6.5,
+        "sub_pulse_2": 8.0,
+        "swish": 8.9,
+        "block_build": 10.0
+      },
+      "frames": 240,
+      "rms_dbfs": -22.73,
+      "peak_dbfs": -6.01,
+      "lufs_i": -24.57,
+      "band_rms_dbfs": {
+        "20-60": -28.72,
+        "60-250": -27.58,
+        "250-2000": -30.13,
+        "2000-8000": -42.42,
+        "8000-20000": -50.58
+      },
+      "side_minus_mid_db": -5.89
+    },
+    {
+      "id": "b03-store",
+      "kind": "store",
+      "start": 14.0,
+      "end": 24.0,
+      "bars": 5,
+      "layers": [
+        "kick 4/4",
+        "808",
+        "16th hats",
+        "clap 2&4",
+        "block arp",
+        "pad",
+        "sparkle",
+        "riser"
+      ],
+      "cues": {
+        "impact": 14.0,
+        "sparkle": 16.0,
+        "riser_start": 22.0,
+        "riser_top": 23.6
+      },
+      "frames": 300,
+      "rms_dbfs": -18.29,
+      "peak_dbfs": -3.51,
+      "lufs_i": -19.65,
+      "band_rms_dbfs": {
+        "20-60": -26.9,
+        "60-250": -20.63,
+        "250-2000": -26.25,
+        "2000-8000": -37.75,
+        "8000-20000": -38.23
+      },
+      "side_minus_mid_db": -9.8
+    },
+    {
+      "id": "b04-sources",
+      "kind": "sources",
+      "start": 24.0,
+      "end": 34.0,
+      "bars": 5,
+      "layers": [
+        "kick 4/4",
+        "808 (sparse)",
+        "16th hats",
+        "clap 2&4",
+        "quarter arp",
+        "pad (deep sidechain)",
+        "bar accents",
+        "roll + riser"
+      ],
+      "cues": {
+        "accent": 26.0,
+        "roll": 32.4,
+        "riser_top": 33.6,
+        "breath": 33.4,
+        "riser_start": 32.0
+      },
+      "frames": 300,
+      "rms_dbfs": -18.98,
+      "peak_dbfs": -3.51,
+      "lufs_i": -20.52,
+      "band_rms_dbfs": {
+        "20-60": -27.18,
+        "60-250": -21.38,
+        "250-2000": -27.27,
+        "2000-8000": -39.54,
+        "8000-20000": -42.65
+      },
+      "side_minus_mid_db": -9.07
+    },
+    {
+      "id": "b05-admin",
+      "kind": "admin",
+      "start": 34.0,
+      "end": 42.0,
+      "bars": 4,
+      "layers": [
+        "kick 4/4",
+        "808",
+        "16th hats",
+        "clap 2&4",
+        "block arp",
+        "pad",
+        "sparkle",
+        "riser"
+      ],
+      "cues": {
+        "impact": 34.0,
+        "sparkle": 36.0,
+        "riser_start": 40.0,
+        "riser_top": 41.6
+      },
+      "frames": 240,
+      "rms_dbfs": -18.16,
+      "peak_dbfs": -3.51,
+      "lufs_i": -19.47,
+      "band_rms_dbfs": {
+        "20-60": -26.86,
+        "60-250": -20.49,
+        "250-2000": -26.29,
+        "2000-8000": -36.76,
+        "8000-20000": -38.04
+      },
+      "side_minus_mid_db": -9.61
+    },
+    {
+      "id": "b06-finale",
+      "kind": "finale",
+      "start": 42.0,
+      "end": 48.0,
+      "bars": 3,
+      "layers": [
+        "kick 4/4 + pushes",
+        "808",
+        "16th hats + rolls",
+        "clap",
+        "16th arp",
+        "widest pad",
+        "bells",
+        "yellow shimmer",
+        "resolve"
+      ],
+      "cues": {
+        "impact": 42.0,
+        "shimmer": 44.0,
+        "resolve": 46.0
+      },
+      "frames": 180,
+      "rms_dbfs": -17.78,
+      "peak_dbfs": -3.51,
+      "lufs_i": -18.83,
+      "band_rms_dbfs": {
+        "20-60": -27.08,
+        "60-250": -20.01,
+        "250-2000": -25.37,
+        "2000-8000": -36.5,
+        "8000-20000": -36.3
+      },
+      "side_minus_mid_db": -10.61
+    }
+  ],
+  "cues": [
+    {
+      "section": "b01-hook",
+      "cue": "sub_pulse_1",
+      "at": 0.5,
+      "window_s": 0.3,
+      "rms_dbfs": -18.73,
+      "peak_dbfs": -9.12
+    },
+    {
+      "section": "b01-hook",
+      "cue": "sub_pulse_2",
+      "at": 2.0,
+      "window_s": 0.3,
+      "rms_dbfs": -18.88,
+      "peak_dbfs": -7.89
+    },
+    {
+      "section": "b01-hook",
+      "cue": "swish",
+      "at": 2.9,
+      "window_s": 0.3,
+      "rms_dbfs": -25.52,
+      "peak_dbfs": -13.38
+    },
+    {
+      "section": "b01-hook",
+      "cue": "block_build",
+      "at": 4.0,
+      "window_s": 0.3,
+      "rms_dbfs": -17.91,
+      "peak_dbfs": -6.37
+    },
+    {
+      "section": "b02-setup",
+      "cue": "sub_pulse_1",
+      "at": 6.5,
+      "window_s": 0.3,
+      "rms_dbfs": -17.55,
+      "peak_dbfs": -7.39
+    },
+    {
+      "section": "b02-setup",
+      "cue": "sub_pulse_2",
+      "at": 8.0,
+      "window_s": 0.3,
+      "rms_dbfs": -18.91,
+      "peak_dbfs": -8.39
+    },
+    {
+      "section": "b02-setup",
+      "cue": "swish",
+      "at": 8.9,
+      "window_s": 0.3,
+      "rms_dbfs": -22.55,
+      "peak_dbfs": -11.16
+    },
+    {
+      "section": "b02-setup",
+      "cue": "block_build",
+      "at": 10.0,
+      "window_s": 0.3,
+      "rms_dbfs": -17.58,
+      "peak_dbfs": -6.01
+    },
+    {
+      "section": "b03-store",
+      "cue": "impact",
+      "at": 14.0,
+      "window_s": 0.3,
+      "rms_dbfs": -17.47,
+      "peak_dbfs": -3.51
+    },
+    {
+      "section": "b03-store",
+      "cue": "sparkle",
+      "at": 16.0,
+      "window_s": 0.3,
+      "rms_dbfs": -16.34,
+      "peak_dbfs": -3.51
+    },
+    {
+      "section": "b03-store",
+      "cue": "riser_start",
+      "at": 22.0,
+      "window_s": 0.4,
+      "rms_dbfs": -17.22,
+      "peak_dbfs": -3.51
+    },
+    {
+      "section": "b03-store",
+      "cue": "riser_top",
+      "at": 23.6,
+      "window_s": 0.4,
+      "rms_dbfs": -22.61,
+      "peak_dbfs": -9.94
+    },
+    {
+      "section": "b04-sources",
+      "cue": "accent",
+      "at": 26.0,
+      "window_s": 0.3,
+      "rms_dbfs": -17.75,
+      "peak_dbfs": -3.51
+    },
+    {
+      "section": "b04-sources",
+      "cue": "roll",
+      "at": 32.4,
+      "window_s": 0.3,
+      "rms_dbfs": -19.8,
+      "peak_dbfs": -4.28
+    },
+    {
+      "section": "b04-sources",
+      "cue": "riser_top",
+      "at": 33.6,
+      "window_s": 0.4,
+      "rms_dbfs": -25.17,
+      "peak_dbfs": -12.01
+    },
+    {
+      "section": "b04-sources",
+      "cue": "breath",
+      "at": 33.4,
+      "window_s": 0.8,
+      "rms_dbfs": -19.45,
+      "peak_dbfs": -3.51
+    },
+    {
+      "section": "b04-sources",
+      "cue": "riser_start",
+      "at": 32.0,
+      "window_s": 0.4,
+      "rms_dbfs": -17.35,
+      "peak_dbfs": -3.51
+    },
+    {
+      "section": "b05-admin",
+      "cue": "impact",
+      "at": 34.0,
+      "window_s": 0.3,
+      "rms_dbfs": -17.56,
+      "peak_dbfs": -3.51
+    },
+    {
+      "section": "b05-admin",
+      "cue": "sparkle",
+      "at": 36.0,
+      "window_s": 0.3,
+      "rms_dbfs": -16.37,
+      "peak_dbfs": -3.51
+    },
+    {
+      "section": "b05-admin",
+      "cue": "riser_start",
+      "at": 40.0,
+      "window_s": 0.4,
+      "rms_dbfs": -17.21,
+      "peak_dbfs": -3.51
+    },
+    {
+      "section": "b05-admin",
+      "cue": "riser_top",
+      "at": 41.6,
+      "window_s": 0.4,
+      "rms_dbfs": -23.41,
+      "peak_dbfs": -11.05
+    },
+    {
+      "section": "b06-finale",
+      "cue": "impact",
+      "at": 42.0,
+      "window_s": 0.3,
+      "rms_dbfs": -18.05,
+      "peak_dbfs": -3.51
+    },
+    {
+      "section": "b06-finale",
+      "cue": "shimmer",
+      "at": 44.0,
+      "window_s": 0.3,
+      "rms_dbfs": -17.45,
+      "peak_dbfs": -3.51
+    },
+    {
+      "section": "b06-finale",
+      "cue": "resolve",
+      "at": 46.0,
+      "window_s": 0.3,
+      "rms_dbfs": -15.38,
+      "peak_dbfs": -3.51
+    }
+  ],
+  "risers": [
+    {
+      "section": "b01-hook",
+      "at": 4.0,
+      "length_s": 2.0,
+      "band_hz": [
+        3500,
+        12000
+      ],
+      "rms_bottom_dbfs": -48.77,
+      "rms_top_dbfs": -41.88,
+      "lift_db": 6.89
+    },
+    {
+      "section": "b02-setup",
+      "at": 12.0,
+      "length_s": 2.0,
+      "band_hz": [
+        3500,
+        12000
+      ],
+      "rms_bottom_dbfs": -51.01,
+      "rms_top_dbfs": -42.08,
+      "lift_db": 8.93
+    },
+    {
+      "section": "b03-store",
+      "at": 22.0,
+      "length_s": 2.0,
+      "band_hz": [
+        3500,
+        12000
+      ],
+      "rms_bottom_dbfs": -40.04,
+      "rms_top_dbfs": -36.08,
+      "lift_db": 3.95
+    },
+    {
+      "section": "b04-sources",
+      "at": 32.0,
+      "length_s": 2.0,
+      "band_hz": [
+        3500,
+        12000
+      ],
+      "rms_bottom_dbfs": -40.75,
+      "rms_top_dbfs": -35.14,
+      "lift_db": 5.61
+    },
+    {
+      "section": "b05-admin",
+      "at": 40.0,
+      "length_s": 2.0,
+      "band_hz": [
+        3500,
+        12000
+      ],
+      "rms_bottom_dbfs": -39.3,
+      "rms_top_dbfs": -36.14,
+      "lift_db": 3.17
+    }
+  ],
+  "riser_lift_db": 6.89,
+  "stems": {
+    "from_sfx_library": [],
+    "synthesised": [
+      "kick",
+      "clap",
+      "closed hat",
+      "open hat",
+      "clock tick",
+      "808 sub bass",
+      "sub pulse",
+      "sub drop",
+      "impact",
+      "block pluck arpeggio",
+      "glass bell",
+      "detuned saw pad",
+      "air shimmer",
+      "riser",
+      "reverse swell",
+      "swish",
+      "snare roll",
+      "room tone",
+      "plate reverb IR",
+      "ping-pong delay"
+    ]
+  },
+  "gates": {
+    "samples": {
+      "got": 2304000,
+      "want": 2304000,
+      "ok": true
+    },
+    "duration": {
+      "got": 48.0,
+      "want": 48.0,
+      "ok": true
+    },
+    "rate": {
+      "got": 48000,
+      "want": 48000,
+      "ok": true
+    },
+    "channels": {
+      "got": 2,
+      "want": 2,
+      "ok": true
+    },
+    "rms": {
+      "got": -19.27,
+      "want": -19.0,
+      "ok": true
+    },
+    "peak": {
+      "got": -3.51,
+      "want": -3.0,
+      "ok": true
+    },
+    "true_peak": {
+      "got": -3.02,
+      "want": -3.0,
+      "ok": true
+    },
+    "clipped": {
+      "got": 0,
+      "want": 0,
+      "ok": true
+    },
+    "probe_rate": {
+      "got": 48000,
+      "want": 48000,
+      "ok": true
+    },
+    "probe_channels": {
+      "got": 2,
+      "want": 2,
+      "ok": true
+    },
+    "probe_duration": {
+      "got": 48.0,
+      "want": 48.0,
+      "ok": true
+    },
+    "riser_rises": {
+      "got": 6.89,
+      "want": ">= +6 dB in 3.5-12 kHz, bottom to top",
+      "ok": true
+    },
+    "gap_has_air": {
+      "got": -19.45,
+      "want": "> -50 dBFS",
+      "ok": true
+    }
+  },
+  "ok": true
+}

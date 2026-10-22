@@ -1,3 +1,121 @@
+## 2.4.0 — 2026-10-22
+
+The Cobalt Ledger cut: a 48 s, 24-bar feature film that explains a Telegram store's
+economics instead of only showing it. The client asked for deeper feature copy
+(multi-source sourcing, best price, margin, automatic repricing, payment coverage,
+quick setup), a non-green stage, a formal Arabic display face and a voice that is
+clear enough to trust.
+
+### New grammar and stage
+
+- `setup` and `sources` join the beat kinds; `design` and `finale` are now first-class
+  in the template budget. `setup.tsx` is the real wizard board; `sources.tsx` is the
+  three-source graph with cheapest routing, a 15% margin and automatic repricing.
+- `cobalt-atelier` look + `cobalt` ground: navy/cobalt, silver chrome, ivory Tajawal
+  700/800, ice-blue emphasis, champagne money. `atelier-emerald` remains for the
+  brand-atelier cut; `AtelierFX` supplies the chrome ribbon, sphere, lattice and
+  glass monoliths.
+- `open` / `store` / `admin` / `finale` now accept `stage: 'cobalt'`; the store beat
+  carries a payment-method ticker/row (wallet, Sham Cash, Syriatel, MTN, USDT,
+  Binance Pay, bank, custom).
+
+### Craft fixes
+
+- `OVER` is 8 frames (was 10); the cut is faster and the pre-roll still hides the
+  seam. Screen content is pre-rolled 16 frames so no page is blank at a bar line.
+- The design scene clamps its colour/style index at negative pre-roll time; a crash
+  at the first transition is fixed.
+- The source scene is a three-column data layout; product card below the sub, price
+  panel after the headline edge, alert above the platform band. Every aspect is
+  checked at 1:1.
+- The CTA never says «السعر على الخاص»; the approved line is «للمزيد من التفاصيل أو
+  لمتجرك — تواصل معنا على الخاص.» and the ticket foot says «التفاصيل على الخاص».
+
+### Voice and sound
+
+- Delivered on Fish **`drama-3`** with the Damascene male reference, fully vocalised,
+  temperature 0.6, per-line speed lifts; ASR **6/6, worst 0.985**. ElevenLabs
+  library voices are blocked on the free API (`402 paid_plan_required`); no credits
+  are spent retrying them.
+- The 48 s `souk-drop` arrangement maps open/setup→hook, store→drop, sources→machine
+  room, admin→drop, finale→widest drop; measured RMS −19.27, peak −3.51, true peak
+  −3.02, 0 clipped.
+
+### Reuse, not restart
+
+- `references/templates/cobalt-ledger.json` is the 24-bar recipe.
+- `references/PLAYBOOK-cobalt-ledger.md` is the build order, the gates and the
+  pitfalls.
+- `references/prompt-packs/cobalt-ledger.md` is the Opus-style code-film prompt and
+  the b-roll prompt pack.
+- `projects/cobalt-store-launch/` is the reference film (docs, film.json, style.json,
+  vo-script, prompt pack, manifest).
+
+## 2.3.0 — 2026-10-21
+
+The store film: a public launch cut for a digital-products store that lives inside
+Telegram as a Mini App. The client asked for explosive, premium backdrops, a
+clean public story (store/buyer/owner/security, no platform vocabulary), a fully
+vocalised female Levantine voice and the real product UI — and for the studio to
+absorb everything the film taught it.
+
+### New grammar: the product-demo beat kinds
+
+- `open · store · admin · security · close` join `hook · device · stat · cta` in
+  `BeatKind`; `src/store/` maps them to scenes (`src/store/scenes.tsx`) and
+  `Film.tsx` merges both registries. The compiler accepts the new kinds,
+  backgrounds and transitions, and `templates.py`'s capability budget follows the
+  engine instead of a frozen list.
+- `Beat.data` is passed through untouched: a scene can carry its chat copy,
+  product, KPI grid, guard slabs or end-card contacts without inventing fields in
+  the compiler. `demo.ts` documents the source table for every string.
+
+### The store kit (fidelity, measured)
+
+- `src/store/tokens.ts` transcribes the real Mini App's `tokens.css`/`fonts.css`
+  (light glass, saffron money, 8/14/20/28 radii, Reem Kufi + IBM Plex Sans Arabic);
+  `src/store/ui.tsx` rebuilds the kit (canvas, Telegram chrome, tab bar, voucher
+  ticket with punched notches, price/number isolation, sparkline, PIN dots, toast);
+  `src/store/PhonePro.tsx` is a 21:9 handset with bezel, titanium band, key + rim
+  light, camera island and a travelling glass reflection.
+- Screens: buyer (home, product, checkout sheet, success), owner (pulse, orders,
+  broadcast, stats, security) and support (chat, wallet, feature board) — all
+  rendered from the app's own strings and its demo fixture data, labelled as sample
+  data on the end card.
+
+### New look and cut vocabulary
+
+- `midnight-souk` look, warmed for delivery (bloom 1.02, vignette .30, camera 1.35):
+  the only light is the product; saffron is reserved for money.
+- Warm stage `golden-souk` (deep umber + teal shadow + arabesque tile + bokeh) and
+  `vault-warm`; the earlier colder `souk-night`/`vault-night` remain in the engine.
+- Clip transitions `flood` (shape opens over the live outgoing frame), `iris`, and
+  `maskline` (a gold perforation line sweeps). Unlike a wipe, the outgoing scene
+  stays alive underneath, so the seam never renders a blank frame.
+- Style `sfx` may name extra stems (`tick · drop · success · stamp · rise · seal ·
+  reward · land · sweep · open · close`); `--strict` validates every name.
+
+### Template
+
+- `references/templates/store-launch.json` — the 20-bar recipe (open 3 · store 5 ·
+  admin 5 · security 4 · close 3), its guardrails (public copy, sample data, one
+  drop) and the four pinned reference cards it borrows from. Archive: 14 recipes,
+  7 looks, 5 backgrounds, 7 cuts, 42 stems.
+
+### The film
+
+- `projects/tg-store-launch/`: 40.00 s, 120 BPM, 20 bars; female Levantine voice
+  (`lebanese-f`, speed 0.92, reference `baa6e604…`) with a fully vocalised script,
+  clear owner-facing copy and a delivered take ASR-gated at 0.959–1.000 per line;
+  original `--style souk-drop` score (RMS −19.11 dBFS, peak
+  −3.36, true peak −3.02, 0 clipped, deterministic SHA256); 16:9 / 9:16 / 1:1
+  masters, audio normalised to −14 LUFS / TP −1.5 on delivery; Arabic SRTs
+  regenerated from the measured VO.
+- **9:16 ships without burned captions**: at 1080×1920 the caption strip sat on the
+  checkout/end-card controls. The film is silent-first (every beat reads as a still)
+  and the SRT is delivered, so the master keeps the UI clean; the `Captions`
+  component stays for films whose layout reserves a caption band.
+
 ## 2.2.0 — 2026-10-21
 
 The second film, and the studio around it. The first StudyAI cut was judged by the

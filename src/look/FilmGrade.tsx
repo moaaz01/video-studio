@@ -25,6 +25,7 @@ export const FilmGrade: React.FC<{look: Look; children: React.ReactNode; overlay
   const grade = gradeFor(look.name);
   const id = gradeFilterId(look.name);
   const barH = `${look.letterbox * 100}%`;
+  const bloom = look.bloomColor ?? "255,238,208";
 
   return (
     <AbsoluteFill style={{background: "#000"}}>
@@ -47,7 +48,7 @@ export const FilmGrade: React.FC<{look: Look; children: React.ReactNode; overlay
       {overlays && look.bloom > 0 ? (
         <AbsoluteFill
           style={{
-            background: `radial-gradient(120% 85% at 50% -12%, rgba(255,238,208,${0.12 * look.bloom}), rgba(255,238,208,0) 64%)`,
+            background: `radial-gradient(120% 85% at 50% -12%, rgba(${bloom},${0.12 * look.bloom}), rgba(${bloom},0) 64%)`,
             mixBlendMode: "screen",
             pointerEvents: "none",
           }}

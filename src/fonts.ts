@@ -38,4 +38,23 @@ fontsReady.push(
   loadFont({family: FONT.naskh, url: staticFile('fonts/NotoNaskhArabic.ttf'), weight: '400', format: 'truetype'}),
 );
 
+/**
+ * The store Mini App's own faces (webapp fonts.css): Reem Kufi for display,
+ * prices and numbers; IBM Plex Sans Arabic for every body string. The film and
+ * the product must render the same glyphs or the "that is my screen" beat fails.
+ */
+const STORE_FACES: Array<[string, string, string]> = [
+  ['Reem Kufi', 'ReemKufi-Regular.woff2', '400'],
+  ['Reem Kufi', 'ReemKufi-SemiBold.woff2', '500'],
+  ['Reem Kufi', 'ReemKufi-SemiBold.woff2', '600'],
+  ['Reem Kufi', 'ReemKufi-Bold.woff2', '700'],
+  ['IBM Plex Sans Arabic', 'IBMPlexSansArabic-Regular.woff2', '400'],
+  ['IBM Plex Sans Arabic', 'IBMPlexSansArabic-Medium.woff2', '500'],
+  ['IBM Plex Sans Arabic', 'IBMPlexSansArabic-SemiBold.woff2', '600'],
+];
+
+for (const [family, file, weight] of STORE_FACES) {
+  fontsReady.push(loadFont({family, url: staticFile(`fonts/${file}`), weight, format: 'woff2'}));
+}
+
 export const ff = FONT.tajawal;

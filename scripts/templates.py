@@ -53,16 +53,23 @@ SFX_DIR = ROOT / "public" / "audio" / "sfx"
 STYLE_KEYS = ("template", "look", "motion", "background", "transitions", "sfx")
 
 # Engine capability budget. Keep in sync with the composition, not with taste.
-BACKGROUNDS = ("paper-glow", "ink-aurora", "emerald-depth")
-TRANSITIONS = ("whip", "slide", "blur", "flash")
-DEFAULT_LOOKS = ("cinema-warm", "paper-clean", "ink-noir", "vivid-launch", "ui-daylight")
+BACKGROUNDS = ("paper-glow", "ink-aurora", "emerald-depth", "souk-night", "golden-souk", "vault-night", "vault-warm", "atelier", "cobalt")
+TRANSITIONS = ("whip", "slide", "blur", "flash", "flood", "iris", "maskline")
+DEFAULT_LOOKS = ("cinema-warm", "paper-clean", "ink-noir", "vivid-launch", "ui-daylight", "midnight-souk", "atelier-emerald", "cobalt-atelier")
 SFX_KEYS = ("intro", "cut", "accent")
+# A style may name extra stems (money ticks, drops, stamps); the engine keys them by name.
+OPTIONAL_SFX_KEYS = (
+    "tick", "drop", "success", "stamp", "rise", "seal", "reward", "land", "sweep",
+    "open", "close",
+)
+ALL_SFX_KEYS = SFX_KEYS + OPTIONAL_SFX_KEYS
 
 ASPECTS = ("16x9", "9x16", "1x1")
 ASPECT_ALIASES = {"16:9": "16x9", "9:16": "9x16", "1:1": "1x1"}
 ENERGIES = ("low", "mid", "high")
 DIALECTS = ("ar-msa", "ar-levant", "ar-gulf", "ar-egypt")
-ENGINE_KINDS = ("hook", "device", "stat", "cta")
+# Kinds are scene grammars registered in src/film/Film.tsx (legacy launch + product-demo).
+ENGINE_KINDS = ("hook", "device", "stat", "cta", "open", "store", "admin", "security", "close", "design", "setup", "sources", "finale")
 
 # What a request can be, in the archive's own vocabulary.
 REQUEST_KINDS = frozenset(
@@ -83,11 +90,15 @@ REQUEST_KINDS = frozenset(
         "kinetic",
         "reel",
         "teaser",
+        "saas-store",
+        "ecommerce",
+        "telegram-mini-app",
+        "store-launch",
     }
 )
 
-FONTS = ("Tajawal", "Amiri", "NotoNaskhArabic")
-WEIGHTS = (300, 400, 500, 700, 800, 900)
+FONTS = ("Tajawal", "Amiri", "NotoNaskhArabic", "Reem Kufi", "IBM Plex Sans Arabic")
+WEIGHTS = (300, 400, 500, 600, 700, 800, 900)
 LAYOUTS = frozenset(
     {
         "full-bleed-type",
@@ -104,6 +115,11 @@ LAYOUTS = frozenset(
         "end-card",
         "timeline-strip",
         "card-column",
+        "device-right-copy-left",
+        "device-low-copy-top",
+        "chat-bubble-hero",
+        "end-ticket",
+        "capability-strip",
     }
 )
 
@@ -138,7 +154,7 @@ ID_RE = re.compile(r"^[a-z][a-z0-9-]{2,40}$")
 MIN_RECIPES = 12
 MIN_BARS, MAX_BARS = 8, 26
 MAX_BEATS = 8
-RECIPE_MOTION_MAX = 1.0
+RECIPE_MOTION_MAX = 1.5
 STYLE_MOTION_MAX = 1.5
 MIN_PICK_SCORE = 60
 MIN_PICK_MARGIN = 5
@@ -274,6 +290,10 @@ def available_looks() -> tuple[str, ...]:
 def theme_colors() -> frozenset[str]:
     """Every colour token in ``src/theme.ts``; a template may invent none."""
     text = _read(THEME_TS)
+    # The product UI kit carries its own transcribed palette; a recipe may quote it.
+    product = ROOT / "src" / "store" / "tokens.ts"
+    if product.is_file():
+        text += "\n" + product.read_text(encoding="utf-8")
     return frozenset(value.upper() for value in re.findall(r"#[0-9A-Fa-f]{6}", text))
 
 
@@ -459,12 +479,12 @@ def recipe_errors(recipe: dict[str, Any], caps: dict[str, Any]) -> list[str]:
                     "(16-52 s at 120 BPM)",
                 )
                 need(
-                    beat_list[0]["kind"] == "hook" if beat_list and isinstance(beat_list[0], dict) else False,
-                    "structure must open on a hook",
+                    beat_list[0]["kind"] in ("hook", "open") if beat_list and isinstance(beat_list[0], dict) else False,
+                    "structure must open on a hook (or the product-demo open)",
                 )
                 need(
-                    beat_list[-1]["kind"] == "cta" if beat_list and isinstance(beat_list[-1], dict) else False,
-                    "structure must close on a cta",
+                    beat_list[-1]["kind"] in ("cta", "close", "finale") if beat_list and isinstance(beat_list[-1], dict) else False,
+                    "structure must close on a cta (or the product-demo close/finale)",
                 )
                 if isinstance(when, dict) and isinstance(when.get("duration"), list) and len(when["duration"]) == 2:
                     low, high = when["duration"]
@@ -556,7 +576,7 @@ def recipe_errors(recipe: dict[str, Any], caps: dict[str, Any]) -> list[str]:
         need(len(set(layouts)) == len(layouts), "layouts: duplicate variants")
 
     transitions = recipe["transitions"]
-    need(isinstance(transitions, list) and 1 <= len(transitions) <= 2, "transitions must be 1-2 cuts")
+    need(isinstance(transitions, list) and 1 <= len(transitions) <= 3, "transitions must be 1-3 cuts")
     if isinstance(transitions, list):
         bad = [transition for transition in transitions if transition not in TRANSITIONS]
         need(not bad, f"transitions: unknown cuts: {', '.join(map(str, bad))}")
@@ -567,7 +587,7 @@ def recipe_errors(recipe: dict[str, Any], caps: dict[str, Any]) -> list[str]:
     if not isinstance(sfx, dict):
         errors.append("sfx must be an object")
     else:
-        unknown = sorted(set(sfx) - set(SFX_KEYS))
+        unknown = sorted(set(sfx) - set(ALL_SFX_KEYS))
         missing = sorted(set(SFX_KEYS) - set(sfx))
         need(not unknown, f"sfx: unknown keys: {', '.join(unknown)}")
         need(not missing, f"sfx: missing keys: {', '.join(missing)}")
@@ -923,8 +943,11 @@ def style_errors(style: Any, caps: dict[str, Any], where: str = "style") -> list
     elif len(set(transitions)) != len(transitions):
         errors.append(f"{where}.transitions must not repeat a cut")
     sfx = style["sfx"]
-    if not isinstance(sfx, dict) or set(sfx) != set(SFX_KEYS):
-        errors.append(f"{where}.sfx must have exactly the keys {', '.join(SFX_KEYS)}")
+    if not isinstance(sfx, dict) or not set(SFX_KEYS) <= set(sfx) or set(sfx) - set(ALL_SFX_KEYS):
+        errors.append(
+            f"{where}.sfx must contain {', '.join(SFX_KEYS)} and only known stems "
+            f"({', '.join(ALL_SFX_KEYS)})"
+        )
     else:
         for key, stem in sfx.items():
             if not isinstance(stem, str) or stem not in caps["stems"]:

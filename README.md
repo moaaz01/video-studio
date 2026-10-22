@@ -15,6 +15,9 @@ It is not a template with placeholders. It is a small studio with an opinion:
   transitions, voice measured before the timeline is compiled.
 - **Gates before praise.** Every master is probed for peak/RMS/clipping, black
   stretches and corrupted Arabic before anyone says "done".
+- **Data films are a first-class form.** Cobalt Ledger (48 s) explains sourcing,
+  margin, automatic repricing, payments and setup as code-rendered data scenes —
+  start from `references/PLAYBOOK-cobalt-ledger.md`, not from zero.
 
 ```
  Brief ─▶ Direction ─▶ Script ─▶ Voice ─▶ Build ─▶ Mix ─▶ QA ─▶ Masters
@@ -113,7 +116,8 @@ src/theme.ts            design tokens (paper/ink palette, type scale, phone geom
 src/brand.ts            the only file that changes between clients
 src/components/         Phone · Surfaces · Overlays · Text · Ico · Brand · StudyAIScreen · DemoUI
 src/lib/                animation + RTL/bidi helpers
-src/scenes/             Hook · Device · Stat · Cta  (the four beats every film needs)
+src/scenes/             Hook · Device · Stat · Cta  (the launch grammar)
+src/store/              Open · Store · Admin · Security · Close + the product UI kit
 src/film/Film.tsx       timeline-driven assembler, one film → 16:9 · 9:16 · 4:5 · 1:1
 src/film/types.ts       the style contract: look, background, cut vocabulary, sfx
 film/film.json          the film's whole structure: beats, bars, copy, VO lines
@@ -147,6 +151,10 @@ film answers four questions: *why look? what is it? does it work? what now?*
 | `device` | what is it? | `#device` on paper | the screen is the real screen |
 | `stat` | does it work? | `#data` on ink | every number traced to a source |
 | `cta` | what now? | `#launch` on emerald | the handle is the largest type |
+
+A product-demo film swaps the middle beats for the shop's own grammar —
+`open · store · admin · security · close` (`src/store/scenes.tsx`), registered in
+the same `SCENES` map, so the launch grammar and the product grammar coexist.
 
 Add scenes freely — `src/film/Film.tsx` maps `beat.kind` to a component; the
 timeline carries the copy, so a new scene needs no changes to the script layer.
@@ -196,7 +204,7 @@ Four inputs, each with a command, so none of them is a vibe:
 | Input | Command | Produces |
 |---|---|---|
 | the product itself | `studio.py ui --dir <app>` | `film/ui-source.json`: real screens, strings, colours, fonts |
-| the pixels on a real device | `ui_source.py --rea` then REA + adb | captured screens + the real density -> dp |
+| the pixels on a real device | `ui_source.py --rea` then REA + adb; web apps: `ui_source.py --dir <app>` | captured screens + the real density -> dp |
 | what already shipped | `studio.py refs whatships "<product>"` | matching launch films with original X links |
 | the prompt craft | `studio.py refs motion product-ui` | the corpus taxonomy + pinned cards with the exact move |
 

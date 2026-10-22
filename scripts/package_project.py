@@ -28,43 +28,46 @@ import qa  # noqa: E402  (probe/loudness are the studio's own measurements)
 
 # Hero masters live in out/masters/ (CRF 10 / png); the legacy studio.py render
 # writes out/film_*.mp4, so both locations are accepted.
-MASTERS = {
-    "16x9": ("out/masters/film_16x9.mp4", "studyai-shami-16x9-1080p.mp4"),
-    "9x16": ("out/masters/film_9x16.mp4", "studyai-shami-9x16-1080p.mp4"),
-    "4x5": ("out/masters/film_4x5.mp4", "studyai-shami-4x5-1080p.mp4"),
-    "1x1": ("out/masters/film_1x1.mp4", "studyai-shami-1x1-1080p.mp4"),
-}
+# A project renders into its own folder; the packager copies + measures from there.
+# The legacy studio.py render writes out/masters/, so that is accepted as a fallback.
+MASTER_ASPECTS = ("16x9", "9x16", "1x1")
 
 # Global state the film consumed, copied into assets/ so the project is self-contained.
 ASSETS = {
     "timeline.json": "src/generated/timeline.json",
     "vo.json": "src/generated/vo.json",
     "captions.json": "src/generated/captions.json",
-    "grade.json": "src/generated/grade.json",
-    "studyai-ar.json": "src/generated/studyai-ar.json",
+    "style.json": "src/generated/style.json",
     "music.wav": "public/audio/score/music.wav",
     "captions/wide.srt": "out/captions/wide.srt",
     "captions/vertical.srt": "out/captions/vertical.srt",
-    "vo-asr-check.json": "out/qa/vo-asr-check.json",
-    "vo-asr-master.json": "out/qa/vo-asr-master.json",
+    "score-report.json": "out/audio/score-report.json",
+    "vo-audit.json": "out/qa/vo-asr-check.json",
 }
 
 
 def asr_summary() -> str:
-    """Read the ASR report instead of repeating a number from memory."""
-    p = ROOT / "out/qa/vo-asr-check.json"
-    if not p.exists():
-        return "out/qa/vo-asr-check.json (not run)"
-    try:
-        data = json.loads(p.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        return "out/qa/vo-asr-check.json (unreadable)"
-    rows = data if isinstance(data, list) else data.get("lines", [])
-    sims = [float(r.get("sim", r.get("similarity", 0))) for r in rows]
-    if not sims:
-        return "out/qa/vo-asr-check.json (empty)"
-    ok = sum(1 for s in sims if s >= 0.90)
-    return f"out/qa/vo-asr-check.json ({ok}/{len(sims)} lines >= 0.90, worst {min(sims):.3f})"
+    """Read the measured ASR trail instead of repeating a number from memory."""
+    for rel in ("out/qa/vo-asr-check.json", "out/auditions/tg2/audit.json", "out/auditions/tg/audit.json"):
+        p = ROOT / rel
+        if not p.exists():
+            continue
+        try:
+            data = json.loads(p.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            return f"{rel} (unreadable)"
+        rows = data if isinstance(data, list) else data.get("final") or data.get("lines") or []
+        sims = [
+            float(r.get("sim", r.get("similarity", r.get("char_sim", 0))))
+            for r in rows
+            if isinstance(r, dict)
+        ]
+        sims = [s for s in sims if s > 0]
+        if not sims:
+            continue
+        ok = sum(1 for s in sims if s >= 0.90)
+        return f"{rel} ({ok}/{len(sims)} lines >= 0.90, worst {min(sims):.3f})"
+    return "no measured ASR report found"
 
 
 def sha256(path: pathlib.Path) -> str:
@@ -93,13 +96,14 @@ def main() -> None:
 
     proj = (ROOT / args.project).resolve()
     film = json.loads((proj / "film.json").read_text(encoding="utf-8"))
-    vo = json.loads((ROOT / "src/generated/vo.json").read_text(encoding="utf-8"))
+    vo_path = proj / "assets" / "vo.json"
+    vo = json.loads((vo_path if vo_path.exists() else ROOT / "src/generated/vo.json").read_text(encoding="utf-8"))
     style = json.loads((ROOT / "src/generated/style.json").read_text(encoding="utf-8"))
     timeline = json.loads((ROOT / "src/generated/timeline.json").read_text(encoding="utf-8"))
 
     files: list[dict] = []
     # 1. the script itself (already authored in the project)
-    for name in ("brief.md", "film.json", "style.json", "vo-script.json", "README.md"):
+    for name in ("brief.md", "film.json", "style.json", "vo-script.json", "README.md", "ui-source.json"):
         p = proj / name
         if p.exists():
             files.append({"path": p.relative_to(ROOT).as_posix(), "role": "document",
@@ -107,29 +111,49 @@ def main() -> None:
 
     # 2. VO wavs actually used, then the shared audio/visual state
     for entry in vo:
-        src = ROOT / "public" / entry["wav"]
-        files.append({"role": f"vo:{entry['id']}", **copy(src, proj / "assets" / "vo" / pathlib.Path(entry["wav"]).name)})
+        name = pathlib.Path(entry["wav"]).name
+        own = proj / "assets" / "vo" / name
+        src = own if own.exists() else ROOT / "public" / entry["wav"]
+        dest = proj / "assets" / "vo" / name
+        if src.resolve() == dest.resolve():
+            files.append({"role": f"vo:{entry['id']}", "path": dest.relative_to(ROOT).as_posix(),
+                          "bytes": dest.stat().st_size, "sha256": sha256(dest)})
+        else:
+            files.append({"role": f"vo:{entry['id']}", **copy(src, dest)})
     for rel, src_rel in ASSETS.items():
-        src = ROOT / src_rel
+        # The project's own copy wins: a project must survive the studio's global
+        # state being reset for the next film, and re-packaging must not overwrite
+        # the film's own timeline/voice/score with whatever is in `src/generated`.
+        dest = proj / "assets" / rel
+        src = dest if dest.exists() else ROOT / src_rel
         if not src.exists():
             print(f"  !! missing {src_rel} — skipped")
             continue
-        files.append({"role": "asset", **copy(src, proj / "assets" / rel)})
+        if src.resolve() == dest.resolve():
+            files.append({"role": "asset", "path": dest.relative_to(ROOT).as_posix(),
+                          "bytes": dest.stat().st_size, "sha256": sha256(dest)})
+        else:
+            files.append({"role": "asset", **copy(src, dest)})
 
     # 3. masters, measured, in output/
+    slug = film.get("slug", proj.name)
     masters = []
-    for aspect, (src_rel, name) in MASTERS.items():
-        src = ROOT / src_rel
+    candidates: list[tuple[str, pathlib.Path, str]] = []
+    for aspect in MASTER_ASPECTS:
+        own = proj / "output" / "masters" / f"film_{aspect}.mp4"
+        legacy = ROOT / "out" / "masters" / f"film_{aspect}.mp4"
+        src = own if own.exists() else legacy
+        candidates.append((aspect, src, f"{slug}-{aspect}-1080p.mp4"))
+    for kind, rel in (("teaser", "output/teasers/film_16x9_crf16.mp4"),):
+        own = proj / rel
+        legacy = ROOT / "out" / "teasers" / "film_16x9_crf16.mp4"
+        src = own if own.exists() else legacy
+        candidates.append((kind, src, f"{slug}-16x9-teaser.mp4"))
+    for aspect, src, name in candidates:
         if not src.exists():
-            legacy = {
-                "16x9": "out/film_1080p.mp4", "9x16": "out/film_9x16.mp4",
-                "4x5": "out/film_4x5.mp4", "1x1": "out/film_1x1.mp4",
-            }[aspect]
-            src = ROOT / legacy if (ROOT / legacy).exists() else src
-        if not src.exists():
-            print(f"  !! missing {src_rel} — run the render first")
+            print(f"  !! missing {src.relative_to(ROOT).as_posix() if src.is_relative_to(ROOT) else src} — run the render first")
             continue
-        dest = proj / "output" / name
+        dest = proj / "output" / ("teasers" if aspect == "teaser" else "masters") / name
         info = copy(src, dest)
         probe = qa.probe(dest)
         lvl = qa.loudness(dest) or {}
@@ -149,9 +173,15 @@ def main() -> None:
     # 4. QA stills
     stills = []
     for s in args.stills:
-        src = (ROOT / s).resolve() if not pathlib.Path(s).is_absolute() else pathlib.Path(s)
-        if src.exists():
-            stills.append({"role": "stills", **copy(src, proj / "output" / "stills" / src.name)})
+        src = (ROOT / s).resolve() if not pathlib.Path(s).is_absolute() else pathlib.Path(s).resolve()
+        if not src.exists():
+            continue
+        dest = (proj / "output" / "stills" / src.name).resolve()
+        if src == dest:
+            stills.append({"role": "stills", "path": dest.relative_to(ROOT).as_posix(),
+                           "bytes": dest.stat().st_size, "sha256": sha256(dest)})
+        else:
+            stills.append({"role": "stills", **copy(src, dest)})
 
     manifest = {
         "slug": film.get("slug", proj.name),
@@ -167,11 +197,17 @@ def main() -> None:
         "voice": {
             "engine": "Fish Audio TTS",
             "model": (film.get("voice") or {}).get("model"),
-            "reference_id": vo[0].get("voice") if vo else (film.get("voice") or {}).get("reference_id"),
+            "reference_id": (film.get("voice") or {}).get("reference_id") or (vo[0].get("voice") if vo else None),
+            "label": (film.get("voice") or {}).get("label"),
             "speed": (film.get("voice") or {}).get("speed"),
             "lines": [{"id": e["id"], "seconds": round(e["dur"], 3)} for e in vo],
             "total_seconds": round(sum(e["dur"] for e in vo), 3),
             "asr_report": asr_summary(),
+        },
+        "disclosure": {
+            "sample_data": "The store, its products, prices, wallet and dashboard numbers are the app's demo fixture (labelled «لقطات الواجهة ببيانات تجريبية» on the end card).",
+            "public_copy": "The cut names no platform, tenant or infrastructure; it shows the storefront, the owner panel, the identity controls and the two supplied contacts.",
+            "security": "This cut makes no security claim; every product statement is limited to the store behaviour shown on screen.",
         },
         "files": files,
         "stills": stills,

@@ -69,6 +69,14 @@ LOOKS = {
     # Hero launch look: richer contrast and a warm key, paper whites protected so
     # the app screen still reads as the product (graded, not Instagram-filtered).
     "premium-warm": {"contrast": 0.18, "gamma": 0.995, "lift": 0.005, "gain": 1.005, "sat": 1.10, "warm": 0.30},
+    # Atelier: emerald-graphite stage with a cool key. Highlights lean away from
+    # parchment (negative warmth) so the phone's white stays product-white, not cream.
+    "atelier-emerald": {"contrast": 0.27, "gamma": 0.99, "lift": 0.006, "gain": 1.0, "sat": 1.06, "warm": -0.28},
+    # Cobalt: cool key, neutral silver, no green cast; the highlights lean icy.
+    "cobalt-atelier": {"contrast": 0.29, "gamma": 0.985, "lift": 0.005, "gain": 1.0, "sat": 1.07, "warm": -0.42},
+    # The souk was graded warm in the delivered cut before this table existed; keep
+    # an explicit entry so the filter no longer falls through to cinema-warm.
+    "midnight-souk": {"contrast": 0.24, "gamma": 0.99, "lift": 0.006, "gain": 1.0, "sat": 1.02, "warm": 0.12},
 }
 
 

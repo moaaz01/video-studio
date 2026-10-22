@@ -1,0 +1,132 @@
+{
+  "id": "store-launch",
+  "title": "Store launch: one warm golden shop inside Telegram (for the future owner)",
+  "when": {
+    "kind": [
+      "saas-store",
+      "ecommerce",
+      "telegram-mini-app"
+    ],
+    "aspects": [
+      "16x9",
+      "9x16",
+      "1x1"
+    ],
+    "energy": "high",
+    "audience": [
+      "small-business",
+      "resellers",
+      "creators",
+      "consumers"
+    ],
+    "dialect": [
+      "ar-levant",
+      "ar-msa"
+    ],
+    "duration": [
+      40,
+      45
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "open",
+        "bars": 3,
+        "role": "own your store inside a chat — no app, no site"
+      },
+      {
+        "kind": "store",
+        "bars": 5,
+        "role": "what your customers do in one pass: choose, pay from balance, receive in seconds"
+      },
+      {
+        "kind": "admin",
+        "bars": 5,
+        "role": "the owner's phone: pulse, orders, broadcast, stats + the capability strip"
+      },
+      {
+        "kind": "security",
+        "bars": 4,
+        "role": "the vault: PIN fills, guards land, the riser rises"
+      },
+      {
+        "kind": "close",
+        "bars": 3,
+        "role": "the drop, the end ticket, and the only two contacts"
+      }
+    ],
+    "total_bars": 20
+  },
+  "look": "midnight-souk",
+  "palette": {
+    "ground": "#241307",
+    "surface": "#0A1A21",
+    "ink": "#EEF1F6",
+    "accent": "#F2A93B",
+    "support": "#2AA5A9"
+  },
+  "typography": {
+    "face": "Reem Kufi",
+    "display_px": [
+      88,
+      168
+    ],
+    "body_px": [
+      34,
+      48
+    ],
+    "line_height": 1.42,
+    "weights": [
+      500,
+      600,
+      700
+    ],
+    "rules": [
+      "Product UI is quoted, not restyled: the screens use the real Mini App's Reem Kufi + IBM Plex Sans Arabic scale inside the phone.",
+      "Headline words land whole; never split Arabic into letters, never track Arabic.",
+      "Saffron is money and impact only, never body copy or decoration."
+    ]
+  },
+  "layouts": [
+    "device-right-copy-left",
+    "device-low-copy-top",
+    "chat-bubble-hero",
+    "end-ticket",
+    "capability-strip"
+  ],
+  "transitions": [
+    "flood",
+    "iris",
+    "maskline"
+  ],
+  "sfx": {
+    "intro": "impact",
+    "cut": "pan_whoosh",
+    "accent": "button_click",
+    "tick": "type_tick",
+    "drop": "sub_drop",
+    "success": "correct_chime",
+    "stamp": "stamp_thud",
+    "rise": "riser_short",
+    "seal": "haptic_thud",
+    "reward": "level_up",
+    "land": "card_pop",
+    "sweep": "whoosh_rtl"
+  },
+  "background": "golden-souk",
+  "motion": 1.15,
+  "reference": {
+    "site": "prompt-motion.com + behance.net",
+    "url": "https://prompt-motion.com/twoclipping-221cab",
+    "pattern": "one-take flood handoff + beat-locked 120 BPM",
+    "move": "The shop grows out of the chat bubble inside one continuous move; a new UI state lands on every bar, and the only hard cut is the drop.",
+    "note": "Pattern adapted from the four pinned reference cards (one-take flood handoff, 120 BPM event-per-bar, whole-word Arabic kinetic type, macro-to-context scale reveal); no frames, prompts or assets were copied."
+  },
+  "guardrails": [
+    "Public film: no SaaS/tenant/platform vocabulary, no invented metrics or social proof.",
+    "The store name and its numbers are the app's own sample data and are labelled as such on the end card.",
+    "One drop only; no second shockwave, no glitch, no neon.",
+    "Contacts are the only numbers in the film, printed exactly as supplied."
+  ]
+}

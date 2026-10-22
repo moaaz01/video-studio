@@ -17,15 +17,18 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-KINDS = {"hook", "device", "stat", "cta"}
+# Kinds are visual grammars, not templates: a film declares which grammar each beat
+# speaks and `src/film/Film.tsx` maps it to a scene. The first four are the launch
+# grammar; store/admin/security are the product-demo grammar of a live shop.
+KINDS = {"hook", "device", "stat", "cta", "open", "store", "admin", "security", "close", "design", "finale", "setup", "sources"}
 TONES = {"ink", "paper", "emerald"}
 # Reading budget: new words are slow, filler is fast. Arabic UI copy averages
 # ~0.42 s per word when it must be read at a glance.
 SEC_PER_WORD = 0.42
 VO_TAIL = 0.35  # air after a line, before the cut
 
-BACKGROUNDS = {"paper-glow", "ink-aurora", "emerald-depth"}
-TRANSITIONS = {"whip", "slide", "blur", "flash"}
+BACKGROUNDS = {"paper-glow", "ink-aurora", "emerald-depth", "souk-night", "golden-souk", "vault-night", "vault-warm", "atelier", "cobalt"}
+TRANSITIONS = {"whip", "slide", "blur", "flash", "flood", "iris", "maskline"}
 STYLE_DEFAULTS = {
     "template": "launch-hero",
     "look": None,
@@ -169,6 +172,10 @@ def main() -> None:
             "line2": b.get("line2") or "",
             "stat": b.get("stat"),
             "screen": b.get("screen"),
+            # scene copy that is not a headline: chat, product, KPI, guard slabs, ctas.
+            # The compiler does not interpret it; the scene does (and only with strings
+            # that exist in the app's own tables).
+            "data": b.get("data") or {},
             "emphasis": b.get("emphasis") or [],
             "sfx": check_cues(b.get("sfx"), bid, problems),
             "vo": lines,

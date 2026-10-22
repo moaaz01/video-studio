@@ -2,7 +2,7 @@
 
 A recipe is the decision layer between a brief and `film/style.json`: what kind
 of film this is, which beats it is made of, and how it is lit, set, cut and
-sounded. Thirteen recipes live here, one JSON file per id, and
+sounded. Fourteen recipes live here, one JSON file per id, and
 `scripts/templates.py` is the only thing that reads them.
 
 They are **patterns, not presets and not assets.** Every recipe names the
@@ -26,6 +26,8 @@ prompt dump, a moodboard, or a licence to reproduce someone's film.
 | `event-promo` | what, when, where, then urgency | `cinema-warm` / `emerald-depth` | 17 · 34 |
 | `product-teaser` | withhold, one reveal, the name | `ink-noir` / `ink-aurora` | 10 · 20 |
 | `ui-morph` | one UI element through its states, never a cut | `ui-daylight` / `paper-glow` | 17 · 34 |
+| `store-launch` | a shop inside Telegram: buyer, owner and proof in one move | `midnight-souk` / `souk-night` | 20 · 40 |
+| `cobalt-ledger` | the store's economics: setup, payments, multi-source, margin, auto-repricing | `cobalt-atelier` / `cobalt` | 24 · 48 |
 
 Durations are `bars × 2.000 s` at 120 BPM (60 frames at 30 fps).
 
@@ -76,9 +78,9 @@ Rules the validator enforces (`python scripts/templates.py --check`):
 | `palette` | every value a `src/theme.ts` token; ink-on-ground contrast ≥ 4.5:1; `ink-noir` needs a dark ground, `paper-clean`/`ui-daylight` a light one |
 | `typography` | face from the self-hosted set (`Tajawal`, `Amiri`, `NotoNaskhArabic`); pixel ranges; 2–6 rules that a beat can obey |
 | `layouts` | 2–5 names from the script's controlled list |
-| `transitions` | 1–2 of `whip`, `slide`, `blur`, `flash` — one vocabulary per film |
+| `transitions` | 1–3 of `whip`, `slide`, `blur`, `flash`, `flood`, `iris`, `maskline` — one vocabulary per film |
 | `sfx` | `intro`/`cut`/`accent` stems that exist under `public/audio/sfx/` |
-| `background` | `paper-glow`, `ink-aurora`, `emerald-depth` |
+| `background` | `paper-glow`, `ink-aurora`, `emerald-depth`, `souk-night`, `vault-night` |
 | `motion` | 0.0–1.0 recipe weight (`film/style.json` allows 0.0–1.5) |
 | `reference` | `site`, `url`, `pattern`, `move`, `note`; `url` is https; `note` must say a pattern was adapted, not an asset copied |
 | `guardrails` | optional 1–4 honesty rules for the cut (no invented quotes, numbers or screens) |

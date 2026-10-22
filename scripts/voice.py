@@ -347,6 +347,9 @@ def tts(text: str, out: pathlib.Path, key: str, a: argparse.Namespace) -> float:
         "normalize": a.normalize,
         "chunk_length": a.chunk_length,
         "latency": a.latency,
+        "temperature": a.temperature,
+        "top_p": a.top_p,
+        "language": a.language,
         "prosody": {
             "speed": a.speed,
             "volume": a.volume,
@@ -386,6 +389,9 @@ def batch(script: pathlib.Path, key: str, a: argparse.Namespace) -> None:
         a.reference_id = a.reference_id or voice.get("reference_id")
         a.model = voice.get("model", a.model)
         a.speed = base_speed = voice.get("speed", a.speed)
+        a.temperature = voice.get("temperature", a.temperature)
+        a.top_p = voice.get("top_p", a.top_p)
+        a.language = voice.get("language", a.language)
     if isinstance(spec, dict):
         a.lead_silence = base_lead = spec.get("lead_silence", base_lead)
 
@@ -440,6 +446,9 @@ def main() -> None:
     p.add_argument("--sample-rate", type=int, default=DEFAULT_RATE)
     p.add_argument("--speed", type=float, default=1.0)
     p.add_argument("--volume", type=float, default=0.0)
+    p.add_argument("--temperature", type=float, default=0.7)
+    p.add_argument("--top-p", type=float, default=0.7)
+    p.add_argument("--language", default="ar")
     p.add_argument("--chunk-length", type=int, default=300)
     p.add_argument("--mp3-bitrate", type=int, default=128)
     p.add_argument("--latency", default="normal", choices=["normal", "balanced"])

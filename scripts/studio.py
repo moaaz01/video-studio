@@ -96,7 +96,10 @@ def voice(args: argparse.Namespace) -> int:
     lines = []
     for b in film.get("beats", []):
         for i, text in enumerate(b.get("vo") or []):
-            lines.append({"id": f"{b['id']}-{i + 1}", "text": text})
+            entry = {"id": f"{b['id']}-{i + 1}", "text": text}
+            if b.get("vo_speed"):
+                entry["speed"] = b["vo_speed"]
+            lines.append(entry)
     if not lines:
         print("no `vo` lines in the film — nothing to synthesise")
         return 0
@@ -107,6 +110,9 @@ def voice(args: argparse.Namespace) -> int:
             "model": v.get("model", "s2.1-pro-free"),
             "reference_id": v.get("reference_id") or "",
             "speed": v.get("speed", 1.0),
+            "temperature": v.get("temperature", 0.7),
+            "top_p": v.get("top_p", 0.7),
+            "language": v.get("language", "ar"),
         },
         "out_dir": "public/audio/vo",
         "manifest": "src/generated/vo.json",

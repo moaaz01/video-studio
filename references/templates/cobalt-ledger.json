@@ -1,0 +1,136 @@
+{
+  "id": "cobalt-ledger",
+  "title": "Cobalt Ledger: the store's economics, explained as a data film",
+  "when": {
+    "kind": [
+      "saas-store",
+      "ecommerce",
+      "telegram-mini-app"
+    ],
+    "aspects": [
+      "16x9",
+      "9x16",
+      "1x1"
+    ],
+    "energy": "high",
+    "audience": [
+      "small-business",
+      "resellers",
+      "creators"
+    ],
+    "dialect": [
+      "ar-levant",
+      "ar-msa"
+    ],
+    "duration": [
+      45,
+      50
+    ]
+  },
+  "structure": {
+    "beats": [
+      {
+        "kind": "open",
+        "bars": 3,
+        "role": "the shop is his: name, identity, inside Telegram"
+      },
+      {
+        "kind": "setup",
+        "bars": 4,
+        "role": "the guided wizard: identity → currency → payments → sources → products → launch; ≈15 min"
+      },
+      {
+        "kind": "store",
+        "bars": 5,
+        "role": "buyer path + the payment-method row around the phone"
+      },
+      {
+        "kind": "sources",
+        "bars": 5,
+        "role": "three sources → cheapest → 15% margin → source rise → automatic repricing"
+      },
+      {
+        "kind": "admin",
+        "bars": 4,
+        "role": "orders, profit, notifications, broadcast from the same phone"
+      },
+      {
+        "kind": "finale",
+        "bars": 3,
+        "role": "contact ticket; no price claim"
+      }
+    ],
+    "total_bars": 24
+  },
+  "look": "cobalt-atelier",
+  "palette": {
+    "ground": "#0B1730",
+    "surface": "#040814",
+    "ink": "#F3F7FF",
+    "accent": "#F2A93B",
+    "support": "#9CC8FF"
+  },
+  "typography": {
+    "face": "Tajawal",
+    "display_px": [
+      72,
+      110
+    ],
+    "body_px": [
+      32,
+      44
+    ],
+    "line_height": 1.3,
+    "weights": [
+      700,
+      800
+    ],
+    "rules": [
+      "Headlines are whole Arabic words in Tajawal 700/800; no tracking, no per-letter animation.",
+      "IBM Plex Sans Arabic is the body face; Reem Kufi stays inside the product phone only.",
+      "Saffron is money and the single CTA emphasis; all other emphasis is ice blue.",
+      "Every data scene is checked at 1:1: no headline under a card, no price panel over the sub."
+    ]
+  },
+  "layouts": [
+    "card-column",
+    "evidence-grid",
+    "device-right-copy-left",
+    "number-centre",
+    "end-ticket"
+  ],
+  "transitions": [
+    "maskline",
+    "flood",
+    "iris"
+  ],
+  "sfx": {
+    "intro": "impact",
+    "cut": "whoosh_rtl",
+    "accent": "button_click",
+    "tick": "type_tick",
+    "drop": "sub_drop",
+    "success": "correct_chime",
+    "stamp": "stamp_thud",
+    "rise": "riser_short",
+    "sweep": "pan_whoosh",
+    "seal": "haptic_thud",
+    "reward": "level_up",
+    "land": "card_pop"
+  },
+  "background": "cobalt",
+  "motion": 1.2,
+  "reference": {
+    "site": "github.com/yihui-dev/awesome-opus5-5-videos + omo.space",
+    "url": "https://github.com/yihui-dev/awesome-opus5-5-videos",
+    "pattern": "code-rendered data film + one-shape UI motion + 120 BPM event-per-bar",
+    "move": "Every scene is a pure function of frame: one glass-card family and one champagne ledger line carry the eye while the data changes on the bar; the Arabic and the prices are real code, never a video model.",
+    "note": "Production grammar adapted from the pinned Opus 5.5 cards (code-rendered motion, one element never cuts, 120 BPM event-per-bar, whole-word Arabic type). No frames, prompts or assets were copied."
+  },
+  "guardrails": [
+    "The source costs and margin are a worked example and must be labelled «مثال».",
+    "Payment names and setup steps come from the app; no supplier names, no live quotes.",
+    "The CTA never says «السعر على الخاص»; use «التفاصيل على الخاص» or «للحصول على متجرك».",
+    "The voice is ASR-gated; «متجرك»، «بث إشعارات»، «مصادر»، «الأرخص»، «تلقائياً» are explicit checks."
+  ]
+}
