@@ -97,7 +97,7 @@ python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict
 | `scripts/master_audio.py` | One audio gain stage over the masters; video stream copied, result re-measured. |
 | `scripts/` | Orchestrator + timeline compiler + Fish bridge + bed composer + QA. |
 | `scripts/ui_source.py` | Reads an app project (screens/strings/tokens) + REA capture bridge. |
-| `scripts/corpus.py` | whatships + prompt-motion queries, card pinning, corpus gate. |
+| `scripts/corpus.py` | whatships + prompt-motion queries, tech axis (does this engine build it?), card pinning, corpus + tech gates. |
 | `scripts/advise.py` | Measured design review; exit 1 with `--strict` on a MUST. |
 | `scripts/looks.py` | Look variants as real frames, for the client to choose from. |
 | `scripts/storyboard.py` | Storyboard sheet + optional per-beat stills. |

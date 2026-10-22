@@ -122,6 +122,7 @@ python scripts/studio.py doctor          # env, fonts, ffmpeg, key, deps
 python scripts/studio.py ui --dir <app>  # scan the real project -> film/ui-source.json
 python scripts/studio.py refs whatships "<product>"   # what already shipped
 python scripts/studio.py refs motion product-ui        # what the corpus has
+python scripts/studio.py refs tech                       # how a move is built, and if this engine has it
 python scripts/studio.py refs add --url ... --title ... --move ... --why ...
 python scripts/studio.py refs check --min 2            # the phase-2 gate
 python scripts/studio.py new <slug>      # scaffold a film from the template
@@ -210,7 +211,8 @@ scripts/level_score.py    loudness/peak leveller
 scripts/make_timeline.py  film.json -> timeline.json, grid + reading-time checks
 scripts/qa.py             probes, blackdetect, loudness, Arabic scan, sheets
 scripts/ui_source.py      scans a real app project -> film/ui-source.json; REA capture bridge
-scripts/corpus.py         what shipped (whatships), what the corpus has (prompt-motion), cards, gate
+scripts/corpus.py         what shipped (whatships), what the corpus has (prompt-motion),
+                          how a move is built (tech), cards, gates
 scripts/package_project.py  a film project folder: assets copied, masters measured, manifest + SHA256SUMS
 scripts/advise.py         measured design review: reading time, contrast, rhythm, cta, look
 scripts/looks.py          the same beat in every look -> out/looks/, for the client
