@@ -22,6 +22,11 @@ jobs:
         run: npx tsc --noEmit
       - name: python syntax
         run: python -m py_compile scripts/*.py evals/*.py
+      - name: python deps
+        # The MCP wire contract calls the `sound` tool, which composes the bed and
+        # therefore imports numpy. requirements.txt is the declared contract, so CI
+        # installs it here instead of assuming the runner happens to ship it.
+        run: python -m pip install --quiet -r requirements.txt
       - name: timeline compiles and fits the voice
         run: python scripts/make_timeline.py --strict
       - name: arabic scan

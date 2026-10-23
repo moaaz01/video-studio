@@ -68,8 +68,19 @@ def schema_errors(film: dict) -> list[str]:
 def compiles(brief: pathlib.Path) -> tuple[bool, str]:
     with tempfile.TemporaryDirectory() as tmp:
         out = pathlib.Path(tmp) / "timeline.json"
+        # A brief is a plan, not a film, so it carries no measured voice. Compiling
+        # it against src/generated/vo.json would lend it the real film's durations
+        # through any beat id the two happen to share: a plan would then fail on a
+        # measurement it never made. Each brief gets its own empty manifest, and the
+        # style plan goes to the same throwaway directory so scoring a brief can
+        # never overwrite the film's own generated files.
+        vo = pathlib.Path(tmp) / "vo.json"
+        vo.write_text("[]\n", encoding="utf-8")
+        style = pathlib.Path(tmp) / "style.json"
         proc = subprocess.run(
-            [sys.executable, str(ROOT / "scripts" / "make_timeline.py"), "--film", str(brief), "--out", str(out), "--strict"],
+            [sys.executable, str(ROOT / "scripts" / "make_timeline.py"),
+             "--film", str(brief), "--out", str(out),
+             "--vo", str(vo), "--style-out", str(style), "--strict"],
             cwd=ROOT, capture_output=True, text=True,
         )
         text = (proc.stdout or "") + (proc.stderr or "")
