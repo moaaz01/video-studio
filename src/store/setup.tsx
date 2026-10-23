@@ -49,7 +49,12 @@ const layout = (W: number, H: number): Lay => {
   if (portrait) {
     return {
       portrait, square, W, H,
-      head: {x: W * 0.06, y: H * 0.06, w: W * 0.88},
+      // Reels, Shorts and Stories paint their own chrome over the top 150px of a
+      // 9:16 frame, so the header starts below that band on that master only.
+      // The 4:5 and 1:1 teasers have no overlay, and pushing them down would eat
+      // the gap their board needs. 0.09 of 1920 puts the kicker at y=173, which
+      // clears the band by 23px and still leaves 30px before the board.
+      head: {x: W * 0.06, y: H * (H >= 1900 ? 0.09 : 0.06), w: W * 0.88},
       board: {x: W * 0.05, y: H * 0.275, w: W * 0.9, h: H * 0.585},
       h1: W * 0.074, h2: W * 0.033, kicker: W * 0.026, align: 'center', stepCols: 1,
     };
