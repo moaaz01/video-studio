@@ -21,7 +21,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SERVER = ROOT / "scripts" / "mcp_server.py"
 PROTOCOL = "2025-06-18"
-VERSION = "2.1.0"
+VERSION = "2.5.0"
 
 
 class Client:
@@ -74,13 +74,13 @@ def main() -> None:
 
         tools = client.call("tools/list", {}).get("result", {}).get("tools", [])
         names = [t["name"] for t in tools]
-        checks.append({"check": "tools listed", "value": len(tools), "pass": len(tools) >= 15})
-        for required in ("captions", "master", "sound"):
+        checks.append({"check": "tools listed", "value": len(tools), "pass": len(tools) >= 20})
+        for required in ("captions", "master", "sound", "intake_questions", "director", "format_check", "motion_audit", "export"):
             checks.append({"check": f"tool {required}", "value": required in names,
                            "pass": required in names})
 
         resources = client.call("resources/list", {}).get("result", {}).get("resources", [])
-        checks.append({"check": "resources listed", "value": len(resources), "pass": len(resources) >= 7})
+        checks.append({"check": "resources listed", "value": len(resources), "pass": len(resources) >= 13})
         film = client.call("resources/read", {"uri": "studio://film"})
         text = film.get("result", {}).get("contents", [{}])[0].get("text", "")
         checks.append({"check": "studio://film chars", "value": len(text), "pass": len(text) > 500})
@@ -92,6 +92,16 @@ def main() -> None:
         caption_text = captions.get("result", {}).get("content", [{}])[0].get("text", "")
         checks.append({"check": "captions call", "value": "OK" in caption_text,
                        "pass": captions.get("result", {}).get("isError") is False and "OK" in caption_text})
+
+        intake = client.call("tools/call", {"name": "intake_questions", "arguments": {"format": "explainer"}})
+        intake_text = intake.get("result", {}).get("content", [{}])[0].get("text", "")
+        checks.append({"check": "intake_questions", "value": "product_name" in intake_text,
+                       "pass": intake.get("result", {}).get("isError") is False and "product_name" in intake_text})
+
+        kinetic = client.call("tools/call", {"name": "format_check", "arguments": {"format": "kinetic", "film": "references/templates/kinetic-launch.json"}})
+        kinetic_text = kinetic.get("result", {}).get("content", [{}])[0].get("text", "")
+        checks.append({"check": "format_check kinetic", "value": "OK" in kinetic_text,
+                       "pass": kinetic.get("result", {}).get("isError") is False and "OK" in kinetic_text})
 
         sound = client.call("tools/call", {"name": "sound", "arguments": {}})
         sound_text = sound.get("result", {}).get("content", [{}])[0].get("text", "")

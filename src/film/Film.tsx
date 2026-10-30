@@ -13,13 +13,15 @@ import {Hook} from '../scenes/Hook';
 import {Device} from '../scenes/Device';
 import {Stat} from '../scenes/Stat';
 import {Cta} from '../scenes/Cta';
+import {Explainer} from '../scenes/Explainer';
+import {Kinetic} from '../scenes/Kinetic';
 import {STORE_SCENES} from '../store/scenes';
 import {Captions} from './Captions';
 import {Soundtrack} from '../audio/Soundtrack';
 
 const T = timelineJson as unknown as Film;
 
-export type SceneProps = {beat: Beat; vertical: boolean; motion?: number};
+export type SceneProps = {beat: Beat; vertical: boolean; motion?: number; preRoll?: number};
 
 /** 180-degree shutter: a camera only blurs what moves, so this is opt-in per look. */
 const Shutter: React.FC<{look: {motionBlur: number}; children: React.ReactNode}> = ({look, children}) =>
@@ -41,6 +43,8 @@ const LEGACY_SCENES: Record<string, React.FC<SceneProps>> = {
   device: Device,
   stat: Stat,
   cta: Cta,
+  explainer: Explainer,
+  kinetic: Kinetic,
 };
 
 export const SCENES: Record<string, React.FC<SceneProps>> = {...LEGACY_SCENES, ...STORE_SCENES};
@@ -262,7 +266,8 @@ const Body: React.FC<{vertical: boolean; lookName?: string; blur?: number; capti
   // The canvas height comes from the composition, not the timeline: T.height is
   // the 16:9 design grid (1080) and is the same for every aspect.
   const {width: canvasW, height: canvasH} = useVideoConfig();
-  const showCaptions = captions ?? (vertical && canvasH >= 1900);
+  const hasSpokenHeadline = beats.some((b) => b.kind === 'explainer');
+  const showCaptions = captions ?? (vertical && canvasH >= 1900 && !hasSpokenHeadline);
   const isStoreFilm = beats.some((b) => b.kind in STORE_SCENES);
   return (
     <AbsoluteFill>
@@ -272,6 +277,21 @@ const Body: React.FC<{vertical: boolean; lookName?: string; blur?: number; capti
             const Scene = SCENES[beat.kind];
             if (!Scene) return null;
             const isLast = i === beats.length - 1;
+            // Kinetic type must not sit under the camera/beat transforms: Chromium
+            // mis-shapes large Arabic in a transformed subtree. The scene owns its
+            // own cuts and background moves; the global shell is bypassed.
+            if (beat.kind === 'kinetic') {
+              return (
+                <Sequence
+                  key={beat.id}
+                  from={beat.start}
+                  durationInFrames={beat.dur + (isLast ? 0 : OVER)}
+                  name={`${beat.id} · ${beat.kind}`}
+                >
+                  <Scene beat={beat} vertical={vertical} motion={motion} preRoll={0} />
+                </Sequence>
+              );
+            }
             return (
               <Sequence
                 key={beat.id}
@@ -286,7 +306,7 @@ const Body: React.FC<{vertical: boolean; lookName?: string; blur?: number; capti
                       mode={CAMERA_BY_KIND[beat.kind] ?? 'settle'}
                       strength={look.camera * motion}
                     >
-                      <Scene beat={beat} vertical={vertical} motion={motion} />
+                      <Scene beat={beat} vertical={vertical} motion={motion} preRoll={PREROLL} />
                     </Camera>
                   </Shutter>
                 </BeatShell>

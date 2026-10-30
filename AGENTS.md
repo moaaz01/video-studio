@@ -20,10 +20,17 @@ Read in this order, and stop when you have what you need:
 npm install
 python scripts/install_check.py       # am I actually installed for every agent?
 python scripts/studio.py doctor        # environment check, no network
+python scripts/studio.py intake questions --format explainer
+python scripts/studio.py intake check --intake film/intake.json
+python scripts/studio.py director --intake film/intake.json
 python scripts/studio.py ui --dir <app>  # scan the real project -> film/ui-source.json
 python scripts/studio.py refs check --min 2   # are the references pinned?
 python scripts/studio.py timeline      # film/film.json -> src/generated/timeline.json
-python scripts/studio.py render        # 1080p masters (CRF 10 / png for the hero cuts)
+python scripts/studio.py format explainer --film film/film.json --strict
+python scripts/studio.py format kinetic --film film/film.json --strict
+python scripts/studio.py motion out/film_9x16.mp4 --profile kinetic --strict
+python scripts/studio.py export --targets 9x16,16x9,1x1,4x5 --strict
+python scripts/studio.py render        # 1080p masters, all four aspects by default
 python scripts/studio.py qa --stills 8 # gates + contact sheets, non-zero on failure
 python scripts/studio.py safe <still>  # platform safe-area check (reels/shorts/story/feed)
 python scripts/studio.py captions      # cue JSON + wide/vertical SRT, self-checked
@@ -40,11 +47,17 @@ python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict
 
 ## How to make a new film
 
-1. **Brief**: copy `film/brief.template.md` to `film/brief.md` and fill the six
-   blocks (`inputs`, `direction`, `structure`, `build`, `gotchas`, `start`) — see
-   `references/prompt-anatomy.md` for why that shape. If a required fact is missing
-   (a handle, a price), ask; never invent it.
-2. **Direction**: choose one of the twelve directions and write down why. You are
+0. **Intake**: ask the questions in `references/intake.md` for the chosen form,
+   fill `film/intake.json`, and pass `studio.py intake check`. Then run
+   `studio.py director` and show the treatment to the user. No beat until both
+   gates pass. Missing images/screens/facts are questions, not guesses.
+1. **Brief**: `studio.py intake brief` writes the six blocks (`inputs`, `direction`,
+   `structure`, `build`, `gotchas`, `start`) from the intake — see
+   `references/prompt-anatomy.md` for why that shape.
+2. **Form + direction**: the director proposes one of the forms in
+   `references/formats/` (explainer, kinetic, device, ui-film, data-film,
+   editorial) and one of the twelve directions. Override only with a recorded
+   reason; choose one direction and write down why. You are
    not allowed to "just make it modern". Then pin the two references you are
    actually borrowing from:
    `python scripts/studio.py refs whatships "<product>"` /
@@ -107,7 +120,8 @@ python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict
 ## Hard rules
 
 - **Never invent product facts, screens, numbers or testimonials.** Fidelity to
-  the real app is the first requirement of this studio. It is also measurable:
+  the real app is the first requirement of this studio. The intake is blocking:
+  if the user has not supplied it, ask; do not fill the gap. It is also measurable:
   `studio.py ui --dir <app>` gives you the truth for names, copy and tokens, REA
   gives you the pixels, and `references/fidelity-pipeline.md` is the loop. If the
   user gave you screenshots, those are the truth too.

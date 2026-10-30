@@ -1,6 +1,6 @@
 ---
 name: video-studio
-description: Use when asked to design, script, voice, render or QA a marketing video, product film, app promo, explainer, launch trailer, UI demo, kinetic-type piece, reel/short, or any motion-design deliverable — including Arabic/RTL films, multi-aspect exports, thumbnail/cover stills, original score and SFX, and faithful reproduction of a real product UI inside the video. Triggers on briefs like "صمم فيديو", "make a promo video", "launch video", "app demo video", "reel", "intro", or any request to turn a product/app/design into moving pictures.
+description: Use when asked to design, script, voice, render or QA a marketing video, product film, app promo, explainer reel, launch trailer, UI demo, kinetic-type piece, reel/short, or any motion-design deliverable — including Arabic/RTL films, intake-driven product facts, multi-aspect/platform exports, thumbnail/cover stills, original score and SFX, and faithful reproduction of a real product UI inside the video. Triggers on briefs like "صمم فيديو", "make a promo video", "launch video", "app demo video", "reel", "explainer", "intro", or any request to turn a product/app/design into moving pictures.
 ---
 
 # Video studio
@@ -25,6 +25,43 @@ own QA never ships.
 - Arabic/RTL motion work, or a film that must reproduce a real app's screens.
 
 Not for: editing third-party footage, live-action, or audio-only podcasts.
+
+## Phase 0 — intake (blocking)
+
+No film is written from a hunch. The agent asks the user the questions in
+[`references/intake.md`](references/intake.md) — product, audience, promise, true
+proof points, action, assets, palette, voice, platforms, duration — fills
+`film/intake.json`, and runs `intake check`. A missing product image is a reason
+to ask, not a reason to invent one. `intake brief` turns a complete intake into
+the six-block `film/brief.md`.
+
+The **director** then reads the intake and writes a treatment: format, direction,
+clock, delivery matrix, required assets, why, alternatives
+([`references/director.md`](references/director.md)). Show the treatment to the
+user and get a yes before writing beats.
+
+```bash
+python scripts/studio.py intake questions --format explainer
+python scripts/studio.py intake check --intake film/intake.json
+python scripts/studio.py director --intake film/intake.json
+```
+
+## The forms
+
+The studio is a set of film forms, not one template. The router and the two new
+playbooks live in [`references/formats/`](references/formats/):
+
+| brief | form | direction | start from |
+|---|---|---|---|
+| a game / launch / dev tool with a claim | **kinetic** | `#kinetic` / `#code` | `references/templates/kinetic-launch.json` |
+| a mechanism to teach, a numbered reel | **explainer** | `#editorial` / `#diagram` | `references/templates/explainer-reel.json` |
+| an app with real screens | **device** | `#device` | device/store scenes |
+| a SaaS launch | **ui-film** | `#ui-film` | real UI crops |
+| a store's economics | **data-film** | `#data-film` | `references/templates/cobalt-ledger.json` |
+| a physical product | **editorial** | `#photo` | real photos |
+
+Every form exports the same four masters by default: `9x16`, `16x9`, `4x5`, `1x1`
+([`references/platform-matrix.md`](references/platform-matrix.md)).
 
 ## The eight phases
 
@@ -125,7 +162,14 @@ python scripts/studio.py refs motion product-ui        # what the corpus has
 python scripts/studio.py refs tech                       # how a move is built, and if this engine has it
 python scripts/studio.py refs add --url ... --title ... --move ... --why ...
 python scripts/studio.py refs check --min 2            # the phase-2 gate
-python scripts/studio.py new <slug>      # scaffold a film from the template
+python scripts/studio.py new <slug> --format explainer   # scaffold from a form
+python scripts/studio.py intake questions --format explainer
+python scripts/studio.py intake check --intake film/intake.json
+python scripts/studio.py director --intake film/intake.json
+python scripts/studio.py format explainer --film film/film.json --strict
+python scripts/studio.py format kinetic --film film/film.json --strict
+python scripts/studio.py motion out/film_9x16.mp4 --profile kinetic --strict
+python scripts/studio.py export --targets 9x16,16x9,1x1,4x5 --strict
 python scripts/studio.py timeline        # film.json -> src/generated/timeline.json
 python scripts/studio.py voice           # Fish Audio lines -> wavs + measured vo.json
 python scripts/ui_source.py --rea        # the capture commands (device, APK, web)
@@ -144,7 +188,7 @@ python scripts/mcp_server.py             # expose the studio to any agent (MCP, 
                                           # tools: doctor, scan, refs, advise, storyboard, still,
                                           # render, qa, captions, safe, shotlist, grade, evals
                                           # resources: studio://film|timeline|grade|captions|ui-source|roadmap|skill
-python scripts/studio.py render 16x9 9x16 # masters, concurrent
+python scripts/studio.py render 16x9 9x16 4x5 1x1   # masters, all four by default
 python scripts/studio.py qa              # gates + contact sheets + thumbnails
 ```
 
@@ -161,38 +205,46 @@ Anything that takes a flag accepts `--help`; read it rather than guessing.
 | a phone app shown faithfully | Device film | `#device` |
 | a calm, premium, editorial pitch | Editorial / paper | `#editorial` |
 | the product's economics need explaining | Data film / Cobalt Ledger | `#data-film` + `PLAYBOOK-cobalt-ledger.md` |
+| a numbered lesson / mechanism, voice-led | Explainer reel | `#editorial` / `#diagram` + `references/formats/explainer-reel.md` |
+| a game / launch / dev-tool claim, beat-grid | Kinetic film | `#kinetic` / `#code` + `references/formats/kinetic-film.md` |
 
 Full rubric, palettes and motion signatures live in
 [`references/visual-direction.md`](references/visual-direction.md).
 
 ## Non-negotiables
 
-1. **Fidelity is measured, not remembered.** Scan the project
+1. **The intake is blocking.** No beat is written until `intake check` passes and
+   the treatment is approved. Ask for real screens, strings, colours and facts;
+   never invent them. See [`references/intake.md`](references/intake.md).
+2. **Fidelity is measured, not remembered.** Scan the project
    (`studio.py ui --dir <app>`): every screen, string, colour and font family the
    film shows must exist there. For pixels, capture the real device with REA and
    match at 1:1. Invented UI is the fastest way to lose the audience's trust —
    see [`references/fidelity-pipeline.md`](references/fidelity-pipeline.md).
-2. **No fake social proof.** No invented ratings, user counts, awards, "the #1".
+3. **No fake social proof.** No invented ratings, user counts, awards, "the #1".
    Placeholder document names are fine; placeholder success is not.
-3. **Arabic is set, not styled.** No `letterSpacing`, no `text-transform`, no
+4. **Arabic is set, not styled.** No `letterSpacing`, no `text-transform`, no
    italics, no letter-by-letter reveal. `dir="rtl"` + `lang="ar"` always.
    See [`references/arabic-type.md`](references/arabic-type.md).
-4. **Audio is composed to the cut.** Everything sits on a 120 BPM grid; a cut with
+5. **Audio is composed to the cut.** Everything sits on a 120 BPM grid; a cut with
    no sound is a mistake. See [`references/audio-and-voice.md`](references/audio-and-voice.md).
-5. **Silent-autoplay safe.** Every beat must read as a still, with sound off.
-6. **Borrowed taste is cited.** Two pinned cards minimum; each names the move and
+6. **Silent-autoplay safe.** Every beat must read as a still, with sound off.
+7. **Borrowed taste is cited.** Two pinned cards minimum; each names the move and
    the source. See [`references/prompt-anatomy.md`](references/prompt-anatomy.md)
    for the prompt structure those cards are written in.
-7. **Gates before praise.** Never report a render as good until
+8. **Gates before praise.** Never report a render as good until
    `references/qa-gates.md` passes on the real file.
-8. **The look is declared, not improvised.** One preset per film, named in
+9. **The look is declared, not improvised.** One preset per film, named in
    `film/style.json` before the first render. Mixing looks between beats reads as a
    mistake; changing the look to fix weak content is a lie. See
    [`references/cinematic-look.md`](references/cinematic-look.md).
-9. **A cut moves the film, it does not hide it.** Scenes hand over on one axis; no
+10. **A cut moves the film, it does not hide it.** Scenes hand over on one axis; no
    solid wipe, no dip to a blank colour, no cut where both frames are static. The
    seam is where the energy is.
-10. **Critique with frames, not adjectives.** Before the client is asked to choose,
+11. **One timeline, four canvases.** Every film ships 9:16, 16:9, 4:5 and 1:1 by
+    default; a platform cut is a subset, not a second edit. Check a 1:1 still before
+    the render. See [`references/platform-matrix.md`](references/platform-matrix.md).
+12. **Critique with frames, not adjectives.** Before the client is asked to choose,
    render the options: `studio.py looks` as real frames, `studio.py storyboard` as
    the whole film on one sheet. A brief answered with a picture gets a decision.
 
@@ -209,6 +261,13 @@ scripts/make_bed.py       additive synth: the bed, from timeline.json, measured
 scripts/make_score.py     legacy map-driven composer (only when a --map exists)+ foley, no samples
 scripts/level_score.py    loudness/peak leveller
 scripts/make_timeline.py  film.json -> timeline.json, grid + reading-time checks
+scripts/intake.py        questions, completeness gate, six-block brief
+scripts/director.py      intake -> treatment (format/direction/clock/delivery)
+scripts/platform_matrix.py  platform/aspect/safe presets
+scripts/platforms.py     plan/export all four masters + manifest
+scripts/format_check.py  explainer / kinetic format gates
+scripts/motion_audit.py  still %, holds, cuts, flow on the delivered MP4
+scripts/voice_elevenlabs.py  optional TTS + word timestamps
 scripts/qa.py             probes, blackdetect, loudness, Arabic scan, sheets
 scripts/ui_source.py      scans a real app project -> film/ui-source.json; REA capture bridge
 scripts/corpus.py         what shipped (whatships), what the corpus has (prompt-motion),
@@ -222,7 +281,8 @@ src/                      the Remotion engine (theme, type, motion, film, scenes
 src/look/                 the look system: presets, grade/grain/vignette, one camera move per beat
 references/               the craft: direction, motion, type, audio, platforms, QA,
                           fidelity-pipeline, prompt-anatomy, reference-sources,
-                          cinematic-look, corpus/
+                          cinematic-look, corpus/, intake.md, director.md,
+                          platform-matrix.md, formats/
 projects/<slug>/          a finished film lives here: brief, film.json, vo-script, assets, output, manifest
 docs/ROADMAP-v2.md        what to build next, and the tests a candidate must pass
 examples/                 a shipped 118 s film as the worked example

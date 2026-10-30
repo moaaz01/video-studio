@@ -15,6 +15,22 @@ be broken in the MP4. **Probe the artifact.**
 - [ ] Captions were regenerated from *this* film (`scripts/captions.py --film
       <film>`): a stale demo cue inside a client film is a copy error, not a bug.
 
+## Gate 0b — the form is the right form
+
+```bash
+python scripts/intake.py check --intake film/intake.json
+python scripts/director.py --intake film/intake.json
+python scripts/format_check.py explainer --film film/film.json --strict
+python scripts/format_check.py kinetic --film film/film.json --strict
+```
+
+- Intake: every required answer and asset exists; no invented product fact.
+- Director: the form/direction/clock is a proposal the user approved (or an
+  override recorded in `film/treatment.json`).
+- Explainer: one sentence per beat, a card per sentence, 90–170 words, measured
+  VO fits, keyword and CTA present.
+- Kinetic: palette, 2-bar scenes, 8 shots, one idea per shot, no parked last shot.
+
 ## Gate 1 — compiles
 
 ```bash
@@ -76,6 +92,20 @@ Then, over the PCM: **peak ≤ −1.4 dBFS**, **no sample with |x| ≥ 0.999**, 
 −20…−23 dBFS for a music-led promo, and a manual listen for: VO not buried, no
 clipped sibilance, no click at a cut, no silence where a beat expects sound,
 no audible loop point in the bed.
+
+## Gate 5c — motion and the platform set
+
+```bash
+python scripts/motion_audit.py out/exports/<slug>/<slug>-9x16.mp4 --profile kinetic --end-card 3 --strict
+python scripts/platforms.py export --film film/film.json --targets 9x16,16x9,1x1,4x5 --strict
+```
+
+- Kinetic: still share ≤ 40% before the end card, longest hold ≤ 0.60 s, median
+  flow ≥ 2.5 px/frame (or `median_change ≥ 1.0` without OpenCV). A **type-only**
+  cut uses `--profile kinetic-type` (still ≤ 60%, hold ≤ 0.60 s).
+- Explainer: still share ≤ 65%, longest hold ≤ 1.20 s.
+- Export: every target is the right size, audio is not clipped, and the safe-area
+  verdict is PASS. The manifest is the evidence; a log is not.
 
 ## Gate 5b — the voice says the words
 

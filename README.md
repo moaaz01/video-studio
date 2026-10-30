@@ -20,8 +20,8 @@ It is not a template with placeholders. It is a small studio with an opinion:
   start from `references/PLAYBOOK-cobalt-ledger.md`, not from zero.
 
 ```
- Brief ─▶ Direction ─▶ Script ─▶ Voice ─▶ Build ─▶ Mix ─▶ QA ─▶ Masters
-                        film.json  Fish    Remotion  wav    ffprobe  16:9 · 9:16 · 4:5 · 1:1
+ Intake ─▶ Director ─▶ Script ─▶ Voice ─▶ Build ─▶ Mix ─▶ QA ─▶ Masters
+ questions  treatment  film.json  Fish    Remotion  wav    ffprobe  16:9 · 9:16 · 4:5 · 1:1
 ```
 
 ---
@@ -34,7 +34,9 @@ npm install
 pip install -r requirements.txt   # numpy · scipy · pillow
 .\install.ps1                 # يربط المهارة بكل وكلاء الذكاء الاصطناعي على الجهاز
 python scripts/studio.py doctor
-python scripts/studio.py render    # يخرج الفيلم التجريبي 16:9 و 9:16
+python scripts/studio.py intake questions --format explainer
+python scripts/studio.py director --intake film/intake.json
+python scripts/studio.py export --targets 9x16,16x9,1x1,4x5 --strict
 ```
 
 ثم قل للوكيل: «اصنع فيديو تسويقي للتطبيق الفلاني» — ستُحمَّل المهارة تلقائيًا.
@@ -94,7 +96,7 @@ half-installed skill fails instead of passing on the installer's word.
 ## What the agent gets
 
 **A protocol** — [`SKILL.md`](SKILL.md): eight phases, each with an exit gate, and
-six non-negotiables that override any aesthetic preference.
+twelve non-negotiables that override any aesthetic preference.
 
 **Knowledge it would otherwise have to guess** — [`references/`](references/):
 
@@ -108,6 +110,22 @@ six non-negotiables that override any aesthetic preference.
 | [`audio-and-voice.md`](references/audio-and-voice.md) | Fish Audio wiring, VO rules, score engine, mix targets |
 | [`platform-specs.md`](references/platform-specs.md) | Sizes, safe areas, encode settings, measured render speeds |
 | [`qa-gates.md`](references/qa-gates.md) | The exact commands that decide "done" |
+| [`intake.md`](references/intake.md) | What the agent must ask before a film exists |
+| [`director.md`](references/director.md) | How the form, direction and clock are chosen |
+| [`formats/`](references/formats/) | Explainer-reel and kinetic-film playbooks |
+| [`platform-matrix.md`](references/platform-matrix.md) | Four masters, platform subsets, safe areas |
+
+**Two new forms** — a voice-led explainer reel and a beat-grid kinetic film:
+
+- [`references/formats/explainer-reel.md`](references/formats/explainer-reel.md):
+  one spoken sentence per beat, one card that proves it, word-level reveal from
+  measured VO timestamps, 9:16 first, all four aspects.
+- [`references/formats/kinetic-film.md`](references/formats/kinetic-film.md):
+  one idea per shot, 160 BPM cuts, ground flips, measured still/hold gates, and an
+  Arabic-safe type path (one shaped SVG text node per frame).
+- [`references/intake.md`](references/intake.md): the blocking questions and asset
+  slots. [`references/director.md`](references/director.md): the rules that choose
+  the form and the clock.
 
 **A working engine** — Remotion + React 19 + TypeScript:
 
@@ -116,7 +134,7 @@ src/theme.ts            design tokens (paper/ink palette, type scale, phone geom
 src/brand.ts            the only file that changes between clients
 src/components/         Phone · Surfaces · Overlays · Text · Ico · Brand · StudyAIScreen · DemoUI
 src/lib/                animation + RTL/bidi helpers
-src/scenes/             Hook · Device · Stat · Cta  (the launch grammar)
+src/scenes/             Hook · Device · Stat · Cta · Explainer · Kinetic
 src/store/              Open · Store · Admin · Security · Close + the product UI kit
 src/film/Film.tsx       timeline-driven assembler, one film → 16:9 · 9:16 · 4:5 · 1:1
 src/film/types.ts       the style contract: look, background, cut vocabulary, sfx
@@ -399,7 +417,7 @@ over stdio (JSON-RPC 2.0, protocol `2025-06-18`). It exposes eight tools —
 `render`, `qa` — so an agent can *call* the studio, not just read about it:
 
 ```powershell
-claude mcp add video-studio -- python D:/deepseek-workspace/video-studio/scripts/mcp_server.py
+claude mcp add video-studio -- python /path/to/video-studio/scripts/mcp_server.py
 ```
 
 The split is deliberate: `SKILL.md` carries judgement, MCP carries execution. See

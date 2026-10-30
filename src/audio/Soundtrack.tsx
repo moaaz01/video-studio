@@ -37,22 +37,27 @@ const STYLE: Style = T.style ?? {};
 const FPS = T.fps;
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 
-/** music bed gain: -9 dB under speech, ducked a further -6 dB while a line plays */
-const BED_GAIN = 0.375;
+/** music bed gain: -9 dB under speech; a no-VO film lets the bed carry the mix */
+const VO_BED_GAIN = 0.375;
+const NO_VO_BED_GAIN = 0.95;
 const DUCK = 0.5;
 const DUCK_RAMP = 0.26;
 
 type Cue = {from: number; dur: number; wav: string; at: number};
 
-const voCues: Cue[] = VO.map((line) => {
+// A vo.json from another film must not be mounted: only lines whose beat exists
+// in this timeline are this film's voice. This keeps a kinetic/type-only cut from
+// requesting a previous film's wavs (and 404-ing the render).
+const voCues: Cue[] = VO.flatMap((line) => {
   const beat = T.beats.find((candidate) => line.id.startsWith(`${candidate.id}-`));
-  const at = beat ? beat.start / FPS : 0;
-  return {
+  if (!beat) return [];
+  const at = beat.start / FPS;
+  return [{
     from: Math.round(at * FPS),
     dur: Math.max(1, Math.round(line.dur * FPS) + 12),
     wav: line.wav,
     at,
-  };
+  }];
 });
 
 const duckAt = (seconds: number): number => {
@@ -73,7 +78,8 @@ const musicVolume = (frame: number): number => {
   const total = T.frames / FPS;
   const fadeIn = clamp01(t / 1.2);
   const fadeOut = clamp01((total - t) / 1.4);
-  return BED_GAIN * (1 - DUCK * duckAt(t)) * fadeIn * fadeOut;
+  const bedGain = voCues.length ? VO_BED_GAIN : NO_VO_BED_GAIN;
+  return bedGain * (1 - DUCK * duckAt(t)) * fadeIn * fadeOut;
 };
 
 /** Delivered foley is peak-normalised, so one scalar per cue is the whole mix. */

@@ -118,6 +118,26 @@ Dedupe rule: skip a cut accent when an existing cue of the same family sits with
 0.45 s, otherwise the edit machine-guns. Trim the whole foley bus to 0.5–0.6 of the
 bed's perceived loudness — foley should be *felt*, not heard.
 
+## ElevenLabs (optional, for word-level explainer timing)
+
+Fish remains the default and the delivered voice. ElevenLabs is an optional
+provider for explainer reels where the headline must reveal each word when it is
+spoken:
+
+```bash
+python scripts/studio.py voice --provider elevenlabs --voice-id <id>
+```
+
+- The adapter calls `with-timestamps` per sentence and stores a `words` array
+  (`w`, `start`, `end`) in `src/generated/vo.json`.
+- `make_timeline.py` turns that into `data.words`; without timestamps it uses a
+  measured-duration character-weight estimate and marks `wordSource: "estimated"`.
+- One request per sentence, never one long take: cutting a long take clips words.
+- The key lives in `ELEVENLABS_API_KEY` (env or `.env`, gitignored). A 402 means
+  the free plan cannot use that voice/model; do not retry and spend credits.
+- `voice_check.py` is Fish-ASR; for ElevenLabs, listen to the wavs and use the
+  measured `dur` + `words` as the gate.
+
 ## The mix
 
 - VO is the reference: duck the bed **under the line** (sidechain or the frame-based

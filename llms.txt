@@ -10,8 +10,9 @@ find the exact file for a question.
 
 ## Protocol
 
-- [SKILL.md](SKILL.md): eight phases (Brief → Direction → Script → Voice → Build
-  → Mix → QA → Deliver), exit gates, six non-negotiables, command surface.
+- [SKILL.md](SKILL.md): intake + director + eight phases (Brief → Direction →
+  Script → Voice → Build → Mix → QA → Deliver), exit gates, non-negotiables,
+  command surface.
 - [AGENTS.md](AGENTS.md): the same protocol for agents without a skill loader;
   hard rules, file map, how to extend.
 - [README.md](README.md): what this is, install for five agents, quickstart.
@@ -36,6 +37,16 @@ find the exact file for a question.
   areas, durations, encode settings, measured render speeds, platform notes.
 - [references/qa-gates.md](references/qa-gates.md): gates 0–9 with the exact
   commands and what each one proves.
+- [references/intake.md](references/intake.md): the blocking questions, asset
+  slots, completeness gate and six-block brief.
+- [references/director.md](references/director.md): the routing rules that choose
+  the form, direction, clock and delivery matrix.
+- [references/formats/explainer-reel.md](references/formats/explainer-reel.md):
+  voice-led, word-synced, one card per sentence, 9:16 first.
+- [references/formats/kinetic-film.md](references/formats/kinetic-film.md):
+  beat-grid type, ground flips, measured still/hold gates, Arabic-safe type.
+- [references/platform-matrix.md](references/platform-matrix.md): four masters,
+  platform subsets, safe areas, export manifest.
 
 ## Engine
 
@@ -46,8 +57,13 @@ find the exact file for a question.
 - [src/scenes/](src/scenes/): Hook, Device, Stat, Cta — one per beat kind.
 - [src/components/](src/components/): Phone, Surfaces, Overlays, Text, Ico, Brand, DemoUI.
 - [src/lib/](src/lib/): animation primitives and RTL/bidi helpers.
-- [scripts/studio.py](scripts/studio.py): doctor, timeline, voice, score, still,
-  render, qa.
+- [scripts/studio.py](scripts/studio.py): doctor, intake, director, timeline,
+  voice, score, still, render, export, qa.
+- [scripts/intake.py](scripts/intake.py): questions, check, brief.
+- [scripts/director.py](scripts/director.py): intake -> treatment.
+- [scripts/format_check.py](scripts/format_check.py): explainer/kinetic gates.
+- [scripts/motion_audit.py](scripts/motion_audit.py): still %, holds, cuts, flow.
+- [scripts/platforms.py](scripts/platforms.py): plan/export all four masters.
 - [scripts/voice.py](scripts/voice.py): Fish Audio bridge with a WAV reader that
   survives placeholder headers.
 - [scripts/qa.py](scripts/qa.py): probes, audio levels, black detect, Arabic scan,

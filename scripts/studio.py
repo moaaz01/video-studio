@@ -75,6 +75,11 @@ def doctor() -> int:
     import os
     has_key = has_key or bool(os.environ.get("FISH_API_KEY"))
     print(f"fish key    {'present' if has_key else 'absent — voice phase will fail (add .env)'}")
+    for name in ("ELEVENLABS_API_KEY", "SCENARIO_API_KEY"):
+        present = bool(os.environ.get(name))
+        if not present and env.exists():
+            present = any(l.startswith(name) and l.split("=", 1)[1].strip() for l in env.read_text(encoding="utf-8").splitlines())
+        print(f"{name.lower():12s} {'present (optional)' if present else 'absent (optional)'}")
 
     tl = ROOT / "src" / "generated" / "timeline.json"
     print(f"timeline    {'compiled' if tl.exists() else 'not compiled — run: studio.py timeline'}")
@@ -91,7 +96,7 @@ def timeline(args: argparse.Namespace) -> int:
 
 
 def voice(args: argparse.Namespace) -> int:
-    """Build the Fish spec from the film's own beats, then synthesise + measure."""
+    """Build the voice spec from the film's own beats, then synthesise + measure."""
     film = json.loads((ROOT / args.film).read_text(encoding="utf-8"))
     lines = []
     for b in film.get("beats", []):
@@ -105,10 +110,19 @@ def voice(args: argparse.Namespace) -> int:
         return 0
 
     v = film.get("voice", {})
+    provider = args.provider or v.get("provider") or "fish"
+    if provider == "none":
+        print("voice provider is none — this film is music/type only")
+        return 0
     spec = {
+        "provider": provider,
         "voice": {
-            "model": v.get("model", "s2.1-pro-free"),
+            "provider": provider,
+            "model": args.model or v.get("model") or ("eleven_multilingual_v2" if provider == "elevenlabs" else "s2.1-pro-free"),
             "reference_id": v.get("reference_id") or "",
+            "voice_id": args.voice_id or v.get("voice_id") or "",
+            "stability": args.stability if args.stability is not None else v.get("stability", 0.5),
+            "similarity_boost": args.similarity if args.similarity is not None else v.get("similarity_boost", 0.75),
             "speed": v.get("speed", 1.0),
             "temperature": v.get("temperature", 0.7),
             "top_p": v.get("top_p", 0.7),
@@ -124,7 +138,8 @@ def voice(args: argparse.Namespace) -> int:
     if args.dry_run:
         print("dry run: not calling the API")
         return 0
-    rc = run([PY, str(ROOT / "scripts" / "voice.py"), "--script", str(spec_path.relative_to(ROOT))])
+    script = "voice_elevenlabs.py" if provider == "elevenlabs" else "voice.py"
+    rc = run([PY, str(ROOT / "scripts" / script), "--script", str(spec_path.relative_to(ROOT))])
     if rc == 0:
         print("\nrecompile the timeline so the beats fit the measured speech:")
         print("  python scripts/studio.py timeline --strict")
@@ -200,7 +215,17 @@ def qa(args: argparse.Namespace) -> int:
 
 def new(args: argparse.Namespace) -> int:
     """Clone the demo film into a named slug, plus a brief to fill in."""
-    src = ROOT / "film" / "film.json"
+    if args.template:
+        src = ROOT / args.template
+        if not src.is_file():
+            print(f"template not found: {args.template}")
+            return 1
+    elif args.format == "explainer":
+        src = ROOT / "references" / "templates" / "explainer-reel.json"
+    elif args.format == "kinetic":
+        src = ROOT / "references" / "templates" / "kinetic-launch.json"
+    else:
+        src = ROOT / "film" / "film.json"
     dest = ROOT / "film" / f"{args.slug}.json"
     if dest.exists() and not args.force:
         print(f"{dest.relative_to(ROOT)} exists - pass --force to overwrite")
@@ -235,6 +260,11 @@ def new(args: argparse.Namespace) -> int:
 
 DELEGATES = {
     "ui": "ui_source.py",
+    "intake": "intake.py",
+    "director": "director.py",
+    "format": "format_check.py",
+    "motion": "motion_audit.py",
+    "platforms": "platforms.py",
     "refs": "corpus.py",
     "advise": "advise.py",
     "storyboard": "storyboard.py",
@@ -251,6 +281,8 @@ DELEGATES = {
 
 def main() -> None:
     argv = sys.argv[1:]
+    if argv and argv[0] == "export":
+        sys.exit(run([sys.executable, str(SCRIPTS / "platforms.py"), "export", *argv[1:]]))
     if argv and argv[0] in DELEGATES:
         sys.exit(run([sys.executable, str(SCRIPTS / DELEGATES[argv[0]]), *argv[1:]]))
 
@@ -261,6 +293,8 @@ def main() -> None:
 
     n = sub.add_parser("new", help="scaffold a named film + brief")
     n.add_argument("slug")
+    n.add_argument("--format", choices=["launch", "explainer", "kinetic"], default="launch")
+    n.add_argument("--from", dest="template", default=None, help="copy this template instead of the built-in form")
     n.add_argument("--force", action="store_true")
 
     t = sub.add_parser("timeline")
@@ -270,6 +304,11 @@ def main() -> None:
     v = sub.add_parser("voice")
     v.add_argument("--film", default="film/film.json")
     v.add_argument("--dry-run", action="store_true")
+    v.add_argument("--provider", choices=["fish", "elevenlabs", "none"], default=None)
+    v.add_argument("--voice-id", default=None)
+    v.add_argument("--model", default=None)
+    v.add_argument("--stability", type=float, default=None)
+    v.add_argument("--similarity", type=float, default=None)
 
     s = sub.add_parser("score")
     s.add_argument("--map", default="film/score.json")
@@ -280,7 +319,7 @@ def main() -> None:
     st.add_argument("--composition", default=None, help="any composition id, e.g. Portrait4x5")
 
     r = sub.add_parser("render")
-    r.add_argument("aspects", nargs="*", default=["16x9", "9x16"])
+    r.add_argument("aspects", nargs="*", default=["16x9", "9x16", "4x5", "1x1"])
     r.add_argument("--crf", type=int, default=15)
     r.add_argument("--concurrency", default=None)
     r.add_argument("--preset", default="medium", help="x264 preset (medium | slow | slower)")

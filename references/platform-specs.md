@@ -1,5 +1,9 @@
 # Platform specs
 
+> The current platform/aspect/export matrix lives in
+> [`platform-matrix.md`](platform-matrix.md). This page keeps the deeper design
+> notes per platform.
+
 Deliver a **master** per aspect, never one file stretched everywhere. A film is
 authored at one aspect and re-edited for the other; the clock and script stay, the
 composition changes.

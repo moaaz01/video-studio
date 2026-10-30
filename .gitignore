@@ -47,6 +47,14 @@ public/luts/
 # private client notes — never public
 docs/private/
 
+# per-client intake answers and treatments — may contain private facts/assets
+film/intake.json
+film/treatment.json
+film/treatment.md
+
+# third-party guides dropped in for a session; never publish them
+/update/
+
 # the Cobalt reference is a recipe in the repo; its heavy delivery stays local
 projects/cobalt-store-launch/assets/
 projects/cobalt-store-launch/manifest.json

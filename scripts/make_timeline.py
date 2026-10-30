@@ -14,13 +14,18 @@ from __future__ import annotations
 import argparse
 import json
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 # Kinds are visual grammars, not templates: a film declares which grammar each beat
 # speaks and `src/film/Film.tsx` maps it to a scene. The first four are the launch
 # grammar; store/admin/security are the product-demo grammar of a live shop.
-KINDS = {"hook", "device", "stat", "cta", "open", "store", "admin", "security", "close", "design", "finale", "setup", "sources"}
+KINDS = {"hook", "device", "stat", "cta", "open", "store", "admin", "security", "close", "design", "finale", "setup", "sources", "explainer", "kinetic"}
+FORMATS = {"launch", "explainer", "kinetic"}
+KINETIC_STYLES = {"slam", "stack", "split", "pair", "cut", "punch", "image", "logo"}
+CARD_TYPES = {"checklist", "counter", "window", "steps", "compare", "quote", "image", "statement", "none"}
+PALETTE_KEYS = {"bg", "paper", "accent", "hot", "ink"}
 TONES = {"ink", "paper", "emerald"}
 # Reading budget: new words are slow, filler is fast. Arabic UI copy averages
 # ~0.42 s per word when it must be read at a glance.
@@ -98,11 +103,76 @@ def words(s: str | None) -> int:
     return len([w for w in (s or "").split() if w.strip()])
 
 
-def load_vo(path: pathlib.Path) -> dict[str, float]:
+HARAKAT = re.compile("[\u0617-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]")
+NON_WORD = re.compile(r"[^\w\u0600-\u06FF]+", re.UNICODE)
+
+
+def display_tokens(text: str | None) -> list[str]:
+    """Whitespace tokens of the on-screen line, tashkeel stripped, punctuation kept."""
+    plain = HARAKAT.sub("", (text or "").replace("\\", ""))
+    return [token for token in plain.split() if token.strip()]
+
+
+def norm_token(token: str) -> str:
+    return NON_WORD.sub("", token)
+
+
+def estimate_word_timings(tokens: list[str], seconds: float, measured: float = 0.0) -> list[dict]:
+    """Spread the spoken line across its measured duration by visible character weight.
+
+    The studio's Fish path has no word timestamps, so this is the honest fallback:
+    it never invents a word, only places the words it already has. ElevenLabs
+    timestamps replace it when the manifest carries them (`wordSource: measured`).
+    """
+    if not tokens:
+        return []
+    usable = measured - 0.12 if measured > 0.4 else min(seconds - 0.35, len(tokens) * 0.38)
+    usable = max(0.25, min(seconds - 0.18, usable))
+    lead = 0.10 if measured > 0.4 else 0.06
+    weights = [max(1, len(norm_token(t))) for t in tokens]
+    total = float(sum(weights)) or 1.0
+    out, cursor = [], lead
+    for token, weight in zip(tokens, weights):
+        span = usable * weight / total
+        out.append({"w": token, "start": round(cursor, 3), "end": round(cursor + span, 3)})
+        cursor += span
+    if out:
+        out[-1]["end"] = round(min(seconds - 0.04, max(out[-1]["start"] + 0.08, out[-1]["end"])), 3)
+    return out
+
+
+def measured_word_timings(tokens: list[str], spoken: list) -> list[dict] | None:
+    """Use provider timestamps only when they line up one-to-one with the display line."""
+    if len(tokens) != len(spoken):
+        return None
+    out = []
+    for token, word in zip(tokens, spoken):
+        if not isinstance(word, dict):
+            return None
+        try:
+            start = float(word.get("start", 0))
+            end = float(word.get("end", 0))
+        except (TypeError, ValueError):
+            return None
+        if end <= start:
+            return None
+        out.append({"w": token, "start": round(start, 3), "end": round(end, 3)})
+    return out
+
+
+def load_vo_entries(path: pathlib.Path) -> dict[str, dict]:
     if not path.exists():
         return {}
     data = json.loads(path.read_text(encoding="utf-8"))
-    return {str(x["id"]): float(x.get("dur") or 0.0) for x in data}
+    if isinstance(data, dict):
+        data = data.get("lines") or data.get("beats") or []
+    if not isinstance(data, list):
+        return {}
+    return {str(x["id"]): x for x in data if isinstance(x, dict) and x.get("id")}
+
+
+def load_vo(path: pathlib.Path) -> dict[str, float]:
+    return {key: float(value.get("dur") or value.get("seconds") or 0.0) for key, value in load_vo_entries(path).items()}
 
 
 def main() -> None:
@@ -119,11 +189,23 @@ def main() -> None:
     fps: int = film.get("fps", 30)
     bpm: int = film.get("bpm", 120)
     bar_frames = round(fps * 240 / bpm)  # 4/4 bar, 60 frames at 120 BPM / 30 fps
-    vo = load_vo(ROOT / a.vo)
+    fmt = film.get("format", "launch")
+    vo_entries = load_vo_entries(ROOT / a.vo)
+    vo = {key: float(value.get("dur") or value.get("seconds") or 0.0) for key, value in vo_entries.items()}
+    palette = film.get("palette") or {}
 
     problems: list[str] = []
     warnings: list[str] = []
+    if fmt not in FORMATS:
+        problems.append(f"format {fmt!r} not in {sorted(FORMATS)}")
+        fmt = "launch"
+    if fmt == "kinetic":
+        missing = PALETTE_KEYS - set(palette)
+        if missing:
+            problems.append(f"kinetic film needs palette keys: {', '.join(sorted(missing))}")
     style = load_style(film, film_path, problems, warnings)
+    if fmt != "launch" and film.get("style") is None:
+        style["template"] = "explainer-reel" if fmt == "explainer" else "kinetic-launch"
     beats_out = []
     cursor = 0
 
@@ -142,6 +224,7 @@ def main() -> None:
             bars = 2
         dur = int(round(bars * bar_frames))
         seconds = dur / fps
+        data = dict(b.get("data") or {})
 
         # reading time for the copy that actually appears
         shown = [b.get("line1"), b.get("line2"), b.get("kicker")]
@@ -160,6 +243,94 @@ def main() -> None:
                 f"(add bars or shorten the line)"
             )
 
+        if kind == "explainer":
+            if len(lines) != 1:
+                problems.append(f"{bid}: explainer needs exactly one VO sentence (has {len(lines)})")
+            card = data.get("card") if isinstance(data.get("card"), dict) else {}
+            ctype = card.get("type")
+            if ctype not in CARD_TYPES:
+                problems.append(f"{bid}: explainer card.type {ctype!r} not in {sorted(CARD_TYPES)}")
+            keyword = str(data.get("keyword") or "").strip()
+            if not keyword:
+                problems.append(f"{bid}: explainer needs data.keyword (the word that carries the sentence)")
+            else:
+                line_norm = "".join(norm_token(t) for t in display_tokens(b.get("line1")))
+                if norm_token(keyword) not in line_norm:
+                    warnings.append(f"{bid}: keyword {keyword!r} is not in line1")
+            if card.get("type") == "image":
+                src = str(card.get("src") or "")
+                if not src:
+                    problems.append(f"{bid}: explainer image card needs src")
+                elif not (ROOT / "public" / src).exists():
+                    problems.append(f"{bid}: explainer image src public/{src} does not exist")
+            data["card"] = card
+            data["keyword"] = keyword
+
+        if kind == "kinetic":
+            shots = data.get("shots")
+            if not isinstance(shots, list) or not shots:
+                problems.append(f"{bid}: kinetic beat needs data.shots[]")
+                shots = []
+            data["palette"] = palette
+            data["bpm"] = bpm
+            data["beatFrames"] = round(bar_frames / 4, 3)
+            data["bars"] = bars
+            last_at = -1.0
+            beat_beats = bars * 4
+            for j, shot in enumerate(shots):
+                if not isinstance(shot, dict):
+                    problems.append(f"{bid}: shot {j + 1} is not an object")
+                    continue
+                try:
+                    at = float(shot.get("at", 0))
+                except (TypeError, ValueError):
+                    problems.append(f"{bid}: shot {j + 1} has a non-numeric `at`")
+                    continue
+                if at < last_at:
+                    problems.append(f"{bid}: shots are out of order at beat {at}")
+                if at < 0 or at >= beat_beats:
+                    problems.append(f"{bid}: shot at beat {at} is outside 0..{beat_beats}")
+                last_at = at
+                style_name = shot.get("style", "slam")
+                if style_name not in KINETIC_STYLES:
+                    problems.append(f"{bid}: kinetic style {style_name!r} not in {sorted(KINETIC_STYLES)}")
+                text = shot.get("text")
+                text_lines = text if isinstance(text, list) else [text]
+                if style_name not in ("image", "logo"):
+                    if not text or not all(str(x).strip() for x in text_lines):
+                        problems.append(f"{bid}: shot {j + 1} ({style_name}) needs text")
+                    for line in text_lines:
+                        n = words(str(line))
+                        if n > 6:
+                            problems.append(f"{bid}: shot {j + 1} has {n} words; split the idea (max 6)")
+                        elif n > 4:
+                            warnings.append(f"{bid}: shot {j + 1} has {n} words; 1–4 reads faster")
+                ground = shot.get("ground")
+                if ground and ground not in PALETTE_KEYS and not str(ground).startswith("#"):
+                    problems.append(f"{bid}: shot {j + 1} ground {ground!r} is not a palette key or hex")
+                if style_name == "image":
+                    src = str(shot.get("src") or "")
+                    if not src:
+                        problems.append(f"{bid}: image shot {j + 1} needs src")
+                    elif not (ROOT / "public" / src).exists():
+                        problems.append(f"{bid}: image shot src public/{src} does not exist")
+                if style_name == "logo":
+                    logo = data.get("logo")
+                    if not isinstance(logo, dict) or not str(logo.get("wordmark") or "").strip():
+                        problems.append(f"{bid}: logo shot needs data.logo.wordmark")
+                cue = shot.get("cue")
+                if cue:
+                    if not (SFX_DIR / f"{cue}.wav").exists():
+                        problems.append(f"{bid}: shot cue {cue!r} is not in public/audio/sfx/")
+                    else:
+                        data.setdefault("shotCues", []).append(
+                            {"at": round(at * bar_frames / 4), "name": cue, "gain": float(shot.get("gain", 0.6))}
+                        )
+
+        sfx_out = check_cues(b.get("sfx"), bid, problems)
+        for cue in data.get("shotCues", []):
+            sfx_out.append(cue)
+
         beats_out.append({
             "id": bid,
             "kind": kind,
@@ -175,12 +346,26 @@ def main() -> None:
             # scene copy that is not a headline: chat, product, KPI, guard slabs, ctas.
             # The compiler does not interpret it; the scene does (and only with strings
             # that exist in the app's own tables).
-            "data": b.get("data") or {},
+            "data": data,
             "emphasis": b.get("emphasis") or [],
-            "sfx": check_cues(b.get("sfx"), bid, problems),
+            "sfx": sfx_out,
             "vo": lines,
         })
         cursor += dur
+
+    if fmt == "explainer":
+        for b in beats_out:
+            tokens = display_tokens(b["line1"])
+            entry = vo_entries.get(f"{b['id']}-1") or {}
+            measured = float(entry.get("dur") or 0.0)
+            spoken = entry.get("words") if isinstance(entry.get("words"), list) else None
+            timings = measured_word_timings(tokens, spoken) if spoken else None
+            source = "measured"
+            if timings is None:
+                timings = estimate_word_timings(tokens, b["dur"] / fps, measured)
+                source = "estimated"
+            b["data"]["words"] = timings
+            b["data"]["wordSource"] = source
 
     total = cursor
     if total % bar_frames:
@@ -188,8 +373,11 @@ def main() -> None:
 
     tl = {
         "fps": fps,
+        "format": fmt,
         "look": style.get("look") or film.get("look"),
         "style": style,
+        "palette": palette,
+        "music": film.get("music") or {},
         "width": film.get("width", 1920),
         "height": film.get("height", 1080),
         "bpm": bpm,
@@ -211,7 +399,7 @@ def main() -> None:
         print(f"{b['id']:16s} {b['kind']:7s} {b['dur'] / bar_frames:4.0f} {b['dur'] / fps:6.2f} "
               f"{b['dur']:7d} {n:6d} {vt:6.2f}")
     print(f"\ntotal {total} frames = {total / fps:.2f}s = {total / bar_frames:.0f} bars @ {bpm} BPM")
-    print(f"style: {style['template']} · look {style['look']} · motion {style['motion']} · "
+    print(f"format: {fmt} · style: {style['template']} · look {style['look']} · motion {style['motion']} · "
           f"bg {style['background']} · cut {'/'.join(style['transitions'])}")
 
     for w in warnings:

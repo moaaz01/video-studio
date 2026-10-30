@@ -1,0 +1,134 @@
+{
+  "format": "kinetic",
+  "slug": "kinetic-launch",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "bpm": 160,
+  "look": "cobalt-atelier",
+  "palette": {
+    "bg": "#050B18",
+    "paper": "#F3F7FF",
+    "accent": "#F2A93B",
+    "hot": "#2F6BFF",
+    "ink": "#071225"
+  },
+  "style": {
+    "template": "kinetic-launch",
+    "look": "cobalt-atelier",
+    "motion": 1.2,
+    "background": "cobalt",
+    "transitions": ["whip", "flash"],
+    "sfx": {"intro": "riser_short", "cut": "whoosh_rtl", "accent": "impact"}
+  },
+  "beats": [
+    {
+      "id": "k01-hook",
+      "kind": "kinetic",
+      "bars": 2,
+      "tone": "ink",
+      "data": {
+        "charge": true,
+        "shots": [
+          {"at": 0, "style": "punch", "text": "فيديو", "ground": "bg", "fx": "punch", "cue": "impact", "gain": 0.7},
+          {"at": 1, "style": "slam", "text": "بلا مونتاج.", "ground": "accent", "fx": "hit", "cue": "impact", "gain": 0.6},
+          {"at": 2, "style": "stack", "text": ["عربي", "أولاً."], "ground": "paper", "fx": "punch", "cue": "correct_chime", "gain": 0.4},
+          {"at": 3, "style": "cut", "text": "كود.", "ground": "bg", "color": "accent", "fx": "beat", "cue": "ui_chirp", "gain": 0.4},
+          {"at": 4, "style": "slam", "text": "من نص.", "ground": "bg", "fx": "hit", "cue": "impact", "gain": 0.5},
+          {"at": 5, "style": "split", "text": ["إلى", "MP4."], "ground": "accent", "fx": "punch", "cue": "correct_chime", "gain": 0.4},
+          {"at": 6, "style": "cut", "text": "بسرعة.", "ground": "paper", "fx": "beat"},
+          {"at": 7, "style": "punch", "text": "جاهز.", "ground": "bg", "fx": "punch", "cue": "impact", "gain": 0.5}
+        ]
+      }
+    },
+    {
+      "id": "k02-aspects",
+      "kind": "kinetic",
+      "bars": 2,
+      "tone": "ink",
+      "data": {
+        "shots": [
+          {"at": 0, "style": "slam", "text": "ثلاثة أبعاد.", "ground": "paper", "fx": "hit", "cue": "impact", "gain": 0.6},
+          {"at": 1, "style": "split", "text": ["تايم لاين", "واحد."], "ground": "accent", "fx": "punch", "cue": "impact", "gain": 0.6},
+          {"at": 2, "style": "cut", "text": "16:9", "ground": "bg", "color": "paper", "fx": "beat"},
+          {"at": 3, "style": "cut", "text": "9:16", "ground": "paper", "fx": "beat"},
+          {"at": 4, "style": "cut", "text": "1:1", "ground": "accent", "fx": "beat"},
+          {"at": 5, "style": "slam", "text": "من نفس المصدر.", "ground": "bg", "fx": "hit", "cue": "impact", "gain": 0.5},
+          {"at": 6, "style": "split", "text": ["بلا", "إعادة."], "ground": "paper", "fx": "punch", "cue": "correct_chime", "gain": 0.4},
+          {"at": 7, "style": "punch", "text": "مرة واحدة.", "ground": "accent", "fx": "punch", "cue": "impact", "gain": 0.5}
+        ]
+      }
+    },
+    {
+      "id": "k03-real",
+      "kind": "kinetic",
+      "bars": 2,
+      "tone": "ink",
+      "data": {
+        "shots": [
+          {"at": 0, "style": "slam", "text": "لقطات حقيقية.", "ground": "bg", "fx": "hit", "cue": "impact", "gain": 0.6},
+          {"at": 1, "style": "split", "text": ["من منتجك.", "لا خيال."], "ground": "paper", "fx": "punch", "cue": "correct_chime", "gain": 0.4},
+          {"at": 2, "style": "cut", "text": "شاشات.", "ground": "accent", "fx": "beat"},
+          {"at": 3, "style": "cut", "text": "ألوان.", "ground": "bg", "color": "paper", "fx": "beat"},
+          {"at": 4, "style": "cut", "text": "نصوص.", "ground": "paper", "fx": "beat"},
+          {"at": 5, "style": "slam", "text": "كلها من المنتج.", "ground": "accent", "fx": "hit", "cue": "impact", "gain": 0.5},
+          {"at": 6, "style": "split", "text": ["لا", "نرسمها."], "ground": "bg", "fx": "punch", "cue": "ui_chirp", "gain": 0.4},
+          {"at": 7, "style": "punch", "text": "نصورها.", "ground": "paper", "fx": "punch", "cue": "impact", "gain": 0.5}
+        ]
+      }
+    },
+    {
+      "id": "k04-measure",
+      "kind": "kinetic",
+      "bars": 2,
+      "tone": "ink",
+      "data": {
+        "shots": [
+          {"at": 0, "style": "slam", "text": "قياس.", "ground": "accent", "fx": "hit", "cue": "impact", "gain": 0.6},
+          {"at": 1, "style": "slam", "text": "لا ذوق.", "ground": "bg", "fx": "beat", "cue": "ui_chirp", "gain": 0.4},
+          {"at": 2, "style": "stack", "text": ["الملف النهائي", "0 clipped."], "ground": "paper", "fx": "punch", "cue": "correct_chime", "gain": 0.45},
+          {"at": 3, "style": "cut", "text": "peak", "ground": "bg", "color": "paper", "fx": "beat"},
+          {"at": 4, "style": "cut", "text": "RMS", "ground": "accent", "fx": "beat"},
+          {"at": 5, "style": "cut", "text": "ASR", "ground": "paper", "fx": "beat"},
+          {"at": 6, "style": "split", "text": ["كل رقم", "من الملف."], "ground": "bg", "fx": "punch", "cue": "impact", "gain": 0.5},
+          {"at": 7, "style": "punch", "text": "مقاس.", "ground": "accent", "fx": "punch", "cue": "impact", "gain": 0.5}
+        ]
+      }
+    },
+    {
+      "id": "k05-arabic",
+      "kind": "kinetic",
+      "bars": 2,
+      "tone": "ink",
+      "data": {
+        "shots": [
+          {"at": 0, "style": "slam", "text": "عربي.", "ground": "bg", "fx": "hit", "cue": "impact", "gain": 0.55},
+          {"at": 1, "style": "pair", "text": ["RTL", "من أول إطار."], "ground": "accent", "fx": "punch", "cue": "impact", "gain": 0.55},
+          {"at": 2, "style": "cut", "text": "تشكيل.", "ground": "paper", "fx": "beat"},
+          {"at": 3, "style": "cut", "text": "خطوط.", "ground": "bg", "color": "paper", "fx": "beat"},
+          {"at": 4, "style": "cut", "text": "بلا حروف مقطعة.", "ground": "accent", "fx": "beat"},
+          {"at": 5, "style": "slam", "text": "كلمات.", "ground": "paper", "fx": "hit", "cue": "impact", "gain": 0.5},
+          {"at": 6, "style": "split", "text": ["لا", "letters."], "ground": "bg", "fx": "punch", "cue": "ui_chirp", "gain": 0.4},
+          {"at": 7, "style": "punch", "text": "طبيعي.", "ground": "accent", "fx": "punch", "cue": "impact", "gain": 0.5}
+        ]
+      }
+    },
+    {
+      "id": "k06-logo",
+      "kind": "kinetic",
+      "bars": 2,
+      "tone": "ink",
+      "data": {
+        "logo": {
+          "wordmark": "VIDEO STUDIO",
+          "tagline": "استوديو الفيديو العربي",
+          "small": "OPEN SOURCE · MIT",
+          "url": "github.com/moaaz01/video-studio"
+        },
+        "shots": [
+          {"at": 0, "style": "logo", "ground": "bg", "fx": "hit", "cue": "sub_drop", "gain": 0.5}
+        ]
+      }
+    }
+  ]
+}

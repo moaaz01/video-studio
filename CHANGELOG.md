@@ -1,3 +1,67 @@
+## 2.5.0 — 2026-10-30
+
+Two new forms, a blocking intake, a director, and a four-aspect export. The studio
+can now choose the right kind of film for a product instead of applying one
+template to every brief — and it asks for the real product facts, images and
+screens before it writes a beat.
+
+### Intake + director
+
+- `scripts/intake.py`: the question bank for explainer and kinetic films, a
+  completeness gate (`check`), asset slots under `public/assets/<slug>/`, and a
+  six-block `brief` generated from the answers. Absolute paths and invented facts
+  are rejected.
+- `scripts/director.py`: reads the intake, scores product type / goal / assets /
+  emotion / platforms / duration, and writes a treatment (form, direction, clock,
+  delivery, why, alternatives). Overrides are recorded; the treatment is shown to
+  the user before beats.
+- `studio.py intake|director`; MCP `intake_questions`, `intake_check`, `director`;
+  `studio://intake`, `studio://treatment`, `studio://formats`.
+
+### Explainer reel
+
+- `src/scenes/Explainer.tsx`: one spoken sentence per beat, word-level reveal from
+  `data.words`, one card per sentence (`checklist`, `window`, `counter`, `steps`,
+  `compare`, `quote`, `image`, `statement`), 9:16-first with square/wide layouts.
+- `make_timeline.py` compiles `format: "explainer"`, validates the card/keyword/one
+  sentence per beat, and writes measured or estimated word timings.
+- `references/templates/explainer-reel.json` + `references/formats/explainer-reel.md`.
+- Optional ElevenLabs provider with `with-timestamps` word alignment
+  (`scripts/voice_elevenlabs.py`); Fish remains the default.
+
+### Kinetic film
+
+- `src/scenes/Kinetic.tsx`: beat-grid shots (`slam`, `punch`, `stack`, `split`,
+  `pair`, `cut`, `image`, `logo`), ground flips, hit/flash/ring/rays, real pictures.
+- Arabic-safe type path: one direct SVG `<text>` per frame, no `<tspan>`, no
+  transform on the type; kinetic beats bypass the global Camera/BeatShell. The
+  scene animates x/y/font-size/opacity and a moving background instead.
+- `make_timeline.py` compiles `format: "kinetic"`, validates shots/palette/cues,
+  and flattens shot cues into the beat's foley.
+- `references/templates/kinetic-launch.json` + `references/formats/kinetic-film.md`.
+
+### Platform matrix + motion gates
+
+- `scripts/platform_matrix.py` / `scripts/platforms.py`: X, Instagram, TikTok,
+  YouTube, LinkedIn, Snapchat, Facebook; 9:16, 16:9, 4:5, 1:1. `export` renders the
+  union, checks safe areas and audio, and writes `out/exports/<slug>/manifest.json`.
+- `studio.py render` now defaults to all four masters; `studio.py export` is the
+  measured path.
+- `scripts/motion_audit.py`: still share, longest hold, cuts/10 s, median change and
+  optical flow on the delivered MP4; `kinetic` (picture-led) and `kinetic-type`
+  profiles.
+- `scripts/format_check.py`: explainer/kinetic plan gates (sentences, cards, VO fit,
+  shots, palette, end card).
+
+### Fixes
+
+- `Soundtrack` mounts only VO lines whose beat exists in the current timeline; a
+  kinetic/type-only cut no longer requests a previous film's wavs and 404s.
+- No-VO films let the bed carry the mix (peak/RMS gate passes); VO films keep the
+  -9 dB duck.
+- `references/qa-gates.md`, `audio-and-voice.md`, `platform-specs.md`, `SKILL.md`,
+  `AGENTS.md`, `README.md`, `llms.txt` updated.
+
 ## 2.4.0 — 2026-10-22
 
 The Cobalt Ledger cut: a 48 s, 24-bar feature film that explains a Telegram store's

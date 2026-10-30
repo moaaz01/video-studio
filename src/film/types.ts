@@ -18,7 +18,11 @@ export type BeatKind =
   /** multi-source sourcing, margin, automatic repricing */
   | 'sources'
   /** contact-first end card with the two real handles */
-  | 'finale';
+  | 'finale'
+  /** voice-led explainer: one sentence per beat, one card that proves it */
+  | 'explainer'
+  /** beat-grid kinetic type: shots on the music, grounds flipping */
+  | 'kinetic';
 export type Tone = 'ink' | 'paper' | 'emerald';
 
 export type Stat = {from: number; to: number; suffix: string; label: string};
@@ -80,10 +84,15 @@ export type Beat = {
 
 export type Film = {
   fps: number;
+  format?: 'launch' | 'explainer' | 'kinetic';
   width: number;
   height: number;
   frames: number;
   bpm: number;
+  /** kinetic palette: bg / paper / accent / hot / ink */
+  palette?: Record<string, string>;
+  /** optional external bed: {file, offset, gain, stopBeat} */
+  music?: {file?: string; offset?: number; gain?: number; stopBeat?: number};
   /** named grade from src/look/looks.ts; absent = default */
   look?: string;
   /** compiled from film.json `style` by scripts/make_timeline.py */
@@ -97,4 +106,6 @@ export type SceneProps = {
   /** style.motion — scenes multiply decorative float/bob by this */
   motion?: number;
   style?: StylePlan;
+  /** frames the scene is pre-rolled before its beat; word/beat timing must subtract it */
+  preRoll?: number;
 };

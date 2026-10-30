@@ -5,10 +5,11 @@ The skill teaches an agent *what* the studio does; MCP lets it *call* the studio
 from Claude Code, opencode, Cursor or anything else that speaks MCP. Transport is
 stdio with one JSON-RPC 2.0 message per line - no SDK, no version drift.
 
-    claude mcp add video-studio -- python D:/deepseek-workspace/video-studio/scripts/mcp_server.py
+    claude mcp add video-studio -- python /path/to/video-studio/scripts/mcp_server.py
 
-Tools: studio_doctor, app_scan, refs_search, film_advise, storyboard, still,
-render, qa, captions, safe, shotlist, grade, evals, master, sound.
+Tools: studio_doctor, app_scan, refs_search, intake_questions, intake_check,
+director, film_advise, storyboard, still, render, export, format_check,
+motion_audit, qa, captions, safe, shotlist, grade, evals, master, sound.
 
 Resources: the film, the compiled timeline, the generated grade and captions, the
 roadmap and the skill itself - so an agent can read the studio's state without a
@@ -84,6 +85,30 @@ TOOLS = {
             if a.get("source") == "motion"
             else [PYTHON, "scripts/corpus.py", "whatships", a["query"]]
         ),
+    ),
+    "intake_questions": tool(
+        "intake_questions",
+        "Print the blocking intake questions for a form (explainer or kinetic).",
+        {"format": {"type": "string", "enum": ["explainer", "kinetic"]}},
+        ["format"],
+        lambda a: sh([PYTHON, "scripts/intake.py", "questions", "--format", a["format"]]),
+    ),
+    "intake_check": tool(
+        "intake_check",
+        "Check that every required intake answer and asset is present; exit 1 if not.",
+        {"intake": {"type": "string", "description": "default film/intake.json"},
+         "strict": {"type": "boolean"}},
+        [],
+        lambda a: sh([PYTHON, "scripts/intake.py", "check", "--intake", a.get("intake", "film/intake.json")] + (["--strict"] if a.get("strict") else [])),
+    ),
+    "director": tool(
+        "director",
+        "Read the intake and write a treatment: form, direction, clock, delivery, why.",
+        {"intake": {"type": "string", "description": "default film/intake.json"},
+         "format": {"type": "string", "description": "optional override"},
+         "direction": {"type": "string", "description": "optional override, e.g. #editorial"}},
+        [],
+        lambda a: sh([PYTHON, "scripts/director.py", "--intake", a.get("intake", "film/intake.json"), "--json"] + (["--format", a["format"]] if a.get("format") else []) + (["--direction", a["direction"]] if a.get("direction") else [])),
     ),
     "film_advise": tool(
         "film_advise",
@@ -165,6 +190,34 @@ TOOLS = {
         [],
         lambda a: sh([PYTHON, "evals/run_evals.py", "--min-score", str(a.get("min_score", 90))]),
     ),
+    "export": tool(
+        "export",
+        "Render the platform/aspect set from one timeline and write a measured manifest.",
+        {"targets": {"type": "string", "description": "9x16,16x9,4x5,1x1 (default all four)"},
+         "platforms": {"type": "string", "description": "x,instagram,tiktok,..."},
+         "strict": {"type": "boolean"}},
+        [],
+        lambda a: sh([PYTHON, "scripts/platforms.py", "export"] + (["--targets", a["targets"]] if a.get("targets") else []) + (["--platforms", a["platforms"]] if a.get("platforms") else []) + (["--strict"] if a.get("strict") else [])),
+    ),
+    "format_check": tool(
+        "format_check",
+        "Gate an explainer or kinetic plan: structure, copy, VO fit, shots, palette.",
+        {"format": {"type": "string", "enum": ["explainer", "kinetic"]},
+         "film": {"type": "string", "description": "default film/film.json"},
+         "strict": {"type": "boolean"}},
+        ["format"],
+        lambda a: sh([PYTHON, "scripts/format_check.py", a["format"], "--film", a.get("film", "film/film.json")] + (["--strict"] if a.get("strict") else [])),
+    ),
+    "motion_audit": tool(
+        "motion_audit",
+        "Measure still frames, holds, cuts and flow on a delivered MP4.",
+        {"video": {"type": "string"},
+         "profile": {"type": "string", "enum": ["kinetic", "explainer", "any"]},
+         "end_card": {"type": "number", "description": "seconds of end card excluded from the hold gate"},
+         "strict": {"type": "boolean"}},
+        ["video"],
+        lambda a: sh([PYTHON, "scripts/motion_audit.py", a["video"], "--profile", a.get("profile", "any"), "--end-card", str(a.get("end_card", 0))] + (["--strict"] if a.get("strict") else [])),
+    ),
     "qa": tool(
         "qa",
         "Run the delivery gates on the rendered files: probe, black frames, loudness, Arabic scan.",
@@ -181,6 +234,12 @@ RESOURCES = [
     ("studio://grade", "grade", "Palette-derived transfer curves and saturation", "src/generated/grade.json", "application/json"),
     ("studio://captions", "captions", "Frame-timed caption cues for both aspect families", "src/generated/captions.json", "application/json"),
     ("studio://ui-source", "ui-source", "The real app's screens and strings, the fidelity source", "film/ui-source.json", "application/json"),
+    ("studio://intake", "intake", "The blocking intake answers and asset slots", "film/intake.json", "application/json"),
+    ("studio://treatment", "treatment", "The director's chosen form, clock and delivery", "film/treatment.json", "application/json"),
+    ("studio://formats", "formats", "The form router: explainer, kinetic, device, data, editorial", "references/formats/README.md", "text/markdown"),
+    ("studio://explainer-playbook", "explainer-playbook", "Voice-led explainer reel playbook", "references/formats/explainer-reel.md", "text/markdown"),
+    ("studio://kinetic-playbook", "kinetic-playbook", "Beat-grid kinetic film playbook", "references/formats/kinetic-film.md", "text/markdown"),
+    ("studio://platforms", "platforms", "Platform/aspect/safe matrix", "references/platform-matrix.md", "text/markdown"),
     ("studio://roadmap", "roadmap", "What this studio admits, plans and refuses", "docs/ROADMAP-v2.md", "text/markdown"),
     ("studio://skill", "skill", "The operating manual: phases, gates, commands", "SKILL.md", "text/markdown"),
 ]
@@ -210,7 +269,7 @@ def handle(msg: dict) -> None:
                     "tools": {"listChanged": False},
                     "resources": {"listChanged": False, "subscribe": False},
                 },
-                "serverInfo": {"name": "video-studio", "version": "2.1.0"},
+                "serverInfo": {"name": "video-studio", "version": "2.5.0"},
             },
         )
         return

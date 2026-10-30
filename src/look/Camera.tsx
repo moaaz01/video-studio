@@ -79,4 +79,6 @@ export const CAMERA_BY_KIND: Record<string, CameraMode> = {
   security: "settle",
   close: "push-in",
   finale: "push-in",
+  explainer: "drift",
+  kinetic: "settle",
 };
