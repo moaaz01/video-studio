@@ -30,7 +30,7 @@ import qa  # noqa: E402  (probe/loudness are the studio's own measurements)
 # writes out/film_*.mp4, so both locations are accepted.
 # A project renders into its own folder; the packager copies + measures from there.
 # The legacy studio.py render writes out/masters/, so that is accepted as a fallback.
-MASTER_ASPECTS = ("16x9", "9x16", "1x1")
+MASTER_ASPECTS = ("16x9", "9x16", "1x1", "4x5")
 
 # Global state the film consumed, copied into assets/ so the project is self-contained.
 ASSETS = {
@@ -120,7 +120,14 @@ def main() -> None:
                           "bytes": dest.stat().st_size, "sha256": sha256(dest)})
         else:
             files.append({"role": f"vo:{entry['id']}", **copy(src, dest)})
-    for rel, src_rel in ASSETS.items():
+    assets = dict(ASSETS)
+    if not film.get("captions"):
+        for key in ("captions.json", "captions/wide.srt", "captions/vertical.srt"):
+            assets.pop(key, None)
+    music_rel = (film.get("music") or {}).get("file")
+    if music_rel:
+        assets["music.wav"] = music_rel if music_rel.startswith("public/") else f"public/{music_rel}"
+    for rel, src_rel in assets.items():
         # The project's own copy wins: a project must survive the studio's global
         # state being reset for the next film, and re-packaging must not overwrite
         # the film's own timeline/voice/score with whatever is in `src/generated`.
@@ -204,10 +211,10 @@ def main() -> None:
             "total_seconds": round(sum(e["dur"] for e in vo), 3),
             "asr_report": asr_summary(),
         },
-        "disclosure": {
-            "sample_data": "The store, its products, prices, wallet and dashboard numbers are the app's demo fixture (labelled «لقطات الواجهة ببيانات تجريبية» on the end card).",
-            "public_copy": "The cut names no platform, tenant or infrastructure; it shows the storefront, the owner panel, the identity controls and the two supplied contacts.",
-            "security": "This cut makes no security claim; every product statement is limited to the store behaviour shown on screen.",
+        "disclosure": film.get("disclosure") or {
+            "sample_data": "Interface captures use the app's own demo fixture; no real student data is shown.",
+            "public_copy": "Every product statement in the cut is limited to behaviour visible on screen.",
+            "security": "This cut makes no security claim.",
         },
         "files": files,
         "stills": stills,

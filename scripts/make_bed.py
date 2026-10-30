@@ -771,7 +771,7 @@ def _souk_arrange(timeline: dict, n: int) -> tuple[dict, list[dict], list[tuple]
         bass.add(_souk_808(freq, dur, glide_from), at, gain)
 
     for beat in beats:
-        raw_kind = beat.get("kind", "")
+        raw_kind = beat.get("bed") or beat.get("kind", "")
         # this film's grammar is open -> store -> design -> admin -> finale;
         # map it onto the launch-track sections without changing the music.
         kind = {"open": "hook", "setup": "hook", "design": "store", "sources": "admin", "admin": "store", "finale": "cta"}.get(raw_kind, raw_kind)

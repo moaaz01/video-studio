@@ -23,6 +23,7 @@ type SfxCue = {at: number; name: string; gain?: number};
 type Beat = {id: string; kind: string; start: number; dur: number; frames: number; sfx?: SfxCue[]};
 type VoLine = {id: string; wav: string; dur: number};
 type Style = {sfx?: {intro?: string; cut?: string; accent?: string}; transitions?: string[]};
+type Music = {file?: string; gain?: number};
 
 const T = timeline as unknown as {
   fps: number;
@@ -30,6 +31,7 @@ const T = timeline as unknown as {
   frames: number;
   beats: Beat[];
   style?: Style;
+  music?: Music;
 };
 const VO = voManifest as unknown as VoLine[];
 const STYLE: Style = T.style ?? {};
@@ -124,7 +126,7 @@ const accents: Accent[] = T.beats.flatMap((beat, index) => {
 export const Soundtrack: React.FC = () => {
   return (
     <>
-      <Html5Audio src={staticFile('audio/score/music.wav')} volume={musicVolume} />
+      <Html5Audio src={staticFile(T.music?.file ?? 'audio/score/music.wav')} volume={musicVolume} />
 
       {voCues.map((cue) => (
         <Sequence key={`vo-${cue.wav}`} from={cue.from} durationInFrames={cue.dur} layout="none">

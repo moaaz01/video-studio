@@ -343,6 +343,7 @@ def main() -> None:
             "line2": b.get("line2") or "",
             "stat": b.get("stat"),
             "screen": b.get("screen"),
+            "bed": b.get("bed"),
             # scene copy that is not a headline: chat, product, KPI, guard slabs, ctas.
             # The compiler does not interpret it; the scene does (and only with strings
             # that exist in the app's own tables).
