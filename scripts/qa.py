@@ -39,7 +39,7 @@ FFMPEG = tool("ffmpeg")
 FFPROBE = tool("ffprobe")
 
 # Mojibake that only appears when Arabic passed through a cp1256/UTF-8 mismatch.
-ARABIC_SIGNS = ["\u00e2\u20ac", "\u00c3", "\ufffd", "\u0637\u00a7", "\u0638\u2026", "\u00d8", "\u00d9"]
+ARABIC_SIGNS = ["\u00e2\u20ac", "\u00c3", "\ufffd", "\u0637\u00a7", "\u0638\u2026\u0637\u00a7", "\u00d8", "\u00d9"]
 
 
 def probe(path: pathlib.Path) -> dict:
