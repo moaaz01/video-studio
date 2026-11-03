@@ -1,0 +1,57 @@
+{
+  "_doc": "Provider catalogue for scripts/providers.py. Scores are 1-5 (5 = best). cost_usd is per `unit`. `env` names the key that makes a cloud provider available; `local` providers need `probe` (a python module or a node package) instead. Add a provider only after one real round-trip; never mark Arabic support you have not heard or read.",
+  "capabilities": {
+    "tts": "spoken voice from text",
+    "image": "still image generation",
+    "video": "generated motion clip (text/image to video)",
+    "music": "music bed generation",
+    "sfx": "sound effect generation",
+    "stock": "licensed stock footage / photos",
+    "avatar": "talking head / lip sync",
+    "transcribe": "speech to text with word timings",
+    "compose": "the renderer that builds the film"
+  },
+  "providers": [
+    {"id": "fish-s2", "capability": "tts", "env": "FISH_API_KEY", "unit": "1k chars", "cost_usd": 0.0, "quality": 4, "speed": 4, "arabic": 5, "control": 3, "license": 4, "note": "studio default; s2.1-pro-free keeps the repo runnable without spend"},
+    {"id": "elevenlabs", "capability": "tts", "env": "ELEVENLABS_API_KEY", "unit": "1k chars", "cost_usd": 0.18, "quality": 5, "speed": 4, "arabic": 4, "control": 5, "license": 5, "note": "word timestamps; best English, good MSA"},
+    {"id": "openai-tts", "capability": "tts", "env": "OPENAI_API_KEY", "unit": "1k chars", "cost_usd": 0.015, "quality": 4, "speed": 5, "arabic": 3, "control": 2, "license": 5},
+    {"id": "piper", "capability": "tts", "probe": "piper", "unit": "1k chars", "cost_usd": 0.0, "quality": 2, "speed": 5, "arabic": 2, "control": 1, "license": 5, "local": true, "note": "offline fallback; drafts only"},
+
+    {"id": "flux-pro", "capability": "image", "env": "REPLICATE_API_TOKEN", "unit": "image", "cost_usd": 0.05, "quality": 5, "speed": 3, "arabic": 1, "control": 4, "license": 4, "note": "never let it draw Arabic letters; type is set by the renderer"},
+    {"id": "gpt-image", "capability": "image", "env": "OPENAI_API_KEY", "unit": "image", "cost_usd": 0.04, "quality": 5, "speed": 3, "arabic": 2, "control": 5, "license": 5},
+    {"id": "recraft", "capability": "image", "env": "RECRAFT_API_KEY", "unit": "image", "cost_usd": 0.04, "quality": 4, "speed": 4, "arabic": 1, "control": 5, "license": 5, "note": "vector/SVG output: icons, spot illustrations, characters"},
+    {"id": "sd-local", "capability": "image", "probe": "diffusers", "unit": "image", "cost_usd": 0.0, "quality": 3, "speed": 2, "arabic": 1, "control": 4, "license": 4, "local": true},
+
+    {"id": "veo", "capability": "video", "env": "GEMINI_API_KEY", "unit": "second", "cost_usd": 0.40, "quality": 5, "speed": 2, "arabic": 1, "control": 3, "license": 4},
+    {"id": "kling", "capability": "video", "env": "KLING_API_KEY", "unit": "second", "cost_usd": 0.10, "quality": 4, "speed": 3, "arabic": 1, "control": 4, "license": 4},
+    {"id": "runway", "capability": "video", "env": "RUNWAY_API_KEY", "unit": "second", "cost_usd": 0.25, "quality": 5, "speed": 3, "arabic": 1, "control": 4, "license": 5},
+    {"id": "ltx-local", "capability": "video", "probe": "diffusers", "unit": "second", "cost_usd": 0.0, "quality": 2, "speed": 1, "arabic": 1, "control": 2, "license": 4, "local": true},
+
+    {"id": "studio-score", "capability": "music", "probe": "numpy", "unit": "track", "cost_usd": 0.0, "quality": 3, "speed": 5, "arabic": 5, "control": 5, "license": 5, "local": true, "note": "scripts/make_score.py: on-grid, levelled, owned outright"},
+    {"id": "elevenlabs-music", "capability": "music", "env": "ELEVENLABS_API_KEY", "unit": "track", "cost_usd": 0.50, "quality": 5, "speed": 3, "arabic": 3, "control": 3, "license": 4},
+    {"id": "studio-foley", "capability": "sfx", "probe": "numpy", "unit": "cue", "cost_usd": 0.0, "quality": 3, "speed": 5, "arabic": 5, "control": 5, "license": 5, "local": true, "note": "public/audio/sfx library"},
+    {"id": "elevenlabs-sfx", "capability": "sfx", "env": "ELEVENLABS_API_KEY", "unit": "cue", "cost_usd": 0.02, "quality": 5, "speed": 4, "arabic": 3, "control": 3, "license": 4},
+
+    {"id": "pexels", "capability": "stock", "env": "PEXELS_API_KEY", "unit": "clip", "cost_usd": 0.0, "quality": 4, "speed": 4, "arabic": 3, "control": 2, "license": 4, "note": "free licence; keep the source URL in provenance"},
+    {"id": "pixabay", "capability": "stock", "env": "PIXABAY_API_KEY", "unit": "clip", "cost_usd": 0.0, "quality": 3, "speed": 4, "arabic": 3, "control": 2, "license": 4},
+    {"id": "wikimedia", "capability": "stock", "unit": "clip", "cost_usd": 0.0, "quality": 3, "speed": 3, "arabic": 3, "control": 1, "license": 3, "note": "per-file licence; attribution required"},
+
+    {"id": "heygen", "capability": "avatar", "env": "HEYGEN_API_KEY", "unit": "second", "cost_usd": 0.10, "quality": 5, "speed": 3, "arabic": 4, "control": 3, "license": 4, "note": "only with the presenter's written consent"},
+    {"id": "sadtalker", "capability": "avatar", "probe": "sadtalker", "unit": "second", "cost_usd": 0.0, "quality": 2, "speed": 1, "arabic": 3, "control": 2, "license": 3, "local": true},
+    {"id": "studio-puppet", "capability": "avatar", "unit": "second", "cost_usd": 0.0, "quality": 3, "speed": 5, "arabic": 5, "control": 5, "license": 5, "local": true, "note": "src/components/Puppet.tsx: original SVG character, mouth driven by VO word timings"},
+
+    {"id": "faster-whisper", "capability": "transcribe", "probe": "faster_whisper", "unit": "minute", "cost_usd": 0.0, "quality": 4, "speed": 3, "arabic": 4, "control": 4, "license": 5, "local": true},
+    {"id": "openai-whisper", "capability": "transcribe", "env": "OPENAI_API_KEY", "unit": "minute", "cost_usd": 0.006, "quality": 4, "speed": 4, "arabic": 4, "control": 3, "license": 5},
+    {"id": "elevenlabs-stt", "capability": "transcribe", "env": "ELEVENLABS_API_KEY", "unit": "minute", "cost_usd": 0.007, "quality": 5, "speed": 4, "arabic": 4, "control": 3, "license": 5},
+
+    {"id": "remotion", "capability": "compose", "unit": "render", "cost_usd": 0.0, "quality": 5, "speed": 3, "arabic": 5, "control": 5, "license": 4, "local": true, "note": "the studio renderer; check the Remotion licence for companies over 3 people"},
+    {"id": "ffmpeg", "capability": "compose", "unit": "render", "cost_usd": 0.0, "quality": 3, "speed": 5, "arabic": 2, "control": 3, "license": 5, "local": true, "note": "cuts, concat, loudness; no type"}
+  ],
+  "profiles": {
+    "_doc": "Weights per job. `arabic` matters most for anything that speaks or prints Arabic.",
+    "default": {"quality": 3, "cost": 2, "speed": 1, "arabic": 3, "control": 2, "license": 2, "availability": 4},
+    "draft": {"quality": 1, "cost": 4, "speed": 4, "arabic": 2, "control": 1, "license": 1, "availability": 5},
+    "hero": {"quality": 5, "cost": 1, "speed": 1, "arabic": 4, "control": 3, "license": 3, "availability": 3},
+    "offline": {"quality": 2, "cost": 3, "speed": 2, "arabic": 2, "control": 2, "license": 2, "availability": 6}
+  }
+}

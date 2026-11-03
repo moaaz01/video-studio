@@ -81,4 +81,8 @@ export const CAMERA_BY_KIND: Record<string, CameraMode> = {
   finale: "push-in",
   explainer: "drift",
   kinetic: "settle",
+  tutorial: "still",
+  character: "drift",
+  gfx: "settle",
+  footage: "still",
 };

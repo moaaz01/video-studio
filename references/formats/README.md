@@ -15,6 +15,11 @@ one; this page is the map it uses.
 | a course / teacher | teach | **explainer** | `#editorial` | one sentence + one card per beat |
 | a developer tool | launch | **code** | `#code` | kinetic + real source/terminal |
 | a personal brand | announce | **editorial** | `#editorial` | one claim, one face, one action |
+| an app / SaaS with real screens | teach | **tutorial** | `#ui-film` | `references/starters/tutorial.json` · [visual-forms](visual-forms.md) |
+| anything | explain warmly (`emotion=playful`) | **character** | `#editorial` | `references/starters/character.json` · lip-synced presenter |
+| a number, a mechanism, a brand | explain / announce | **motion-graphics** | `#diagram` | `references/starters/motion-graphics.json` · layers as data |
+| a real recording | explain / sell | **talking-head** | `#photo` | [footage](footage.md): silence cut, captions, punch-ins |
+| a long recording | repurpose | **clip-factory** | `#photo` | [footage](footage.md): scored hooks → vertical shorts |
 
 The director is a rules engine, not a taste oracle: it explains every choice and
 records every override. See [`../director.md`](../director.md).
@@ -27,6 +32,15 @@ records every override. See [`../director.md`](../director.md).
 - [`kinetic-film.md`](kinetic-film.md) — beat-grid type, ground flips, whip/flash
   cuts, one idea per shot. From the Scenario kinetic-film skill, rebuilt for Arabic
   and for this renderer (one shaped text node per frame, no letter splitting).
+
+## Pipelines
+
+Every form has a staged pipeline (`references/pipelines.json`):
+`studio.py pipeline start <name>` records the stage, `pipeline check` runs its gates,
+`pipeline approve <key> --quote "…"` stores the user's own words, and `pipeline advance`
+refuses to move past a red gate. A new session runs `pipeline status` and knows where
+the film stands. Providers for voice, images, clips and transcription are picked by
+score inside a budget: see [`../providers.md`](../providers.md).
 
 ## The intake comes first
 

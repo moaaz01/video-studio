@@ -1,0 +1,30 @@
+{
+  "_doc": "Pipelines for scripts/pipelines.py. A pipeline is an ordered list of stages; a stage passes when every gate passes. Gate kinds: file (path exists), cmd (studio.py args exit 0), approval (the user said yes in chat; recorded verbatim with --approve). `{film}` expands to the film path in film/state.json.",
+  "stages": {
+    "intake":     {"skill": "references/intake.md", "gates": [{"cmd": ["intake", "check", "--intake", "film/intake.json"]}]},
+    "treatment":  {"skill": "references/director.md", "gates": [{"file": "film/treatment.md"}, {"approval": "treatment"}]},
+    "refs":       {"skill": "references/reference-sources.md", "gates": [{"cmd": ["refs", "check", "--min", "2"]}]},
+    "script":     {"skill": "references/prompt-anatomy.md", "gates": [{"file": "{film}"}, {"approval": "script"}]},
+    "assets":     {"skill": "references/providers.md", "gates": [{"cmd": ["provenance"]}]},
+    "footage":    {"skill": "references/formats/footage.md", "gates": [{"file": "film/edl.json"}]},
+    "clips":      {"skill": "references/formats/footage.md", "gates": [{"file": "film/clips.json"}, {"approval": "clips"}]},
+    "voice":      {"skill": "references/audio-and-voice.md", "gates": [{"file": "src/generated/vo.json"}]},
+    "timeline":   {"skill": "references/qa-gates.md", "gates": [{"cmd": ["timeline", "--film", "{film}", "--strict"]}]},
+    "storyboard": {"skill": "references/cinematic-look.md", "gates": [{"file": "out/storyboard/sheet.png"}, {"approval": "storyboard"}]},
+    "score":      {"skill": "references/audio-and-voice.md", "gates": [{"file": "public/audio/score/music.wav"}]},
+    "render":     {"skill": "references/platform-specs.md", "gates": [{"file": "out/film_9x16.mp4"}]},
+    "qa":         {"skill": "references/qa-gates.md", "gates": [{"cmd": ["qa"]}]},
+    "deliver":    {"skill": "AGENTS.md", "gates": [{"approval": "publish"}]}
+  },
+  "pipelines": {
+    "product-launch":  {"form": "device",          "stages": ["intake", "treatment", "refs", "script", "voice", "timeline", "storyboard", "score", "render", "qa", "deliver"]},
+    "data-film":       {"form": "data-film",       "stages": ["intake", "treatment", "refs", "script", "voice", "timeline", "storyboard", "score", "render", "qa", "deliver"]},
+    "kinetic":         {"form": "kinetic",         "stages": ["intake", "treatment", "refs", "script", "timeline", "storyboard", "score", "render", "qa", "deliver"]},
+    "explainer":       {"form": "explainer",       "stages": ["intake", "treatment", "script", "voice", "timeline", "storyboard", "score", "render", "qa", "deliver"]},
+    "tutorial":        {"form": "tutorial",        "stages": ["intake", "treatment", "assets", "script", "voice", "timeline", "storyboard", "score", "render", "qa", "deliver"]},
+    "character":       {"form": "character",       "stages": ["intake", "treatment", "script", "voice", "timeline", "storyboard", "score", "render", "qa", "deliver"]},
+    "motion-graphics": {"form": "motion-graphics", "stages": ["intake", "treatment", "refs", "script", "timeline", "storyboard", "score", "render", "qa", "deliver"]},
+    "talking-head":    {"form": "talking-head",    "stages": ["assets", "footage", "script", "timeline", "storyboard", "render", "qa", "deliver"]},
+    "clip-factory":    {"form": "talking-head",    "stages": ["assets", "clips", "footage", "timeline", "render", "qa", "deliver"]}
+  }
+}

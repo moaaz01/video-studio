@@ -28,10 +28,12 @@ BUNDLED = ROOT / "node_modules" / "@remotion" / "compositor-win32-x64-msvc"
 
 
 def tool(name: str) -> str | None:
+    """Bundled first; a git worktree resolves node_modules from its parent checkout."""
     exe = f"{name}.exe" if sys.platform == "win32" else name
-    bundled = BUNDLED / exe
-    if bundled.exists():
-        return str(bundled)
+    for base in (ROOT, *ROOT.parents):
+        bundled = base / BUNDLED.relative_to(ROOT) / exe
+        if bundled.exists():
+            return str(bundled)
     return shutil.which(name)
 
 

@@ -22,7 +22,15 @@ export type BeatKind =
   /** voice-led explainer: one sentence per beat, one card that proves it */
   | 'explainer'
   /** beat-grid kinetic type: shots on the music, grounds flipping */
-  | 'kinetic';
+  | 'kinetic'
+  /** a real screen, a camera that zooms to each step, a cursor that clicks */
+  | 'tutorial'
+  /** the studio presenter: an SVG puppet lip-synced to the VO */
+  | 'character'
+  /** motion graphics as data: shapes, paths, type, charts, counters */
+  | 'gfx'
+  /** a real recording, trimmed by the EDL, captioned from the transcript */
+  | 'footage';
 export type Tone = 'ink' | 'paper' | 'emerald';
 
 export type Stat = {from: number; to: number; suffix: string; label: string};
@@ -84,7 +92,7 @@ export type Beat = {
 
 export type Film = {
   fps: number;
-  format?: 'launch' | 'explainer' | 'kinetic';
+  format?: 'launch' | 'explainer' | 'kinetic' | 'footage';
   width: number;
   height: number;
   frames: number;

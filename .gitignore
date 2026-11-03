@@ -62,3 +62,13 @@ projects/cobalt-store-launch/SHA256SUMS
 projects/cobalt-store-launch/ui-source.json
 projects/cobalt-store-launch/output/qa/contact-*.png
 projects/cobalt-store-launch/output/stills/*.png
+
+# per-film working state (pipelines, providers, footage)
+film/state.json
+film/ledger.jsonl
+film/budget.json
+film/decisions.jsonl
+film/edl.json
+film/transcript.json
+film/clips.json
+film/footage.json

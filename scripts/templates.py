@@ -328,6 +328,8 @@ def load_archive() -> dict[str, dict[str, Any]]:
             raise TemplateError(f"{path.name}: cannot read ({exc})") from exc
         if not isinstance(data, dict):
             raise TemplateError(f"{path.name}: a recipe must be a JSON object")
+        if "id" not in data and isinstance(data.get("beats"), list):
+            continue  # a film starter (explainer-reel, kinetic-launch), not a recipe
         recipe_id = data.get("id")
         if not isinstance(recipe_id, str) or not ID_RE.match(recipe_id):
             raise TemplateError(f"{path.name}: missing or malformed id")

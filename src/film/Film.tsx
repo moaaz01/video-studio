@@ -15,6 +15,10 @@ import {Stat} from '../scenes/Stat';
 import {Cta} from '../scenes/Cta';
 import {Explainer} from '../scenes/Explainer';
 import {Kinetic} from '../scenes/Kinetic';
+import {Tutorial} from '../scenes/Tutorial';
+import {Character} from '../scenes/Character';
+import {Gfx} from '../scenes/Gfx';
+import {Footage} from '../scenes/Footage';
 import {STORE_SCENES} from '../store/scenes';
 import {Captions} from './Captions';
 import {Soundtrack} from '../audio/Soundtrack';
@@ -45,6 +49,10 @@ const LEGACY_SCENES: Record<string, React.FC<SceneProps>> = {
   cta: Cta,
   explainer: Explainer,
   kinetic: Kinetic,
+  tutorial: Tutorial,
+  character: Character,
+  gfx: Gfx,
+  footage: Footage,
 };
 
 export const SCENES: Record<string, React.FC<SceneProps>> = {...LEGACY_SCENES, ...STORE_SCENES};

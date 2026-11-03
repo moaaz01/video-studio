@@ -18,11 +18,14 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from kinds import NEW_KINDS, SPOKEN_KINDS, validate as validate_kind  # noqa: E402
 # Kinds are visual grammars, not templates: a film declares which grammar each beat
 # speaks and `src/film/Film.tsx` maps it to a scene. The first four are the launch
 # grammar; store/admin/security are the product-demo grammar of a live shop.
-KINDS = {"hook", "device", "stat", "cta", "open", "store", "admin", "security", "close", "design", "finale", "setup", "sources", "explainer", "kinetic"}
-FORMATS = {"launch", "explainer", "kinetic"}
+KINDS = {"hook", "device", "stat", "cta", "open", "store", "admin", "security", "close", "design", "finale", "setup", "sources", "explainer", "kinetic"} | NEW_KINDS
+# footage films are cut to the recording, not to the bar grid
+FORMATS = {"launch", "explainer", "kinetic", "footage"}
 KINETIC_STYLES = {"slam", "stack", "split", "pair", "cut", "punch", "image", "logo"}
 CARD_TYPES = {"checklist", "counter", "window", "steps", "compare", "quote", "image", "statement", "none"}
 PALETTE_KEYS = {"bg", "paper", "accent", "hot", "ink"}
@@ -219,8 +222,11 @@ def main() -> None:
         if tone not in TONES:
             problems.append(f"{bid}: tone {tone!r} not in {sorted(TONES)}")
         bars = float(b.get("bars") or 0)
-        if bars <= 0:
-            problems.append(f"{bid}: needs a positive `bars`")
+        secs = float(b.get("seconds") or 0)
+        if bars <= 0 and secs > 0 and fmt == "footage":
+            bars = secs * fps / bar_frames  # cut to the recording
+        elif bars <= 0:
+            problems.append(f"{bid}: needs a positive `bars`" + (" (`seconds` is for footage films)" if secs else ""))
             bars = 2
         dur = int(round(bars * bar_frames))
         seconds = dur / fps
@@ -242,6 +248,11 @@ def main() -> None:
                 f"{bid}: VO {vo_total:.2f}s + {VO_TAIL}s air > beat {seconds:.2f}s "
                 f"(add bars or shorten the line)"
             )
+
+        if kind in NEW_KINDS:
+            kp, kw = validate_kind(kind, bid, data, seconds, ROOT)
+            problems += kp
+            warnings += kw
 
         if kind == "explainer":
             if len(lines) != 1:
@@ -354,8 +365,8 @@ def main() -> None:
         })
         cursor += dur
 
-    if fmt == "explainer":
-        for b in beats_out:
+    for b in beats_out:
+        if fmt == "explainer" or (b["kind"] in SPOKEN_KINDS and b["vo"]):
             tokens = display_tokens(b["line1"])
             entry = vo_entries.get(f"{b['id']}-1") or {}
             measured = float(entry.get("dur") or 0.0)
@@ -369,7 +380,7 @@ def main() -> None:
             b["data"]["wordSource"] = source
 
     total = cursor
-    if total % bar_frames:
+    if total % bar_frames and fmt != "footage":
         warnings.append(f"total {total} frames is not a whole number of bars ({bar_frames})")
 
     tl = {

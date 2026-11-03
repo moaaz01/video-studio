@@ -1,0 +1,45 @@
+{
+  "slug": "character-starter",
+  "_doc": "Character explainer starter. Copy is SAMPLE structure, not product claims: replace every line with the intake's promise/proof points. The mouth follows the VO word timings (estimated until `studio.py voice` measures them).",
+  "format": "launch",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "bpm": 120,
+  "look": "premium-warm",
+  "style": {"template": "explainer-education", "look": "premium-warm", "motion": 1.0, "background": "paper-glow", "transitions": ["slide", "blur"]},
+  "beats": [
+    {
+      "id": "c01", "kind": "character", "tone": "paper", "bars": 2,
+      "kicker": "خلال دقيقة",
+      "line1": "مرحباً! سأشرح لك الفكرة في ثلاث خطوات.",
+      "vo": ["مَرْحَباً! سَأَشْرَحُ لَكَ الفِكْرَةَ فِي ثَلَاثِ خُطُوَات."],
+      "data": {
+        "character": {"skin": "#E6B48E", "hairStyle": "hijab", "accent": "#0E8A6E", "shirt": "#1A2A36"},
+        "gestures": [{"at": 0, "pose": "wave"}, {"at": 1.6, "pose": "present"}],
+        "expression": "happy"
+      }
+    },
+    {
+      "id": "c02", "kind": "character", "tone": "paper", "bars": 3,
+      "line1": "الخطوة الأولى: اكتب هنا الفكرة الحقيقية الأولى.",
+      "vo": ["الخُطْوَةُ الأُولَى: اكْتُبْ هُنَا الفِكْرَةَ الحَقِيقِيَّةَ الأُولَى."],
+      "data": {
+        "character": {"skin": "#E6B48E", "hairStyle": "hijab", "accent": "#0E8A6E", "shirt": "#1A2A36"},
+        "gestures": [{"at": 0, "pose": "point"}],
+        "expression": "confident",
+        "card": {"title": "مثال", "rows": ["نقطة حقيقية من المنتج", "نقطة حقيقية ثانية"]}
+      }
+    },
+    {
+      "id": "c03", "kind": "character", "tone": "ink", "bars": 2,
+      "line1": "جرّبها الآن، والتفاصيل على الخاص.",
+      "vo": ["جَرِّبْهَا الآن، وَالتَّفَاصِيلُ عَلَى الخَاص."],
+      "data": {
+        "character": {"skin": "#E6B48E", "hairStyle": "hijab", "accent": "#0E8A6E", "shirt": "#1A2A36"},
+        "gestures": [{"at": 0, "pose": "cheer"}],
+        "expression": "happy"
+      }
+    }
+  ]
+}
