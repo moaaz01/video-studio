@@ -42,6 +42,14 @@ python scripts/studio.py looks         # one frame in every look: let the client
 python scripts/studio.py eval          # golden briefs: schema + compile + score floor
 python scripts/studio.py lut           # palette-derived grade curves + .cube LUTs
 python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict
+python scripts/studio.py pipeline start tutorial --film film/howto.json  # staged gates + approvals
+python scripts/studio.py pipeline status      # where the film stands, for a fresh session
+python scripts/studio.py providers pick tts --need arabic   # scored provider + decision log
+python scripts/studio.py providers budget --mode cap --cap 10
+python scripts/studio.py footage silence public/assets/x/talk.mp4   # EDL from real pauses
+python scripts/studio.py footage clips film/transcript.json         # scored shorts
+python scripts/studio.py new howto --format tutorial   # | character | motion-graphics | talking-head
+python -m unittest discover -s tests          # engine unit tests
 
 ```
 
@@ -97,7 +105,13 @@ python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict
 | `references/corpus/` | Pinned reference cards + their index. `refs add` writes here. |
 | `src/generated/timeline.json` | Compiled output. Never hand-edit. |
 | `src/brand.ts` | Client identity: name, monogram/icon, accent, CTA, contacts. |
-| `src/scenes/*.tsx` | One component per beat kind. Copy arrives as props. |
+| `src/scenes/*.tsx` | One component per beat kind. Copy arrives as props. `Tutorial`, `Character`, `Gfx`, `Footage` are the drawn-tutorial, presenter, motion-graphics and real-footage grammars (`references/formats/visual-forms.md`, `footage.md`). |
+| `src/components/Puppet.tsx` | The studio presenter: original SVG rig, procedural blink/breath, mouth from VO word timings (`src/lib/speech.ts`). |
+| `references/starters/` | Starter films for tutorial, character, motion-graphics, talking-head (`studio.py new --format`). |
+| `references/providers.json` + `scripts/providers.py` | Provider catalogue, 7-axis scoring, budget modes, ledger, `film/decisions.jsonl`. |
+| `references/pipelines.json` + `scripts/pipelines.py` | Staged pipelines with file/command/approval gates; state in `film/state.json`. |
+| `scripts/footage.py` | Silence → EDL, transcript, scored shorts, EDL → footage beats, filter-free rough cut. |
+| `scripts/kinds.py` | Compile-time checks for the tutorial/character/gfx/footage data. |
 | `src/film/Film.tsx` | Sequences beats, hands scenes over on the cut axis (pre-roll + 8-frame overlap), drives every aspect. |
 | `src/look/looks.ts` | The nine looks; `premium-warm` is the device-led default, `ui-daylight` is the flat cautionary one, `midnight-souk` is the store-launch look, `cobalt-atelier` is the data-film look. `film/style.json` names one; no ad-hoc grading in scenes. |
 | `projects/cobalt-store-launch/` | 48 s Cobalt Ledger reference film: 6 beats, 24 bars, sources/pricing/payments; docs + prompt pack + manifest. |

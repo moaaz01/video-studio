@@ -60,11 +60,11 @@ COMMON: list[Q] = [
       example="store-service"),
     q("goal", "ما هدف الفيلم؟",
       "الهدف يحدد البنية: إطلاق، شرح، بيع، تعليم، توظيف، إعلان.", "choice",
-      choices=["launch", "explain", "sell", "teach", "recruit", "announce"],
+      choices=["launch", "explain", "sell", "teach", "recruit", "announce", "repurpose"],
       example="explain"),
     q("emotion", "ما الإحساس الذي يجب أن يبقى بعد آخر إطار؟",
       "الإحساس يحدد الإيقاع واللون، لا الزخرفة.", "choice",
-      choices=["premium", "hype", "calm", "smart", "warm"],
+      choices=["premium", "hype", "calm", "smart", "warm", "playful"],
       example="smart"),
     q("promise", "ما الوعد الواحد الذي يتحقق فعلاً — لا شعار؟",
       "الادعاء الذي لا يستطيع المنتج إثباته سيُحذف.", "long",
@@ -197,6 +197,12 @@ ASSETS: dict[str, dict] = {
         "why": "الخط جزء من الهوية؛ البديل الافتراضي Tajawal.",
         "required_for": set(), "extensions": [".ttf", ".otf", ".woff2"],
         "multiple": False, "example": "public/assets/<slug>/brand.ttf",
+    },
+    "footage": {
+        "prompt": "ارفع التسجيل الأصلي (كاميرا أو تسجيل شاشة) إن كان الفيلم يُبنى من لقطات حقيقية.",
+        "why": "المونتاج يُقاس على الصوت الحقيقي: قص الصمت، الترجمة، المقاطع القصيرة.",
+        "required_for": set(), "extensions": [".mp4", ".mov", ".webm", ".m4v"],
+        "multiple": True, "example": "public/assets/<slug>/talk-01.mp4",
     },
 }
 

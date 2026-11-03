@@ -1,0 +1,25 @@
+{
+  "slug": "talking-head-starter",
+  "_doc": "Talking-head starter. Generate the footage beats instead of typing them: `studio.py footage silence <public/...mp4>` -> `footage transcribe` -> `footage beats film/edl.json --transcript film/transcript.json`. Then dress them: zoom punch-ins on the idea words, b-roll, one lower third, a gfx CTA beat.",
+  "format": "footage",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "bpm": 120,
+  "style": {"template": "talking-head", "transitions": ["blur"]},
+  "beats": [
+    {
+      "id": "f01", "kind": "footage", "tone": "ink", "seconds": 6.0,
+      "data": {
+        "src": "assets/<slug>/talk-01.mp4", "in": 1.2, "out": 7.2, "fit": "cover",
+        "lowerThird": {"title": "اسم المتحدث", "sub": "صفته الحقيقية", "at": 0.4, "dur": 3.5},
+        "zoom": [{"at": 2.0, "scale": 1.12}],
+        "words": []
+      }
+    },
+    {
+      "id": "f02", "kind": "gfx", "tone": "emerald", "seconds": 3.0,
+      "data": {"layers": [{"type": "text", "text": "التفاصيل على الخاص", "x": 0.5, "y": 0.5, "size": 0.3, "color": "#FFFFFF", "at": 0, "anim": "rise", "w": 0.8}]}
+    }
+  ]
+}

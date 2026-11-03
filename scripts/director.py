@@ -69,6 +69,36 @@ SPECS: dict[str, dict] = {
         "grammar": "hook → 3–5 full-bleed claims → CTA",
         "duration": (15, 30), "pace": "hard cuts on the kick, 1.05 punch-ins",
     },
+    "tutorial": {
+        "format": "tutorial", "film_format": "launch", "direction": "#ui-film",
+        "bpm": 110, "voice": "fish", "template": "references/starters/tutorial.json",
+        "grammar": "goal → real screen, one step per beat (zoom, cursor, click, callout) → result",
+        "duration": (30, 90), "pace": "one action per beat, the camera goes where the cursor goes",
+    },
+    "character": {
+        "format": "character", "film_format": "launch", "direction": "#editorial",
+        "bpm": 110, "voice": "fish", "template": "references/starters/character.json",
+        "grammar": "presenter greets → one idea per beat with a card → presenter asks for the action",
+        "duration": (20, 60), "pace": "lip-synced presenter, bubble lands word by word",
+    },
+    "motion-graphics": {
+        "format": "motion-graphics", "film_format": "launch", "direction": "#diagram",
+        "bpm": 120, "voice": "none", "template": "references/starters/motion-graphics.json",
+        "grammar": "shape → number → diagram → logo, layers on the beat",
+        "duration": (10, 30), "pace": "layers enter on quarter bars, paths draw, numbers count",
+    },
+    "talking-head": {
+        "format": "talking-head", "film_format": "footage", "direction": "#photo",
+        "bpm": 120, "voice": "none", "template": "references/starters/talking-head.json",
+        "grammar": "hook clip → jump-cut body with captions, punch-ins, b-roll → CTA card",
+        "duration": (20, 180), "pace": "silence removed, word captions, a punch-in every idea",
+    },
+    "clip-factory": {
+        "format": "clip-factory", "film_format": "footage", "direction": "#photo",
+        "bpm": 120, "voice": "none", "template": "references/starters/talking-head.json",
+        "grammar": "long recording → scored hooks → 3–5 vertical shorts with captions",
+        "duration": (20, 60), "pace": "one short per hook, 9:16 first",
+    },
     "code": {
         "format": "code", "film_format": "kinetic", "direction": "#code",
         "bpm": 160, "voice": "none", "template": "references/templates/kinetic-launch.json",
@@ -147,6 +177,19 @@ def choose(a: dict, data: dict) -> tuple[str, list[str]]:
     shots = bool(asset_paths(data, "product_shot"))
     art = bool(asset_paths(data, "key_art"))
     visual = a.get("visual_mode")
+    footage = bool(asset_paths(data, "footage"))
+
+    # A recording is the film: the edit is cut from it, not drawn over it.
+    if footage:
+        name = "clip-factory" if a.get("goal") == "repurpose" else "talking-head"
+        why.append(f"real footage supplied → {name}: cut the recording, caption it, never re-stage it.")
+        return name, why
+    if a.get("goal") == "teach" and screens and name in ("explainer", "device", "ui-film"):
+        name = "tutorial"
+        why.append("teach + real screenshots → tutorial: the screen is the lesson, the camera follows the steps.")
+    if a.get("emotion") == "playful" and name in ("explainer", "editorial"):
+        name = "character"
+        why.append("emotion=playful → character: a presenter carries warmth a card cannot.")
 
     # Assets move the choice: real screens beat a re-drawn UI; no screens means type.
     if name in ("device", "ui-film") and not (screens or shots):

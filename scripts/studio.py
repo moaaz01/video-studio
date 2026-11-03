@@ -224,6 +224,8 @@ def new(args: argparse.Namespace) -> int:
         src = ROOT / "references" / "templates" / "explainer-reel.json"
     elif args.format == "kinetic":
         src = ROOT / "references" / "templates" / "kinetic-launch.json"
+    elif args.format in STARTERS:
+        src = ROOT / "references" / "starters" / f"{args.format}.json"
     else:
         src = ROOT / "film" / "film.json"
     dest = ROOT / "film" / f"{args.slug}.json"
@@ -258,6 +260,9 @@ def new(args: argparse.Namespace) -> int:
     return 0
 
 
+# forms whose starter film lives in references/starters/
+STARTERS = ("tutorial", "character", "motion-graphics", "talking-head")
+
 DELEGATES = {
     "ui": "ui_source.py",
     "intake": "intake.py",
@@ -276,6 +281,9 @@ DELEGATES = {
     "provenance": "provenance.py",
     "bed": "make_bed.py",
     "master": "master_audio.py",
+    "providers": "providers.py",
+    "footage": "footage.py",
+    "pipeline": "pipelines.py",
 }
 
 
@@ -293,7 +301,7 @@ def main() -> None:
 
     n = sub.add_parser("new", help="scaffold a named film + brief")
     n.add_argument("slug")
-    n.add_argument("--format", choices=["launch", "explainer", "kinetic"], default="launch")
+    n.add_argument("--format", choices=["launch", "explainer", "kinetic", *STARTERS], default="launch")
     n.add_argument("--from", dest="template", default=None, help="copy this template instead of the built-in form")
     n.add_argument("--force", action="store_true")
 

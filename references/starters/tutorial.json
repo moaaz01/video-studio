@@ -1,0 +1,34 @@
+{
+  "slug": "tutorial-starter",
+  "_doc": "Tutorial starter. `src` must be the client's real screenshot or screen recording under public/ (it will not compile until it is). Step x/y/box are 0-1 of that capture: measure them on the real image, never guess. `at` is seconds into the beat; leave >=0.55 s for the cursor to travel.",
+  "format": "launch",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "bpm": 120,
+  "look": "paper-clean",
+  "style": {"template": "feature-reveal", "look": "paper-clean", "motion": 0.8, "background": "paper-glow", "transitions": ["slide", "blur"]},
+  "beats": [
+    {
+      "id": "t01", "kind": "tutorial", "tone": "paper", "bars": 3,
+      "line1": "افتح الإعدادات من الشريط الجانبي",
+      "vo": ["افْتَحِ الإِعْدَادَاتِ مِنَ الشَّرِيطِ الجَانِبِيّ."],
+      "data": {
+        "src": "assets/<slug>/screen-01.png", "aspect": 1.6, "frame": "browser", "url": "app.example.com",
+        "steps": [
+          {"at": 0.9, "x": 0.08, "y": 0.42, "zoom": 2.2, "label": "اضغط على «الإعدادات»", "box": [0.01, 0.38, 0.15, 0.08]},
+          {"at": 3.2, "x": 0.55, "y": 0.3, "zoom": 1.6, "label": "اختر «الحساب»"}
+        ]
+      }
+    },
+    {
+      "id": "t02", "kind": "tutorial", "tone": "paper", "bars": 3,
+      "line1": "احفظ التغييرات",
+      "vo": ["احْفَظِ التَّغْيِيرَات."],
+      "data": {
+        "src": "assets/<slug>/screen-02.png", "aspect": 1.6, "frame": "browser",
+        "steps": [{"at": 1.0, "x": 0.86, "y": 0.9, "zoom": 2.0, "label": "زر «حفظ» أسفل الصفحة"}]
+      }
+    }
+  ]
+}

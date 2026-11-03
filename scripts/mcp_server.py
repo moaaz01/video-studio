@@ -58,6 +58,39 @@ def captions_tool(a: dict) -> str:
 
 
 TOOLS = {
+    "providers_pick": tool(
+        "providers_pick",
+        "Rank providers for a capability (tts/image/video/music/sfx/stock/avatar/transcribe/compose) on 7 axes and log the choice.",
+        {"capability": {"type": "string"},
+         "profile": {"type": "string", "enum": ["default", "draft", "hero", "offline"]},
+         "need": {"type": "string", "description": "comma list: arabic, offline, free"}},
+        ["capability"],
+        lambda a: sh([PYTHON, "scripts/providers.py", "pick", a["capability"], "--profile", a.get("profile", "default")]
+                     + (["--need", a["need"]] if a.get("need") else [])),
+    ),
+    "pipeline_status": tool(
+        "pipeline_status",
+        "Where the film stands: pipeline, current stage, gates. `check` runs the current stage's gates.",
+        {"check": {"type": "boolean"}},
+        [],
+        lambda a: sh([PYTHON, "scripts/pipelines.py", "check" if a.get("check") else "status"]),
+    ),
+    "footage_silence": tool(
+        "footage_silence",
+        "Detect pauses in a recording under public/ and write film/edl.json (keep ranges).",
+        {"media": {"type": "string", "description": "path under public/, e.g. public/assets/x/talk.mp4"},
+         "threshold": {"type": "number", "description": "dBFS, default -38"}},
+        ["media"],
+        lambda a: sh([PYTHON, "scripts/footage.py", "silence", a["media"], "--threshold", str(a.get("threshold", -38))]),
+    ),
+    "footage_clips": tool(
+        "footage_clips",
+        "Score a transcript for vertical shorts (hook + pace + clean ending) -> film/clips.json.",
+        {"transcript": {"type": "string", "description": "default film/transcript.json"},
+         "top": {"type": "integer"}},
+        [],
+        lambda a: sh([PYTHON, "scripts/footage.py", "clips", a.get("transcript", "film/transcript.json"), "--top", str(a.get("top", 5))]),
+    ),
     "studio_doctor": tool(
         "studio_doctor",
         "Check this machine: python deps, node, remotion, fonts, fish key, timeline.",
