@@ -6,11 +6,15 @@ as a portable Agent Skill (`SKILL.md`).
 
 Read in this order, and stop when you have what you need:
 
-1. `SKILL.md` — the protocol: eight phases, exit gates, non-negotiables.
+1. `SKILL.md` — the protocol: eight phases, exit gates, non-negotiables, the forms.
 2. `references/visual-direction.md` — pick the look *before* writing code.
 3. `references/arabic-type.md` — hard rules; violating them is a defect, not a taste.
 4. `references/audio-and-voice.md` — if the request includes voice or music.
 5. `references/qa-gates.md` — the commands that decide whether you are done.
+   - Tutorial, character or motion graphics → `references/formats/visual-forms.md`.
+   - The user's own recordings (talking head, shorts) → `references/formats/footage.md`.
+   - Any voice, image, clip or stock asset from a service → `references/providers.md`.
+   - Resuming a film → `python scripts/studio.py pipeline status` first.
 6. `references/PLAYBOOK-cobalt-ledger.md` — the 48 s data-film recipe, if the brief
    is a store/economics film. Copy it; do not start from a blank `film.json`.
 
@@ -54,6 +58,13 @@ python -m unittest discover -s tests          # engine unit tests
 ```
 
 ## How to make a new film
+
+Run `python scripts/studio.py pipeline start <form> --film film/<slug>.json` once,
+then `pipeline check` / `pipeline advance` at each step below. The pipeline
+refuses to skip a stage, and `pipeline approve <key> --quote "…"` records the
+user's yes in their own words. For a recording-led film (talking head, clip
+factory), steps 3–5 are `footage silence → transcribe → beats` or `footage clips`
+(`references/formats/footage.md`).
 
 0. **Intake**: ask the questions in `references/intake.md` for the chosen form,
    fill `film/intake.json`, and pass `studio.py intake check`. Then run
@@ -128,10 +139,17 @@ python -m unittest discover -s tests          # engine unit tests
 | `scripts/advise.py` | Measured design review; exit 1 with `--strict` on a MUST. |
 | `scripts/looks.py` | Look variants as real frames, for the client to choose from. |
 | `scripts/storyboard.py` | Storyboard sheet + optional per-beat stills. |
-| `scripts/mcp_server.py` | MCP stdio server: 13 tools + 7 resources (film, timeline, grade, captions, ui-source, roadmap, skill). |
+| `scripts/mcp_server.py` | MCP stdio server: 25 tools + 7 resources (film, timeline, grade, captions, ui-source, roadmap, skill). |
+| `film/state.json`, `film/decisions.jsonl`, `film/ledger.jsonl` | Per-film working state: pipeline stage + approvals, why each provider was chosen, money spent. Gitignored. |
 | `docs/ROADMAP-v2.md` | The development campaign: axes, competitor matrix, priorities, gates. |
 
 ## Hard rules
+
+- **Never spend without the gate.** Every paid provider call goes through
+  `providers spend`, and an action above the approval line needs the user's yes in
+  chat. Never approve on the user's behalf.
+- **Never re-stage a real person.** Footage is cut and captioned, never re-voiced
+  or re-animated. An avatar or a voice clone needs that person's written consent.
 
 - **Never invent product facts, screens, numbers or testimonials.** Fidelity to
   the real app is the first requirement of this studio. The intake is blocking:

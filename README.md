@@ -112,7 +112,8 @@ twelve non-negotiables that override any aesthetic preference.
 | [`qa-gates.md`](references/qa-gates.md) | The exact commands that decide "done" |
 | [`intake.md`](references/intake.md) | What the agent must ask before a film exists |
 | [`director.md`](references/director.md) | How the form, direction and clock are chosen |
-| [`formats/`](references/formats/) | Explainer-reel and kinetic-film playbooks |
+| [`formats/`](references/formats/) | Explainer-reel, kinetic-film, visual-forms (tutorial · character · motion graphics) and footage (talking head · clip factory) playbooks |
+| [`providers.md`](references/providers.md) | Provider ranking, budget modes, the decision log |
 | [`platform-matrix.md`](references/platform-matrix.md) | Four masters, platform subsets, safe areas |
 
 **Two new forms** — a voice-led explainer reel and a beat-grid kinetic film:
@@ -134,7 +135,7 @@ src/theme.ts            design tokens (paper/ink palette, type scale, phone geom
 src/brand.ts            the only file that changes between clients
 src/components/         Phone · Surfaces · Overlays · Text · Ico · Brand · StudyAIScreen · DemoUI
 src/lib/                animation + RTL/bidi helpers
-src/scenes/             Hook · Device · Stat · Cta · Explainer · Kinetic
+src/scenes/             Hook · Device · Stat · Cta · Explainer · Kinetic · Tutorial · Character · Gfx · Footage
 src/store/              Open · Store · Admin · Security · Close + the product UI kit
 src/film/Film.tsx       timeline-driven assembler, one film → 16:9 · 9:16 · 4:5 · 1:1
 src/film/types.ts       the style contract: look, background, cut vocabulary, sfx
@@ -202,8 +203,14 @@ python scripts/studio.py safe out/qa/vert_device.png --preset reels --strict   #
 python scripts/studio.py captions            # burned captions JSON + wide/vertical SRT, checked
 python scripts/studio.py shotlist film/brief.md --out film/plan.json   # brief -> plan + shots
 python scripts/studio.py provenance --strict # every declared capture matches its hash
+python scripts/studio.py new howto --format tutorial   # | character | motion-graphics | talking-head
+python scripts/studio.py pipeline start tutorial --film film/howto.json   # stages, gates, approvals
+python scripts/studio.py providers pick tts --need arabic   # scored provider choice + decision log
+python scripts/studio.py footage silence public/assets/x/talk.mp4   # silence cut -> film/edl.json
+python scripts/studio.py footage clips film/transcript.json         # scored shorts from a long video
+python -m unittest discover -s tests       # engine unit tests
 python scripts/mcp_server.py                 # the studio as MCP tools (stdio, no SDK)
-python scripts/mcp_selftest.py               # 11 wire checks: protocol, 15 tools, 7 resources, live calls
+python scripts/mcp_selftest.py               # wire checks: protocol, 25 tools, 7 resources, live calls
 python scripts/studio.py render 16x9 9x16    # masters
 python scripts/studio.py master             # one audio gain stage; video stream copied
 python scripts/studio.py qa --stills 8 --require-audio   # gates, contact sheets, and a silence check

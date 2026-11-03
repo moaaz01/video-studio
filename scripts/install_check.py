@@ -44,6 +44,13 @@ REQUIRED = [
     "scripts/corpus.py",
     "scripts/ui_source.py",
     "scripts/studio.py",
+    "scripts/pipelines.py",
+    "scripts/providers.py",
+    "scripts/footage.py",
+    "references/pipelines.json",
+    "references/providers.json",
+    "references/formats/visual-forms.md",
+    "references/formats/footage.md",
 ]
 
 FRONTMATTER_KEYS = ("name", "description")

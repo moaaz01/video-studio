@@ -1,6 +1,6 @@
 ---
 name: video-studio
-description: Use when asked to design, script, voice, render or QA a marketing video, product film, app promo, explainer reel, launch trailer, UI demo, kinetic-type piece, reel/short, or any motion-design deliverable — including Arabic/RTL films, intake-driven product facts, multi-aspect/platform exports, thumbnail/cover stills, original score and SFX, and faithful reproduction of a real product UI inside the video. Triggers on briefs like "صمم فيديو", "make a promo video", "launch video", "app demo video", "reel", "explainer", "intro", or any request to turn a product/app/design into moving pictures.
+description: Use when asked to design, script, voice, render or QA a marketing video, product film, app promo, explainer reel, launch trailer, UI demo, kinetic-type piece, reel/short, or any motion-design deliverable — screen tutorials and software walkthroughs, an animated presenter/character explainer, motion graphics and animated infographics, editing the user's own recordings (talking head, silence cut, word captions, punch-ins, b-roll), cutting shorts from a long video or podcast — including Arabic/RTL films, intake-driven product facts, multi-aspect/platform exports, thumbnail/cover stills, original score and SFX, and faithful reproduction of a real product UI inside the video. Triggers on briefs like "صمم فيديو", "مونتاج", "فيديو شرح", "شرح برنامج", "شخصية كرتونية", "موشن غرافيك", "قص الصمت", "مقاطع قصيرة من فيديو طويل", "make a promo video", "tutorial video", "screen recording edit", "talking head", "clip this podcast", "launch video", "app demo video", "reel", "explainer", "intro", or any request to turn a product/app/design into moving pictures.
 ---
 
 # Video studio
@@ -24,7 +24,11 @@ own QA never ships.
 - Any request for stills from a film (thumbnail, cover, social crop).
 - Arabic/RTL motion work, or a film that must reproduce a real app's screens.
 
-Not for: editing third-party footage, live-action, or audio-only podcasts.
+- Tutorials over real screens, an animated presenter, motion graphics, and edits of
+  the user's **own** recordings: talking head, screen capture, long video → shorts.
+
+Not for: re-staging what a real person said, deepfakes or voice clones without
+written consent, footage the user has no rights to, or audio-only podcasts.
 
 ## Phase 0 — intake (blocking)
 
@@ -44,7 +48,15 @@ user and get a yes before writing beats.
 python scripts/studio.py intake questions --format explainer
 python scripts/studio.py intake check --intake film/intake.json
 python scripts/studio.py director --intake film/intake.json
+python scripts/studio.py pipeline start <form> --film film/<slug>.json   # stages + gates
 ```
+
+**Pipelines keep the agent honest across sessions.** `pipeline start` records the
+form and the first stage in `film/state.json`. `pipeline check` runs the current
+stage's gates (a file, a command, or an approval). `pipeline approve <key> --quote "…"`
+stores the user's own words. `pipeline advance` refuses to move past a red gate.
+A new session starts with `pipeline status`. See
+[`references/pipelines.json`](references/pipelines.json).
 
 ## The forms
 
@@ -59,6 +71,19 @@ playbooks live in [`references/formats/`](references/formats/):
 | a SaaS launch | **ui-film** | `#ui-film` | real UI crops |
 | a store's economics | **data-film** | `#data-film` | `references/templates/cobalt-ledger.json` |
 | a physical product | **editorial** | `#photo` | real photos |
+| teach software with real screens | **tutorial** | `#ui-film` | `references/starters/tutorial.json` |
+| explain warmly, a presenter on screen | **character** | `#editorial` | `references/starters/character.json` |
+| numbers, diagrams, a brand sting | **motion-graphics** | `#diagram` | `references/starters/motion-graphics.json` |
+| the user's own recording | **talking-head** | `#photo` | `studio.py footage …` → `references/starters/talking-head.json` |
+| one long video → several shorts | **clip-factory** | `#photo` | `studio.py footage clips` |
+
+The drawn forms (tutorial, character, gfx) are in
+[`references/formats/visual-forms.md`](references/formats/visual-forms.md). The
+recorded forms (talking head, clip factory) are in
+[`references/formats/footage.md`](references/formats/footage.md). Every form has a
+starter: `studio.py new <slug> --format tutorial|character|motion-graphics|talking-head`.
+Beat kinds mix freely inside one film, so a tutorial can open on the presenter and
+close on a gfx CTA.
 
 Every form exports the same four masters by default: `9x16`, `16x9`, `4x5`, `1x1`
 ([`references/platform-matrix.md`](references/platform-matrix.md)).
@@ -184,9 +209,18 @@ python scripts/studio.py safe <still> --preset reels --strict   # platform UI ba
 python scripts/studio.py captions        # cue JSON + wide/vertical SRT (--check verifies)
 python scripts/studio.py shotlist <brief> --out film/plan.json   # brief -> shot list + plan
 python scripts/studio.py provenance --strict   # declared captures match their hashes
+python scripts/studio.py pipeline status        # where the film stands (start|check|approve|advance)
+python scripts/studio.py providers pick tts --need arabic   # 7-axis ranking, logged to film/decisions.jsonl
+python scripts/studio.py providers budget --mode cap --cap 10 --approve-over 0.5
+python scripts/studio.py footage silence public/assets/<slug>/talk.mp4   # pauses -> film/edl.json
+python scripts/studio.py footage transcribe public/assets/<slug>/talk.mp4 --lang ar
+python scripts/studio.py footage clips film/transcript.json   # scored shorts -> film/clips.json
+python scripts/studio.py footage beats film/edl.json --transcript film/transcript.json --out film/talk.json
+python -m unittest discover -s tests   # engine unit tests
 python scripts/mcp_server.py             # expose the studio to any agent (MCP, stdio)
                                           # tools: doctor, scan, refs, advise, storyboard, still,
-                                          # render, qa, captions, safe, shotlist, grade, evals
+                                          # render, qa, captions, safe, shotlist, grade, evals,
+                                          # providers_pick, pipeline_status, footage_silence, footage_clips
                                           # resources: studio://film|timeline|grade|captions|ui-source|roadmap|skill
 python scripts/studio.py render 16x9 9x16 4x5 1x1   # masters, all four by default
 python scripts/studio.py qa              # gates + contact sheets + thumbnails
@@ -247,6 +281,15 @@ Full rubric, palettes and motion signatures live in
 12. **Critique with frames, not adjectives.** Before the client is asked to choose,
    render the options: `studio.py looks` as real frames, `studio.py storyboard` as
    the whole film on one sheet. A brief answered with a picture gets a decision.
+13. **Money and likeness need a yes.** Pick providers with `providers pick`. A
+    paid action above the approval line needs the user's yes in chat
+    (`--approved`); the agent never approves its own spend. A face or a voice
+    that belongs to a real person needs that person's written consent.
+14. **Footage is cut, never re-staged.** Silence cuts, captions and punch-ins
+    serve what was said. A caption shows the transcript, and a wrong word is fixed
+    in the transcript. Shorts come from `footage clips` and the user picks them.
+15. **Generated pictures carry no letters.** Image and video models never draw
+    Arabic; the renderer sets every word.
 
 ## Layout of this skill
 
@@ -276,8 +319,15 @@ scripts/package_project.py  a film project folder: assets copied, masters measur
 scripts/advise.py         measured design review: reading time, contrast, rhythm, cta, look
 scripts/looks.py          the same beat in every look -> out/looks/, for the client
 scripts/storyboard.py     out/storyboard/sheet.png, rendered by the engine itself
-scripts/mcp_server.py     MCP over stdio: 13 tools, 7 resources, no SDK, for any agent
+scripts/mcp_server.py     MCP over stdio: 25 tools, 7 resources, no SDK, for any agent
+scripts/providers.py      provider catalogue: 7-axis scoring, budget modes, ledger, decision log
+scripts/pipelines.py      staged pipelines: file/command/approval gates, film/state.json
+scripts/footage.py        silence -> EDL, transcript, scored shorts, EDL -> beats, rough cut
+scripts/kinds.py          compile checks for tutorial / character / gfx / footage beats
+tests/                    unit tests for the engines (python -m unittest discover -s tests)
+references/starters/      starter films: tutorial, character, motion-graphics, talking-head
 src/                      the Remotion engine (theme, type, motion, film, scenes)
+src/scenes/               Tutorial (zoom+cursor) · Character (lip-synced puppet) · Gfx (layers) · Footage (EDL+captions)
 src/look/                 the look system: presets, grade/grain/vignette, one camera move per beat
 references/               the craft: direction, motion, type, audio, platforms, QA,
                           fidelity-pipeline, prompt-anatomy, reference-sources,
@@ -301,6 +351,10 @@ examples/                 a shipped 118 s film as the worked example
 | 4K because "premium" | 4K at this complexity costs ~6 h/film. 1080p CRF 10 / `--image-format=png` is the master; 1080p CRF 16 / medium is the teaser |
 | Trusting the encoder's log | Probe the output file itself: dimensions, fps, duration, peak, black frames |
 | Rebuilding the UI from memory | Scan the project first — one command turns "how did the header look" into a string table |
+| Guessing tutorial step coordinates | Read x/y off the real capture at 1:1: a cursor that lands beside the button teaches the wrong click |
+| A character that talks without VO | No voice means no word timings, so the mouth rests. Voice the line or drop the bubble |
+| Cutting every pause in a talk | Pauses under 0.45 s are prosody. Raise `--min-silence` before you lower the threshold |
+| Choosing a provider by habit | `providers pick` ranks on Arabic, licence and availability too, and logs why |
 | Collecting references in a browser tab | A reference is a card: the move, the source, what it buys. Tabs are not evidence |
 
 ## Red flags
