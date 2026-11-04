@@ -1,7 +1,6 @@
 # Channel kit — hand this to the production agent
 
-> Replace `[اسم القناة]` and `[@المعرّف]` with the name and handle you chose.
-> In the builder, the name is one constant: `BRAND` in `build_episodes.py`.
+> Channel name: **قصّة رقم**. In the builder it is one constant: `BRAND` in `build_episodes.py`.
 
 ## What the agent reads, in order
 
@@ -24,7 +23,7 @@ A 10 s beat holds about 21 spoken words; numbers spoken as words cost more.
 ## Channel description (YouTube "About", ~900 characters)
 
 ```
-[اسم القناة] — رقم واحد… وقصة كاملة خلفه.
+قصّة رقم — رقم واحد… وقصة كاملة خلفه.
 
 كل يوم نختار رقماً صادماً من عالم المال أو التقنية أو جسمك وعقلك أو الكون، ونحكي لك في أقل من دقيقة لماذا هو مهم، بالرسوم المتحركة والبيانات الواضحة، وبالعربية الفصحى البسيطة.
 
@@ -82,3 +81,39 @@ Deliver: icon on dark background, icon on white background, monochrome version.
 Wide YouTube channel banner, deep night-blue background with a slow mesh gradient, faint dot-matrix pattern and floating amber particles, a few glowing amber line-chart strokes and small geometric shapes (hexagon, ring, star) at the edges, empty centre safe area for text, premium motion-graphics look, no text, no letters, no numbers.
 ```
 Add the name and «رقم جديد كل يوم» in the centre yourself, in Arabic type.
+
+---
+
+## Logo prompts for GPT (image) or Gemini
+
+Recent GPT and Gemini image models can draw Arabic, but they still drop dots
+or reorder letters. Check every letter of «قصّة رقم» at 100% zoom: ق ص (with shadda) ة،
+then ر ق م. If one letter is wrong, regenerate or use Prompt A and set the text yourself.
+
+**Prompt A: symbol only (the safest, best for the avatar):**
+```
+Design a minimal, modern logo symbol for an Arabic educational YouTube channel called "Story of a Number" — every video starts with one surprising number and tells the story behind it.
+Concept: a bold, geometric shape that reads as a number and a speech bubble at the same time — the tail of a speech bubble forms the stroke of the digit "1".
+Style: flat vector, thick confident strokes, soft rounded corners, perfectly centred, generous padding, readable at 32×32 px, works inside a circular YouTube avatar crop.
+Colours: deep night-blue background (#0B0F1A), warm amber-gold symbol (#F2C14E), one small teal accent dot (#3DD6C4).
+Mood: smart, curious, trustworthy, youthful but not childish, for both men and women aged 18–50.
+No text, no letters, no words, no mascot, no 3D, no photo-realism, no clip-art.
+Output: a square 1:1 image, the icon on the dark background.
+```
+
+**Prompt B: symbol + Arabic wordmark (for the banner and the end card):**
+```
+Design a horizontal logo lockup for an Arabic YouTube channel named «قصّة رقم».
+Left: a minimal geometric symbol — a speech bubble whose tail forms the digit "1", amber-gold (#F2C14E) with a tiny teal dot (#3DD6C4).
+Right: the Arabic wordmark «قصّة رقم», written exactly with these letters, right-to-left: ق ص ّ ة (space) ر ق م — a bold, modern geometric Arabic typeface similar to Tajawal ExtraBold or Cairo Black, clean joins, correct dots, the shadda placed above the ص.
+Colours: off-white wordmark (#F5F3EE) on deep night blue (#0B0F1A).
+Style: flat vector, premium, minimal, generous spacing, no other text, no slogan, no Latin letters, no 3D, no effects except a very soft glow on the symbol.
+Output: a wide 16:9 image, the lockup centred.
+```
+
+**Prompt C: variations to ask for in the same chat:**
+```
+Give me 4 variations of the symbol: (1) a flip-clock digit tile with a small spark, (2) three rising bars ending in a star spark, (3) the speech bubble with the digit 1 inside, (4) a hexagon containing an abstract numeral. Same colours, same flat style, no text.
+```
+
+Before you publish, open the final image at 32 px: if the symbol no longer reads as one clear shape, simplify it.
