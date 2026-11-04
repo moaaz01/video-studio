@@ -68,8 +68,8 @@ COMMON: list[Q] = [
       example="smart"),
     q("promise", "ما الوعد الواحد الذي يتحقق فعلاً — لا شعار؟",
       "الادعاء الذي لا يستطيع المنتج إثباته سيُحذف.", "long",
-      example="تفتح متجرك وتستقبل أول طلب في أقل من ١٥ دقيقة."),
-    q("proof_points", "اذكر ٣ إلى ٧ حقائق/ميزات حقيقية يمكن طباعتها.",
+      example="تفتح متجرك وتستقبل أول طلب في أقل من 15 دقيقة."),
+    q("proof_points", "اذكر 3 إلى 7 حقائق/ميزات حقيقية يمكن طباعتها.",
       "كل نقطة يجب أن تكون موجودة في المنتج، لا في خيال الحملة.", "list",
       example="دفع بالمحفظة، كود تسليم فوري، ثلاثة مصادر سعر.", min_items=3, max_items=7),
     q("cta", "ما الإجراء الواحد المطلوب في النهاية؟",
@@ -100,7 +100,7 @@ COMMON: list[Q] = [
       "Fish افتراضي؛ ElevenLabs اختياري ويحتاج مفتاحاً؛ none لفيلم بلا تعليق.",
       "choice", choices=["fish", "elevenlabs", "none"], example="fish"),
     q("voice_id", "معرّف الصوت أو اسمه إن اخترت ElevenLabs/Fish. (اختياري)",
-      "لا نختار صوتاً عشوائياً؛ نسمع ٢–٣ ثم نختار.", "text", required=False,
+      "لا نختار صوتاً عشوائياً؛ نسمع 2–3 ثم نختار.", "text", required=False,
       example="voice id from the provider dashboard"),
     q("music_mode", "الموسيقى: أصلية من الاستوديو أم ملف خارجي؟",
       "الاستوديو يؤلف bed على نفس الـ BPM؛ الخارجي يحتاج ملفاً وترخيصاً.",
@@ -117,9 +117,9 @@ COMMON: list[Q] = [
 ]
 
 EXPLAINER: list[Q] = [
-    q("hook_number", "ما الرقم الذي يفتح الفيديو؟ (٧ أدوات، ٣ أسباب، ٥ أخطاء...)",
-      "الهوك الرقمي يحدد توقع المشاهد ويمنع المقدمة الضبابية.", example="٧"),
-    q("points", "اكتب ٣ إلى ٧ نقاط، كل نقطة سطر واحد قصير (اسم + فكرة).",
+    q("hook_number", "ما الرقم الذي يفتح الفيديو؟ (7 أدوات، 3 أسباب، 5 أخطاء...)",
+      "الهوك الرقمي يحدد توقع المشاهد ويمنع المقدمة الضبابية.", example="7"),
+    q("points", "اكتب 3 إلى 7 نقاط، كل نقطة سطر واحد قصير (اسم + فكرة).",
       "كل نقطة = جملة منطوقة = beat واحد = بطاقة واحدة.", "list",
       example="ملف واحد: النص والإيقاع والصوت. | ثلاثة أبعاد من نفس التايم لاين. | قياس لا ذوق.",
       min_items=3, max_items=7),
@@ -150,7 +150,7 @@ KINETIC: list[Q] = [
     q("launch_claim", "ما الجملة/الادعاء الذي يفتح الفيلم؟",
       "كلمتان إلى خمس، تُقال بصوت عالٍ وتُرسم بحجم الشاشة.", "long",
       example="فيديو عربي. بلا مونتاج."),
-    q("tempo_bpm", "ما الإيقاع (BPM)؟ ١٥٠–١٧٥ للترايلر، ١٢٠–١٢٨ للهادئ.",
+    q("tempo_bpm", "ما الإيقاع (BPM)؟ 150–175 للترايلر، 120–128 للهادئ.",
       "كل shot يقاس بالـ beat؛ الإيقاع يحدد طول الفيلم.", "int", example="160",
       min_value=120, max_value=175),
     q("genre", "نوع الموسيقى/المزاج. (اختياري)",
@@ -175,19 +175,19 @@ ASSETS: dict[str, dict] = {
         "multiple": False, "example": "public/assets/<slug>/logo.svg",
     },
     "product_shot": {
-        "prompt": "ارفع ١–٣ صور حقيقية للمنتج/الخدمة (أو لقطات شاشة).",
+        "prompt": "ارفع 1–3 صور حقيقية للمنتج/الخدمة (أو لقطات شاشة).",
         "why": "الصورة الحقيقية هي دليل الثقة؛ لا نولّد واجهة المنتج.",
         "required_for": set(), "extensions": [".jpg", ".jpeg", ".png", ".webp"],
         "multiple": True, "example": "public/assets/<slug>/product-01.png",
     },
     "screenshot": {
-        "prompt": "ارفع ١–٣ لقطات شاشة حقيقية للتطبيق/الموقع.",
+        "prompt": "ارفع 1–3 لقطات شاشة حقيقية للتطبيق/الموقع.",
         "why": "النصوص والألوان تُسحب من الواجهة نفسها، لا من الذاكرة.",
         "required_for": set(), "extensions": [".jpg", ".jpeg", ".png", ".webp"],
         "multiple": True, "example": "public/assets/<slug>/screen-01.png",
     },
     "key_art": {
-        "prompt": "ارفع ١–٢ صور key art أو صور منتج عالية الدقة (≥ 2048px عرض).",
+        "prompt": "ارفع 1–2 صور key art أو صور منتج عالية الدقة (≥ 2048px عرض).",
         "why": "Picture shots تحتاج عرضاً كافياً للـ punch-in دون softness.",
         "required_for": set(), "extensions": [".jpg", ".jpeg", ".png", ".webp"],
         "multiple": True, "example": "public/assets/<slug>/key-art-01.png",
@@ -337,9 +337,9 @@ def check(data: dict, strict: bool = False) -> tuple[list[dict], list[dict]]:
         hook = str(answers.get("hook_number") or "")
         hook_ok = bool(re.search(r"[0-9٠-٩]", hook))
         add("hook_number.digit", "الهوك يحتوي رقماً", hook_ok,
-            "" if hook_ok else "اكتب عدداً صريحاً مثل ٧ أو 7", True)
+            "" if hook_ok else "اكتب عدداً صريحاً مثل 7 أو 7", True)
         points = [str(v).strip() for v in (answers.get("points") or []) if str(v).strip()]
-        add("points.count", "عدد النقاط ٣–٧", 3 <= len(points) <= 7,
+        add("points.count", "عدد النقاط 3–7", 3 <= len(points) <= 7,
             f"has {len(points)}", True)
         cta_ok = bool(str(answers.get("cta_keyword") or "").strip())
         add("cta_keyword.present", "كلمة CTA موجودة", cta_ok,
@@ -351,9 +351,9 @@ def check(data: dict, strict: bool = False) -> tuple[list[dict], list[dict]]:
             ok = 120 <= bpm <= 175
         except (TypeError, ValueError):
             bpm, ok = 0, False
-        add("tempo_bpm.range", "الإيقاع ١٢٠–١٧٥ BPM", ok, f"{bpm or '?'} BPM", True)
+        add("tempo_bpm.range", "الإيقاع 120–175 BPM", ok, f"{bpm or '?'} BPM", True)
         points = [str(v).strip() for v in (answers.get("proof_points") or []) if str(v).strip()]
-        add("proof_points.count", "عدد الحقائق ٣–٥", 3 <= len(points) <= 5, f"has {len(points)}", True)
+        add("proof_points.count", "عدد الحقائق 3–5", 3 <= len(points) <= 5, f"has {len(points)}", True)
 
     # Assets: required by format and by the chosen visual mode.
     required_assets: set[str] = set()

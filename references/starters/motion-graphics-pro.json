@@ -1,0 +1,379 @@
+{
+  "slug": "motion-graphics-pro",
+  "_doc": "Showcase of the pro gfx vocabulary: one palette + backdrop per beat, glass cards, line/donut/progress charts, text fx, depth (z), glow and exits. Numbers and labels are SAMPLE data: replace with sourced figures. See references/formats/visual-forms.md#gfx-pro.",
+  "format": "launch",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "bpm": 120,
+  "look": "premium-warm",
+  "style": {
+    "template": "stats-impact",
+    "look": "premium-warm",
+    "motion": 1.0,
+    "background": "paper-glow",
+    "transitions": [
+      "blur",
+      "slide"
+    ]
+  },
+  "beats": [
+    {
+      "id": "p01",
+      "kind": "gfx",
+      "tone": "ink",
+      "bars": 2,
+      "data": {
+        "palette": "midnight-amber",
+        "backdrop": "mesh",
+        "layers": [
+          {
+            "type": "badge",
+            "text": "بيانات تجريبية",
+            "x": 0.5,
+            "y": 0.24,
+            "at": 0,
+            "v": {
+              "y": 0.22
+            }
+          },
+          {
+            "type": "text",
+            "text": "الرقم الذي يغيّر القصة",
+            "fx": "gradient",
+            "x": 0.5,
+            "y": 0.44,
+            "size": 0.56,
+            "w": 0.8,
+            "at": 0.2,
+            "anim": "rise",
+            "v": {
+              "size": 0.58,
+              "w": 0.9
+            }
+          },
+          {
+            "type": "text",
+            "text": "كل شيء يبدأ بسؤال",
+            "x": 0.5,
+            "y": 0.76,
+            "size": 0.24,
+            "at": 0.6,
+            "anim": "rise",
+            "out": 3.4
+          }
+        ]
+      }
+    },
+    {
+      "id": "p02",
+      "kind": "gfx",
+      "tone": "ink",
+      "bars": 3,
+      "data": {
+        "palette": "ocean-cyan",
+        "backdrop": "grid",
+        "layers": [
+          {
+            "type": "text",
+            "text": "النمو عبر ستة أشهر",
+            "x": 0.5,
+            "y": 0.14,
+            "size": 0.28,
+            "at": 0,
+            "anim": "rise",
+            "v": {
+              "y": 0.16
+            }
+          },
+          {
+            "type": "line",
+            "values": [
+              12,
+              18,
+              15,
+              26,
+              31,
+              44
+            ],
+            "labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "x": 0.42,
+            "y": 0.55,
+            "w": 0.5,
+            "h": 0.42,
+            "at": 0.3,
+            "v": {
+              "x": 0.5,
+              "y": 0.46,
+              "w": 0.84,
+              "h": 0.28
+            }
+          },
+          {
+            "type": "card",
+            "title": "+267%",
+            "sub": "منذ الشهر الأول",
+            "icon": "trendingUp",
+            "x": 0.84,
+            "y": 0.42,
+            "w": 0.24,
+            "at": 1.4,
+            "z": 1,
+            "glow": true,
+            "v": {
+              "x": 0.5,
+              "y": 0.8,
+              "w": 0.8
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "p03",
+      "kind": "gfx",
+      "tone": "ink",
+      "bars": 3,
+      "data": {
+        "palette": "electric-indigo",
+        "backdrop": "flow",
+        "layers": [
+          {
+            "type": "donut",
+            "segments": [
+              {
+                "value": 62
+              },
+              {
+                "value": 28
+              },
+              {
+                "value": 10
+              }
+            ],
+            "x": 0.3,
+            "y": 0.5,
+            "size": 0.62,
+            "at": 0.2,
+            "glow": true,
+            "v": {
+              "x": 0.5,
+              "y": 0.3,
+              "size": 0.62
+            }
+          },
+          {
+            "type": "progress",
+            "value": 0.62,
+            "label": "الهاتف",
+            "x": 0.68,
+            "y": 0.36,
+            "w": 0.4,
+            "at": 0.6,
+            "v": {
+              "x": 0.5,
+              "y": 0.6,
+              "w": 0.84
+            }
+          },
+          {
+            "type": "progress",
+            "value": 0.28,
+            "label": "الحاسوب",
+            "x": 0.68,
+            "y": 0.52,
+            "w": 0.4,
+            "at": 0.8,
+            "v": {
+              "x": 0.5,
+              "y": 0.7,
+              "w": 0.84
+            }
+          },
+          {
+            "type": "progress",
+            "value": 0.1,
+            "label": "أخرى",
+            "x": 0.68,
+            "y": 0.68,
+            "w": 0.4,
+            "at": 1.0,
+            "v": {
+              "x": 0.5,
+              "y": 0.8,
+              "w": 0.84
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "p04",
+      "kind": "gfx",
+      "tone": "ink",
+      "bars": 3,
+      "data": {
+        "palette": "emerald-gold",
+        "backdrop": "topo",
+        "layers": [
+          {
+            "type": "text",
+            "text": "ثلاث خطوات فقط",
+            "x": 0.5,
+            "y": 0.15,
+            "size": 0.3,
+            "at": 0,
+            "anim": "rise",
+            "v": {
+              "y": 0.16
+            }
+          },
+          {
+            "type": "card",
+            "title": "اجمع",
+            "sub": "المعلومة من مصدرها",
+            "icon": "search",
+            "x": 0.8,
+            "y": 0.55,
+            "w": 0.27,
+            "at": 0.3,
+            "v": {
+              "x": 0.5,
+              "y": 0.34,
+              "w": 0.84
+            }
+          },
+          {
+            "type": "card",
+            "title": "افهم",
+            "sub": "الرقم في سياقه",
+            "icon": "lightbulb",
+            "x": 0.5,
+            "y": 0.55,
+            "w": 0.27,
+            "at": 0.6,
+            "z": 0.6,
+            "v": {
+              "x": 0.5,
+              "y": 0.52,
+              "w": 0.84
+            }
+          },
+          {
+            "type": "card",
+            "title": "شارك",
+            "sub": "القصة لا الرقم",
+            "icon": "share",
+            "x": 0.2,
+            "y": 0.55,
+            "w": 0.27,
+            "at": 0.9,
+            "z": 1.2,
+            "v": {
+              "x": 0.5,
+              "y": 0.7,
+              "w": 0.84
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "p05",
+      "kind": "gfx",
+      "tone": "ink",
+      "bars": 2,
+      "data": {
+        "palette": "sunset-plum",
+        "backdrop": "dots",
+        "layers": [
+          {
+            "type": "shape",
+            "shape": "hexagon",
+            "x": 0.18,
+            "y": 0.3,
+            "size": 0.16,
+            "color": "#FF8A3D",
+            "at": 0,
+            "anim": "spin",
+            "z": 1.5,
+            "v": {
+              "x": 0.2,
+              "y": 0.2
+            }
+          },
+          {
+            "type": "shape",
+            "shape": "star",
+            "x": 0.82,
+            "y": 0.72,
+            "size": 0.12,
+            "color": "#FF4F8B",
+            "at": 0.2,
+            "anim": "pop",
+            "z": 2,
+            "v": {
+              "x": 0.8,
+              "y": 0.78
+            }
+          },
+          {
+            "type": "text",
+            "text": "المعلومة التي ستشاركها",
+            "fx": "marker",
+            "x": 0.5,
+            "y": 0.5,
+            "size": 0.5,
+            "w": 0.8,
+            "at": 0.3,
+            "anim": "rise",
+            "v": {
+              "w": 0.9,
+              "size": 0.5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "p06",
+      "kind": "gfx",
+      "tone": "ink",
+      "bars": 2,
+      "data": {
+        "palette": "mono-red",
+        "backdrop": "beams",
+        "layers": [
+          {
+            "type": "counter",
+            "to": 1200,
+            "suffix": "+",
+            "x": 0.5,
+            "y": 0.44,
+            "size": 0.8,
+            "at": 0,
+            "dur": 1.4,
+            "glow": true
+          },
+          {
+            "type": "text",
+            "text": "مشاهدة تجريبية",
+            "fx": "outline",
+            "x": 0.5,
+            "y": 0.72,
+            "size": 0.32,
+            "at": 0.6,
+            "anim": "rise"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -351,6 +351,8 @@ examples/                 a shipped 118 s film as the worked example
 | 4K because "premium" | 4K at this complexity costs ~6 h/film. 1080p CRF 10 / `--image-format=png` is the master; 1080p CRF 16 / medium is the teaser |
 | Trusting the encoder's log | Probe the output file itself: dimensions, fps, duration, peak, black frames |
 | Rebuilding the UI from memory | Scan the project first — one command turns "how did the header look" into a string table |
+| A centred word on a flat colour | That is the cheap-AI frame. Give gfx a `palette` + `backdrop`, stagger the layers, add depth (`z`) and one glow. See `references/design-inspiration.md` |
+| Arabic-Indic digits (١٢٣) | The project prints Western digits (123) everywhere; `toAr()` normalises, and tests fail on ١٢٣ in film copy |
 | Guessing tutorial step coordinates | Read x/y off the real capture at 1:1: a cursor that lands beside the button teaches the wrong click |
 | A character that talks without VO | No voice means no word timings, so the mouth rests. Voice the line or drop the bubble |
 | Cutting every pause in a talk | Pauses under 0.45 s are prosody. Raise `--min-silence` before you lower the threshold |

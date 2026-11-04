@@ -14,9 +14,16 @@ SPOKEN_KINDS = {"explainer", "character", "tutorial"}
 POSES = {"idle", "wave", "point", "cheer", "think", "present"}
 EXPRESSIONS = {"neutral", "happy", "surprised", "thinking", "concerned", "confident"}
 HAIR = {"short", "long", "hijab", "cap", "none"}
-LAYERS = {"shape", "path", "text", "icon", "bars", "counter", "ring", "connector", "image", "lowerthird"}
+LAYERS = {"shape", "path", "text", "icon", "bars", "counter", "ring", "connector", "image", "lowerthird",
+          "card", "line", "donut", "progress", "badge"}
+# mirrors src/look/palettes.ts and src/components/Backdrop.tsx (a test keeps them in sync)
+PALETTES = {"midnight-amber", "electric-indigo", "emerald-gold", "ocean-cyan", "sunset-plum", "mono-red", "sand-ink", "paper-cobalt"}
+BACKDROPS = {"mesh", "grid", "flow", "topo", "dots", "beams", "solid"}
+SHAPES = {"circle", "rect", "ring", "blob", "triangle", "hexagon", "star", "pill", "arrow"}
+TEXT_FX = {"gradient", "outline", "marker"}
 LAYER_NEEDS = {"path": "d", "text": "text", "icon": "name", "bars": "values", "counter": "to",
-               "ring": "value", "connector": "to", "image": "src", "lowerthird": "title"}
+               "ring": "value", "connector": "to", "image": "src", "lowerthird": "title",
+               "card": "title", "line": "values", "donut": "segments", "progress": "value", "badge": "text"}
 MEDIA = {".png", ".jpg", ".jpeg", ".webp", ".mp4", ".webm", ".mov", ".m4v"}
 
 
@@ -28,6 +35,13 @@ def _media(src: object, where: str, root: pathlib.Path, problems: list[str]) -> 
         problems.append(f"{where} src {s!r} is not an image or video")
     elif not (root / "public" / s).exists():
         problems.append(f"{where} src public/{s} does not exist")
+
+
+def icon_names(root: pathlib.Path) -> set[str]:
+    """Keys of the generated icon table; an unknown name renders as an empty box."""
+    import re
+    path = root / "src" / "generated" / "icons.ts"
+    return set(re.findall(r'^  "([A-Za-z]+)":', path.read_text(encoding="utf-8"), re.M)) if path.exists() else set()
 
 
 def _unit(v: object) -> bool:
@@ -71,6 +85,10 @@ def validate(kind: str, bid: str, data: dict, seconds: float, root: pathlib.Path
         layers = data.get("layers") or []
         if not layers:
             problems.append(f"{bid}: gfx needs data.layers[]")
+        if data.get("palette") not in (None, *PALETTES):
+            problems.append(f"{bid}: palette {data.get('palette')!r} not in {sorted(PALETTES)}")
+        if data.get("backdrop") not in (None, *BACKDROPS):
+            problems.append(f"{bid}: backdrop {data.get('backdrop')!r} not in {sorted(BACKDROPS)}")
         for j, layer in enumerate(layers):
             t = layer.get("type")
             if t not in LAYERS:
@@ -85,6 +103,18 @@ def validate(kind: str, bid: str, data: dict, seconds: float, root: pathlib.Path
             for axis in ("x", "y"):
                 if axis in layer and not _unit(layer[axis]):
                     problems.append(f"{bid}: layer {j + 1} {axis} must be 0–1")
+            if t == "shape" and layer.get("shape") not in (None, *SHAPES):
+                problems.append(f"{bid}: layer {j + 1} shape {layer.get('shape')!r} not in {sorted(SHAPES)}")
+            if t == "text" and layer.get("fx") not in (None, *TEXT_FX):
+                problems.append(f"{bid}: layer {j + 1} fx {layer.get('fx')!r} not in {sorted(TEXT_FX)}")
+            out = layer.get("out")
+            if out is not None and (not isinstance(out, (int, float)) or out <= (at if isinstance(at, (int, float)) else 0)):
+                problems.append(f"{bid}: layer {j + 1} out={out!r} must come after at")
+            if t in ("icon", "card") and (layer.get("name") or layer.get("icon")):
+                name = layer.get("name") or layer.get("icon")
+                known = icon_names(root)
+                if known and name not in known:
+                    problems.append(f"{bid}: layer {j + 1} icon {name!r} is not in src/generated/icons.ts (camelCase, e.g. trendingUp)")
             if t == "image":
                 _media(layer.get("src"), f"{bid}: image layer {j + 1}", root, problems)
             if t == "text" and len(str(layer.get("text", "")).split()) > 8:

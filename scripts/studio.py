@@ -29,10 +29,18 @@ def run(cmd: list[str], cwd: pathlib.Path | None = None) -> int:
     return subprocess.run(cmd, cwd=str(cwd or ROOT)).returncode
 
 
+def node_modules() -> pathlib.Path:
+    """This checkout's node_modules, or the parent checkout's when run from a git worktree."""
+    for base in (ROOT, *ROOT.parents):
+        if (base / "node_modules" / "remotion").exists():
+            return base / "node_modules"
+    return ROOT / "node_modules"
+
+
 def node_bin(name: str) -> str | None:
     """Prefer the local node_modules/.bin so no global install is required."""
     exe = f"{name}.cmd" if sys.platform == "win32" else name
-    local = ROOT / "node_modules" / ".bin" / exe
+    local = node_modules() / ".bin" / exe
     return str(local) if local.exists() else shutil.which(name)
 
 
@@ -60,7 +68,7 @@ def doctor() -> int:
     print(f"node tool   {'found' if npx else 'MISSING (install Node 18+)'}")
     ok &= bool(npx)
 
-    deps = ROOT / "node_modules" / "remotion"
+    deps = node_modules() / "remotion"
     print(f"remotion    {'installed' if deps.exists() else 'MISSING — npm install'}")
     ok &= deps.exists()
 
@@ -84,7 +92,7 @@ def doctor() -> int:
     tl = ROOT / "src" / "generated" / "timeline.json"
     print(f"timeline    {'compiled' if tl.exists() else 'not compiled — run: studio.py timeline'}")
 
-    ff = list((ROOT / "node_modules" / "@remotion").glob("compositor-*/ffprobe*"))
+    ff = list((node_modules() / "@remotion").glob("compositor-*/ffprobe*"))
     print(f"ffmpeg      {'bundled with remotion' if ff else 'system PATH only'}")
 
     print("\nready" if ok else "\nnot ready — fix the MISSING lines")

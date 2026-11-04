@@ -11,7 +11,8 @@ Read in this order, and stop when you have what you need:
 3. `references/arabic-type.md` — hard rules; violating them is a defect, not a taste.
 4. `references/audio-and-voice.md` — if the request includes voice or music.
 5. `references/qa-gates.md` — the commands that decide whether you are done.
-   - Tutorial, character or motion graphics → `references/formats/visual-forms.md`.
+   - Tutorial, character or motion graphics → `references/formats/visual-forms.md`
+     (pro layer: palettes, backdrops, cards, charts) + `references/design-inspiration.md`.
    - The user's own recordings (talking head, shorts) → `references/formats/footage.md`.
    - Any voice, image, clip or stock asset from a service → `references/providers.md`.
    - Resuming a film → `python scripts/studio.py pipeline status` first.
@@ -165,6 +166,7 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
 - **Never claim "done" without the gate output in hand** — peak, RMS, clipped
   samples, black stretches, Arabic scan.
 - **One idea per beat.** If a beat needs two headlines, it is two beats.
+- **Western digits only (123), never ١٢٣**, in copy, counters and charts (`src/lib/rtl.ts`).
 - **Never sell with a price line.** The CTA is «التفاصيل على الخاص» or «للحصول على
   متجرك — تواصل معنا», never «السعر على الخاص».
 - **Data scenes are checked at 1:1.** A product card over a headline or a price

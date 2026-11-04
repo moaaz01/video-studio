@@ -70,3 +70,29 @@ an optional `v: {x, y, size, w, h}` override for vertical canvases.
 
 Numbers in a gfx beat are claims: they come from the intake, or the beat says
 "sample" on screen, as the starter does.
+
+<a id="gfx-pro"></a>
+### Pro layer: palettes, backdrops, depth (`references/starters/motion-graphics-pro.json`)
+
+| field | values | effect |
+|---|---|---|
+| `data.palette` | midnight-amber, electric-indigo, emerald-gold, ocean-cyan, sunset-plum, mono-red, sand-ink, paper-cobalt | every colour a layer does not set |
+| `data.backdrop` | mesh, grid, flow, topo, dots, beams, solid | a moving ground with grain + vignette |
+| `data.intensity` | 0–1.5 | how loud the ground is |
+| layer `z` | 0–2 | parallax drift; deeper = moves more |
+| layer `glow` | true | accent glow (one per frame) |
+| layer `out` | seconds | exit before the next idea |
+| layer `at` omitted | — | auto-stagger 0.14 s by order |
+| text `fx` | gradient, outline, marker | gradient fill, stroke (short bold words only), highlighter sweep |
+| shape | + hexagon, star, pill, arrow | |
+| `card` | `title`, `sub`, `icon`, `w` | frosted glass card, springs in |
+| `line` | `values`, `labels`, `suffix`, `w`, `h` | draws left → right, area fill, glowing last value |
+| `donut` | `segments[{value}]`, `center` | segments draw in sequence |
+| `progress` | `value` 0–1, `label`, `w` | fills right → left |
+| `badge` | `text`, `solid` | pill tag |
+| `bars` | + `ltr: true` | time series left → right |
+
+Icons are camelCase names from `src/generated/icons.ts` (`trendingUp`, `rocketLaunch`);
+the compiler rejects an unknown one, which used to render as an empty box. Where to
+find the taste, and how to turn a reference into these fields:
+[`../design-inspiration.md`](../design-inspiration.md).

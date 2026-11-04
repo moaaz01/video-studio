@@ -21,7 +21,7 @@
       "id": "g02", "kind": "gfx", "tone": "paper", "bars": 3,
       "data": {"layers": [
         {"type": "text", "text": "النمو خلال أربعة أشهر", "x": 0.5, "y": 0.16, "size": 0.26, "at": 0, "anim": "rise", "w": 0.8, "v": {"y": 0.2}},
-        {"type": "bars", "values": [12, 19, 27, 41], "labels": ["١", "٢", "٣", "٤"], "x": 0.5, "y": 0.58, "w": 0.5, "h": 0.5, "at": 0.3, "v": {"w": 0.8, "h": 0.35}},
+        {"type": "bars", "values": [12, 19, 27, 41], "labels": ["1", "2", "3", "4"], "x": 0.5, "y": 0.58, "w": 0.5, "h": 0.5, "at": 0.3, "v": {"w": 0.8, "h": 0.35}},
         {"type": "lowerthird", "title": "بيانات تجريبية", "sub": "استبدلها بأرقام العميل", "at": 1.2}
       ]}
     },
@@ -37,7 +37,7 @@
     {
       "id": "g04", "kind": "gfx", "tone": "emerald", "bars": 2,
       "data": {"layers": [
-        {"type": "icon", "name": "rocket_launch", "x": 0.5, "y": 0.38, "size": 0.2, "color": "#FFFFFF", "at": 0, "anim": "pop"},
+        {"type": "icon", "name": "rocketLaunch", "x": 0.5, "y": 0.38, "size": 0.2, "color": "#FFFFFF", "at": 0, "anim": "pop"},
         {"type": "text", "text": "التفاصيل على الخاص", "x": 0.5, "y": 0.64, "size": 0.3, "color": "#FFFFFF", "at": 0.3, "anim": "rise", "w": 0.8}
       ]}
     }

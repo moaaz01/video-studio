@@ -138,9 +138,42 @@ class KindTests(unittest.TestCase):
         problems, _ = kinds.validate("gfx", "g1", {"layers": [{"type": "counter", "to": 9, "at": 1}]}, 4.0, ROOT)
         self.assertEqual(problems, [])
 
+    def test_pro_gfx_vocabulary(self) -> None:
+        data = {"palette": "neon-soup", "backdrop": "lava", "layers": [
+            {"type": "card", "title": "x"}, {"type": "donut"}, {"type": "shape", "shape": "cloud"},
+            {"type": "text", "text": "x", "fx": "sparkle"}, {"type": "badge", "text": "x", "at": 2, "out": 1}]}
+        problems, _ = kinds.validate("gfx", "g1", data, 4.0, ROOT)
+        joined = " ".join(problems)
+        for needle in ("palette", "backdrop", "donut layer", "shape 'cloud'", "fx 'sparkle'", "out=1"):
+            self.assertIn(needle, joined)
+
+    def test_palettes_and_backdrops_match_the_renderer(self) -> None:
+        import re
+        ts = (ROOT / "src" / "look" / "palettes.ts").read_text(encoding="utf-8")
+        self.assertEqual(set(re.findall(r"^  '([a-z-]+)': \{bg", ts, re.M)), kinds.PALETTES)
+        bd = (ROOT / "src" / "components" / "Backdrop.tsx").read_text(encoding="utf-8")
+        union = re.search(r"BackdropVariant = ([^;]+);", bd).group(1)
+        self.assertEqual(set(re.findall(r"'([a-z]+)'", union)), kinds.BACKDROPS)
+
     def test_character_vocabulary(self) -> None:
         problems, _ = kinds.validate("character", "c1", {"pose": "dab", "expression": "smug"}, 4.0, ROOT)
         self.assertEqual(len(problems), 2)
+
+
+class NumeralsTests(unittest.TestCase):
+    """Project rule: on-screen digits are Western (123), never Arabic-Indic."""
+
+    def test_film_copy_uses_western_digits(self) -> None:
+        import re
+        hindi = re.compile("[٠-٩٪]")
+        paths = [ROOT / "film" / "film.json", *sorted((ROOT / "references" / "starters").glob("*.json")),
+                 *sorted((ROOT / "projects" / "qissat-raqam" / "episodes").glob("*.json"))]
+        offenders = [p.name for p in paths if hindi.search(p.read_text(encoding="utf-8"))]
+        self.assertEqual(offenders, [])
+
+    def test_renderer_default_is_western(self) -> None:
+        rtl = (ROOT / "src" / "lib" / "rtl.ts").read_text(encoding="utf-8")
+        self.assertIn("NUMERALS: 'western' | 'arabic-indic' = 'western'", rtl)
 
 
 class StarterCompileTests(unittest.TestCase):

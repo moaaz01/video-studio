@@ -44,7 +44,7 @@
         "keyword": "ستة",
         "card": {
           "type": "statement",
-          "value": "٦",
+          "value": "6",
           "label": "أسباب",
           "sub": "ليست قائمة ميزات — بل طريقة عمل"
         }
@@ -76,7 +76,7 @@
         "keyword": "المصدر",
         "card": {
           "type": "statement",
-          "value": "١",
+          "value": "1",
           "label": "مصدر واحد",
           "sub": "بلا خطوات مخفية ولا ملفات جانبية"
         }

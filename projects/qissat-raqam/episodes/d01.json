@@ -1,0 +1,323 @@
+{
+  "slug": "qr-d01",
+  "format": "launch",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "bpm": 120,
+  "look": "premium-warm",
+  "style": {
+    "template": "stats-impact",
+    "look": "premium-warm",
+    "motion": 1.0,
+    "background": "paper-glow",
+    "transitions": [
+      "blur",
+      "slide"
+    ]
+  },
+  "voice": {
+    "provider": "fish",
+    "model": "s2.1-pro-free",
+    "language": "ar",
+    "speed": 1.0
+  },
+  "beats": [
+    {
+      "id": "b01",
+      "kind": "gfx",
+      "tone": "ink",
+      "bars": 4,
+      "vo": [
+        "فِنْجَانُ قَهْوَةٍ كُلَّ يَوْمٍ... كَمْ يُكَلِّفُكَ حَقًّا؟"
+      ],
+      "data": {
+        "palette": "emerald-gold",
+        "backdrop": "beams",
+        "layers": [
+          {
+            "type": "text",
+            "text": "54750 ريال",
+            "x": 0.5,
+            "y": 0.42,
+            "size": 0.95,
+            "at": 0.1,
+            "anim": "pop",
+            "w": 0.84,
+            "fx": "gradient",
+            "v": {
+              "size": 0.85,
+              "w": 0.92
+            }
+          },
+          {
+            "type": "text",
+            "text": "فنجان بـ15 ريالاً يومياً لعشر سنوات",
+            "x": 0.5,
+            "y": 0.72,
+            "size": 0.22,
+            "at": 0.9,
+            "anim": "rise",
+            "w": 0.84,
+            "v": {
+              "w": 0.9
+            }
+          }
+        ]
+      },
+      "kicker": "مالك بالأرقام"
+    },
+    {
+      "id": "b02",
+      "kind": "gfx",
+      "tone": "paper",
+      "bars": 3,
+      "vo": [
+        "لِنَحْسُبْهَا مَعًا، خُطْوَةً خُطْوَةً."
+      ],
+      "data": {
+        "palette": "emerald-gold",
+        "backdrop": "mesh",
+        "layers": [
+          {
+            "type": "text",
+            "text": "كم يكلّفك فنجانك اليومي؟",
+            "x": 0.5,
+            "y": 0.45,
+            "size": 0.4,
+            "at": 0.1,
+            "anim": "rise",
+            "w": 0.84
+          }
+        ]
+      }
+    },
+    {
+      "id": "b03",
+      "kind": "gfx",
+      "tone": "paper",
+      "bars": 5,
+      "vo": [
+        "خَمْسَةَ عَشَرَ رِيَالًا فِي اليَوْمِ تَبْدُو مَبْلَغًا صَغِيرًا لَا يَسْتَحِقُّ التَّفْكِير."
+      ],
+      "data": {
+        "palette": "emerald-gold",
+        "backdrop": "grid",
+        "layers": [
+          {
+            "type": "text",
+            "text": "في اليوم",
+            "x": 0.5,
+            "y": 0.17,
+            "size": 0.3,
+            "at": 0.0,
+            "anim": "rise",
+            "w": 0.84,
+            "v": {
+              "w": 0.9
+            }
+          },
+          {
+            "type": "counter",
+            "to": 15,
+            "suffix": " ريال",
+            "x": 0.5,
+            "y": 0.5,
+            "size": 0.55,
+            "at": 0.2,
+            "dur": 1.8,
+            "glow": true,
+            "v": {
+              "size": 0.5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "b04",
+      "kind": "gfx",
+      "tone": "ink",
+      "bars": 5,
+      "vo": [
+        "فِي السَّنَةِ: خَمْسَةُ آلَافٍ وَأَرْبَعُمِئَةٍ وَخَمْسَةٌ وَسَبْعُونَ رِيَالًا."
+      ],
+      "data": {
+        "palette": "emerald-gold",
+        "backdrop": "topo",
+        "layers": [
+          {
+            "type": "text",
+            "text": "في السنة",
+            "x": 0.5,
+            "y": 0.17,
+            "size": 0.3,
+            "at": 0.0,
+            "anim": "rise",
+            "w": 0.84,
+            "v": {
+              "w": 0.9
+            }
+          },
+          {
+            "type": "counter",
+            "to": 5475,
+            "suffix": " ريال",
+            "x": 0.5,
+            "y": 0.5,
+            "size": 0.55,
+            "at": 0.2,
+            "dur": 1.8,
+            "glow": true,
+            "v": {
+              "size": 0.5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "b05",
+      "kind": "gfx",
+      "tone": "paper",
+      "bars": 5,
+      "vo": [
+        "وَفِي عَشْرِ سَنَوَاتٍ: أَرْبَعَةٌ وَخَمْسُونَ أَلْفًا وَسَبْعُمِئَةٍ وَخَمْسُونَ رِيَالًا."
+      ],
+      "data": {
+        "palette": "emerald-gold",
+        "backdrop": "flow",
+        "layers": [
+          {
+            "type": "text",
+            "text": "في عشر سنوات",
+            "x": 0.5,
+            "y": 0.17,
+            "size": 0.3,
+            "at": 0.0,
+            "anim": "rise",
+            "w": 0.84,
+            "v": {
+              "w": 0.9
+            }
+          },
+          {
+            "type": "bars",
+            "values": [
+              5475,
+              16425,
+              27375,
+              54750
+            ],
+            "labels": [
+              "سنة",
+              "3 سنوات",
+              "5 سنوات",
+              "10 سنوات"
+            ],
+            "suffix": "",
+            "ltr": true,
+            "x": 0.5,
+            "y": 0.58,
+            "w": 0.7,
+            "h": 0.5,
+            "at": 0.3,
+            "v": {
+              "w": 0.8,
+              "h": 0.42,
+              "y": 0.56
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "b06",
+      "kind": "gfx",
+      "tone": "ink",
+      "bars": 4,
+      "vo": [
+        "لَيْسَ المَقْصُودُ أَنْ تَتْرُكَ قَهْوَتَكَ، بَلْ أَنْ تَعْرِفَ ثَمَنَ عَادَاتِكَ الصَّغِيرَةِ."
+      ],
+      "data": {
+        "palette": "emerald-gold",
+        "backdrop": "dots",
+        "layers": [
+          {
+            "type": "shape",
+            "shape": "ring",
+            "x": 0.5,
+            "y": 0.5,
+            "size": 0.9,
+            "at": 0,
+            "anim": "spin",
+            "glow": true,
+            "z": 1
+          },
+          {
+            "type": "text",
+            "text": "ثمن العادة الصغيرة يكبر مع الوقت",
+            "x": 0.5,
+            "y": 0.5,
+            "size": 0.3,
+            "at": 0.3,
+            "anim": "rise",
+            "w": 0.5,
+            "v": {
+              "w": 0.62
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "b07",
+      "kind": "gfx",
+      "tone": "emerald",
+      "bars": 3,
+      "vo": [
+        "رَقْمٌ جَدِيدٌ كُلَّ يَوْمٍ. تَابِعْ قِصَّةَ رَقَم."
+      ],
+      "data": {
+        "palette": "emerald-gold",
+        "backdrop": "mesh",
+        "layers": [
+          {
+            "type": "text",
+            "text": "قصّة رقم",
+            "x": 0.5,
+            "y": 0.34,
+            "size": 0.5,
+            "at": 0.1,
+            "anim": "pop",
+            "w": 0.84,
+            "fx": "gradient"
+          },
+          {
+            "type": "text",
+            "text": "رقم جديد كل يوم",
+            "x": 0.5,
+            "y": 0.5,
+            "size": 0.26,
+            "at": 0.6,
+            "anim": "rise",
+            "w": 0.84
+          },
+          {
+            "type": "text",
+            "text": "الحساب: 15×365×10 (السعر مثال)",
+            "x": 0.5,
+            "y": 0.72,
+            "size": 0.15,
+            "at": 1.0,
+            "anim": "rise",
+            "w": 0.84,
+            "v": {
+              "w": 0.9
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

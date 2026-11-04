@@ -25,9 +25,11 @@ errors, not preferences.
 - A Latin token inside Arabic (`StudyAI`, `t.me/studyai0`) keeps its own internal
   LTR order and is bidi-isolated: wrap it in a span with `unicodeBidi: 'isolate'`
   so the surrounding number or dot cannot steal it.
-- Numbers: Western digits (`0-9`) by default for a modern product; Arabic-Indic
-  (`٠-٩`) only when the product itself uses them. Pick one per film and apply it
-  everywhere, including counters.
+- Numbers: **Western digits (`0-9`) everywhere — the project rule.** `toAr()` in
+  `src/lib/rtl.ts` normalises any input to `NUMERALS` (default `western`), so counters,
+  charts and percentages print `123` and `%`. Switch `NUMERALS` to `arabic-indic` only
+  for a product whose own UI prints `١٢٣`, and then for the whole film. Copy in
+  film.json uses `0-9` too.
 - A URL or handle in the end card is Latin and LTR — lay it out as its own block,
   never inline inside a sentence.
 - Fractions/percent: `48 صفحة` (number first, RTL flow puts it on the right).
