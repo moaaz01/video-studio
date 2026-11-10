@@ -1,0 +1,47 @@
+{
+  "$comment": "The capture manifest. `screen` must exist in src/screens/index.tsx; `brand` must exist in brands.json. Width/height are CSS pixels; scale is the device pixel ratio used by Playwright.",
+  "version": 1,
+  "outDir": "public/mockups",
+  "screens": [
+    {
+      "slug": "waha-storefront",
+      "title": "Storefront — mobile",
+      "screen": "storefront",
+      "brand": "waha",
+      "mode": "light",
+      "width": 412,
+      "height": 915,
+      "scale": 2
+    },
+    {
+      "slug": "waha-product",
+      "title": "Service detail — mobile",
+      "screen": "product",
+      "brand": "waha",
+      "mode": "light",
+      "width": 412,
+      "height": 915,
+      "scale": 2
+    },
+    {
+      "slug": "waha-dashboard",
+      "title": "Store dashboard — desktop",
+      "screen": "dashboard",
+      "brand": "waha",
+      "mode": "light",
+      "width": 1440,
+      "height": 900,
+      "scale": 2
+    },
+    {
+      "slug": "waha-dashboard-dark",
+      "title": "Store dashboard — desktop, dark",
+      "screen": "dashboard",
+      "brand": "waha",
+      "mode": "dark",
+      "width": 1440,
+      "height": 900,
+      "scale": 2
+    }
+  ]
+}

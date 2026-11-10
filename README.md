@@ -8,7 +8,9 @@ coding agent can pick it up and use it.
 It is not a template with placeholders. It is a small studio with an opinion:
 
 - **Fidelity is the rule.** If the app has a screen, the film shows *that* screen,
-  same type, same spacing, same Arabic. No invented UI, no fake dashboards.
+  same type, same spacing, same Arabic. No invented UI, no fake dashboards. When a
+  screen does not exist yet, it is built as a **declared mockup**
+  ([`references/mockups.md`](references/mockups.md)), never passed off as the real app.
 - **Arabic is designed, not styled.** Word-level reveals, no letter-spacing, no
   italics, bidi isolation, vocalised voice-over.
 - **Sound is composed to the cut**, not laid over it: a 120 BPM bed, foley on
@@ -134,6 +136,7 @@ twelve non-negotiables that override any aesthetic preference.
 src/theme.ts            design tokens (paper/ink palette, type scale, phone geometry)
 src/brand.ts            the only file that changes between clients
 src/components/         Phone · Surfaces · Overlays · Text · Ico · Brand · StudyAIScreen · DemoUI
+tools/mockups/          Astryx UI factory (separate Vite app; see references/mockups.md)
 src/lib/                animation + RTL/bidi helpers
 src/scenes/             Hook · Device · Stat · Cta · Explainer · Kinetic · Tutorial · Character · Gfx · Footage
 src/store/              Open · Store · Admin · Security · Close + the product UI kit
@@ -186,6 +189,8 @@ timeline carries the copy, so a new scene needs no changes to the script layer.
 python scripts/studio.py doctor              # python deps · node · remotion · fonts · key · timeline
 python scripts/studio.py new my-film         # scaffold film/my-film.json + six-block brief
 python scripts/studio.py ui --dir <app>      # scan the real project -> film/ui-source.json
+python scripts/studio.py mockups capture      # no real screens? Astryx -> 2× stills
+python scripts/studio.py mockups verify --strict
 python scripts/studio.py refs whatships "<product>"   # what already shipped
 python scripts/studio.py refs add --url ... --move ... --why ...
 python scripts/studio.py refs check --min 2  # phase-2 gate: references are pinned

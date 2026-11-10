@@ -29,6 +29,8 @@ python scripts/studio.py intake questions --format explainer
 python scripts/studio.py intake check --intake film/intake.json
 python scripts/studio.py director --intake film/intake.json
 python scripts/studio.py ui --dir <app>  # scan the real project -> film/ui-source.json
+python scripts/studio.py mockups capture      # no real screens? Astryx -> public/mockups/*.png
+python scripts/studio.py mockups verify --strict
 python scripts/studio.py refs check --min 2   # are the references pinned?
 python scripts/studio.py timeline      # film/film.json -> src/generated/timeline.json
 python scripts/studio.py format explainer --film film/film.json --strict
@@ -93,8 +95,10 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
    string, colour and font family you print must be in `film/ui-source.json`. Then
    `src/brand.ts` (name, mark, accent, action, contacts) and the screens in
    `src/components/DemoUI.tsx`, or the client's real screens. For real pixels, capture
-   the device with REA (`references/fidelity-pipeline.md`). Scenes read copy from the
-   timeline; keep components dumb.
+   the device with REA (`references/fidelity-pipeline.md`). If the client has no
+   screens yet, build the concept in `tools/mockups/` and capture 2× stills with
+   `studio.py mockups capture` (`references/mockups.md`); never present a mockup as
+   the real app. Scenes read copy from the timeline; keep components dumb.
 6. **Look and cut** *(before the first render)*: `studio.py looks` -> pick one preset
    -> write `film/style.json` (`look`, `motion`, `background`, `transitions`, `sfx`).
    Then `studio.py storyboard` and `studio.py advise`: the sheet is what the client
@@ -131,6 +135,8 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
 | `src/film/Captions.tsx` | Burned captions from `src/generated/captions.json`; 9:16 only, display copy without tashkeel. |
 | `film/style.json` + `film/voices.json` | The film's declared cut and its voice catalogue (clones + verified stock ids). |
 | `src/components/DemoUI.tsx` | The mock product screen. Replace with the real UI. |
+| `tools/mockups/` | The Astryx UI factory: `brands.json`, `screens.json`, pure screens, 2× capture. Never imported by `src/` or Remotion. |
+| `public/mockups/` | Captured stills + `manifest.json` (size, bytes, sha256); consumed with `staticFile`. |
 | `src/audio/Soundtrack.tsx` | The mix: bed, measured VO cues, foley on the cuts. Mounted once in `Film.tsx`. |
 | `scripts/make_bed.py` | Composes the bed from `timeline.json`; asserts RMS/peak. |
 | `scripts/master_audio.py` | One audio gain stage over the masters; video stream copied, result re-measured. |
@@ -152,6 +158,10 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
 - **Never re-stage a real person.** Footage is cut and captioned, never re-voiced
   or re-animated. An avatar or a voice clone needs that person's written consent.
 
+- **A designed mockup is not the real app.** If the client has screens, scan them
+  with `studio.py ui` and capture them with REA; the Astryx factory is for screens
+  that do not exist yet. Its `waha` fixture is not a catalogue — never ship fixture
+  products, prices or names in a client film.
 - **Never invent product facts, screens, numbers or testimonials.** Fidelity to
   the real app is the first requirement of this studio. The intake is blocking:
   if the user has not supplied it, ask; do not fill the gap. It is also measurable:

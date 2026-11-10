@@ -292,6 +292,7 @@ DELEGATES = {
     "providers": "providers.py",
     "footage": "footage.py",
     "pipeline": "pipelines.py",
+    "mockups": "mockups.py",
 }
 
 

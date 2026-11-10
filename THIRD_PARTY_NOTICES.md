@@ -26,6 +26,19 @@ MIT-licensed; it has its own license with commercial-use terms. See
 <https://www.remotion.dev/license> and the `LICENSE` file in the installed package.
 The MIT license of this repo does not override it.
 
+## The mockup factory (Astryx)
+
+`tools/mockups/` uses **Astryx** (`@astryxdesign/core`,
+`@astryxdesign/theme-neutral`) by Meta, licensed **MIT**, and **StyleX**
+(`@stylexjs/stylex`), licensed **MIT**. Icons come from **Lucide**
+(`lucide-react`), licensed **ISC**. The factory is a separate app; none of these
+packages is imported by the Remotion bundle.
+
+The `waha` brand, its services, prices, ratings, customer names and order numbers
+in `tools/mockups/src/data/waha.ts` are **fictional fixtures** for layout testing.
+They are not a real store and are not covered by any client's rights. Replace them
+before capturing screens for a film.
+
 ## Node and Python dependencies
 
 `package-lock.json` and `requirements.txt` pin the full dependency tree. Each package

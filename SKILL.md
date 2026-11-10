@@ -99,7 +99,7 @@ open gate — a late discovery re-renders the whole film.
 | 2 | Direction | a named direction from `references/visual-direction.md` + palette/motion/type tokens, grounded by **two pinned reference cards** | `corpus.py check --min 2` passes and you can name the exact move you are borrowing, per card |
 | 3 | Script | `film/film.json` — beat grid, on-screen copy, VO lines with tashkeel | every beat matches one line; reading time ≤ beat length |
 | 4 | Voice | `src/generated/vo.json` + wavs via `scripts/voice.py` | every line measured; total speech ≥ 55 % of runtime |
-| 5 | Build | `film/ui-source.json` scanned from the real app, scenes in `src/scenes/`, assembled by `src/film/Film.tsx` | typecheck clean, still per beat rendered, every on-screen string exists in the app's own table |
+| 5 | Build | `film/ui-source.json` scanned from the real app (or `tools/mockups/` when no real UI exists), scenes in `src/scenes/`, assembled by `src/film/Film.tsx` | typecheck clean, still per beat rendered, every on-screen string exists in the app's own table or is a declared mockup fixture |
 | 6 | Mix | bed composed from the timeline by `scripts/make_bed.py`, VO placed from `vo.json`, foley on the 120 BPM cuts by `src/audio/Soundtrack.tsx` | bed RMS ≈ −19 dBFS, peak ≤ −3 dBFS, 0 clipped samples, and `qa --require-audio` sees an AAC track |
 | 7 | QA | `out/qa/` sheet + gates from `references/qa-gates.md` | every gate green, nothing read only from logs |
 | 8 | Deliver | `out/masters/film_*.mp4` (CRF 10 / png hero, CRF 16 teasers), the QA sheet, thumbnail/cover stills, and `python scripts/package_project.py` -> `projects/<slug>/` with `manifest.json` + `SHA256SUMS` | names, durations, sizes and hashes read from the delivered files; `sha256sum -c` passes; the hand-off list matches what the user can actually open |
@@ -182,6 +182,8 @@ not from a blank `film.json`.
 ```bash
 python scripts/studio.py doctor          # env, fonts, ffmpeg, key, deps
 python scripts/studio.py ui --dir <app>  # scan the real project -> film/ui-source.json
+python scripts/studio.py mockups capture   # no real screens? Astryx -> public/mockups/*.png
+python scripts/studio.py mockups verify --strict
 python scripts/studio.py refs whatships "<product>"   # what already shipped
 python scripts/studio.py refs motion product-ui        # what the corpus has
 python scripts/studio.py refs tech                       # how a move is built, and if this engine has it
@@ -313,6 +315,7 @@ scripts/motion_audit.py  still %, holds, cuts, flow on the delivered MP4
 scripts/voice_elevenlabs.py  optional TTS + word timestamps
 scripts/qa.py             probes, blackdetect, loudness, Arabic scan, sheets
 scripts/ui_source.py      scans a real app project -> film/ui-source.json; REA capture bridge
+tools/mockups/            Astryx UI factory -> public/mockups/*.png + manifest (references/mockups.md)
 scripts/corpus.py         what shipped (whatships), what the corpus has (prompt-motion),
                           how a move is built (tech), cards, gates
 scripts/package_project.py  a film project folder: assets copied, masters measured, manifest + SHA256SUMS
