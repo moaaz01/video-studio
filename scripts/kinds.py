@@ -15,12 +15,13 @@ POSES = {"idle", "wave", "point", "cheer", "think", "present"}
 EXPRESSIONS = {"neutral", "happy", "surprised", "thinking", "concerned", "confident"}
 HAIR = {"short", "long", "hijab", "cap", "none"}
 LAYERS = {"shape", "path", "text", "icon", "bars", "counter", "ring", "connector", "image", "lowerthird",
-          "card", "line", "donut", "progress", "badge"}
+          "card", "line", "donut", "progress", "badge", "burst"}
 # mirrors src/look/palettes.ts and src/components/Backdrop.tsx (a test keeps them in sync)
 PALETTES = {"midnight-amber", "electric-indigo", "emerald-gold", "ocean-cyan", "sunset-plum", "mono-red", "sand-ink", "paper-cobalt"}
 BACKDROPS = {"mesh", "grid", "flow", "topo", "dots", "beams", "solid"}
 SHAPES = {"circle", "rect", "ring", "blob", "triangle", "hexagon", "star", "pill", "arrow"}
 TEXT_FX = {"gradient", "outline", "marker"}
+BURSTS = {"confetti", "sparks", "ring"}
 LAYER_NEEDS = {"path": "d", "text": "text", "icon": "name", "bars": "values", "counter": "to",
                "ring": "value", "connector": "to", "image": "src", "lowerthird": "title",
                "card": "title", "line": "values", "donut": "segments", "progress": "value", "badge": "text"}
@@ -105,6 +106,8 @@ def validate(kind: str, bid: str, data: dict, seconds: float, root: pathlib.Path
                     problems.append(f"{bid}: layer {j + 1} {axis} must be 0–1")
             if t == "shape" and layer.get("shape") not in (None, *SHAPES):
                 problems.append(f"{bid}: layer {j + 1} shape {layer.get('shape')!r} not in {sorted(SHAPES)}")
+            if t == "burst" and layer.get("kind") not in (None, *BURSTS):
+                problems.append(f"{bid}: layer {j + 1} burst kind {layer.get('kind')!r} not in {sorted(BURSTS)}")
             if t == "text" and layer.get("fx") not in (None, *TEXT_FX):
                 problems.append(f"{bid}: layer {j + 1} fx {layer.get('fx')!r} not in {sorted(TEXT_FX)}")
             out = layer.get("out")

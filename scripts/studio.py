@@ -293,6 +293,7 @@ DELEGATES = {
     "footage": "footage.py",
     "pipeline": "pipelines.py",
     "mockups": "mockups.py",
+    "craft": "craft.py",
 }
 
 

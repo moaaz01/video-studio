@@ -26,6 +26,15 @@ find the exact file for a question.
   chooser; a five-axis scoring rubric.
 - [references/reference-sources.md](references/reference-sources.md): how to mine
   prompt-motion.com, whatships.com and the `rea` toolkit without copying them.
+- [references/story.md](references/story.md): three storylines (devices × forms),
+  hook, turn, echoing end; gate `studio.py craft storylines`.
+- [references/styles.md](references/styles.md) + `references/styles.json`: twelve
+  style cards mapped to look/palette/backdrop/cuts; `studio.py craft styles apply`.
+- [references/craft.md](references/craft.md): the craft gate (P0/P1/P2: read time,
+  text size, glows, stagger, dead stretch), the review loop, `REVIEW.md`, reference
+  breakdowns.
+- [references/external-tools.md](references/external-tools.md): Blender, three.js,
+  ComfyUI, GSAP, pixelfx, HyperFrames, rea-video: when, and how their output enters.
 - [references/motion-grammar.md](references/motion-grammar.md): grid and clock,
   easing family, universal entrance, two-transition rule, camera, rhythm curve.
 - [references/arabic-type.md](references/arabic-type.md): the five hard rules,

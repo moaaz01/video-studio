@@ -79,7 +79,7 @@ def viz(v: dict) -> list[dict]:
                   "v": {"y": 0.5, "size": 0.3}}] if v.get("earth") else []
         return [*earth, {"type": "path", "d": v.get("d", CURVE), "x": 0.5, "y": 0.55, "size": 0.6, "glow": True, "width": 5,
                  "at": 0.3, "dur": 2.0, "v": {"size": 0.8, "y": 0.5}},
-                text(v.get("note", "رسم توضيحي"), 0.9, 0.12, 1.5, v={"w": 0.9})]
+                text(v.get("note", "رسم توضيحي"), 0.9, 0.12, 1.5, v={"w": 0.9, "size": 0.2})]
     raise SystemExit(f"unknown viz {kind!r}")
 
 
@@ -124,7 +124,7 @@ def build(spec: dict) -> dict:
     beats.append(beat("b07", "end", [
         text(BRAND, 0.34, 0.5, 0.1, anim="pop", fx="gradient"),
         text(TAGLINE, 0.5, 0.26, 0.6),
-        text(spec["src"], 0.72, 0.15, 1.0, v={"w": 0.9})], spec["end_vo"]))
+        text(spec["src"], 0.72, 0.15, 1.0, v={"w": 0.9, "size": 0.2})], spec["end_vo"]))
 
     return {
         "slug": f"qr-d{spec['day']:02d}", "format": "launch", "fps": 30, "width": 1920, "height": 1080, "bpm": 120,

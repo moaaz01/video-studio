@@ -91,6 +91,7 @@ Numbers in a gfx beat are claims: they come from the intake, or the beat says
 | `progress` | `value` 0–1, `label`, `w` | fills right → left |
 | `badge` | `text`, `solid` | pill tag |
 | `bars` | + `ltr: true` | time series left → right |
+| `burst` | `kind`: sparks, confetti, ring; `count` (≤ 80), `dur` | one-shot particle accent on a landing (the number, the badge, the payoff); seeded, so renders repeat. Once or twice a film |
 
 Icons are camelCase names from `src/generated/icons.ts` (`trendingUp`, `rocketLaunch`);
 the compiler rejects an unknown one, which used to render as an empty box. Where to

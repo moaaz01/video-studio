@@ -16,6 +16,9 @@ Read in this order, and stop when you have what you need:
    - The user's own recordings (talking head, shorts) → `references/formats/footage.md`.
    - Any voice, image, clip or stock asset from a service → `references/providers.md`.
    - Resuming a film → `python scripts/studio.py pipeline status` first.
+   - Any film over 15 s → `references/story.md` (three storylines) + `references/styles.md` (a style card).
+   - Before every render → `references/craft.md` (`craft check`; the review loop and `REVIEW.md`).
+   - 3D, generated images/clips, GSAP, game-style effects → `references/external-tools.md`.
 6. `references/PLAYBOOK-cobalt-ledger.md` — the 48 s data-film recipe, if the brief
    is a store/economics film. Copy it; do not start from a blank `film.json`.
 
@@ -44,6 +47,10 @@ python scripts/studio.py captions      # cue JSON + wide/vertical SRT, self-chec
 python scripts/studio.py shotlist <brief> --out film/plan.json   # brief -> plan + shots
 python scripts/studio.py provenance --strict   # captures match their hashes
 python scripts/studio.py advise        # measured design review before you render
+python scripts/studio.py craft check --strict --review film/REVIEW.md  # tells of a generated film, P0 blocks
+python scripts/studio.py craft storylines film/STORYLINES.md  # three storylines, one picked
+python scripts/studio.py craft styles list   # 12 style cards; `apply <id> --film ...` wires one in
+python scripts/studio.py craft breakdown <ref.mp4>   # learn from a reference: shots, lengths, stills
 python scripts/studio.py storyboard    # out/storyboard/sheet.png: real panels, real Arabic
 python scripts/studio.py looks         # one frame in every look: let the client choose
 python scripts/studio.py eval          # golden briefs: schema + compile + score floor
@@ -99,13 +106,14 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
    screens yet, build the concept in `tools/mockups/` and capture 2× stills with
    `studio.py mockups capture` (`references/mockups.md`); never present a mockup as
    the real app. Scenes read copy from the timeline; keep components dumb.
-6. **Look and cut** *(before the first render)*: `studio.py looks` -> pick one preset
+6. **Look and cut** *(before the first render)*: start from a style card
+   (`studio.py craft styles apply <id> --film film/<slug>.json`), then `studio.py looks` -> confirm one preset
    -> write `film/style.json` (`look`, `motion`, `background`, `transitions`, `sfx`).
    Then `studio.py storyboard` and `studio.py advise`: the sheet is what the client
    annotates, the review is what you fix. Guide: `references/cinematic-look.md`.
 7. **Mix**: `python scripts/studio.py score` — 120 BPM bed, foley on cuts only
    (see the foley table), levelled to peak −1.4 dBFS / RMS −20…−23.
-8. **QA**: run the gates. Report *measured* numbers, from the delivered MP4.
+8. **QA**: `studio.py craft check --strict --review film/REVIEW.md` before the render, then the gates. Report *measured* numbers, from the delivered MP4.
    `python scripts/qa.py` also scans every source file for Arabic mojibake.
 9. **Deliver**: `python scripts/package_project.py --project projects/<slug>` — the
    only step that produces the folder you hand over (assets + masters + 11 stills +
@@ -146,7 +154,8 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
 | `scripts/advise.py` | Measured design review; exit 1 with `--strict` on a MUST. |
 | `scripts/looks.py` | Look variants as real frames, for the client to choose from. |
 | `scripts/storyboard.py` | Storyboard sheet + optional per-beat stills. |
-| `scripts/mcp_server.py` | MCP stdio server: 25 tools + 7 resources (film, timeline, grade, captions, ui-source, roadmap, skill). |
+| `scripts/craft.py` + `references/styles.json` | Craft gate (P0/P1/P2), storylines gate, 12 style cards, reference breakdown. Docs: `references/craft.md`, `story.md`, `styles.md`. |
+| `scripts/mcp_server.py` | MCP stdio server: 27 tools + 7 resources (film, timeline, grade, captions, ui-source, roadmap, skill). |
 | `film/state.json`, `film/decisions.jsonl`, `film/ledger.jsonl` | Per-film working state: pipeline stage + approvals, why each provider was chosen, money spent. Gitignored. |
 | `docs/ROADMAP-v2.md` | The development campaign: axes, competitor matrix, priorities, gates. |
 
@@ -175,6 +184,7 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
 - **Never trust a render's own metrics.** Probe the MP4 (`scripts/qa.py`).
 - **Never claim "done" without the gate output in hand** — peak, RMS, clipped
   samples, black stretches, Arabic scan.
+- **No P0 from `craft check` at render time**, and a `REVIEW.md` with the delivery.
 - **One idea per beat.** If a beat needs two headlines, it is two beats.
 - **Western digits only (123), never ١٢٣**, in copy, counters and charts (`src/lib/rtl.ts`).
 - **Never sell with a price line.** The CTA is «التفاصيل على الخاص» or «للحصول على

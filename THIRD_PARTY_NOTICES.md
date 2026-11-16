@@ -76,6 +76,25 @@ of the source. `references/prompt-packs/` contains prompts written for this stud
 informed by the linked public material. If you reuse a linked source, check its own
 license and attribution requirements.
 
+## Ideas adapted from other projects
+
+No code was copied from these projects. The methods below were adapted, rewritten for
+this engine and for Arabic, and are credited here; some tables (story devices and
+forms, the transition feedback map) follow the structure of the HyperFrames originals.
+
+- **HyperFrames** (HeyGen, Apache-2.0): review loop (P0/P1/P2, phone sheet, REVIEW.md),
+  measurable craft checks (unread lines, dead stretches, small text), titles that land
+  and hold, transitions with a cause, three storylines of devices and forms.
+- **impeccable** (Paul Bakaus, Apache-2.0): deterministic slop rules as a gate.
+- **unslop** (Damir Sokolovsky, CC BY 4.0, https://github.com/heydamir/unslop): audit
+  first, then a direction; the anti-template checks in `references/craft.md`.
+- **Lemo-Opuscar** (lemomo-ai): the general idea of one card per style, and of checking
+  a new film against the starter it came from. Its styles, demos and texts were not used.
+- **rea-video** (Apache-2.0): shot-by-shot reverse engineering of a reference video,
+  basis for `studio.py craft breakdown`.
+- **pixelfx** (MIT): one-shot particle accents, basis for the gfx `burst` layer
+  (written from scratch).
+
 ## No warranty
 
 The studio is provided “as is”. The authors are not liable for a claim arising from a

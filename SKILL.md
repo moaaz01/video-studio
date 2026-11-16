@@ -96,7 +96,7 @@ open gate — a late discovery re-renders the whole film.
 | # | Phase | Produces | Exit gate |
 |---|---|---|---|
 | 1 | Brief | `film/brief.md` from `film/brief.template.md` — six labelled blocks (inputs, direction, structure, build, gotchas, start) | one sentence: "for X, the film proves Y, so they do Z"; every block filled |
-| 2 | Direction | a named direction from `references/visual-direction.md` + palette/motion/type tokens, grounded by **two pinned reference cards** | `corpus.py check --min 2` passes and you can name the exact move you are borrowing, per card |
+| 2 | Direction | three storylines then one (`references/story.md`, `film/STORYLINES.md`), a style card (`craft styles apply <id>`, `references/styles.md`), a named direction from `references/visual-direction.md`, grounded by **two pinned reference cards** | `craft storylines` and `corpus.py check --min 2` pass, and you can name the exact move you are borrowing, per card |
 | 3 | Script | `film/film.json` — beat grid, on-screen copy, VO lines with tashkeel | every beat matches one line; reading time ≤ beat length |
 | 4 | Voice | `src/generated/vo.json` + wavs via `scripts/voice.py` | every line measured; total speech ≥ 55 % of runtime |
 | 5 | Build | `film/ui-source.json` scanned from the real app (or `tools/mockups/` when no real UI exists), scenes in `src/scenes/`, assembled by `src/film/Film.tsx` | typecheck clean, still per beat rendered, every on-screen string exists in the app's own table or is a declared mockup fixture |
@@ -205,6 +205,10 @@ python scripts/studio.py still 502       # one frame, 1:1 crop, for eyeballing
 python scripts/studio.py looks           # the same beat in every look, for the client
 python scripts/studio.py storyboard      # sheet.png: real panels + VO, to annotate
 python scripts/studio.py advise          # measured review before spending render time
+python scripts/studio.py craft check --strict --review film/REVIEW.md   # P0/P1/P2 tells of a generated film
+python scripts/studio.py craft storylines film/STORYLINES.md   # three storylines, one picked
+python scripts/studio.py craft styles list | apply <id> --film film/film.json   # 12 style cards -> engine
+python scripts/studio.py craft breakdown <reference.mp4>   # shot list + stills of a reference video
 python scripts/studio.py eval            # golden briefs must compile and score >= 90
 python scripts/studio.py lut             # palette -> grade curves (and .cube for later)
 python scripts/studio.py safe <still> --preset reels --strict   # platform UI bands
@@ -322,11 +326,16 @@ scripts/package_project.py  a film project folder: assets copied, masters measur
 scripts/advise.py         measured design review: reading time, contrast, rhythm, cta, look
 scripts/looks.py          the same beat in every look -> out/looks/, for the client
 scripts/storyboard.py     out/storyboard/sheet.png, rendered by the engine itself
-scripts/mcp_server.py     MCP over stdio: 25 tools, 7 resources, no SDK, for any agent
+scripts/mcp_server.py     MCP over stdio: 27 tools, 7 resources, no SDK, for any agent
 scripts/providers.py      provider catalogue: 7-axis scoring, budget modes, ledger, decision log
 scripts/pipelines.py      staged pipelines: file/command/approval gates, film/state.json
 scripts/footage.py        silence -> EDL, transcript, scored shorts, EDL -> beats, rough cut
 scripts/kinds.py          compile checks for tutorial / character / gfx / footage beats
+scripts/craft.py          craft gate (P0/P1/P2), storylines gate, style cards, reference breakdown
+references/craft.md       the craft numbers + the review loop + REVIEW.md
+references/story.md       three storylines: devices, forms, hook, turn, ending
+references/styles.md      the style library (styles.json) and how to add one
+references/external-tools.md  3D, image/video generation, GSAP, effects: when and how they enter a film
 tests/                    unit tests for the engines (python -m unittest discover -s tests)
 references/starters/      starter films: tutorial, character, motion-graphics, talking-head
 src/                      the Remotion engine (theme, type, motion, film, scenes)
@@ -360,6 +369,10 @@ examples/                 a shipped 118 s film as the worked example
 | A character that talks without VO | No voice means no word timings, so the mouth rests. Voice the line or drop the bubble |
 | Cutting every pause in a talk | Pauses under 0.45 s are prosody. Raise `--min-silence` before you lower the threshold |
 | Choosing a provider by habit | `providers pick` ranks on Arabic, licence and availability too, and logs why |
+| Good motion around no story | Write three storylines with different devices and forms, pick one, then beat it out. `craft storylines` checks it |
+| Titles that breathe, float or pulse after landing | A landed title holds dead still; the ground or camera moves. `craft check` flags it |
+| A line on screen for less than it takes to read | Arabic default: 0.6 s + 0.4 s per word. `craft check` measures every text layer on both aspects |
+| A particle burst on every beat | `burst` is a one-shot accent on the payoff, once or twice a film |
 | Collecting references in a browser tab | A reference is a card: the move, the source, what it buys. Tabs are not evidence |
 
 ## Red flags

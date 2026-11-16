@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Img, interpolate, random, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {evolvePath} from '@remotion/paths';
 import {Ground} from '../components/Surfaces';
 import {Backdrop, type BackdropVariant} from '../components/Backdrop';
@@ -32,6 +32,43 @@ type Base = {
   v?: {x?: number; y?: number; size?: number; w?: number; h?: number; to?: [number, number]};
 };
 type Shape = 'circle' | 'rect' | 'ring' | 'blob' | 'triangle' | 'hexagon' | 'star' | 'pill' | 'arrow';
+/** A one-shot particle accent on a landing (a number, a badge, the payoff). Seeded, so every render is identical. */
+type BurstKind = 'confetti' | 'sparks' | 'ring';
+
+const Burst: React.FC<{kind: BurstKind; count: number; t: number; size: number; colors: string[]; seed: string}> = ({kind, count, t, size, colors, seed}) => {
+  if (t < 0 || t > 1) return null;
+  const R = size * 1.5;
+  if (kind === 'ring') {
+    const k = 1 - Math.pow(1 - t, 3);
+    return (
+      <svg width={R * 2} height={R * 2} style={{position: 'absolute', left: -R, top: -R, overflow: 'visible'}}>
+        {[0, 0.18].map((d, j) => {
+          const kk = Math.max(0, Math.min(1, (t - d) / (1 - d)));
+          return <circle key={j} cx={R} cy={R} r={R * 0.15 + R * 0.85 * (1 - Math.pow(1 - kk, 3))} fill="none"
+            stroke={colors[j % colors.length]} strokeWidth={Math.max(1, 10 * (1 - kk))} opacity={(1 - kk) * (k > 0 ? 1 : 0)} />;
+        })}
+      </svg>
+    );
+  }
+  const parts = Array.from({length: count}, (_, n) => {
+    const a = random(`${seed}-a${n}`) * Math.PI * 2;
+    const v = 0.45 + random(`${seed}-v${n}`) * 0.55;
+    const ease = 1 - Math.pow(1 - t, 2.4); // fast out, drag
+    const g = kind === 'confetti' ? t * t * 0.55 : 0;
+    const px = R + Math.cos(a) * R * v * ease;
+    const py = R + Math.sin(a) * R * v * ease + g * R;
+    const op = t < 0.7 ? 1 : 1 - (t - 0.7) / 0.3;
+    const c = colors[n % colors.length];
+    if (kind === 'sparks') {
+      const len = (size / 9) * (1 - t) + size / 60;
+      return <line key={n} x1={px} y1={py} x2={px - Math.cos(a) * len} y2={py - Math.sin(a) * len} stroke={c} strokeWidth={Math.max(3, size / 70)} strokeLinecap="round" opacity={op} />;
+    }
+    const spin = (random(`${seed}-s${n}`) - 0.5) * 720 * t;
+    return <rect key={n} x={px - size / 60} y={py - size / 110} width={size / 30} height={size / 55} rx={2} fill={c} opacity={op} transform={`rotate(${spin} ${px} ${py})`} />;
+  });
+  return <svg width={R * 2} height={R * 2} style={{position: 'absolute', left: -R, top: -R, overflow: 'visible'}}>{parts}</svg>;
+};
+
 type Layer = Base & (
   | {type: 'shape'; shape?: Shape; fill?: boolean}
   | {type: 'path'; d: string; width?: number; dur?: number}
@@ -48,6 +85,7 @@ type Layer = Base & (
   | {type: 'donut'; segments: {value: number; label?: string}[]; center?: string}
   | {type: 'progress'; value: number; label?: string}
   | {type: 'badge'; text: string; solid?: boolean}
+  | {type: 'burst'; kind?: BurstKind; count?: number; dur?: number}
 );
 type Data = {layers?: Layer[]; bg?: string; grid?: boolean; palette?: string; backdrop?: BackdropVariant; intensity?: number};
 
@@ -118,6 +156,15 @@ const LayerView: React.FC<ViewProps> = ({l, i, f, fps, vertical, unit, pal, cw, 
   };
 
   switch (l.type) {
+    case 'burst': {
+      const t = (f - startF) / Math.max(1, Math.round((l.dur ?? 1.1) * fps));
+      return (
+        <div style={{...anchor(x, y)}}>
+          <Burst kind={l.kind ?? 'sparks'} count={Math.min(80, l.count ?? 28)} t={t} size={size}
+            colors={[l.color ?? pal.accent, pal.accent2, pal.ink]} seed={`b${i}`} />
+        </div>
+      );
+    }
     case 'shape': {
       const fill = l.fill !== false ? color : 'none';
       const stroke = l.fill === false || l.shape === 'ring' ? color : 'none';

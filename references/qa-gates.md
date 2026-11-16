@@ -142,6 +142,17 @@ beat only works because of the music, it has no picture and needs one.
   and says where the thing actually comes from.
 - [ ] Brand name in Latin renders as the brand writes it.
 
+## Gate 8b — craft (before the render)
+
+```bash
+python scripts/studio.py craft check --strict --review film/REVIEW.md
+```
+
+Proves no P0 tell is in the plan: every text layer is readable on a phone at 16:9 and
+9:16 (≥ 2.6% of the frame height), every line holds long enough to read (Arabic
+default 0.6 s + 0.4 s/word), one glow per beat, no Arabic-Indic digits. P1/P2 lines
+are fixed or kept on purpose in `REVIEW.md`. Rules: `references/craft.md`.
+
 ## Gate 9 — the handoff
 
 - [ ] Files named per `platform-specs.md`, in one folder, with a thumbnail/cover.

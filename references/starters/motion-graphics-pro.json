@@ -371,6 +371,14 @@
             "size": 0.32,
             "at": 0.6,
             "anim": "rise"
+          },
+          {
+            "type": "burst",
+            "kind": "sparks",
+            "x": 0.5,
+            "y": 0.44,
+            "size": 0.8,
+            "at": 1.4
           }
         ]
       }
