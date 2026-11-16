@@ -1,0 +1,366 @@
+{
+  "_doc": "Style cards: what stays true for every film in one style, mapped onto this engine. `studio.py craft styles apply <id>` writes look/motion/transitions into film/style.json and palette/backdrop into gfx beats that have none. See references/styles.md.",
+  "styles": [
+    {
+      "id": "data-noir",
+      "ar": "بيانات ليلية",
+      "for": [
+        "data story",
+        "economics",
+        "one surprising number",
+        "explainer"
+      ],
+      "look": "cobalt-atelier",
+      "palette": "midnight-amber",
+      "backdrop": "mesh",
+      "motion": 1.0,
+      "transitions": [
+        "maskline",
+        "flood",
+        "blur"
+      ],
+      "essence": "Night-blue ground that slowly breathes, one warm accent reserved for the number that matters, charts that draw themselves.",
+      "moves": [
+        "A number lands: counter in the accent with glow, everything else muted",
+        "Colour flood on the turn: the ground changes, the hero number stays",
+        "A line chart draws left to right and the last point glows"
+      ],
+      "pitfalls": [
+        "Two glowing elements in one frame",
+        "Chart with no unit or source on screen",
+        "Amber used for decoration instead of meaning"
+      ]
+    },
+    {
+      "id": "editorial-paper",
+      "ar": "صحافة ورقية",
+      "for": [
+        "news",
+        "history",
+        "calm explainer",
+        "culture"
+      ],
+      "look": "paper-clean",
+      "palette": "sand-ink",
+      "backdrop": "topo",
+      "motion": 0.85,
+      "transitions": [
+        "maskline",
+        "slide",
+        "blur"
+      ],
+      "essence": "Paper ground, ink type, one terracotta mark. Feels printed, not generated: big headline, small caption, generous margins.",
+      "moves": [
+        "Marker sweep under the one phrase that carries the claim",
+        "Headline sets in still, then the caption arrives under it",
+        "Map contours drift behind a date"
+      ],
+      "pitfalls": [
+        "Neon or glow on paper",
+        "Centred everything; use the RTL column",
+        "Headline under 3x the caption size"
+      ]
+    },
+    {
+      "id": "tech-indigo",
+      "ar": "تقنية بنفسجية",
+      "for": [
+        "AI",
+        "software",
+        "how a device works",
+        "launch"
+      ],
+      "look": "vivid-launch",
+      "palette": "electric-indigo",
+      "backdrop": "grid",
+      "motion": 1.15,
+      "transitions": [
+        "whip",
+        "iris",
+        "flood",
+        "blur"
+      ],
+      "essence": "Violet depth on a perspective grid, glass cards stacked in z, a pink counterpoint used once.",
+      "moves": [
+        "Glass cards enter staggered at three depths and parallax",
+        "Iris opens from the element just named",
+        "A flow of cards joined by drawn connectors"
+      ],
+      "pitfalls": [
+        "Purple-to-blue gradient on every surface",
+        "Pink and violet glowing together",
+        "Grid floor behind dense text"
+      ]
+    },
+    {
+      "id": "money-emerald",
+      "ar": "مال وزمرد",
+      "for": [
+        "personal finance",
+        "savings",
+        "heritage",
+        "business"
+      ],
+      "look": "atelier-emerald",
+      "palette": "emerald-gold",
+      "backdrop": "beams",
+      "motion": 0.95,
+      "transitions": [
+        "slide",
+        "maskline",
+        "flood"
+      ],
+      "essence": "Deep green, gold for money only, slow keynote light sweeps. Trustworthy, never flashy.",
+      "moves": [
+        "Bars grow left to right over time, the last one in gold",
+        "Progress fills right to left toward a goal",
+        "A coin-gold badge pops on the result"
+      ],
+      "pitfalls": [
+        "Gold on non-money elements",
+        "Fast whips in a calm money story",
+        "Investment advice phrasing"
+      ]
+    },
+    {
+      "id": "space-ocean",
+      "ar": "كون ومحيط",
+      "for": [
+        "space",
+        "earth",
+        "science",
+        "scale"
+      ],
+      "look": "ink-noir",
+      "palette": "ocean-cyan",
+      "backdrop": "flow",
+      "motion": 0.9,
+      "transitions": [
+        "blur",
+        "flood",
+        "iris"
+      ],
+      "essence": "Cold deep ground with drifting particles, one sun-coloured accent for scale reveals.",
+      "moves": [
+        "Scale reveal: a small ring grows until it fills the frame",
+        "Particles slow down before the big number",
+        "Donut segments draw one by one for proportions"
+      ],
+      "pitfalls": [
+        "Particles behind long text",
+        "Fake star photos with letters",
+        "Unsourced distances"
+      ]
+    },
+    {
+      "id": "body-dusk",
+      "ar": "جسم وعقل",
+      "for": [
+        "health",
+        "psychology",
+        "people",
+        "habits"
+      ],
+      "look": "premium-warm",
+      "palette": "sunset-plum",
+      "backdrop": "dots",
+      "motion": 0.9,
+      "transitions": [
+        "blur",
+        "slide",
+        "flood"
+      ],
+      "essence": "Plum dusk, coral accent, soft dot-matrix wave: human and warm, never clinical.",
+      "moves": [
+        "A presenter points at one card",
+        "Ring fills to a percentage that the VO says",
+        "Blur swap between two states on one stage"
+      ],
+      "pitfalls": [
+        "Medical advice phrasing",
+        "Red alarm colours for normal facts",
+        "Cartoon bounce on serious topics"
+      ]
+    },
+    {
+      "id": "urgent-mono",
+      "ar": "عاجل أحادي",
+      "for": [
+        "breaking",
+        "warning",
+        "myth vs fact",
+        "editorial opinion"
+      ],
+      "look": "ink-noir",
+      "palette": "mono-red",
+      "backdrop": "solid",
+      "motion": 1.25,
+      "transitions": [
+        "flash",
+        "whip",
+        "maskline"
+      ],
+      "essence": "Black, white and one red. Hard cuts on the beat, giant type, nothing decorative.",
+      "moves": [
+        "Type carries the argument: one word per beat at 60-90% of the width",
+        "Dip cut: frame darkens for three frames before the hard cut",
+        "The red only on the word that is wrong"
+      ],
+      "pitfalls": [
+        "Red on more than one element",
+        "Flash transitions on every seam (photosensitive viewers)",
+        "Small type"
+      ]
+    },
+    {
+      "id": "product-cobalt",
+      "ar": "منتج نظيف",
+      "for": [
+        "SaaS",
+        "app demo",
+        "store launch",
+        "UI film"
+      ],
+      "look": "premium-warm",
+      "palette": "paper-cobalt",
+      "backdrop": "mesh",
+      "motion": 1.0,
+      "transitions": [
+        "iris",
+        "slide",
+        "blur"
+      ],
+      "essence": "Off-white ground, cobalt for the action, orange for the result. The real UI is the hero; graphics only frame it.",
+      "moves": [
+        "Zoom through the button that was just clicked",
+        "The result card carried across into the next screen",
+        "Lower third names the screen, then leaves"
+      ],
+      "pitfalls": [
+        "Mock UI presented as the real app",
+        "Price lines in the CTA",
+        "Decorative blobs behind screenshots"
+      ]
+    },
+    {
+      "id": "souk-night",
+      "ar": "سوق ليلي",
+      "for": [
+        "store launch",
+        "retail",
+        "offers",
+        "Ramadan campaigns"
+      ],
+      "look": "midnight-souk",
+      "palette": "midnight-amber",
+      "backdrop": "beams",
+      "motion": 1.1,
+      "transitions": [
+        "maskline",
+        "flood",
+        "whip"
+      ],
+      "essence": "Warm night market: amber lantern light sweeping a dark ground, products as glass cards.",
+      "moves": [
+        "Light beam sweeps across the product card as it lands",
+        "Badge pops on the offer, once",
+        "Cards rise in a staggered shelf"
+      ],
+      "pitfalls": [
+        "Price on screen in the CTA",
+        "Fixture products in a client film",
+        "Every card glowing"
+      ]
+    },
+    {
+      "id": "kinetic-type",
+      "ar": "طباعة حركية",
+      "for": [
+        "quote",
+        "manifesto",
+        "hook reel",
+        "lyrics-free promo"
+      ],
+      "look": "vivid-launch",
+      "palette": "mono-red",
+      "backdrop": "dots",
+      "motion": 1.3,
+      "transitions": [
+        "whip",
+        "flash",
+        "maskline",
+        "flood"
+      ],
+      "essence": "Words are the picture. Whole Arabic words enter, hold dead still, leave; never letters.",
+      "moves": [
+        "Word-by-word blur-in, no translate",
+        "One word in the accent rolls through options",
+        "Hero word fills the width, quiet line at a third of its size"
+      ],
+      "pitfalls": [
+        "Splitting Arabic into letters (forbidden)",
+        "Titles that keep drifting after they land",
+        "Even pace with no breath"
+      ]
+    },
+    {
+      "id": "warm-cinema",
+      "ar": "سينما دافئة",
+      "for": [
+        "brand film",
+        "device film",
+        "premium product"
+      ],
+      "look": "cinema-warm",
+      "palette": "midnight-amber",
+      "backdrop": "flow",
+      "motion": 0.9,
+      "transitions": [
+        "blur",
+        "slide",
+        "flood"
+      ],
+      "essence": "Graded warm cinema: slow camera, long holds, one hero object filling a third of the frame.",
+      "moves": [
+        "Slow push-in on the one detail that matters",
+        "Hold before the payoff, then the payoff lands on the beat",
+        "Object becomes the world: a card grows past the frame"
+      ],
+      "pitfalls": [
+        "Fast cuts that fight the grade",
+        "Hero object too small",
+        "Generic piano-and-strings bed"
+      ]
+    },
+    {
+      "id": "calm-classroom",
+      "ar": "صف هادئ",
+      "for": [
+        "tutorial",
+        "how-to",
+        "course lesson",
+        "screen walkthrough"
+      ],
+      "look": "paper-clean",
+      "palette": "sand-ink",
+      "backdrop": "dots",
+      "motion": 0.8,
+      "transitions": [
+        "slide",
+        "blur",
+        "iris"
+      ],
+      "essence": "Daylight paper, one action per step, the cursor and callout do the talking.",
+      "moves": [
+        "Camera zooms onto the next click, the cursor arrives on time",
+        "Spotlight box dims everything else",
+        "Step badge counts 1 / 4"
+      ],
+      "pitfalls": [
+        "Two actions in one step",
+        "Re-drawn UI instead of the capture",
+        "Zoom past the screen edge"
+      ]
+    }
+  ]
+}

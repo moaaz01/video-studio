@@ -77,7 +77,7 @@ green. No neon, no glitch, no generic tech grid. Formal, expensive, editorial.
        with the condition "إذا كانت المفاتيح جاهزة". Launch button.
 14–24 store: buyer path home → product → checkout → paid; a payment-method ticker
        with محفظة المتجر، شام كاش، سيريتل كاش، MTN كاش، USDT، Binance Pay، تحويل بنكي.
-24–34 sources: three source cards (مصدر ١/٢/٣) with costs $8.20/$8.45/$8.60; a product
+24–34 sources: three source cards (مصدر 1/2/3) with costs $8.20/$8.45/$8.60; a product
        card "شدّات ببجي · 660 UC" with a 15% margin and sale $9.43; the cheapest badge
        switches when source 1 rises to $8.70; the sale price counts to $9.72; an
        amber alert "ارتفع سعر المصدر — انتقلنا للأرخص وحدّثنا سعر البيع". A line:

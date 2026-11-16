@@ -150,9 +150,9 @@ export const SourcesScene: React.FC<{beat: Beat; vertical?: boolean; motion?: nu
   const head = (d.head as string[]) ?? ['من عدة مصادر…', 'أفضل سعر، وأعلى ربح.'];
   const sub = (d.sub as string) ?? beat.line2 ?? '';
   const sources = (d.sources as Source[]) ?? [
-    {name: 'مصدر ١', cost: 8.2, available: true},
-    {name: 'مصدر ٢', cost: 8.45, available: true},
-    {name: 'مصدر ٣', cost: 8.6, available: true},
+    {name: 'مصدر 1', cost: 8.2, available: true},
+    {name: 'مصدر 2', cost: 8.45, available: true},
+    {name: 'مصدر 3', cost: 8.6, available: true},
   ];
   const marginPct = Number(d.marginPct ?? 15) / 100;
 

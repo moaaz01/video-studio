@@ -44,6 +44,10 @@ out/looks/
 out/storyboard/
 public/luts/
 
+# generated UI captures (run `python scripts/studio.py mockups capture`)
+public/mockups/
+tools/mockups/dist/
+
 # private client notes — never public
 docs/private/
 

@@ -1,0 +1,44 @@
+{
+  "$comment": "Brand tokens for the mockup factory. `waha` is a fixture, not a real store: it exists so the factory has a complete, honest demo. Add a client brand here, then reference its key from screens.json.",
+  "waha": {
+    "slug": "waha",
+    "name": "واحة",
+    "tagline": "خدمات رقمية تصنع الفرق",
+    "monogram": "و",
+    "currency": "$",
+    "light": {
+      "accent": "#0F7A5E",
+      "accentDeep": "#0A5A45",
+      "accentSoft": "#DDF1EA",
+      "accentInk": "#F4FBF8",
+      "paper": "#F7F3EB",
+      "surface": "#FFFFFF",
+      "sunken": "#EFE9DE",
+      "ink": "#14231E",
+      "muted": "#68766F",
+      "border": "#E5DDD0",
+      "borderStrong": "#D2C7B6",
+      "gold": "#C98A2E",
+      "goldSoft": "#F7E9CE",
+      "rose": "#C4553F",
+      "shadow": "26,35,30"
+    },
+    "dark": {
+      "accent": "#3FC9A6",
+      "accentDeep": "#1F9E7E",
+      "accentSoft": "#173B31",
+      "accentInk": "#06130F",
+      "paper": "#0D1512",
+      "surface": "#15201B",
+      "sunken": "#101A16",
+      "ink": "#F1F7F4",
+      "muted": "#9AAFA5",
+      "border": "#23332C",
+      "borderStrong": "#33473E",
+      "gold": "#E7B45C",
+      "goldSoft": "#3A2C15",
+      "rose": "#E8836D",
+      "shadow": "0,0,0"
+    }
+  }
+}

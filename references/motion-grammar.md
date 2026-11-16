@@ -58,7 +58,7 @@ The vocabulary (`style.transitions`, one word per bar line, cycled):
 | `iris` | a circular iris from the centre; no translation, only aperture |
 | `maskline` | a gold perforation line sweeps the frame and the new scene is revealed behind it |
 
-A film gets **two or three** of these, no more. Rules:
+A film gets **two to four** of these (a style card lists them), no more. Rules:
 
 - Never a solid wipe or dip-to-paper: an opaque panel across the frame is a blank
   cream frame at the seam, the single most "primitive" artefact a cut can make.
@@ -86,6 +86,42 @@ Spice, once or twice per film: *match-cut* (same object, new context), *punch-in
   it. If everything animates, nothing is emphasised.
 - Counters count integers, settle once, and stop 1 frame before the label appears.
 - Line breaks are punctuation: break where the sentence breathes.
+
+## Titles land, then hold still
+
+- A landed title is **dead still**. The motion moves to the next element, the camera
+  or the ground behind (the gfx `backdrop` already moves). Breathing, floating or
+  pulsing loops on titles and UI are the commonest tell of a generated film;
+  `craft check` flags `anim: "pulse"` on text.
+- Exits are 40–50% shorter than entrances, one smooth motion, never slide-stop-leave.
+- Overlap: the next element starts when the last is 30–50% in (`at` stagger
+  0.12–0.5 s). All at once reads cheap; strictly one after another reads robotic.
+- Vary title entrances within a film (`rise`, `fade`, `slide`, `pop`, `fx: marker`),
+  never the same one on every beat. **Whole Arabic words only**: per-letter
+  staggers and name reveals are forbidden (they break the shaping).
+- Hold a line for 0.6 s + 0.4 s per word before it leaves (Arabic default, measured
+  from this studio's speech rate); the film's last line at least 2 s.
+- Size: hero words 4–9% of the frame height or filling 60–90% of the width; quiet
+  lines a third of that. One highlighted word in the accent, carrying meaning.
+- Springs by feel: no overshoot for opacity or colour, ever; slight overshoot
+  (damping 14–18) reads premium; strong bounce only on stamps and badges.
+
+## Transitions with a cause
+
+Each seam is caused by something on screen. Map the cause to the engine word:
+
+| cause on screen | word | build note |
+|---|---|---|
+| a button or element was just named or clicked | `iris` / `flood` | aperture opens from that point |
+| the ground changes while the hero object stays | `flood` | the colour flood carries the turn |
+| a fast move or card leaves sideways | `whip` / `slide` | cut on the move's fastest frame, same direction both sides |
+| two states of one stage | `blur` | the ground never cuts |
+| a structural chapter change | `maskline` | once or twice a film |
+| a hard punch on the beat (urgent, kinetic) | `flash` | sparingly; never on every seam |
+
+A film uses two to four of these words (a style card lists them). Feedback map:
+"too fast" → slow camera moves to 0.7×, nothing else; "feels like slides" → enter the
+next beat through an object on screen; "the titles move" → land them and hold.
 
 ## Sound-sync
 

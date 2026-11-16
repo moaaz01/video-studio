@@ -26,6 +26,19 @@ MIT-licensed; it has its own license with commercial-use terms. See
 <https://www.remotion.dev/license> and the `LICENSE` file in the installed package.
 The MIT license of this repo does not override it.
 
+## The mockup factory (Astryx)
+
+`tools/mockups/` uses **Astryx** (`@astryxdesign/core`,
+`@astryxdesign/theme-neutral`) by Meta, licensed **MIT**, and **StyleX**
+(`@stylexjs/stylex`), licensed **MIT**. Icons come from **Lucide**
+(`lucide-react`), licensed **ISC**. The factory is a separate app; none of these
+packages is imported by the Remotion bundle.
+
+The `waha` brand, its services, prices, ratings, customer names and order numbers
+in `tools/mockups/src/data/waha.ts` are **fictional fixtures** for layout testing.
+They are not a real store and are not covered by any client's rights. Replace them
+before capturing screens for a film.
+
 ## Node and Python dependencies
 
 `package-lock.json` and `requirements.txt` pin the full dependency tree. Each package
@@ -62,6 +75,25 @@ the **move** and the reason, not the frames, assets, fonts, music or full prompt
 of the source. `references/prompt-packs/` contains prompts written for this studio,
 informed by the linked public material. If you reuse a linked source, check its own
 license and attribution requirements.
+
+## Ideas adapted from other projects
+
+No code was copied from these projects. The methods below were adapted, rewritten for
+this engine and for Arabic, and are credited here; some tables (story devices and
+forms, the transition feedback map) follow the structure of the HyperFrames originals.
+
+- **HyperFrames** (HeyGen, Apache-2.0): review loop (P0/P1/P2, phone sheet, REVIEW.md),
+  measurable craft checks (unread lines, dead stretches, small text), titles that land
+  and hold, transitions with a cause, three storylines of devices and forms.
+- **impeccable** (Paul Bakaus, Apache-2.0): deterministic slop rules as a gate.
+- **unslop** (Damir Sokolovsky, CC BY 4.0, https://github.com/heydamir/unslop): audit
+  first, then a direction; the anti-template checks in `references/craft.md`.
+- **Lemo-Opuscar** (lemomo-ai): the general idea of one card per style, and of checking
+  a new film against the starter it came from. Its styles, demos and texts were not used.
+- **rea-video** (Apache-2.0): shot-by-shot reverse engineering of a reference video,
+  basis for `studio.py craft breakdown`.
+- **pixelfx** (MIT): one-shot particle accents, basis for the gfx `burst` layer
+  (written from scratch).
 
 ## No warranty
 

@@ -210,7 +210,7 @@ export const DemoUI: React.FC<{copy?: DemoCopy}> = ({copy = DEMO}) => {
         >
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             <span style={{fontSize: T.labelMedium.size * dp, fontWeight: 700, color: C.inkSoft}}>تقدّم هذا الأسبوع</span>
-            <span style={{fontSize: T.labelMedium.size * dp, fontWeight: 700, color: C.emeraldDeep}}>٣ من ٥</span>
+            <span style={{fontSize: T.labelMedium.size * dp, fontWeight: 700, color: C.emeraldDeep}}>3 من 5</span>
           </div>
           <div style={{height: 8 * dp, borderRadius: 999, background: 'rgba(26,42,54,0.10)', overflow: 'hidden'}}>
             <div style={{width: '60%', height: '100%', borderRadius: 999, background: C.emerald}} />

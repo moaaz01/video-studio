@@ -3,11 +3,17 @@
 export const AR_DIGITS = '٠١٢٣٤٥٦٧٨٩';
 
 /**
- * Western → Arabic-Indic digits. The app renders numbers through the `ar` locale,
- * so on-screen numbers must be Arabic-Indic to match the product exactly.
+ * Which digits the studio prints. Project rule: Western digits (`123`) everywhere,
+ * counters and charts included. Switch to 'arabic-indic' only for a product whose
+ * own UI prints `١٢٣`, and then for the whole film.
  */
+export const NUMERALS: 'western' | 'arabic-indic' = 'western';
+
+/** Display digits for on-screen numbers, normalised to `NUMERALS` whatever the input. */
 export const toAr = (v: string | number): string =>
-  String(v).replace(/[0-9]/g, (d) => AR_DIGITS[Number(d)]);
+  NUMERALS === 'western'
+    ? String(v).replace(/[٠-٩]/g, (d) => String(AR_DIGITS.indexOf(d)))
+    : String(v).replace(/[0-9]/g, (d) => AR_DIGITS[Number(d)]);
 
 /** Arabic-Indic → Western (for logic, never for display). */
 export const toWestern = (v: string): string =>
@@ -30,4 +36,4 @@ export const isRtl = (text: string): boolean => {
 export const arWords = (text: string): string[] => text.split(/\s+/).filter(Boolean);
 
 /** Basic Arabic pluralisation-free helpers for the copy we ship. */
-export const pct = (n: number): string => `${toAr(n)}٪`;
+export const pct = (n: number): string => `${toAr(n)}${NUMERALS === 'western' ? '%' : '٪'}`;

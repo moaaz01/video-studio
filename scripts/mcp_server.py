@@ -58,6 +58,22 @@ def captions_tool(a: dict) -> str:
 
 
 TOOLS = {
+    "craft_check": tool(
+        "craft_check",
+        "Measured craft gate on the compiled timeline: P0/P1/P2 tells of a generated film (text too small for a phone, line too short to read, two glows, no stagger, flat ground, dead stretch). Optionally writes REVIEW.md.",
+        {"review": {"type": "string", "description": "path for a REVIEW.md delivery note, e.g. film/REVIEW.md"}},
+        [],
+        lambda a: sh([PYTHON, "scripts/craft.py", "check"] + (["--review", a["review"]] if a.get("review") else [])),
+    ),
+    "craft_styles": tool(
+        "craft_styles",
+        "Style cards (references/styles.json): list them, show one, or apply one to film/style.json and the film's gfx beats.",
+        {"action": {"type": "string", "enum": ["list", "show", "apply"]}, "id": {"type": "string"},
+         "film": {"type": "string", "description": "film.json to fill palette/backdrop on gfx beats (apply only)"}},
+        ["action"],
+        lambda a: sh([PYTHON, "scripts/craft.py", "styles", a["action"]] + ([a["id"]] if a.get("id") else [])
+                     + (["--film", a["film"]] if a.get("film") else [])),
+    ),
     "providers_pick": tool(
         "providers_pick",
         "Rank providers for a capability (tts/image/video/music/sfx/stock/avatar/transcribe/compose) on 7 axes and log the choice.",

@@ -183,17 +183,17 @@
         "marginPct": 15,
         "sources": [
           {
-            "name": "مصدر ١",
+            "name": "مصدر 1",
             "cost": 8.2,
             "available": true
           },
           {
-            "name": "مصدر ٢",
+            "name": "مصدر 2",
             "cost": 8.45,
             "available": true
           },
           {
-            "name": "مصدر ٣",
+            "name": "مصدر 3",
             "cost": 8.6,
             "available": true
           }
