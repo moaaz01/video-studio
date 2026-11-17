@@ -32,20 +32,29 @@ CUT_AREA = 0.45
 
 
 def decode(path: pathlib.Path, fps: float):
+    """Grey WxH frames. A full ffmpeg streams rawvideo; the bundled Remotion build has
+    no rawvideo muxer and no fps filter, so it falls back to PNG frames (craft._frames)."""
     ff = qa.FFMPEG
     if not ff:
         sys.exit("ffmpeg not found (install it or npm install)")
     cmd = [ff, "-v", "error", "-i", str(path), "-vf", f"fps={fps},scale={W}:{H}", "-f", "rawvideo", "-pix_fmt", "gray", "-"]
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+    got = 0
     try:
         while True:
             buf = proc.stdout.read(W * H)
             if len(buf) < W * H:
                 break
+            got += 1
             yield np.frombuffer(buf, np.uint8).reshape(H, W)
     finally:
         proc.stdout.close()
         proc.wait()
+    if got == 0:
+        import craft
+
+        for frame in craft._frames(path, fps, ff, (W, H)):
+            yield frame.astype(np.uint8)
 
 
 def audit(path: pathlib.Path, profile: str, bpm: float, end_card: float) -> dict:

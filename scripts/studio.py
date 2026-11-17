@@ -294,6 +294,8 @@ DELEGATES = {
     "pipeline": "pipelines.py",
     "mockups": "mockups.py",
     "craft": "craft.py",
+    "foley": "foley.py",
+    "vo-import": "vo_import.py",
 }
 
 

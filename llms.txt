@@ -33,6 +33,9 @@ find the exact file for a question.
 - [references/craft.md](references/craft.md): the craft gate (P0/P1/P2: read time,
   text size, glows, stagger, dead stretch), the review loop, `REVIEW.md`, reference
   breakdowns.
+- [references/interaction.md](references/interaction.md): interaction levels
+  (none → rich), the events that sound, peak-aligned rotated cues, the cursor and
+  real-pixel press, keycaps, zoom by action.
 - [references/external-tools.md](references/external-tools.md): Blender, three.js,
   ComfyUI, GSAP, pixelfx, HyperFrames, rea-video: when, and how their output enters.
 - [references/motion-grammar.md](references/motion-grammar.md): grid and clock,

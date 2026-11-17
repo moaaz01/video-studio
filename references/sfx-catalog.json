@@ -1,0 +1,254 @@
+{
+ "button_click": {
+  "len_s": 0.05,
+  "peak_ms": 0.6,
+  "peak_db": -3.0,
+  "rms_db": -22.6
+ },
+ "card_pop": {
+  "len_s": 0.15,
+  "peak_ms": 3.7,
+  "peak_db": -3.0,
+  "rms_db": -17.4
+ },
+ "cite_glow": {
+  "len_s": 0.5,
+  "peak_ms": 1.8,
+  "peak_db": -3.0,
+  "rms_db": -19.5
+ },
+ "correct_chime": {
+  "len_s": 0.59,
+  "peak_ms": 92.5,
+  "peak_db": -3.0,
+  "rms_db": -19.0
+ },
+ "ding": {
+  "len_s": 0.7,
+  "peak_ms": 5.2,
+  "peak_db": -3.0,
+  "rms_db": -18.8
+ },
+ "doc_pop": {
+  "len_s": 0.17,
+  "peak_ms": 39.7,
+  "peak_db": -3.0,
+  "rms_db": -16.4
+ },
+ "file_drop": {
+  "len_s": 0.24,
+  "peak_ms": 5.5,
+  "peak_db": -3.0,
+  "rms_db": -18.8
+ },
+ "haptic_thud": {
+  "len_s": 0.16,
+  "peak_ms": 4.3,
+  "peak_db": -3.0,
+  "rms_db": -18.3
+ },
+ "highlight_swipe": {
+  "len_s": 0.3,
+  "peak_ms": 137.9,
+  "peak_db": -3.0,
+  "rms_db": -16.7
+ },
+ "impact": {
+  "len_s": 0.6,
+  "peak_ms": 7.3,
+  "peak_db": -3.0,
+  "rms_db": -19.9
+ },
+ "level_up": {
+  "len_s": 0.66,
+  "peak_ms": 162.9,
+  "peak_db": -3.0,
+  "rms_db": -17.6
+ },
+ "mute_hit": {
+  "len_s": 0.09,
+  "peak_ms": 2.4,
+  "peak_db": -3.0,
+  "rms_db": -20.4
+ },
+ "node_pop": {
+  "len_s": 0.16,
+  "peak_ms": 3.4,
+  "peak_db": -3.0,
+  "rms_db": -21.0
+ },
+ "notif_tritone": {
+  "len_s": 0.58,
+  "peak_ms": 131.8,
+  "peak_db": -3.0,
+  "rms_db": -18.0
+ },
+ "page_flip": {
+  "len_s": 0.3,
+  "peak_ms": 102.9,
+  "peak_db": -3.0,
+  "rms_db": -22.1
+ },
+ "page_settle": {
+  "len_s": 0.3,
+  "peak_ms": 3.7,
+  "peak_db": -3.0,
+  "rms_db": -22.2
+ },
+ "pan_whoosh": {
+  "len_s": 0.5,
+  "peak_ms": 240.3,
+  "peak_db": -3.0,
+  "rms_db": -17.8
+ },
+ "paper_flip": {
+  "len_s": 0.4,
+  "peak_ms": 335.0,
+  "peak_db": -3.0,
+  "rms_db": -27.3
+ },
+ "paper_whoosh": {
+  "len_s": 0.38,
+  "peak_ms": 170.2,
+  "peak_db": -3.0,
+  "rms_db": -18.1
+ },
+ "pen_scribe": {
+  "len_s": 0.42,
+  "peak_ms": 27.1,
+  "peak_db": -3.0,
+  "rms_db": -21.5
+ },
+ "piano_note": {
+  "len_s": 1.1,
+  "peak_ms": 2.1,
+  "peak_db": -3.0,
+  "rms_db": -13.7
+ },
+ "print_mech": {
+  "len_s": 0.36,
+  "peak_ms": 240.1,
+  "peak_db": -3.0,
+  "rms_db": -19.8
+ },
+ "progress_tone": {
+  "len_s": 0.34,
+  "peak_ms": 10.7,
+  "peak_db": -3.0,
+  "rms_db": -12.6
+ },
+ "reverse_hit": {
+  "len_s": 0.5,
+  "peak_ms": 260.6,
+  "peak_db": -3.0,
+  "rms_db": -12.3
+ },
+ "ring_swell": {
+  "len_s": 1.0,
+  "peak_ms": 493.4,
+  "peak_db": -3.0,
+  "rms_db": -13.0
+ },
+ "riser": {
+  "len_s": 4.0,
+  "peak_ms": 3973.6,
+  "peak_db": -3.0,
+  "rms_db": -21.0
+ },
+ "riser_short": {
+  "len_s": 0.7,
+  "peak_ms": 671.4,
+  "peak_db": -3.0,
+  "rms_db": -19.7
+ },
+ "room_tone": {
+  "len_s": 2.4,
+  "peak_ms": 773.5,
+  "peak_db": -3.0,
+  "rms_db": -16.4
+ },
+ "scan_sweep": {
+  "len_s": 0.6,
+  "peak_ms": 364.8,
+  "peak_db": -3.0,
+  "rms_db": -16.1
+ },
+ "send_click": {
+  "len_s": 0.1,
+  "peak_ms": 0.8,
+  "peak_db": -3.0,
+  "rms_db": -24.1
+ },
+ "shimmer": {
+  "len_s": 0.6,
+  "peak_ms": 3.7,
+  "peak_db": -3.0,
+  "rms_db": -18.0
+ },
+ "stamp_thud": {
+  "len_s": 0.3,
+  "peak_ms": 7.9,
+  "peak_db": -3.0,
+  "rms_db": -18.8
+ },
+ "sub_drop": {
+  "len_s": 0.9,
+  "peak_ms": 18.5,
+  "peak_db": -3.0,
+  "rms_db": -11.4
+ },
+ "sub_thump": {
+  "len_s": 0.5,
+  "peak_ms": 8.5,
+  "peak_db": -3.0,
+  "rms_db": -18.2
+ },
+ "teacher_chime": {
+  "len_s": 0.8,
+  "peak_ms": 202.2,
+  "peak_db": -3.0,
+  "rms_db": -17.8
+ },
+ "tick_clock": {
+  "len_s": 0.03,
+  "peak_ms": 1.7,
+  "peak_db": -3.0,
+  "rms_db": -20.8
+ },
+ "tick_mark": {
+  "len_s": 0.28,
+  "peak_ms": 0.6,
+  "peak_db": -3.0,
+  "rms_db": -24.5
+ },
+ "type_tick": {
+  "len_s": 0.02,
+  "peak_ms": 1.0,
+  "peak_db": -3.0,
+  "rms_db": -18.4
+ },
+ "ui_chirp": {
+  "len_s": 0.18,
+  "peak_ms": 4.6,
+  "peak_db": -3.0,
+  "rms_db": -17.9
+ },
+ "ui_pop": {
+  "len_s": 0.09,
+  "peak_ms": 4.7,
+  "peak_db": -3.0,
+  "rms_db": -17.7
+ },
+ "whoosh_rtl": {
+  "len_s": 0.32,
+  "peak_ms": 150.6,
+  "peak_db": -3.0,
+  "rms_db": -18.6
+ },
+ "wrong_buzz": {
+  "len_s": 0.34,
+  "peak_ms": 14.2,
+  "peak_db": -3.0,
+  "rms_db": -15.7
+ }
+}

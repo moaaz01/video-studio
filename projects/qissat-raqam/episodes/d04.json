@@ -14,7 +14,8 @@
     "transitions": [
       "blur",
       "slide"
-    ]
+    ],
+    "interaction": "subtle"
   },
   "voice": {
     "provider": "fish",
@@ -446,7 +447,8 @@
               "w": 0.62
             }
           }
-        ]
+        ],
+        "chapter": true
       }
     },
     {
@@ -496,7 +498,8 @@
               "size": 0.2
             }
           }
-        ]
+        ],
+        "chapter": true
       }
     }
   ]

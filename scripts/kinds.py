@@ -22,6 +22,7 @@ BACKDROPS = {"mesh", "grid", "flow", "topo", "dots", "beams", "solid"}
 SHAPES = {"circle", "rect", "ring", "blob", "triangle", "hexagon", "star", "pill", "arrow"}
 TEXT_FX = {"gradient", "outline", "marker"}
 BURSTS = {"confetti", "sparks", "ring"}
+ACTIONS = {"click", "type", "scroll", "drag", "hover"}  # mirrors src/components/Cursor.tsx ACTION_ZOOM
 LAYER_NEEDS = {"path": "d", "text": "text", "icon": "name", "bars": "values", "counter": "to",
                "ring": "value", "connector": "to", "image": "src", "lowerthird": "title",
                "card": "title", "line": "values", "donut": "segments", "progress": "value", "badge": "text"}
@@ -68,6 +69,11 @@ def validate(kind: str, bid: str, data: dict, seconds: float, root: pathlib.Path
             box = s.get("box")
             if box is not None and not (isinstance(box, list) and len(box) == 4 and all(_unit(v) for v in box)):
                 problems.append(f"{bid}: step {j + 1} box must be [x, y, w, h] in 0–1")
+            if s.get("action") not in (None, *ACTIONS):
+                problems.append(f"{bid}: step {j + 1} action {s.get('action')!r} not in {sorted(ACTIONS)}")
+            keys = s.get("keys")
+            if keys is not None and not (isinstance(keys, list) and 0 < len(keys) <= 4 and all(isinstance(k, str) and k.strip() for k in keys)):
+                problems.append(f"{bid}: step {j + 1} keys must be 1–4 key names, e.g. [\"Ctrl\", \"C\"]")
             if s.get("zoom") is not None and not 1 <= float(s["zoom"]) <= 4:
                 problems.append(f"{bid}: step {j + 1} zoom must be 1–4")
         if data.get("frame") not in (None, "browser", "phone", "none"):

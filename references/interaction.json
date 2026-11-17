@@ -1,0 +1,80 @@
+{
+  "_doc": "Interaction levels: how much the film reacts to what happens on screen (clicks, numbers landing, cards, cuts). The compiler (scripts/foley.py) turns on-screen events into a cue sheet; the level sets which events sound, their timbre, gain, rotation and a density cap. Chosen by film style `interaction`; `legacy` reproduces the pre-profile mix exactly. See references/interaction.md.",
+  "levels": {
+    "legacy": {
+      "why": "the original fixed mix: a whoosh on every cut, stat/cta/device accents, plus cues the film names",
+      "legacy": true
+    },
+    "none": {
+      "why": "real footage or a talking head: the recording carries its own sound; foley would re-stage it",
+      "cut": null,
+      "events": {},
+      "cap_per_10s": 0,
+      "cursor": {"press": false, "ripple": "none"}
+    },
+    "subtle": {
+      "why": "data stories, editorial, calm explainers: sound marks only the moment that matters",
+      "cut": {"stems": ["whoosh_rtl", "pan_whoosh"], "gain": 0.4, "every": "chapter"},
+      "events": {
+        "click": {"stem": "send_click", "gain": 0.32},
+        "counter_land": {"stem": "tick_mark", "gain": 0.34},
+        "burst": {"stem": "shimmer", "gain": 0.26},
+        "stat": {"stem": "stamp_thud", "gain": 0.38},
+        "cta": {"stem": "ui_pop", "gain": 0.32}
+      },
+      "cap_per_10s": 4,
+      "rates": [1.0, 0.97, 1.03],
+      "cursor": {"press": true, "ripple": "ring"}
+    },
+    "standard": {
+      "why": "product launches, explainers with UI, motion graphics: every meaningful landing is felt",
+      "cut": {"stems": ["whoosh_rtl", "pan_whoosh", "paper_whoosh"], "gain": 0.55, "every": 1},
+      "events": {
+        "click": {"stem": "button_click", "gain": 0.42},
+        "keys": {"stem": "type_tick", "gain": 0.3},
+        "counter_land": {"stem": "ding", "gain": 0.36},
+        "card_land": {"stem": "card_pop", "gain": 0.3},
+        "badge_land": {"stem": "ui_pop", "gain": 0.32},
+        "burst": {"stem": "shimmer", "gain": 0.32},
+        "stat": {"stem": "stamp_thud", "gain": 0.46},
+        "cta": {"stem": "ui_pop", "gain": 0.38},
+        "device": {"stem": "file_drop", "gain": 0.26}
+      },
+      "cap_per_10s": 7,
+      "rates": [1.0, 0.96, 1.04],
+      "cursor": {"press": true, "ripple": "ring"}
+    },
+    "rich": {
+      "why": "UI films and tutorials: the viewer learns by clicks, so every click, key and result is heard",
+      "cut": {"stems": ["whoosh_rtl", "pan_whoosh"], "gain": 0.5, "every": 1},
+      "events": {
+        "click": {"stem": "button_click", "gain": 0.5},
+        "keys": {"stem": "type_tick", "gain": 0.34},
+        "counter_land": {"stem": "ding", "gain": 0.38},
+        "card_land": {"stem": "card_pop", "gain": 0.34},
+        "badge_land": {"stem": "ui_pop", "gain": 0.36},
+        "burst": {"stem": "level_up", "gain": 0.3},
+        "stat": {"stem": "stamp_thud", "gain": 0.46},
+        "cta": {"stem": "ui_pop", "gain": 0.4},
+        "device": {"stem": "file_drop", "gain": 0.28}
+      },
+      "cap_per_10s": 10,
+      "rates": [1.0, 0.95, 1.05, 0.98],
+      "cursor": {"press": true, "ripple": "ring"}
+    },
+    "punchy": {
+      "why": "kinetic type and hook reels: hits on the cut, no UI sounds",
+      "cut": {"stems": ["whoosh_rtl", "pan_whoosh", "reverse_hit"], "gain": 0.6, "every": 1},
+      "events": {
+        "counter_land": {"stem": "impact", "gain": 0.4},
+        "burst": {"stem": "sub_thump", "gain": 0.4},
+        "stat": {"stem": "impact", "gain": 0.5},
+        "cta": {"stem": "haptic_thud", "gain": 0.42}
+      },
+      "cap_per_10s": 8,
+      "rates": [1.0, 0.94, 1.06],
+      "cursor": {"press": true, "ripple": "ring"}
+    }
+  },
+  "priority": {"stat": 5, "cta": 5, "click": 4, "keys": 3, "counter_land": 3, "burst": 3, "device": 2, "badge_land": 2, "card_land": 1, "cut": 1, "intro": 4, "named": 6}
+}

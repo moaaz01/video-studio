@@ -15,7 +15,8 @@
     "transitions": [
       "blur",
       "slide"
-    ]
+    ],
+    "interaction": "standard"
   },
   "beats": [
     {

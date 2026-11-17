@@ -92,7 +92,9 @@ PALETTE = {"name": "midnight-amber"}  # set per episode by build()
 
 def beat(bid: str, role: str, layers: list[dict], vo: str) -> dict:
     return {"id": bid, "kind": "gfx", "tone": TONES[role], "bars": BARS[role], "vo": [vo],
-            "data": {"palette": PALETTE["name"], "backdrop": BACKDROP_BY_ROLE[role], "layers": layers}}
+            "data": {"palette": PALETTE["name"], "backdrop": BACKDROP_BY_ROLE[role], "layers": layers,
+                     # the turn and the end card are chapters: the only cuts a subtle mix marks
+                     **({"chapter": True} if role in ("twist", "end") else {})}}
 
 
 def build(spec: dict) -> dict:
@@ -130,7 +132,7 @@ def build(spec: dict) -> dict:
         "slug": f"qr-d{spec['day']:02d}", "format": "launch", "fps": 30, "width": 1920, "height": 1080, "bpm": 120,
         "look": "premium-warm",
         "style": {"template": "stats-impact", "look": "premium-warm", "motion": 1.0, "background": "paper-glow",
-                  "transitions": ["blur", "slide"]},
+                  "transitions": ["blur", "slide"], "interaction": "subtle"},
         "voice": {"provider": "fish", "model": "s2.1-pro-free", "language": "ar", "speed": 1.0},
         "beats": beats,
     }

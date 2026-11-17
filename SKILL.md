@@ -209,6 +209,8 @@ python scripts/studio.py craft check --strict --review film/REVIEW.md   # P0/P1/
 python scripts/studio.py craft storylines film/STORYLINES.md   # three storylines, one picked
 python scripts/studio.py craft styles list | apply <id> --film film/film.json   # 12 style cards -> engine
 python scripts/studio.py craft breakdown <reference.mp4>   # shot list + stills of a reference video
+python scripts/studio.py foley suggest | sheet   # interaction level for this film; every sound, frame by frame
+python scripts/studio.py vo-import --film film/film.json   # your own recorded voice (bNN-j.wav) -> measured vo.json
 python scripts/studio.py eval            # golden briefs must compile and score >= 90
 python scripts/studio.py lut             # palette -> grade curves (and .cube for later)
 python scripts/studio.py safe <still> --preset reels --strict   # platform UI bands
@@ -326,12 +328,16 @@ scripts/package_project.py  a film project folder: assets copied, masters measur
 scripts/advise.py         measured design review: reading time, contrast, rhythm, cta, look
 scripts/looks.py          the same beat in every look -> out/looks/, for the client
 scripts/storyboard.py     out/storyboard/sheet.png, rendered by the engine itself
-scripts/mcp_server.py     MCP over stdio: 27 tools, 7 resources, no SDK, for any agent
+scripts/mcp_server.py     MCP over stdio: 28 tools, 7 resources, no SDK, for any agent
 scripts/providers.py      provider catalogue: 7-axis scoring, budget modes, ledger, decision log
 scripts/pipelines.py      staged pipelines: file/command/approval gates, film/state.json
 scripts/footage.py        silence -> EDL, transcript, scored shorts, EDL -> beats, rough cut
 scripts/kinds.py          compile checks for tutorial / character / gfx / footage beats
 scripts/craft.py          craft gate (P0/P1/P2), storylines gate, style cards, reference breakdown
+scripts/foley.py          events on screen x interaction level -> measured cue sheet in timeline.json
+scripts/vo_import.py      external voice wavs -> measured vo.json
+src/components/Cursor.tsx video-sized cursor, real tap, real-pixel button press, keycaps, zoom by action
+references/interaction.md the interaction levels, the events that sound, the cursor and press rules
 references/craft.md       the craft numbers + the review loop + REVIEW.md
 references/story.md       three storylines: devices, forms, hook, turn, ending
 references/styles.md      the style library (styles.json) and how to add one
@@ -373,6 +379,8 @@ examples/                 a shipped 118 s film as the worked example
 | Titles that breathe, float or pulse after landing | A landed title holds dead still; the ground or camera moves. `craft check` flags it |
 | A line on screen for less than it takes to read | Arabic default: 0.6 s + 0.4 s per word. `craft check` measures every text layer on both aspects |
 | A particle burst on every beat | `burst` is a one-shot accent on the payoff, once or twice a film |
+| A whoosh on every cut and a pop on every card | Sound follows events and the film's interaction level: a data story is `subtle`, a tutorial `rich`, footage `none`. `foley suggest` says which and why |
+| A cursor that lands, then nothing happens | The press, ripple, target and click sound share one frame; give the step a `box` so the real button presses |
 | Collecting references in a browser tab | A reference is a card: the move, the source, what it buys. Tabs are not evidence |
 
 ## Red flags

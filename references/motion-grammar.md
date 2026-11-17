@@ -112,7 +112,7 @@ Each seam is caused by something on screen. Map the cause to the engine word:
 
 | cause on screen | word | build note |
 |---|---|---|
-| a button or element was just named or clicked | `iris` / `flood` | aperture opens from that point |
+| a button or element was just named or clicked | `iris` / `flood` | the engine opens from preset origins today; place the clicked element near the next origin (a click-point origin is on the roadmap) |
 | the ground changes while the hero object stays | `flood` | the colour flood carries the turn |
 | a fast move or card leaves sideways | `whip` / `slide` | cut on the move's fastest frame, same direction both sides |
 | two states of one stage | `blur` | the ground never cuts |
@@ -125,8 +125,10 @@ next beat through an object on screen; "the titles move" → land them and hold.
 
 ## Sound-sync
 
-- Every cut carries a whoosh; every structural cut a low thud.
-- SFX precede the visual by 1–3 frames (sound leads picture, never the reverse).
+- The film's interaction level decides which cuts and actions sound
+  (`references/interaction.md`); `studio.py foley sheet` lists them.
+- A stem's measured transient peak lands on the picture frame (a whoosh's peak on the
+  hand-over's fastest frame); the compiler places it, nobody nudges by ear.
 - A drop lands with the picture change, not after it.
 - Silence before a reveal is a sound design choice: cut the bed, then hit.
 

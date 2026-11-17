@@ -25,6 +25,9 @@ type VoLine = {id: string; wav: string; dur: number};
 type Style = {sfx?: {intro?: string; cut?: string; accent?: string}; transitions?: string[]};
 type Music = {file?: string; gain?: number};
 
+/** One compiled cue: absolute frame, stem, gain and a take-rotation rate (scripts/foley.py). */
+type CompiledCue = {frame: number; name: string; gain: number; rate?: number; role?: string};
+
 const T = timeline as unknown as {
   fps: number;
   bpm: number;
@@ -32,6 +35,7 @@ const T = timeline as unknown as {
   beats: Beat[];
   style?: Style;
   music?: Music;
+  cues?: CompiledCue[];
 };
 const VO = voManifest as unknown as VoLine[];
 const STYLE: Style = T.style ?? {};
@@ -87,14 +91,18 @@ const musicVolume = (frame: number): number => {
 /** Delivered foley is peak-normalised, so one scalar per cue is the whole mix. */
 const SFX_TRIM = 0.56;
 
-type Accent = {at: number; name: string; gain: number};
+type Accent = {at: number; name: string; gain: number; rate?: number};
 
 const cutStem = STYLE.sfx?.cut ?? 'whoosh_rtl';
 const introStem = STYLE.sfx?.intro;
 const defaultAccent = STYLE.sfx?.accent ?? 'ui_pop';
 
-/** Every picture cut gets an edge; the stat and the end card get a body hit. */
-const accents: Accent[] = T.beats.flatMap((beat, index) => {
+/**
+ * The compiler owns the cue sheet (`timeline.cues`, from on-screen events and the
+ * film's interaction level). A timeline compiled before that existed falls back to
+ * the fixed mix below, which `foley.py legacy_cues` reproduces exactly.
+ */
+const legacyAccents = (): Accent[] => T.beats.flatMap((beat, index) => {
   const seconds = beat.start / FPS;
   const cues: Accent[] = [];
 
@@ -123,6 +131,10 @@ const accents: Accent[] = T.beats.flatMap((beat, index) => {
   return cues;
 });
 
+const accents: Accent[] = T.cues
+  ? T.cues.map((c) => ({at: c.frame / FPS, name: c.name, gain: c.gain, rate: c.rate}))
+  : legacyAccents();
+
 export const Soundtrack: React.FC = () => {
   return (
     <>
@@ -141,7 +153,8 @@ export const Soundtrack: React.FC = () => {
           durationInFrames={90}
           layout="none"
         >
-          <Html5Audio src={staticFile(`audio/sfx/${accent.name}.wav`)} volume={accent.gain * SFX_TRIM} />
+          <Html5Audio src={staticFile(`audio/sfx/${accent.name}.wav`)} volume={accent.gain * SFX_TRIM}
+            playbackRate={accent.rate ?? 1} />
         </Sequence>
       ))}
     </>

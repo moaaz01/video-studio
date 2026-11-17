@@ -144,11 +144,14 @@ const BeatShell: React.FC<{
   transitions: TransitionName[];
   children: React.ReactNode;
 }> = ({beat, index, count, transitions, children}) => {
+  // frames between the Sequence start and the beat's own start (8, or less for a beat
+  // that starts before frame 8, i.e. the first one)
+  const pre = beat.start - Math.max(0, beat.start - PREROLL);
   const local = useCurrentFrame();
   const enterName = index > 0 ? transitions[(index - 1) % transitions.length] : undefined;
   const exitName = index < count - 1 ? transitions[index % transitions.length] : undefined;
-  const a = enterXf(enterName, clamp((local - PREROLL) / OVER), index);
-  const b = exitXf(exitName, clamp((local - PREROLL - beat.dur) / OVER));
+  const a = enterXf(enterName, clamp((local - pre) / OVER), index);
+  const b = exitXf(exitName, clamp((local - pre - beat.dur) / OVER));
 
   return (
     <AbsoluteFill
@@ -304,7 +307,7 @@ const Body: React.FC<{vertical: boolean; lookName?: string; blur?: number; capti
               <Sequence
                 key={beat.id}
                 from={Math.max(0, beat.start - PREROLL)}
-                durationInFrames={PREROLL + beat.dur + (isLast ? 0 : OVER)}
+                durationInFrames={beat.start - Math.max(0, beat.start - PREROLL) + beat.dur + (isLast ? 0 : OVER)}
                 name={`${beat.id} · ${beat.kind}`}
               >
                 <BeatShell beat={beat} index={i} count={beats.length} transitions={cuts}>
@@ -314,7 +317,8 @@ const Body: React.FC<{vertical: boolean; lookName?: string; blur?: number; capti
                       mode={CAMERA_BY_KIND[beat.kind] ?? 'settle'}
                       strength={look.camera * motion}
                     >
-                      <Scene beat={beat} vertical={vertical} motion={motion} preRoll={PREROLL} />
+                      {/* the first beat cannot pre-roll before frame 0: its clock must not lag the voice */}
+                      <Scene beat={beat} vertical={vertical} motion={motion} preRoll={beat.start - Math.max(0, beat.start - PREROLL)} />
                     </Camera>
                   </Shutter>
                 </BeatShell>

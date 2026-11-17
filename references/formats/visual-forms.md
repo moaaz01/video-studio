@@ -24,6 +24,9 @@ MP4 under `public/`), in a `browser`, `phone` or `none` frame.
 | `steps[].box` | `[x, y, w, h]` spotlight: the rest of the screen dims |
 | `steps[].label` | the Arabic callout, one action per step |
 | `steps[].click` | `false` for a hover-only step (no ripple) |
+| `steps[].action` | click (default), type, scroll, drag, hover: sets the default zoom (1.8 / 2.4 / 1.25 / 1.5 / 1.6) and whether it clicks |
+| `steps[].keys` | `["Ctrl", "K"]`: keycaps under the screen, each key heard as it goes down |
+| `steps[].box` + click | the capture's own pixels in the box press with the cursor (real button press) |
 
 Rules: one action per step, one screen per beat. Read coordinates off the real
 image (open it at 1:1 and divide the pixel by its width/height). Captures come from
