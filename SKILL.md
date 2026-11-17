@@ -384,6 +384,7 @@ examples/                 a shipped 118 s film as the worked example
 | A particle burst on every beat | `burst` is a one-shot accent on the payoff, once or twice a film |
 | A whoosh on every cut and a pop on every card | Sound follows events and the film's interaction level: a data story is `subtle`, a tutorial `rich`, footage `none`. `foley suggest` says which and why |
 | A cursor that lands, then nothing happens | The press, ripple, target and click sound share one frame; give the step a `box` so the real button presses |
+| Rendering past a craft finding with `npx remotion render` | `studio.py render` refuses on a P0 for a reason: the text is unreadable on a phone or the read is broken. Fix the beat and re-render; delivery checks the gate record |
 | Committing a client film to "save" it | Client films, assets and finals never enter git. `private add` the paths, `private deliver` the finals outside the repo; the guard blocks the rest |
 | Collecting references in a browser tab | A reference is a card: the move, the source, what it buys. Tabs are not evidence |
 

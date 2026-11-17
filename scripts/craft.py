@@ -53,7 +53,12 @@ def _font_px(layer: dict, vertical: bool) -> float:
     return float(size) * 1080 / 4  # Gfx.tsx: text renders at size*1080*unit/4
 
 
-def check_gfx(beat: dict, fps: float, add) -> None:
+# aspect -> (renders with the vertical `v` overrides, frame height in px)
+ASPECT_FRAMES = {"16:9": (False, 1080), "9:16": (True, 1920), "1:1": (False, 1080), "4:5": (True, 1350)}
+ALL_ASPECTS = ("16:9", "9:16")
+
+
+def check_gfx(beat: dict, fps: float, add, aspects=ALL_ASPECTS) -> None:
     bid = beat.get("id", "?")
     data = beat.get("data") or {}
     layers = data.get("layers") or []
@@ -82,9 +87,10 @@ def check_gfx(beat: dict, fps: float, add) -> None:
         if sizes[0] > 0 and sizes[-1] / sizes[0] < 3.0:
             add("P2", bid, "flat type scale", f"largest/smallest text = {sizes[-1] / sizes[0]:.1f}; aim for >= 3")
     for l in texts:
-        for vertical, frame_h in ((False, 1080), (True, 1920)):
+        for tag, (vertical, frame_h) in ASPECT_FRAMES.items():
+            if tag not in aspects:
+                continue
             if _font_px(l, vertical) < MIN_TEXT_FRAC * frame_h:
-                tag = "9:16" if vertical else "16:9"
                 add("P0", bid, f"text too small on {tag}", f"'{l.get('text', '')[:24]}' renders {_font_px(l, vertical):.0f}px; "
                     f"needs >= {MIN_TEXT_FRAC * frame_h:.0f}px (raise size{' or v.size' if vertical else ''})")
                 break
@@ -140,7 +146,7 @@ def check_sound(timeline: dict, add) -> None:
         add("P1", "-", "foley over real footage", "level 'none' should carry only cues the film names")
 
 
-def check(timeline: dict) -> list[dict]:
+def check(timeline: dict, aspects=ALL_ASPECTS) -> list[dict]:
     findings: list[dict] = []
 
     def add(level: str, where: str, problem: str, fix: str) -> None:
@@ -154,7 +160,7 @@ def check(timeline: dict) -> list[dict]:
     for b in beats:
         dur = b.get("dur", 0) / fps
         if b.get("kind") == "gfx":
-            check_gfx(b, fps, add)
+            check_gfx(b, fps, add, aspects)
         else:
             line = " ".join(x for x in (b.get("line1"), b.get("line2")) if x)
             if line and dur < need_hold(line):
@@ -171,6 +177,40 @@ def check(timeline: dict) -> list[dict]:
     check_sound(timeline, add)
     order = {"P0": 0, "P1": 1, "P2": 2}
     return sorted(findings, key=lambda f: (order[f["level"]], f["where"]))
+
+
+GATE_RECORD = ROOT / "out" / "craft-gate.json"
+
+
+def render_gate(timeline_path: pathlib.Path | None = None, aspects=ALL_ASPECTS) -> int:
+    """The hard gate every render passes through: any P0 refuses the render.
+
+    Called by `studio.py render` and `studio.py export`. The result is recorded in
+    out/craft-gate.json (timeline hash, counts, time) so `private deliver` can refuse
+    a film whose render never passed. There is no override flag on purpose: fix the
+    P0 in film.json, recompile, render again.
+    """
+    import datetime as dt
+    import hashlib
+
+    tl_path = timeline_path or ROOT / "src" / "generated" / "timeline.json"
+    raw = tl_path.read_bytes()
+    aspects = tuple(a.replace("x", ":") for a in aspects)
+    findings = check(json.loads(raw.decode("utf-8")), aspects)
+    p0 = [f for f in findings if f["level"] == "P0"]
+    record = {"timeline": str(tl_path), "aspects": list(aspects), "sha256": hashlib.sha256(raw).hexdigest(), "pass": not p0,
+              "counts": {k: sum(f["level"] == k for f in findings) for k in ("P0", "P1", "P2")},
+              "p0": p0, "at": dt.datetime.now().isoformat(timespec="seconds")}
+    GATE_RECORD.parent.mkdir(parents=True, exist_ok=True)
+    GATE_RECORD.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    c = record["counts"]
+    if p0:
+        print(f"craft gate: REFUSED — {len(p0)} P0 (P1 {c['P1']}, P2 {c['P2']}). Fix these, recompile, render again:")
+        for f in p0:
+            print(f"  P0  {f['where']:<5} {f['problem']} -> {f['fix']}")
+        return 1
+    print(f"craft gate: pass (P0 0, P1 {c['P1']}, P2 {c['P2']}) — keep or fix the P1/P2 in REVIEW.md")
+    return 0
 
 
 def write_review(path: pathlib.Path, findings: list[dict]) -> None:

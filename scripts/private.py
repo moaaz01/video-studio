@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import fnmatch
+import json
 import os
 import pathlib
 import shutil
@@ -163,10 +164,23 @@ def cmd_deliver(a: argparse.Namespace) -> int:
     if inside_repo(root):
         print(f"refusing: {root} is inside the repository")
         return 1
+    top = toplevel()
+    # A film is delivered only if its render passed the craft gate and it carries a review.
+    gate = top / a.source / "craft-gate.json"
+    if not gate.exists():
+        print(f"refusing: no {gate.relative_to(top)} — render with `studio.py render` (it runs the craft gate)")
+        return 1
+    record = json.loads(gate.read_text(encoding="utf-8"))
+    if not record.get("pass"):
+        print(f"refusing: the last render failed the craft gate ({len(record.get('p0') or [])} P0) — fix, re-render")
+        return 1
+    reviews = [p for p in ((top / a.project / "REVIEW.md") if a.project else None, top / "film" / "REVIEW.md") if p and p.exists()]
+    if not reviews:
+        print("refusing: no REVIEW.md — `studio.py craft check --review film/REVIEW.md`, then fill its creative calls")
+        return 1
     stamp = dt.datetime.now().strftime("%Y-%m-%d_%H%M")
     dest = root / a.name / stamp
-    sources: list[pathlib.Path] = []
-    top = toplevel()
+    sources: list[pathlib.Path] = [gate, reviews[0]]
     out = top / a.source
     for pattern in ("film_*.mp4", "masters/*.mp4", "exports/**/*.mp4", "qa/*.png", "captions/*.srt", "cover*.png"):
         sources += [p for p in out.glob(pattern) if p.is_file()]

@@ -16,6 +16,12 @@ python scripts/studio.py timeline --strict
 python scripts/studio.py craft check --strict --review film/REVIEW.md
 ```
 
+**Enforced, not advised.** `studio.py render <aspects>` and `studio.py export` run the same
+check for the aspects being rendered (a 16:9-only film is not judged on 9:16) and refuse to
+render on any P0; there is no override. The verdict, timeline hash and counts go to
+`out/craft-gate.json`, and `studio.py private deliver` refuses without a passing record
+and a `REVIEW.md`.
+
 ## The numbers (defaults; a reference you were given wins)
 
 | rule | value | why |

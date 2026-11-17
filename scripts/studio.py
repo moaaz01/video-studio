@@ -200,6 +200,11 @@ def render(args: argparse.Namespace) -> int:
     if not npx:
         print("npx not found")
         return 1
+    # hard gate: no master is rendered from a timeline with a craft P0 (references/craft.md)
+    import craft
+
+    if craft.render_gate(aspects=args.aspects):
+        return 1
     (ROOT / "out").mkdir(exist_ok=True)
     rc = 0
     for aspect in args.aspects:
