@@ -211,6 +211,8 @@ python scripts/studio.py craft styles list | apply <id> --film film/film.json   
 python scripts/studio.py craft breakdown <reference.mp4>   # shot list + stills of a reference video
 python scripts/studio.py foley suggest | sheet   # interaction level for this film; every sound, frame by frame
 python scripts/studio.py vo-import --film film/film.json   # your own recorded voice (bNN-j.wav) -> measured vo.json
+python scripts/studio.py private deliver --name <slug> --project projects/<slug> --move   # finals OUTSIDE git
+python scripts/studio.py private scan    # what a careless `git add -A` would publish
 python scripts/studio.py eval            # golden briefs must compile and score >= 90
 python scripts/studio.py lut             # palette -> grade curves (and .cube for later)
 python scripts/studio.py safe <still> --preset reels --strict   # platform UI bands
@@ -336,6 +338,7 @@ scripts/kinds.py          compile checks for tutorial / character / gfx / footag
 scripts/craft.py          craft gate (P0/P1/P2), storylines gate, style cards, reference breakdown
 scripts/foley.py          events on screen x interaction level -> measured cue sheet in timeline.json
 scripts/vo_import.py      external voice wavs -> measured vo.json
+scripts/private.py        client work stays private: delivery outside git, local exclude, commit/push guard
 src/components/Cursor.tsx video-sized cursor, real tap, real-pixel button press, keycaps, zoom by action
 references/interaction.md the interaction levels, the events that sound, the cursor and press rules
 references/craft.md       the craft numbers + the review loop + REVIEW.md
@@ -381,6 +384,7 @@ examples/                 a shipped 118 s film as the worked example
 | A particle burst on every beat | `burst` is a one-shot accent on the payoff, once or twice a film |
 | A whoosh on every cut and a pop on every card | Sound follows events and the film's interaction level: a data story is `subtle`, a tutorial `rich`, footage `none`. `foley suggest` says which and why |
 | A cursor that lands, then nothing happens | The press, ripple, target and click sound share one frame; give the step a `box` so the real button presses |
+| Committing a client film to "save" it | Client films, assets and finals never enter git. `private add` the paths, `private deliver` the finals outside the repo; the guard blocks the rest |
 | Collecting references in a browser tab | A reference is a card: the move, the source, what it buys. Tabs are not evidence |
 
 ## Red flags
