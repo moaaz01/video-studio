@@ -55,6 +55,7 @@ python scripts/studio.py craft breakdown <ref.mp4>   # learn from a reference: s
 python scripts/studio.py foley suggest        # interaction level (none/subtle/standard/rich/punchy) + why
 python scripts/studio.py foley sheet          # every compiled sound, frame by frame
 python scripts/studio.py vo-import --film film/film.json   # external voice wavs -> measured vo.json
+python scripts/studio.py private where | scan | add <path> | add --word <name> | deliver --name <slug> | guard
 python scripts/studio.py storyboard    # out/storyboard/sheet.png: real panels, real Arabic
 python scripts/studio.py looks         # one frame in every look: let the client choose
 python scripts/studio.py eval          # golden briefs: schema + compile + score floor
@@ -120,9 +121,14 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
    film's interaction level (`style.interaction`, `references/interaction.md`; check it with `foley sheet`), levelled to peak −1.4 dBFS / RMS −20…−23.
 8. **QA**: `studio.py craft check --strict --review film/REVIEW.md` before the render, then the gates. Report *measured* numbers, from the delivered MP4.
    `python scripts/qa.py` also scans every source file for Arabic mojibake.
-9. **Deliver**: `python scripts/package_project.py --project projects/<slug>` — the
-   only step that produces the folder you hand over (assets + masters + 11 stills +
-   manifest + SHA256SUMS). Commit the stills and the manifest; masters stay ignored.
+9. **Deliver — outside git.** A client film is private by default:
+   - `python scripts/studio.py private add projects/<slug>/ public/<client-assets>/ src/scenes/<ClientScene>.tsx`
+     and `private add --word <client-name>` (local-only lists in `.git/info/`; nothing published);
+   - `python scripts/package_project.py --project projects/<slug>` builds the hand-over folder;
+   - `python scripts/studio.py private deliver --name <slug> --project projects/<slug> --move` copies the
+     masters, stills, captions and manifest to the private folder **outside the repository**
+     (`studio.py private where`; default `<repo parent>/video-studio-private/`).
+   Only the studio's own reference films (cobalt, qissat-raqam) are committed.
 
 ## Where things live
 
@@ -166,6 +172,13 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
 | `docs/ROADMAP-v2.md` | The development campaign: axes, competitor matrix, priorities, gates. |
 
 ## Hard rules
+
+- **Client work never reaches GitHub.** Final videos and images go to the private
+  folder (`studio.py private deliver`), never into a commit. Before any `git add`, run
+  `studio.py private scan`; never `git add -A` / `git add .` in this repo. The local guard
+  (`studio.py private guard`, `.git/hooks/`) refuses commits and pushes that touch a
+  private path or a client name, and any `backup/`, `private/` or `client/` branch.
+  Never bypass it with `--no-verify`.
 
 - **Never spend without the gate.** Every paid provider call goes through
   `providers spend`, and an action above the approval line needs the user's yes in

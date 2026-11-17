@@ -296,6 +296,7 @@ DELEGATES = {
     "craft": "craft.py",
     "foley": "foley.py",
     "vo-import": "vo_import.py",
+    "private": "private.py",
 }
 
 
