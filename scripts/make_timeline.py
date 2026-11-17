@@ -383,6 +383,21 @@ def main() -> None:
     if total % bar_frames and fmt != "footage":
         warnings.append(f"total {total} frames is not a whole number of bars ({bar_frames})")
 
+    # the whole cue sheet is compiled here, so craft check and tests can hear it
+    import foley  # noqa: E402  (scripts/ is on the path when run as a script)
+
+    level = style.get("interaction") or "legacy"
+    if level not in foley.profiles()["levels"]:
+        problems.append(f"style.interaction {level!r} not in references/interaction.json")
+        style["interaction"] = level = "legacy"
+    raw_style = film.get("style")
+    if isinstance(raw_style, str):
+        target = (film_path.parent / raw_style).resolve()
+        raw_style = json.loads(target.read_text(encoding="utf-8")) if target.exists() else {}
+    declared_sfx = (raw_style or {}).get("sfx") or {} if isinstance(raw_style, dict) else {}
+    # the level picks events; only roles the film itself declared override a level's stem
+    _, cues = foley.cue_sheet(beats_out, {**style, "sfx": declared_sfx} if level != "legacy" else style, fps, cursor)
+
     tl = {
         "fps": fps,
         "format": fmt,
@@ -395,6 +410,8 @@ def main() -> None:
         "bpm": bpm,
         "frames": total,
         "beats": beats_out,
+        "interaction": level,
+        "cues": cues,
     }
     out = ROOT / a.out
     out.parent.mkdir(parents=True, exist_ok=True)

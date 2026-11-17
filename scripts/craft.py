@@ -107,6 +107,39 @@ def check_gfx(beat: dict, fps: float, add) -> None:
         add("P1", bid, "dead stretch", f"{max(gaps):.1f}s with nothing arriving and no voice")
 
 
+MAX_CUES_PER_10S = 10     # above this the foley reads as a template, whatever the level
+
+
+def check_sound(timeline: dict, add) -> None:
+    """The compiled cue sheet (scripts/foley.py): level, density, monotony."""
+    import foley
+
+    beats = timeline.get("beats", [])
+    fps = float(timeline.get("fps", 30))
+    level = timeline.get("interaction") or (timeline.get("style") or {}).get("interaction") or "legacy"
+    if level == "legacy" and beats:
+        lv, why = foley.suggest(beats)
+        add("P2", "-", "no interaction level", f"set style.interaction (suggested '{lv}': {why}); references/interaction.md")
+    cues = timeline.get("cues") or []
+    frames = sorted(c["frame"] for c in cues)
+    j, worst = 0, 0
+    for i, f in enumerate(frames):
+        while frames[j] < f - 10 * fps:
+            j += 1
+        worst = max(worst, i - j + 1)
+    if worst > MAX_CUES_PER_10S:
+        add("P1", "-", "too many sounds", f"{worst} cues in one 10 s window; keep <= {MAX_CUES_PER_10S} (lower the interaction level)")
+    run, last = 1, None
+    for c in (c for c in cues if c.get("role") == "cut"):
+        key = (c["name"], c.get("rate", 1))
+        run = run + 1 if key == last else 1
+        last = key
+        if run == 4:
+            add("P2", "-", "the same whoosh on every cut", f"'{c['name']}' x4 unchanged; rotate takes (an interaction level does it)")
+    if level == "none" and any(c.get("role") not in ("named",) for c in cues):
+        add("P1", "-", "foley over real footage", "level 'none' should carry only cues the film names")
+
+
 def check(timeline: dict) -> list[dict]:
     findings: list[dict] = []
 
@@ -135,6 +168,7 @@ def check(timeline: dict) -> list[dict]:
             anims = {l.get("anim", "pop") for b in beats for l in (b.get("data") or {}).get("layers", []) if l.get("type") == "text"}
             if len(anims) == 1:
                 add("P2", "-", "same entrance on every title", f"all text uses '{anims.pop()}'; vary within the film")
+    check_sound(timeline, add)
     order = {"P0": 0, "P1": 1, "P2": 2}
     return sorted(findings, key=lambda f: (order[f["level"]], f["where"]))
 
@@ -221,7 +255,7 @@ def cmd_styles(a: argparse.Namespace) -> int:
     if a.action == "show":
         print(json.dumps(s, ensure_ascii=False, indent=2))
         return 0
-    patch = {"look": s["look"], "motion": s["motion"], "transitions": s["transitions"]}
+    patch = {"look": s["look"], "motion": s["motion"], "transitions": s["transitions"], "interaction": s["interaction"]}
 
     def merge_file(path: pathlib.Path) -> None:
         cur = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
@@ -258,8 +292,8 @@ def cmd_styles(a: argparse.Namespace) -> int:
 
 # ----------------------------------------------------------------- breakdown
 
-def _frames(src: pathlib.Path, fps: float, ffmpeg: str):
-    """Grey 160x90 frames at `fps`, via PNG files: the bundled ffmpeg has no rawvideo
+def _frames(src: pathlib.Path, fps: float, ffmpeg: str, size: tuple[int, int] = (160, 90)):
+    """Grey frames at `fps`, via PNG files: the bundled ffmpeg has no rawvideo
     muxer and no fps filter, so this path works with it and with a full build."""
     import tempfile
 
@@ -267,7 +301,7 @@ def _frames(src: pathlib.Path, fps: float, ffmpeg: str):
     from PIL import Image
 
     with tempfile.TemporaryDirectory() as tmp:
-        subprocess.run([ffmpeg, "-v", "error", "-i", str(src), "-r", f"{fps:g}", "-vf", "scale=160:90",
+        subprocess.run([ffmpeg, "-v", "error", "-i", str(src), "-r", f"{fps:g}", "-vf", f"scale={size[0]}:{size[1]}",
                         str(pathlib.Path(tmp) / "%06d.png")], check=True)
         for f in sorted(pathlib.Path(tmp).glob("*.png")):
             yield np.asarray(Image.open(f).convert("L"), dtype=np.int16)

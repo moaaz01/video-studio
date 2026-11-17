@@ -19,6 +19,7 @@ Read in this order, and stop when you have what you need:
    - Any film over 15 s → `references/story.md` (three storylines) + `references/styles.md` (a style card).
    - Before every render → `references/craft.md` (`craft check`; the review loop and `REVIEW.md`).
    - 3D, generated images/clips, GSAP, game-style effects → `references/external-tools.md`.
+   - Clicks, cursor, keys, UI sounds, how much foley a film gets → `references/interaction.md`.
 6. `references/PLAYBOOK-cobalt-ledger.md` — the 48 s data-film recipe, if the brief
    is a store/economics film. Copy it; do not start from a blank `film.json`.
 
@@ -51,6 +52,9 @@ python scripts/studio.py craft check --strict --review film/REVIEW.md  # tells o
 python scripts/studio.py craft storylines film/STORYLINES.md  # three storylines, one picked
 python scripts/studio.py craft styles list   # 12 style cards; `apply <id> --film ...` wires one in
 python scripts/studio.py craft breakdown <ref.mp4>   # learn from a reference: shots, lengths, stills
+python scripts/studio.py foley suggest        # interaction level (none/subtle/standard/rich/punchy) + why
+python scripts/studio.py foley sheet          # every compiled sound, frame by frame
+python scripts/studio.py vo-import --film film/film.json   # external voice wavs -> measured vo.json
 python scripts/studio.py storyboard    # out/storyboard/sheet.png: real panels, real Arabic
 python scripts/studio.py looks         # one frame in every look: let the client choose
 python scripts/studio.py eval          # golden briefs: schema + compile + score floor
@@ -95,7 +99,8 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
 3. **Script**: edit `film/film.json` — beats, `bars` (one bar = 2 s at 120 BPM),
    Arabic copy, `vo` lines with full tashkeel. Copy rules: 8–16 words per line,
    one idea per beat, punctuation is prosody.
-4. **Voice** *(optional)*: `python scripts/studio.py voice`, then
+4. **Voice** *(optional)*: `python scripts/studio.py voice` (or `studio.py vo-import --film ...` for a voice
+   recorded elsewhere, files named `bNN-j.wav`), then
    `python scripts/studio.py timeline --strict` — the beats must fit the measured
    speech plus 0.35 s of air, or the timeline refuses to compile.
 5. **Build**: scan the product first (`studio.py ui --dir <repo>`) — every screen,
@@ -111,8 +116,8 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
    -> write `film/style.json` (`look`, `motion`, `background`, `transitions`, `sfx`).
    Then `studio.py storyboard` and `studio.py advise`: the sheet is what the client
    annotates, the review is what you fix. Guide: `references/cinematic-look.md`.
-7. **Mix**: `python scripts/studio.py score` — 120 BPM bed, foley on cuts only
-   (see the foley table), levelled to peak −1.4 dBFS / RMS −20…−23.
+7. **Mix**: `python scripts/studio.py score` — 120 BPM bed; foley is compiled from on-screen events at the
+   film's interaction level (`style.interaction`, `references/interaction.md`; check it with `foley sheet`), levelled to peak −1.4 dBFS / RMS −20…−23.
 8. **QA**: `studio.py craft check --strict --review film/REVIEW.md` before the render, then the gates. Report *measured* numbers, from the delivered MP4.
    `python scripts/qa.py` also scans every source file for Arabic mojibake.
 9. **Deliver**: `python scripts/package_project.py --project projects/<slug>` — the
@@ -154,8 +159,9 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
 | `scripts/advise.py` | Measured design review; exit 1 with `--strict` on a MUST. |
 | `scripts/looks.py` | Look variants as real frames, for the client to choose from. |
 | `scripts/storyboard.py` | Storyboard sheet + optional per-beat stills. |
+| `scripts/foley.py` + `references/interaction.json` | Interaction levels and the compiled cue sheet (`timeline.cues`): events → stems, peak-aligned, rotated, capped. `src/components/Cursor.tsx` is the shared cursor/press/keycaps. |
 | `scripts/craft.py` + `references/styles.json` | Craft gate (P0/P1/P2), storylines gate, 12 style cards, reference breakdown. Docs: `references/craft.md`, `story.md`, `styles.md`. |
-| `scripts/mcp_server.py` | MCP stdio server: 27 tools + 7 resources (film, timeline, grade, captions, ui-source, roadmap, skill). |
+| `scripts/mcp_server.py` | MCP stdio server: 28 tools + 7 resources (film, timeline, grade, captions, ui-source, roadmap, skill). |
 | `film/state.json`, `film/decisions.jsonl`, `film/ledger.jsonl` | Per-film working state: pipeline stage + approvals, why each provider was chosen, money spent. Gitignored. |
 | `docs/ROADMAP-v2.md` | The development campaign: axes, competitor matrix, priorities, gates. |
 

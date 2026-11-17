@@ -58,6 +58,13 @@ def captions_tool(a: dict) -> str:
 
 
 TOOLS = {
+    "foley_sheet": tool(
+        "foley_sheet",
+        "The film's interaction level and every compiled sound (frame, role, stem, gain, take rate); `suggest` returns the level the beats call for, with the reason.",
+        {"action": {"type": "string", "enum": ["sheet", "suggest"]}},
+        [],
+        lambda a: sh([PYTHON, "scripts/foley.py", a.get("action", "sheet")]),
+    ),
     "craft_check": tool(
         "craft_check",
         "Measured craft gate on the compiled timeline: P0/P1/P2 tells of a generated film (text too small for a phone, line too short to read, two glows, no stagger, flat ground, dead stretch). Optionally writes REVIEW.md.",

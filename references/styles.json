@@ -29,7 +29,8 @@
         "Two glowing elements in one frame",
         "Chart with no unit or source on screen",
         "Amber used for decoration instead of meaning"
-      ]
+      ],
+      "interaction": "subtle"
     },
     {
       "id": "editorial-paper",
@@ -59,7 +60,8 @@
         "Neon or glow on paper",
         "Centred everything; use the RTL column",
         "Headline under 3x the caption size"
-      ]
+      ],
+      "interaction": "subtle"
     },
     {
       "id": "tech-indigo",
@@ -83,14 +85,15 @@
       "essence": "Violet depth on a perspective grid, glass cards stacked in z, a pink counterpoint used once.",
       "moves": [
         "Glass cards enter staggered at three depths and parallax",
-        "Iris opens from the element just named",
+        "Iris on the step that changes the screen",
         "A flow of cards joined by drawn connectors"
       ],
       "pitfalls": [
         "Purple-to-blue gradient on every surface",
         "Pink and violet glowing together",
         "Grid floor behind dense text"
-      ]
+      ],
+      "interaction": "standard"
     },
     {
       "id": "money-emerald",
@@ -120,7 +123,8 @@
         "Gold on non-money elements",
         "Fast whips in a calm money story",
         "Investment advice phrasing"
-      ]
+      ],
+      "interaction": "subtle"
     },
     {
       "id": "space-ocean",
@@ -150,7 +154,8 @@
         "Particles behind long text",
         "Fake star photos with letters",
         "Unsourced distances"
-      ]
+      ],
+      "interaction": "subtle"
     },
     {
       "id": "body-dusk",
@@ -180,7 +185,8 @@
         "Medical advice phrasing",
         "Red alarm colours for normal facts",
         "Cartoon bounce on serious topics"
-      ]
+      ],
+      "interaction": "subtle"
     },
     {
       "id": "urgent-mono",
@@ -210,7 +216,8 @@
         "Red on more than one element",
         "Flash transitions on every seam (photosensitive viewers)",
         "Small type"
-      ]
+      ],
+      "interaction": "punchy"
     },
     {
       "id": "product-cobalt",
@@ -240,7 +247,8 @@
         "Mock UI presented as the real app",
         "Price lines in the CTA",
         "Decorative blobs behind screenshots"
-      ]
+      ],
+      "interaction": "rich"
     },
     {
       "id": "souk-night",
@@ -270,7 +278,8 @@
         "Price on screen in the CTA",
         "Fixture products in a client film",
         "Every card glowing"
-      ]
+      ],
+      "interaction": "standard"
     },
     {
       "id": "kinetic-type",
@@ -301,7 +310,8 @@
         "Splitting Arabic into letters (forbidden)",
         "Titles that keep drifting after they land",
         "Even pace with no breath"
-      ]
+      ],
+      "interaction": "punchy"
     },
     {
       "id": "warm-cinema",
@@ -330,7 +340,8 @@
         "Fast cuts that fight the grade",
         "Hero object too small",
         "Generic piano-and-strings bed"
-      ]
+      ],
+      "interaction": "subtle"
     },
     {
       "id": "calm-classroom",
@@ -360,7 +371,8 @@
         "Two actions in one step",
         "Re-drawn UI instead of the capture",
         "Zoom past the screen edge"
-      ]
+      ],
+      "interaction": "rich"
     }
   ]
 }

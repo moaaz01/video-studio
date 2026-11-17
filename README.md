@@ -215,7 +215,7 @@ python scripts/studio.py footage silence public/assets/x/talk.mp4   # silence cu
 python scripts/studio.py footage clips film/transcript.json         # scored shorts from a long video
 python -m unittest discover -s tests       # engine unit tests
 python scripts/mcp_server.py                 # the studio as MCP tools (stdio, no SDK)
-python scripts/mcp_selftest.py               # wire checks: protocol, 27 tools, 7 resources, live calls
+python scripts/mcp_selftest.py               # wire checks: protocol, 28 tools, 7 resources, live calls
 python scripts/studio.py render 16x9 9x16    # masters
 python scripts/studio.py master             # one audio gain stage; video stream copied
 python scripts/studio.py qa --stills 8 --require-audio   # gates, contact sheets, and a silence check

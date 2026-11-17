@@ -102,7 +102,9 @@ the raw render there before re-levelling or it levels an already-levelled file.
 
 ## Foley
 
-A cut with no sound is a mistake. Minimum vocabulary for a marketing film:
+Placement is compiled (`scripts/foley.py`, `references/interaction.md`): events on
+screen × the film's interaction level → a measured cue sheet in `timeline.json`. The
+table below is the `legacy` mix and the stem vocabulary:
 
 | event | sound | gain |
 |---|---|---|

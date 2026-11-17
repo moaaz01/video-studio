@@ -5,6 +5,7 @@ import {Ar} from '../components/Text';
 import {FONT, C} from '../theme';
 import {E, entrance, entStyle} from '../lib/anim';
 import {toAr} from '../lib/rtl';
+import {ACTION_ZOOM, KeyCaps, Pointer, PressTarget, Ripple, pressScale} from '../components/Cursor';
 import type {SceneProps} from '../film/types';
 
 /**
@@ -18,7 +19,18 @@ import type {SceneProps} from '../film/types';
  * screen is redrawn: if the UI is wrong, the capture is wrong.
  */
 
-type Step = {at: number; x: number; y: number; zoom?: number; label?: string; click?: boolean; box?: [number, number, number, number]};
+type Action = 'click' | 'type' | 'scroll' | 'drag' | 'hover';
+type Step = {
+  at: number; x: number; y: number; zoom?: number; label?: string; click?: boolean;
+  box?: [number, number, number, number];
+  /** what the hand does here: sets the default zoom and whether it clicks */
+  action?: Action;
+  /** keyboard shortcut shown as keycaps, e.g. ["Ctrl", "C"] */
+  keys?: string[];
+};
+// mirrors scripts/foley.py: a step with keys is heard and seen as its keys, not a click
+const clicks = (s: Step) => s.click !== false && !s.keys?.length && s.action !== 'hover' && s.action !== 'scroll';
+const zoomOf = (s: Step) => s.zoom ?? ACTION_ZOOM[s.action ?? 'click'] ?? 1.8;
 type Data = {
   src?: string;
   /** width / height of the capture; default 16:10 desktop */
@@ -37,18 +49,12 @@ type Cam = {x: number; y: number; z: number};
 const camAt = (steps: Step[], t: number): Cam => {
   let cam: Cam = {x: 0.5, y: 0.5, z: 1};
   for (const s of steps) {
-    const target = {x: s.x, y: s.y, z: s.zoom ?? 1.8};
+    const target = {x: s.x, y: s.y, z: zoomOf(s)};
     const k = interpolate(t, [s.at - MOVE, s.at], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: E.inOut});
     cam = {x: cam.x + (target.x - cam.x) * k, y: cam.y + (target.y - cam.y) * k, z: cam.z + (target.z - cam.z) * k};
   }
   return cam;
 };
-
-const Cursor: React.FC<{size: number}> = ({size}) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" style={{filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.35))'}}>
-    <path d="M4 2 L4 19 L8.5 14.8 L11.4 21.4 L14.3 20.1 L11.5 13.6 L17.6 13.6 Z" fill="#111" stroke="#fff" strokeWidth={1.4} strokeLinejoin="round" />
-  </svg>
-);
 
 export const Tutorial: React.FC<SceneProps> = ({beat, vertical, preRoll = 0}) => {
   const frame = useCurrentFrame() - preRoll;
@@ -87,8 +93,9 @@ export const Tutorial: React.FC<SceneProps> = ({beat, vertical, preRoll = 0}) =>
   const cp = toScreen(cur.x, cur.y);
   const step = active >= 0 ? steps[active] : null;
   const since = step ? t - step.at : 0;
-  const ripple = step && step.click !== false ? interpolate(since, [0, 0.45], [0, 1], {extrapolateRight: 'clamp'}) : 1;
-  const press = step && step.click !== false ? 1 - 0.18 * Math.sin(Math.min(1, since / 0.18) * Math.PI) : 1;
+    const clicked = !!step && clicks(step);
+  const press = clicked ? pressScale(since) : 1;
+  const cursorPx = 0.045 * Math.max(width, height);
   const sp = step ? toScreen(step.x, step.y) : null;
   const calloutIn = entrance(frame, step ? Math.round((step.at + 0.1) * fps) : 0, {dur: 14, dist: 12});
   const titleIn = entrance(frame, 0, {dur: 20, dist: 14});
@@ -142,18 +149,27 @@ export const Tutorial: React.FC<SceneProps> = ({beat, vertical, preRoll = 0}) =>
                 boxShadow: `0 0 0 ${4000}px rgba(8,10,14,${0.5 * k})`, opacity: k}} />
             );
           })()}
-          {step && step.click !== false && ripple < 1 && sp ? (
-            <div style={{position: 'absolute', left: sp.x, top: sp.y, width: 90 * unit, height: 90 * unit, borderRadius: 99,
-              border: `${4 * unit}px solid ${C.amber}`, transform: `translate(-50%,-50%) scale(${0.3 + ripple})`, opacity: 1 - ripple}} />
+          {clicked && step?.box && src && !isVideo(src) ? (
+            <PressTarget src={src} since={since} box={step.box} sw={sw} sh={sh} zoom={cam.z} ox={ox} oy={oy} radius={10 * unit} />
+          ) : null}
+          {clicked && sp ? (
+            <div style={{position: 'absolute', left: sp.x, top: sp.y}}>
+              <Ripple since={since} size={120 * unit} color={C.amber} />
+            </div>
           ) : null}
           {steps.length ? (
-            <div style={{position: 'absolute', left: cp.x - 6 * unit, top: cp.y - 4 * unit, transform: `scale(${press})`, transformOrigin: 'top left'}}>
-              <Cursor size={46 * unit} />
+            <div style={{position: 'absolute', left: cp.x - cursorPx * 0.17, top: cp.y - cursorPx * 0.08}}>
+              <Pointer size={cursorPx} scale={press} />
             </div>
           ) : null}
         </div>
       </div>
 
+      {step?.keys?.length ? (
+        <div style={{position: 'absolute', left: 0, right: 0, top: sy + sh + 28 * unit, display: 'flex', justifyContent: 'center'}}>
+          <KeyCaps keys={step.keys} since={since} unit={unit} dark={dark} />
+        </div>
+      ) : null}
       {step?.label && sp ? (
         <div dir="rtl" style={{...entStyle(calloutIn), position: 'absolute',
           left: Math.min(width - 520 * unit, Math.max(24 * unit, sx + sp.x - 250 * unit)),
