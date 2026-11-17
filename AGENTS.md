@@ -203,7 +203,11 @@ factory), steps 3–5 are `footage silence → transcribe → beats` or `footage
 - **Never trust a render's own metrics.** Probe the MP4 (`scripts/qa.py`).
 - **Never claim "done" without the gate output in hand** — peak, RMS, clipped
   samples, black stretches, Arabic scan.
-- **No P0 from `craft check` at render time**, and a `REVIEW.md` with the delivery.
+- **No P0 at render time — enforced.** `studio.py render` and `studio.py export` run the craft
+  gate on the aspects they render and refuse on any P0 (no override flag); the result is
+  recorded in `out/craft-gate.json`. `private deliver` refuses a film whose last render did
+  not pass, or that has no `REVIEW.md`. Never render with `npx remotion render` directly to
+  get around it.
 - **One idea per beat.** If a beat needs two headlines, it is two beats.
 - **Western digits only (123), never ١٢٣**, in copy, counters and charts (`src/lib/rtl.ts`).
 - **Never sell with a price line.** The CTA is «التفاصيل على الخاص» or «للحصول على

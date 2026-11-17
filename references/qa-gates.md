@@ -148,7 +148,8 @@ beat only works because of the music, it has no picture and needs one.
 python scripts/studio.py craft check --strict --review film/REVIEW.md
 ```
 
-Proves no P0 tell is in the plan: every text layer is readable on a phone at 16:9 and
+Enforced: `render` and `export` refuse on a P0 for the aspects they render, and record
+`out/craft-gate.json`; `private deliver` needs a passing record and `REVIEW.md`. Proves no P0 tell is in the plan: every text layer is readable on a phone at 16:9 and
 9:16 (≥ 2.6% of the frame height), every line holds long enough to read (Arabic
 default 0.6 s + 0.4 s/word), one glow per beat, no Arabic-Indic digits. P1/P2 lines
 are fixed or kept on purpose in `REVIEW.md`. Rules: `references/craft.md`.

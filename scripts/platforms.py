@@ -113,6 +113,13 @@ def cmd_export(args: argparse.Namespace) -> int:
         if rc:
             return rc
 
+    # hard gate: the same craft check `studio.py render` runs (references/craft.md)
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import craft
+
+    if craft.render_gate(aspects=[e["aspect"] for e in p["files"]]):
+        return 1
+
     manifest = {**p, "renders": [], "pass": True, "strict": args.strict}
     for entry in p["files"]:
         target = entry["aspect"]

@@ -111,3 +111,39 @@ class StyleCardTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RenderGateTests(unittest.TestCase):
+    def _run(self, layers):
+        import tempfile
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as tmp:
+            t = pathlib.Path(tmp)
+            (t / "tl.json").write_text(json.dumps(tl(layers)), encoding="utf-8")
+            with mock.patch.object(craft, "GATE_RECORD", t / "gate.json"):
+                rc = craft.render_gate(t / "tl.json")
+            return rc, json.loads((t / "gate.json").read_text(encoding="utf-8"))
+
+    def test_p0_refuses_and_is_recorded(self):
+        rc, rec = self._run([{"type": "text", "text": "مصدر", "size": 0.1, "at": 0}])
+        self.assertEqual(rc, 1)
+        self.assertFalse(rec["pass"])
+        self.assertTrue(rec["p0"])
+
+    def test_clean_passes(self):
+        rc, rec = self._run([{"type": "text", "text": "الرقم", "size": 0.6, "at": 0.2, "glow": True},
+                             {"type": "text", "text": "كل شيء يبدأ بسؤال", "size": 0.2, "at": 0.6, "v": {"size": 0.22}}])
+        self.assertEqual(rc, 0)
+        self.assertTrue(rec["pass"])
+        self.assertEqual(len(rec["sha256"]), 64)
+
+    def test_render_and_export_call_the_gate(self):
+        for f in ("scripts/studio.py", "scripts/platforms.py"):
+            src = (ROOT / f).read_text(encoding="utf-8")
+            self.assertIn("craft.render_gate(", src, f)
+            self.assertLess(src.index("craft.render_gate("), src.index('"remotion", "render"'), f)
+
+    def test_delivery_requires_a_passed_gate_and_a_review(self):
+        src = (ROOT / "scripts/private.py").read_text(encoding="utf-8")
+        self.assertIn('"craft-gate.json"', src)
+        self.assertIn("REVIEW.md", src)
