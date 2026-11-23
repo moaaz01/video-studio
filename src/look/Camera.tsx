@@ -49,10 +49,16 @@ export const Camera: React.FC<{
     scale = 1 + 0.012 * eased * s;
   }
 
-  // handheld: sub-pixel breathing, identical for a given frame
-  x += noise2D("cam-x", frame * 0.015, 0) * 2.4 * s;
-  y += noise2D("cam-y", frame * 0.015, 1) * 1.8 * s;
-  const rot = noise2D("cam-r", frame * 0.01, 2) * 0.12 * s;
+  // "still" is still: no handheld, so text stays crisp and no edge is uncovered.
+  // Every other mode breathes (sub-pixel, identical for a given frame) and carries
+  // just enough overscan that the shake and tilt never reveal the frame edge.
+  let rot = 0;
+  if (mode !== "still") {
+    x += noise2D("cam-x", frame * 0.015, 0) * 2.4 * s;
+    y += noise2D("cam-y", frame * 0.015, 1) * 1.8 * s;
+    rot = noise2D("cam-r", frame * 0.01, 2) * 0.12 * s;
+    scale += 0.006 * s;
+  }
 
   return (
     <AbsoluteFill
