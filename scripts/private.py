@@ -86,6 +86,22 @@ def leaked_words(diff: str) -> list[str]:
     return hits
 
 
+def leaked_message(message: str) -> list[str]:
+    """Client names inside a commit message (git comment lines are ignored).
+
+    Only file diffs used to be checked, so a client name written in a commit
+    message reached GitHub although the word was already on the private list.
+    """
+    words = [w.lower() for w in private_words()]
+    hits = []
+    for line in message.splitlines():
+        if line.startswith("#"):
+            continue
+        low = line.lower()
+        hits += [f"{w}: {line[:100]}" for w in words if w in low]
+    return hits
+
+
 def is_private(rel: str, patterns: list[str]) -> bool:
     rel = rel.replace("\\", "/")
     for pat in patterns:
@@ -222,6 +238,16 @@ def cmd_check_staged(_: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_check_msg(a: argparse.Namespace) -> int:
+    """git commit-msg hook: refuse a message that names a client."""
+    bad = leaked_message(pathlib.Path(a.file).read_text(encoding="utf-8", errors="replace"))
+    if bad:
+        print("private.py: refusing a commit message that names a client:\n  " + "\n  ".join(bad))
+        print("reword it without the name (list: .git/info/private-words)")
+        return 1
+    return 0
+
+
 def cmd_check_push(_: argparse.Namespace) -> int:
     """stdin: `<local ref> <local sha> <remote ref> <remote sha>` per line (git pre-push)."""
     zero = "0" * 40
@@ -241,7 +267,11 @@ def cmd_check_push(_: argparse.Namespace) -> int:
         changed = git("diff", "--name-only", f"{base}..{local_sha}" if base else rng).splitlines() if (base or remote_sha != zero) \
             else git("ls-tree", "-r", "--name-only", local_sha).splitlines()
         diff = git("diff", "--unified=0", f"{base}..{local_sha}" if base else rng) if (base or remote_sha != zero) else ""
-        bad = _blocked(changed) + leaked_words(diff)
+        # every pushed commit's message too: this also covers commits made before
+        # the commit-msg hook was installed, or that skipped local hooks
+        log_range = f"{base}..{local_sha}" if base else (rng if remote_sha != zero else local_sha)
+        messages = git("log", "--format=%B", log_range)
+        bad = _blocked(changed) + leaked_words(diff) + [f"commit message: {h}" for h in leaked_message(messages)]
         if bad:
             print(f"private.py: refusing to push '{branch}': it touches private paths or names:\n  " + "\n  ".join(bad[:20]))
             return 1
@@ -265,13 +295,13 @@ exit 1
 def cmd_guard(_: argparse.Namespace) -> int:
     hooks = common_dir() / "hooks"
     hooks.mkdir(parents=True, exist_ok=True)
-    for name, cmd in (("pre-commit", "check-staged"), ("pre-push", "check-push")):
+    for name, cmd in (("pre-commit", "check-staged"), ("commit-msg", 'check-msg "$1"'), ("pre-push", "check-push")):
         h = hooks / name
         if h.exists() and "private.py" not in h.read_text(encoding="utf-8"):
             print(f"  {h} exists and is not ours; left alone — add `scripts/private.py {cmd}` to it yourself")
             continue
         h.write_text(HOOK.format(cmd=cmd, installed=pathlib.Path(__file__).resolve().as_posix(),
-                                 verb="commit" if cmd == "check-staged" else "push"),
+                                 verb="push" if cmd == "check-push" else "commit"),
                      encoding="utf-8", newline="\n")
         h.chmod(0o755)
         print(f"  installed {h}")
@@ -294,9 +324,11 @@ def main() -> None:
     sub.add_parser("guard")
     sub.add_parser("check-staged")
     sub.add_parser("check-push")
+    cm = sub.add_parser("check-msg")
+    cm.add_argument("file", help="the commit message file git passes to the commit-msg hook")
     a = ap.parse_args()
     handlers = {"where": cmd_where, "scan": cmd_scan, "add": cmd_add, "deliver": cmd_deliver, "guard": cmd_guard,
-                "check-staged": cmd_check_staged, "check-push": cmd_check_push}
+                "check-staged": cmd_check_staged, "check-push": cmd_check_push, "check-msg": cmd_check_msg}
     sys.exit(handlers[a.cmd](a))
 
 
