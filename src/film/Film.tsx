@@ -326,10 +326,11 @@ const Body: React.FC<{vertical: boolean; lookName?: string; blur?: number; capti
             );
           })}
 
-          {/* the light that helps the eye across each cut */}
+          {/* the light that helps the eye across each cut: centred on the NEXT beat's start
+              (it was placed at beat.start, one cut early, which flashed frame 0) */}
           {beats.map((beat, i) =>
             i === beats.length - 1 ? null : (
-              <Sequence key={`seam-${beat.id}`} from={beat.start - 7} durationInFrames={14} name={`seam · ${beat.id}`} layout="none">
+              <Sequence key={`seam-${beat.id}`} from={beats[i + 1].start - 7} durationInFrames={14} name={`seam · ${beat.id} → ${beats[i + 1].id}`} layout="none">
                 <CutFX name={cuts[i % cuts.length]} index={i} tone={beats[i + 1]?.tone ?? 'paper'} />
               </Sequence>
             ),
